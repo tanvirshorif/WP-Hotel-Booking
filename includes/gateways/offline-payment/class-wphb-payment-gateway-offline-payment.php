@@ -59,7 +59,7 @@ class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base {
 	 * @param $gateway
 	 */
 	function admin_settings() {
-		$template = WP_Hotel_Booking::instance()->locate( 'includes/gateways/offline-payment/views/settings.php' );
+		$template = WPHB_ABSPATH . 'includes/gateways/offline-payment/views/settings.php';
 		include_once $template;
 	}
 

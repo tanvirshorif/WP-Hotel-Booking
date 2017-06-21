@@ -258,7 +258,7 @@ class WPHB_Post_Types {
 	 */
 	function enqueue_scripts() {
 		if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
-			wp_enqueue_script( 'hb-edit-tags', WP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ), array(
+			wp_enqueue_script( 'hb-edit-tags', WPHB_PLUGIN_URL . 'assets/js/edit-tags.min.js', array(
 				'jquery',
 				'jquery-ui-sortable'
 			) );
