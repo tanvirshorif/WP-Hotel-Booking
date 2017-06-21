@@ -21,7 +21,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Admin_Setting_Lightboxs extends WPHB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Lightboxs extends WPHB_Abstract_Setting {
 
 		/**
 		 * @var string

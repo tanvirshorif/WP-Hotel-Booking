@@ -63,8 +63,10 @@ if ( ! class_exists( 'WPHB_Autoloader' ) ) {
 		private function load_file( $path ) {
 			if ( $path && is_readable( $path ) ) {
 				include_once( $path );
+
 				return true;
 			}
+
 			return false;
 		}
 
@@ -81,7 +83,10 @@ if ( ! class_exists( 'WPHB_Autoloader' ) ) {
 			$file = $this->get_file_name_from_class( $class );
 			$path = WPHB_INCLUDES;
 
-			if ( stripos( $class, 'wphb_admin_metabox_' ) === 0 ) {
+			if ( stripos( $class, 'wphb_abstract_' ) === 0 ) {
+				// abstract class
+				$path = WPHB_INCLUDES . '/abstracts/';
+			} else if ( stripos( $class, 'wphb_admin_metabox_' ) === 0 ) {
 				// admin metaboxes
 				$path = WPHB_INCLUDES . '/admin/metaboxes/';
 			} else if ( strpos( $class, 'wphb_payment_gateway_' ) === 0 ) {

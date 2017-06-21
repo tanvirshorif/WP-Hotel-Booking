@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit();
 
 if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
-	class WPHB_Admin_Setting_Emails extends WPHB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Emails extends WPHB_Abstract_Setting {
 
 		/**
 		 * @var string

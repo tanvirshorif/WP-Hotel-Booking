@@ -21,7 +21,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Info' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Admin_Setting_Hotel_Info extends WPHB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Hotel_Info extends WPHB_Abstract_Setting {
 
 		/**
 		 * @var string

@@ -3,7 +3,7 @@
 /**
  * Abstract WP Hotel Booking admin setting class.
  *
- * @class       WPHB_Admin_Setting_Page
+ * @class       WPHB_Abstract_Setting
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
  * @category    Abstract Class
@@ -16,14 +16,14 @@
 defined( 'ABSPATH' ) || exit();
 
 
-if ( ! class_exists( 'WPHB_Admin_Setting_Page' ) ) {
+if ( ! class_exists( 'WPHB_Abstract_Setting' ) ) {
 
 	/**
-	 * Class WPHB_Admin_Setting_Page.
+	 * Class WPHB_Abstract_Setting.
 	 *
 	 * @since 2.0
 	 */
-	abstract class WPHB_Admin_Setting_Page {
+	abstract class WPHB_Abstract_Setting {
 
 		/**
 		 * Setting tab id.
@@ -40,7 +40,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Page' ) ) {
 		protected $title = null;
 
 		/**
-		 * WPHB_Admin_Setting_Page constructor.
+		 * WPHB_Abstract_Setting constructor.
 		 *
 		 * @since 2.0
 		 */

@@ -22,7 +22,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Currencies' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Admin_Setting_Currencies extends WPHB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Currencies extends WPHB_Abstract_Setting {
 
 		/**
 		 * @var string
@@ -58,12 +58,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Currencies' ) ) {
 				array(
 					'type'  => 'checkbox',
 					'id'    => 'tp_hotel_booking_currencies_enable',
-					'title' => __( 'Enable', 'wp-hotel-booking' )
+					'title' => __( 'Enable', 'wp-hotel-booking' ),
+					'default' => 1
 				),
 				array(
 					'type'  => 'checkbox',
 					'id'    => 'tp_hotel_booking_currencies_multiple_allowed',
-					'title' => __( 'Is multiple allowed', 'wp-hotel-booking' )
+					'title' => __( 'Is multiple allowed', 'wp-hotel-booking' ),
+					'default' => 1
 				),
 				array(
 					'type'    => 'select',

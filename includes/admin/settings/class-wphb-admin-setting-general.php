@@ -21,7 +21,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 	/**
 	 * Class WPHB_Admin_Setting_General.
 	 */
-	class WPHB_Admin_Setting_General extends WPHB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_General extends WPHB_Abstract_Setting {
 
 		/**
 		 * @var string

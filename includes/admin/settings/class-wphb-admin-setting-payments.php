@@ -21,7 +21,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 	 *
 	 *
 	 */
-	class WPHB_Admin_Setting_Payments extends WPHB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Payments extends WPHB_Abstract_Setting {
 
 		/**
 		 * @var string
