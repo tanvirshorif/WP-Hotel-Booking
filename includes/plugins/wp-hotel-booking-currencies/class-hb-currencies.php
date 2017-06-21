@@ -20,14 +20,12 @@ class HB_SW_Curreny
 	 */
 	public function __construct( )
 	{
-		add_action( 'admin_init', array( $this, 'init' ) );
 		add_filter( 'hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
 //		$settings = HB_SW_Curreny_Setting::instance();
 //		if ( $settings->get( 'enable' ) ) {
 			// include file
 			$this->includes();
-			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
 			/**
 			 * if is multi currency is true
@@ -119,38 +117,11 @@ class HB_SW_Curreny
 		return $lag;
 	}
 
-	/**
-	 * add action, filter
-	 * @return null
-	 */
-	public function init()
-	{
-		/**
-		 * generate settings in admin panel
-		 */
-		if( is_admin() )
-		{
-//			add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tab' ), 100 );
-//			add_action( 'hb_admin_settings_tab_currencies', array( $this, 'admin_settings' ) );
-
-		}
-	}
-
 	public function includes()
 	{
 		require_once dirname( __FILE__ ) . '/functions.php' ;
 		require_once dirname( __FILE__ ) . '/class-hb-abstract-shortcode.php' ;
 		require_once dirname( __FILE__ ) . '/shortcodes/class-hb-shortcode-currency-switcher.php' ;
-		require_once dirname( __FILE__ ) . '/widgets/class-hb-widget-currency-switch.php' ;
-	}
-
-	/**
-	 * register widget
-	 * @return null
-	 */
-	public function register_widgets()
-	{
-		register_widget( 'HB_Widget_Currency_Switch' );
 	}
 
 	/**
@@ -222,25 +193,6 @@ class HB_SW_Curreny
 		return $aggregators;
 	}
 
-//	/**
-//	 * admin setting tab hook
-//	 * @param  array $tabs
-//	 * @return array
-//	 */
-//	function setting_tab( $tabs )
-//	{
-//		$tabs['currencies'] = __( 'Currency', 'wp-hotel-booking' );
-//		return $tabs;
-//	}
-
-	/**
-	 * admin setting
-	 * @return null
-	 */
-	function admin_settings()
-	{
-		require_once dirname( __FILE__ ) . '/settings/settings.php' ;
-	}
 
 }
 new HB_SW_Curreny();
