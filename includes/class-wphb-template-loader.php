@@ -1,73 +1,104 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit;
-}
+/**
+ * WP Hotel Booking template loader class.
+ *
+ * @class       WPHB_TemplateLoader
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Class
+ * @author      Thimpress, leehld
+ */
 
-class WPHB_TemplateLoader {
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
-    /**
-     * Path to the includes directory
-     * @var string
-     */
-    private $include_path = '';
 
-    /**
-     * The Constructor
-     */
-    public function __construct() {
-        add_filter( 'template_include', array( $this, 'template_loader' ) );
-    }
+if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 
-    public function template_loader( $template ) {
-        $post_type = get_post_type();
+	/**
+	 * Class WPHB_TemplateLoader.
+	 *
+	 * @since 2.0
+	 */
+	class WPHB_TemplateLoader {
 
-        $file = '';
-        $find = array();
-        if ( $post_type !== 'hb_room' ) {
-            return $template;
-        }
+		/**
+		 * WPHB_TemplateLoader constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			add_filter( 'template_include', array( $this, 'template_loader' ) );
+		}
 
-        if ( is_post_type_archive( 'hb_room' ) ) {
-            $file = 'archive-room.php';
-            $find[] = $file;
-            $find[] = hb_template_path() . '/' . $file;
-        } else if ( is_room_taxonomy() ) {
-            $term = get_queried_object();
-            $taxonomy = $term->taxonomy;
-            if ( strpos( $term->taxonomy, 'hb_' ) === 0 ) {
-                $taxonomy = substr( $term->taxonomy, 3 );
-            }
+		/**
+		 * Load a template.
+		 *
+		 * Handles template usage so that we can use our own templates instead of the themes.
+		 *
+		 * Templates are in the 'templates' folder. WP Hotel Booking looks for theme.
+		 * overrides in /theme/wp-hotel-booking/ by default.
+		 *
+		 * @since 2.0
+		 *
+		 * @param mixed $template
+		 *
+		 * @return string
+		 */
+		public function template_loader( $template ) {
+			$post_type = get_post_type();
 
-            if ( is_tax( 'hb_room_type' ) || is_tax( 'hb_room_capacity' ) ) {
-                $file = 'taxonomy-' . $taxonomy . '.php';
-            } else {
-                $file = 'archive-room.php';
-            }
+			$file = '';
+			$find = array();
+			if ( $post_type !== 'hb_room' ) {
+				return $template;
+			}
 
-            $find[] = 'taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
-            $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
-            $find[] = 'taxonomy-' . $term->taxonomy . '.php';
-            $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '.php';
-            $find[] = $file;
-        } else if ( is_single() ) {
-            $file = 'single-room.php';
-            $find[] = $file;
-            $find[] = hb_template_path() . '/' . $file;
-        }
+			if ( is_post_type_archive( 'hb_room' ) ) {
+				$file   = 'archive-room.php';
+				$find[] = $file;
+				$find[] = hb_template_path() . '/' . $file;
+			} else if ( is_room_taxonomy() ) {
+				$term     = get_queried_object();
+				$taxonomy = $term->taxonomy;
+				if ( strpos( $term->taxonomy, 'hb_' ) === 0 ) {
+					$taxonomy = substr( $term->taxonomy, 3 );
+				}
 
-        if ( $file ) {
-            $find[] = hb_template_path() . '/' . $file;
-            $hb_template = untrailingslashit( WPHB_PLUGIN_PATH ) . '/templates/' . $file;
-            $template = locate_template( array_unique( $find ) );
+				if ( is_tax( 'hb_room_type' ) || is_tax( 'hb_room_capacity' ) ) {
+					$file = 'taxonomy-' . $taxonomy . '.php';
+				} else {
+					$file = 'archive-room.php';
+				}
 
-            if ( !$template && file_exists( $hb_template ) ) {
-                $template = $hb_template;
-            }
-        }
+				$find[] = 'taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
+				$find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
+				$find[] = 'taxonomy-' . $term->taxonomy . '.php';
+				$find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '.php';
+				$find[] = $file;
+			} else if ( is_single() ) {
+				$file   = 'single-room.php';
+				$find[] = $file;
+				$find[] = hb_template_path() . '/' . $file;
+			}
 
-        return $template;
-    }
+			if ( $file ) {
+				$find[]      = hb_template_path() . '/' . $file;
+				$hb_template = untrailingslashit( WPHB_ABSPATH ) . '/templates/' . $file;
+				$template    = locate_template( array_unique( $find ) );
+
+				if ( ! $template && file_exists( $hb_template ) ) {
+					$template = $hb_template;
+				}
+			}
+
+			return $template;
+		}
+
+	}
 
 }
 

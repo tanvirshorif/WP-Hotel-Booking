@@ -76,6 +76,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 			define( 'WPHB_ABSPATH', dirname( __FILE__ ) . '/' );
+			define( 'WPHB_INCLUDES', WPHB_ABSPATH . 'includes/' );
 		}
 
 		/**

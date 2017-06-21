@@ -943,19 +943,6 @@ if ( ! function_exists( 'hb_is_ajax' ) ) {
 	}
 }
 
-/**
- * Place order for a booking
- *
- * @throws Exception
- */
-if ( ! function_exists( 'hb_customer_place_order' ) ) {
-
-	function hb_customer_place_order() {
-		WPHB_Checkout::instance()->process_checkout();
-		exit();
-	}
-}
-
 //add_action( 'init', 'hb_customer_place_order' );
 
 if ( ! function_exists( 'hb_get_currency' ) ) {
