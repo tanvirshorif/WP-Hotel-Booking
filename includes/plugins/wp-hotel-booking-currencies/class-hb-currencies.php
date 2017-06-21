@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname( __FILE__ ) . '/class-hb-currencies-settings.php';
+//require_once dirname( __FILE__ ) . '/class-hb-currencies-settings.php';
 require_once dirname( __FILE__ ) . '/class-hb-currencies-storage.php';
 
 /**
@@ -23,8 +23,8 @@ class HB_SW_Curreny
 		add_action( 'admin_init', array( $this, 'init' ) );
 		add_filter( 'hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
-		$settings = HB_SW_Curreny_Setting::instance();
-		if ( $settings->get( 'enable' ) ) {
+//		$settings = HB_SW_Curreny_Setting::instance();
+//		if ( $settings->get( 'enable' ) ) {
 			// include file
 			$this->includes();
 			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
@@ -48,7 +48,7 @@ class HB_SW_Curreny
 			 */
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 			// add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
-		}
+//		}
 	}
 
 	/**
@@ -130,8 +130,8 @@ class HB_SW_Curreny
 		 */
 		if( is_admin() )
 		{
-			add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tab' ), 100 );
-			add_action( 'hb_admin_settings_tab_currencies', array( $this, 'admin_settings' ) );
+//			add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tab' ), 100 );
+//			add_action( 'hb_admin_settings_tab_currencies', array( $this, 'admin_settings' ) );
 
 		}
 	}
@@ -222,16 +222,16 @@ class HB_SW_Curreny
 		return $aggregators;
 	}
 
-	/**
-	 * admin setting tab hook
-	 * @param  array $tabs
-	 * @return array
-	 */
-	function setting_tab( $tabs )
-	{
-		$tabs['currencies'] = __( 'Currency', 'wp-hotel-booking' );
-		return $tabs;
-	}
+//	/**
+//	 * admin setting tab hook
+//	 * @param  array $tabs
+//	 * @return array
+//	 */
+//	function setting_tab( $tabs )
+//	{
+//		$tabs['currencies'] = __( 'Currency', 'wp-hotel-booking' );
+//		return $tabs;
+//	}
 
 	/**
 	 * admin setting
