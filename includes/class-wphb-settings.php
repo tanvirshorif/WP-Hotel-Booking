@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
@@ -62,9 +62,10 @@ class WPHB_Settings {
 		if ( strpos( $name, 'tp_hotel_booking_' ) === 0 ) {
 			$name = str_replace( 'tp_hotel_booking_', '', $name );
 		}
-		if ( !empty( $this->_options[$name] ) ) {
-			return $this->_options[$name];
+		if ( ! empty( $this->_options[ $name ] ) ) {
+			return $this->_options[ $name ];
 		}
+
 		return $default;
 	}
 
@@ -79,10 +80,11 @@ class WPHB_Settings {
 	function set( $name, $value ) {
 		// update option
 		update_option( $this->_option_prefix . $name, $value );
-		$this->_options[$name] = $value;
+		$this->_options[ $name ] = $value;
 
 		// allow hook
 		do_action( 'hb_update_settings_' . $name, $name, $value );
+
 		return $this->_options;
 	}
 
@@ -95,8 +97,9 @@ class WPHB_Settings {
 	 */
 	function remove( $name ) {
 		if ( array_key_exists( $name, $this->_options ) ) {
-			unset( $this->_options[$name] );
+			unset( $this->_options[ $name ] );
 		}
+
 		return $this->_options;
 	}
 
@@ -104,10 +107,11 @@ class WPHB_Settings {
 	 * Update all options into database
 	 */
 	function update() {
-		if ( $this->_options )
+		if ( $this->_options ) {
 			foreach ( $this->_options as $k => $v ) {
 				update_option( $this->_option_prefix . $k, $v );
 			}
+		}
 	}
 
 	/**
@@ -136,17 +140,19 @@ class WPHB_Settings {
 	 * Update settings
 	 */
 	function update_settings() {
-		if ( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' )
+		if ( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ) {
 			return;
+		}
 		foreach ( $_POST as $k => $v ) {
 			if ( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
 				$option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
-				if ( !$option_key )
+				if ( ! $option_key ) {
 					continue;
-				if ( is_string( $v ) ) {
-					$_POST[$k] = sanitize_text_field( $v );
 				}
-				$this->set( $option_key, $_POST[$k] );
+				if ( is_string( $v ) ) {
+					$_POST[ $k ] = sanitize_text_field( $v );
+				}
+				$this->set( $option_key, $_POST[ $k ] );
 			}
 		}
 		$this->update();
@@ -166,10 +172,11 @@ class WPHB_Settings {
 		);
 		if ( $options = $wpdb->get_results( $query ) ) {
 			foreach ( $options as $option ) {
-				$name                  = str_replace( $this->_option_prefix, '', $option->option_name );
-				$this->_options[$name] = maybe_unserialize( $option->option_value );
+				$name                    = str_replace( $this->_option_prefix, '', $option->option_name );
+				$this->_options[ $name ] = maybe_unserialize( $option->option_value );
 			}
 		}
+
 		return $this->_options;
 	}
 
@@ -194,12 +201,13 @@ class WPHB_Settings {
 		if ( $fields ) {
 			$options = array();
 			foreach ( $fields as $k => $v ) {
-				$options[$v] = $this->get( $v );
+				$options[ $v ] = $this->get( $v );
 			}
 			$return = json_encode( $options );
 		} else {
 			$return = json_encode( $this->_options );
 		}
+
 		return $return;
 	}
 
@@ -217,20 +225,21 @@ class WPHB_Settings {
 	 * @return WPHB_Settings instance
 	 */
 	static function instance( $prefix = null, $default = array() ) {
-		if ( !$prefix || !is_string( $prefix ) ) {
+		if ( ! $prefix || ! is_string( $prefix ) ) {
 			$prefix = 'tp_hotel_booking_';
 		}
-		if ( empty( self::$_instances[$prefix] ) ) {
-			self::$_instances[$prefix] = new self( $prefix, $default );
+		if ( empty( self::$_instances[ $prefix ] ) ) {
+			self::$_instances[ $prefix ] = new self( $prefix, $default );
 		}
-		return self::$_instances[$prefix];
+
+		return self::$_instances[ $prefix ];
 	}
 
 }
 
 $GLOBALS['hb_settings'] = WPHB_Settings::instance();
 
-if ( !function_exists( 'hb_settings' ) ) {
+if ( ! function_exists( 'hb_settings' ) ) {
 	function hb_settings() {
 		return WPHB_Settings::instance();
 	}

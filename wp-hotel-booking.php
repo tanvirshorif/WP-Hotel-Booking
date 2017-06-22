@@ -172,6 +172,10 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/wphb-webhooks.php' );
 
+			// currency
+			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currencies.php' );
+			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currency-storage.php' );
+
 			// booking
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-hooks.php' );
@@ -193,8 +197,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/cart/wphb-cart-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/cart/class-wphb-cart.php' );
 
-			// currencies
-			include_once( WPHB_ABSPATH . 'includes/plugins/wp-hotel-booking-currencies/wp-hotel-booking-currencies.php' );
 			// extra
 			include_once( WPHB_ABSPATH . 'includes/plugins/wp-hotel-booking-extra/wp-hotel-booking-extra.php' );
 

@@ -32,15 +32,16 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 */
 		public static function init() {
 			$shortcodes = array(
-				'hotel_booking'                 => __CLASS__ . '::hotel_booking',
-				'hotel_booking_account'         => __CLASS__ . '::hotel_booking_account',
-				'hotel_booking_best_reviews'    => __CLASS__ . '::hotel_booking_best_reviews',
-				'hotel_booking_cart'            => __CLASS__ . '::hotel_booking_cart',
-				'hotel_booking_checkout'        => __CLASS__ . '::hotel_booking_checkout',
-				'hotel_booking_lastest_reviews' => __CLASS__ . '::hotel_booking_lastest_reviews',
-				'hotel_booking_mini_cart'       => __CLASS__ . '::hotel_booking_mini_cart',
-				'hotel_booking_rooms'           => __CLASS__ . '::hotel_booking_rooms',
-				'hotel_booking_slider'          => __CLASS__ . '::hotel_booking_slider',
+				'hotel_booking'                   => __CLASS__ . '::hotel_booking',
+				'hotel_booking_account'           => __CLASS__ . '::hotel_booking_account',
+				'hotel_booking_best_reviews'      => __CLASS__ . '::hotel_booking_best_reviews',
+				'hotel_booking_cart'              => __CLASS__ . '::hotel_booking_cart',
+				'hotel_booking_checkout'          => __CLASS__ . '::hotel_booking_checkout',
+				'hotel_booking_lastest_reviews'   => __CLASS__ . '::hotel_booking_lastest_reviews',
+				'hotel_booking_mini_cart'         => __CLASS__ . '::hotel_booking_mini_cart',
+				'hotel_booking_rooms'             => __CLASS__ . '::hotel_booking_rooms',
+				'hotel_booking_slider'            => __CLASS__ . '::hotel_booking_slider',
+				'hotel_booking_currency_switcher' => __CLASS__ . 'hotel_booking_currency_switcher'
 			);
 
 			foreach ( $shortcodes as $shortcode => $function ) {
@@ -154,6 +155,15 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 * @since 2.0
 		 */
 		public static function hotel_booking_account( $atts ) {
+
+		}
+
+		/**
+		 * Display currency switcher.
+		 *
+		 * @since 2.0
+		 */
+		public static function hotel_booking_currency_switcher( $atts ) {
 
 		}
 
