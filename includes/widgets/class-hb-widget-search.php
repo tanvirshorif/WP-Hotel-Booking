@@ -125,7 +125,6 @@ if ( ! class_exists( 'HB_Widget_Search' ) ) {
 			$instance['title']      = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 			$instance['show_title'] = ( isset( $new_instance['show_title'] ) ) ? strip_tags( $new_instance['show_title'] ) : 'false';
 			$instance['show_label'] = ( isset( $new_instance['show_label'] ) ) ? strip_tags( $new_instance['show_label'] ) : 'false';
-
 			return $instance;
 		}
 	}

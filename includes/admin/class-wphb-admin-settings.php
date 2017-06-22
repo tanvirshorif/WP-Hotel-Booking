@@ -14,7 +14,6 @@ class WPHB_Admin_Settings {
 
 	public static function get_settings_pages() {
 
-		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-wphb-admin-setting-page.php' );
 		$tabs = array();
 
 		// use WP_Hotel_Booking::instance() return null active hook

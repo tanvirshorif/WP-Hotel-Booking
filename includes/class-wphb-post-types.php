@@ -517,10 +517,6 @@ class WPHB_Post_Types {
 		);
 		$args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );
 		register_post_type( 'hb_booking', $args );
-
-		if ( is_admin() ) {
-			WP_Hotel_Booking::instance()->_include( 'includes/walkers/class-wphb-walker-room-type-dropdown.php' );
-		}
 	}
 
 	static function register_taxonomies() {

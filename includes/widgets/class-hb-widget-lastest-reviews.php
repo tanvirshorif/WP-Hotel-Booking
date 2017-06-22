@@ -110,7 +110,6 @@ if ( ! class_exists( 'HB_Widget_Lastest_Reviews' ) ) {
 			$instance           = array();
 			$instance['title']  = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 			$instance['number'] = ( ! empty( $new_instance['number'] ) ) ? strip_tags( $new_instance['number'] ) : 4;
-
 			return $instance;
 		}
 

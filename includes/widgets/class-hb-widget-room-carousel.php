@@ -154,7 +154,6 @@ if ( ! class_exists( 'HB_Widget_Room_Carousel' ) ) {
 			$instance['text_link']  = ( isset( $new_instance['text_link'] ) ) ? strip_tags( $new_instance['text_link'] ) : '';
 			$instance['nav']        = ( isset( $new_instance['nav'] ) ) ? strip_tags( $new_instance['nav'] ) : 1;
 			$instance['pagination'] = ( isset( $new_instance['pagination'] ) ) ? strip_tags( $new_instance['pagination'] ) : 1;
-
 			return $instance;
 		}
 	}
