@@ -13,9 +13,6 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 	}
 
 	function add_shortcode( $atts, $content = null ) {
-		if ( ! class_exists( 'WPHB_Room' ) ) {
-			WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
-		}
 
 		$start_date = hb_get_request( 'hb_check_in_date' );
 		if ( $start_date ) {

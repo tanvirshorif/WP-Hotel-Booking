@@ -278,7 +278,7 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 		 * @return mixed
 		 */
 		public function amount( $cart = false ) {
-			return hb_price_including_tax() ? $this->get_price_package() : $this->get_price_package( false );
+			return hb_price_including_tax( $cart ) ? $this->get_price_package() : $this->get_price_package( false );
 		}
 
 		/**

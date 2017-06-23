@@ -38,13 +38,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		public $_version = '2.0';
 
 		/**
-		 * Cart.
-		 *
-		 * @var null
-		 */
-		public $cart = null;
-
-		/**
 		 * User.
 		 *
 		 * @var null
@@ -108,7 +101,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			$this->load_text_domain();
 
 			// Load class instances.
-			$this->cart = WPHB_Cart::instance();
 			$this->user = hb_get_current_user();
 		}
 
@@ -172,13 +164,9 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/wphb-webhooks.php' );
 
-			// products
-			include_once( WPHB_ABSPATH . 'includes/products/class-wphb-abstract-product.php' );
-			include_once( WPHB_ABSPATH . 'includes/products/class-wphb-product-room.php' );
-
 			// room
-			include_once( WPHB_ABSPATH . 'includes/room/wphb-room-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/room/class-wphb-room.php' );
+			include_once( WPHB_ABSPATH . 'includes/room/wphb-room-functions.php' );
 
 			// currency
 			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currencies.php' );

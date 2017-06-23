@@ -102,7 +102,8 @@ class WP_Hotel_Booking_Coupon {
 			?>
 			<?php
 			// if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ) {
-			if ( $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
+            $cart = WPHB_Cart::instance();
+			if ( $coupon = $cart->coupon ) {
 				$coupon = HB_Coupon::instance( $coupon );
 				?>
                 <tr class="hb_coupon">

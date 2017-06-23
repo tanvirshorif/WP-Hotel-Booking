@@ -52,7 +52,7 @@ class HB_WC_Checkout extends WPHB_Checkout {
 
         if ( $create === true ) {
             if ( $booking = $this->create_booking( $order ) ) {
-				WP_Hotel_Booking::instance()->cart->empty_cart();
+				WPHB_Cart::instance()->empty_cart();
                 return true;
             }
         }

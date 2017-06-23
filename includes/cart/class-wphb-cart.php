@@ -694,7 +694,9 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			$booking_info = array();
 
 			// use coupon
-			if ( WPHB_Settings::instance()->get( 'enable_coupon' ) && $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
+			$settings = hb_settings();
+			$cart     = WPHB_Cart::instance();
+			if ( $settings->get( 'enable_coupon' ) && $coupon = $cart->coupon ) {
 				$coupon = HB_Coupon::instance( $coupon );
 
 				$booking_info['_hb_coupon_id']    = $coupon->ID;
@@ -805,10 +807,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 						'check_out_date' => $cart_item['check_out_date']
 					);
 					if ( array_key_exists( $extra_id, $turn_on ) ) {
-						$extra_cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $extra_id, $param, $qty );
+						$extra_cart_item_id = $this->add_to_cart( $extra_id, $param, $qty );
 					} else {
-						$extra_cart_item_id = WP_Hotel_Booking::instance()->cart->generate_cart_id( $param );
-						WP_Hotel_Booking::instance()->cart->remove_cart_item( $extra_cart_item_id );
+						$extra_cart_item_id = $this->generate_cart_id( $param );
+						$this->remove_cart_item( $extra_cart_item_id );
 					}
 				}
 			}
@@ -842,13 +844,13 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		 * @return
 		 */
 		public function mini_cart_loop( $room, $cart_id ) {
-			$cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id );
+			$cart_item = $this->get_cart_item( $cart_id );
 			if ( ! $cart_item ) {
 				return;
 			}
 
 			$packages = array();
-			foreach ( WP_Hotel_Booking::instance()->cart->cart_contents as $id => $cart_item ) {
+			foreach ( $this->cart_contents as $id => $cart_item ) {
 				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
 					$cart_item->cart_id = $id;
 					$packages[]         = $cart_item;
@@ -887,14 +889,14 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			}
 
 			$cart_id       = $results['cart_id'];
-			$cart_contents = WP_Hotel_Booking::instance()->cart->cart_contents;
+			$cart_contents = $this->cart_contents;
 
 			if ( $cart_contents ) {
 				$extra_packages = array();
 				foreach ( $cart_contents as $cart_item_id => $cart_item ) {
 					if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
 						// extra class
-						$extra            = HB_Extra_Package::instance( $cart_item->product_id );
+						$extra            = WPHB_Extra_Package::instance( $cart_item->product_id );
 						$extra_packages[] = array(
 							'package_title'    => sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->amount_singular ) ),
 							'package_id'       => $extra->ID,
@@ -960,32 +962,32 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		// email new booking
 		function email_new_booking( $cart_params, $cart_id, $booking ) {
 			?>
-			<tr class="hb_addition_services_title hb_table_center">
-				<td style="text-align: center;" colspan="7">
+            <tr class="hb_addition_services_title hb_table_center">
+                <td style="text-align: center;" colspan="7">
 					<?php _e( 'Addition Services', 'wp-hotel-booking' ); ?>
-				</td>
-			</tr>
+                </td>
+            </tr>
 			<?php
 			foreach ( $cart_params as $id => $cart_item ) {
 				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
 					?>
-					<tr style="background-color: #FFFFFF;">
+                    <tr style="background-color: #FFFFFF;">
 
-						<td></td>
+                        <td></td>
 
-						<td>
+                        <td>
 							<?php echo esc_html( $cart_item->quantity ); ?>
-						</td>
+                        </td>
 
-						<td colspan="3">
+                        <td colspan="3">
 							<?php printf( '%s', $cart_item->product_data->title ) ?>
-						</td>
+                        </td>
 
-						<td>
+                        <td>
 							<?php echo hb_format_price( $cart_item->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ) ?>
-						</td>
+                        </td>
 
-					</tr>
+                    </tr>
 
 					<?php
 				}

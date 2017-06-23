@@ -140,7 +140,7 @@ class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
         }
 
         $book->update_status( $status );
-		WP_Hotel_Booking::instance()->cart->empty_cart();
+		WPHB_Cart::instance()->cart->empty_cart();
         wp_redirect( hb_get_checkout_url() );
         exit();
     }

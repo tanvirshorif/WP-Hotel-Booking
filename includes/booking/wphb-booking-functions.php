@@ -63,7 +63,8 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 			'_hb_customer_fax'            => ''
 		) );
 		// return WP_Error if cart is empty
-		if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
+		$cart = WPHB_Cart::instance();
+		if ( $cart->cart_items_count === 0 ) {
 			return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
 		}
 
@@ -74,8 +75,6 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 			'booking_id'    => 0,
 			'parent'        => 0
 		);
-
-		WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
 
 		$booking                     = WPHB_Booking::instance( $args['booking_id'] );
 		$booking->post->post_title   = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
@@ -91,8 +90,8 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 
 		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
 
-		if ( WP_Hotel_Booking::instance()->cart->coupon ) {
-			$booking_info['_hb_coupon_id']    = WP_Hotel_Booking::instance()->cart->coupon;
+		if ( $cart->coupon ) {
+			$booking_info['_hb_coupon_id']    = $cart->coupon;
 			$coupon                           = HB_Coupon::instance( $booking_info['_hb_coupon_id'] );
 			$booking_info['_hb_coupon_code']  = $coupon->coupon_code;
 			$booking_info['_hb_coupon_value'] = $coupon->discount_value;
@@ -105,7 +104,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 		$booking_id = $booking->update( $order_items );
 
 		// set session booking id
-		WP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
+		$cart->set_booking( 'booking_id', $booking_id );
 
 		// do action
 		do_action( 'hotel_booking_create_booking', $booking_id, $booking_info, $order_items );

@@ -1,34 +1,67 @@
 <?php
 
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-31 14:44:36
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 15:19:01
+ * WP Hotel Booking user class.
+ *
+ * @class       WPHB_User
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Class
+ * @author      Thimpress, leehld
  */
-if ( !defined( 'ABSPATH' ) ) {
-    exit();
-}
 
-WP_Hotel_Booking::instance()->_include( 'includes/user/class-wphb-abstract-user.php' );
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
-class WPHB_User extends WPHB_User_Abstract {
 
-    static $users = null;
+if ( ! class_exists( 'WPHB_User' ) ) {
 
-    // get user
-    static function get_user( $user_id = null ) {
-        if ( !empty( self::$users[$user_id] ) ) {
-            return self::$users[$user_id];
-        }
+	/**
+	 * Class WPHB_User.
+	 *
+	 * @since 2.0
+	 */
+	class WPHB_User extends WPHB_Abstract_User {
 
-        return self::$users[$user_id] = new self( $user_id );
-    }
+		/**
+		 * @var null
+		 */
+		static $users = null;
 
-    // get current user
-    static function get_current_user() {
-        $user_id = get_current_user_id();
-        return self::get_user( $user_id );
-    }
+		// get user
+
+		/**
+		 * Get user.
+		 *
+		 * @since 2.0
+		 *
+		 * @param null $user_id
+		 *
+		 * @return WPHB_User
+		 */
+		public static function get_user( $user_id = null ) {
+			if ( ! empty( self::$users[ $user_id ] ) ) {
+				return self::$users[ $user_id ];
+			}
+
+			return self::$users[ $user_id ] = new self( $user_id );
+		}
+
+		/**
+		 * Get current user.
+		 *
+		 * @since 2.0
+		 *
+		 * @return WPHB_User
+		 */
+		public static function get_current_user() {
+			$user_id = get_current_user_id();
+
+			return self::get_user( $user_id );
+		}
+
+	}
 
 }
