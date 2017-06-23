@@ -37,6 +37,8 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		 */
 		public function __construct() {
 			add_filter( 'hotel_booking_get_product_class', array( $this, 'product_class' ), 10, 3 );
+			add_action( 'hotel_booking_room_details_quantity', array( $this, 'admin_booking_room_details' ), 10, 3 );
+			add_action( 'admin_init', array( $this, 'save_extra' ) );
 		}
 
 		/**
@@ -69,6 +71,123 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 				'room_quantity'  => $parent_quantity,
 				'quantity'       => isset( $params['quantity'] ) ? $params['quantity'] : 1
 			) );
+		}
+
+
+		/**
+		 * Add extra in admin booking room details.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $booking_params
+		 * @param $search_key
+		 * @param $room_id
+		 */
+		public function admin_booking_room_details( $booking_params, $search_key, $room_id ) {
+			if ( ! isset( $booking_params[ $search_key ] ) ||
+			     ! isset( $booking_params[ $search_key ][ $room_id ] ) ||
+			     ! isset( $booking_params[ $search_key ][ $room_id ]['extra_packages_details'] )
+			) {
+				return;
+			}
+			$packages = $booking_params[ $search_key ][ $room_id ]['extra_packages_details'];
+			?>
+            <ul>
+				<?php foreach ( $packages as $id => $package ): ?>
+                    <li>
+                        <small><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></small>
+                    </li>
+				<?php endforeach ?>
+            </ul>
+			<?php
+		}
+
+		/**
+		 * Save extra packages actions.
+		 *
+		 * @since 2.0
+		 *
+		 * @return bool|int|string|WP_Error
+		 */
+		public function save_extra() {
+			if ( ! isset( $_POST ) || empty( $_POST ) ) {
+				return false;
+			}
+
+			if ( ! isset( $_POST[ 'tp_hb_extra_room' ] ) || empty( $_POST[ 'tp_hb_extra_room' ] ) ) {
+				return false;
+			}
+
+			foreach ( (array) $_POST[ 'tp_hb_extra_room' ] as $post_id => $post ) {
+
+				global $wpdb;
+				$query = $wpdb->prepare( "
+				SELECT * FROM $wpdb->posts WHERE `ID` = %d AND `post_type` = %s
+			", $post_id, 'hb_extra_room' );
+
+				$results = $wpdb->get_results( $query, OBJECT );
+
+				$args = array(
+					'post_title'   => isset( $post['name'] ) ? $post['name'] : '',
+					'post_content' => isset( $post['desc'] ) ? $post['desc'] : '',
+					'post_type'    => 'hb_extra_room',
+					'post_status'  => 'publish'
+				);
+
+				if ( ! $results ) {
+					$post_id = wp_insert_post( $args );
+				} else {
+					$args['ID'] = $post_id;
+					wp_update_post( $args );
+				}
+
+				if ( isset( $post['price'] ) ) {
+					$price = (float) $post['price'];
+				} else {
+					$price = 0;
+				}
+
+				if ( get_post_meta( $post_id, 'tp_hb_extra_room_price', true ) || get_post_meta( $post_id, 'tp_hb_extra_room_price', true ) == 0 ) {
+					update_post_meta( $post_id, 'tp_hb_extra_room_price', $price );
+				} else {
+					add_post_meta( $post_id, 'tp_hb_extra_room_price', $price );
+				}
+
+				unset( $post['name'] );
+				unset( $post['desc'] );
+				unset( $post['price'] );
+
+				foreach ( $post as $key => $value ) {
+					if ( get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true )
+					     || get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) === ''
+					     || get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) == 0
+					) {
+						update_post_meta( $post_id, 'tp_hb_extra_room_' . $key, $value );
+					} else {
+						add_post_meta( $post_id, 'tp_hb_extra_room_' . $key, $value );
+					}
+				}
+
+				return $post_id;
+			}
+
+			return false;
+		}
+
+		/**
+         * Get all extras to object.
+         *
+         * @since 2.0
+         *
+		 * @return array|null|object
+		 */
+		public function get_extra() {
+			global $wpdb;
+			$query = $wpdb->prepare( "
+				SELECT * FROM $wpdb->posts WHERE `post_type` = %s
+			", 'hb_extra_room' );
+
+			return $wpdb->get_results( $query, OBJECT );
 		}
 
 		/**

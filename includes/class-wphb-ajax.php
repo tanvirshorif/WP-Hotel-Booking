@@ -374,9 +374,8 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			if ( $qty && ! is_wp_error( $qty ) ) {
 
 				// HB_Room_Extra instead of HB_Room
-				$room_extra = HB_Room_Extra::instance( $product_id );
-
-				$room_extra = $room_extra->get_extra();
+				$extra_product = WPHB_Extra_Product::instance( $product_id );
+				$room_extra    = $extra_product->get_extra();
 
 				$args = apply_filters( 'hotel_booking_check_room_available', array(
 					'status'       => true,

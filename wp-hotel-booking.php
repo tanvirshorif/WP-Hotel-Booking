@@ -172,13 +172,23 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/wphb-webhooks.php' );
 
+			// products
+			include_once( WPHB_ABSPATH . 'includes/products/class-wphb-abstract-product.php' );
+			include_once( WPHB_ABSPATH . 'includes/products/class-wphb-product-room.php' );
+
+			// room
+			include_once( WPHB_ABSPATH . 'includes/room/wphb-room-functions.php' );
+			include_once( WPHB_ABSPATH . 'includes/room/class-wphb-room.php' );
+
 			// currency
 			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currencies.php' );
 			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currency-storage.php' );
 
 			// extra package
 			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra.php' );
+			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-field.php' );
 			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-package.php' );
+			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-product.php' );
 
 			// booking
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-functions.php' );
@@ -189,20 +199,9 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/user/wphb-user-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/user/class-wphb-user.php' );
 
-			// products
-			include_once( WPHB_ABSPATH . 'includes/products/class-wphb-abstract-product.php' );
-			include_once( WPHB_ABSPATH . 'includes/products/class-wphb-product-room.php' );
-
-			// room
-			include_once( WPHB_ABSPATH . 'includes/room/wphb-room-functions.php' );
-			include_once( WPHB_ABSPATH . 'includes/room/class-wphb-room.php' );
-
 			// cart
 			include_once( WPHB_ABSPATH . 'includes/cart/wphb-cart-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/cart/class-wphb-cart.php' );
-
-			// extra
-			include_once( WPHB_ABSPATH . 'includes/plugins/wp-hotel-booking-extra/wp-hotel-booking-extra.php' );
 
 		}
 

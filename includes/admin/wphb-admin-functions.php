@@ -95,8 +95,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'label'   => __( 'Addition Package', 'wp-hotel-booking' ),
 				'type'    => 'multiple',
 				'std'     => '',
-				'options' => hb_room_extra_options(),
-//				'filter'  => array( $this, 'meta_value' ),
+				'options' => hb_room_extra_options()
 			)
 		);
 

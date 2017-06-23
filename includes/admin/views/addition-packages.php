@@ -17,9 +17,8 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
 	 * else customize save function
 	 */
 
-	global $hb_extra_settings;
-	$extras      = $hb_extra_settings->get_extra();
-	$field_name  = TP_HB_OPTION_NAME;
+	$extras      = WPHB_Extra::instance()->get_extra();
+	$field_name  = 'tp_hb_extra_room';
 	$extra_types = hb_extra_types();
 	$respondent  = array();
 	foreach ( $extra_types as $key => $value ) {
@@ -62,7 +61,7 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
                         </div>
                         <div class="type">
                             <h4><?php _e( 'Price Type', 'wp-hb-extra' ); ?></h4>
-							<?php tp_hb_extra_select( $field_name . '[' . $post->ID . '][respondent]', array( 'options' => $respondent ), get_post_meta( $post->ID, 'tp_hb_extra_room_respondent', true ) ); ?>
+							<?php hb_extra_select( $field_name . '[' . $post->ID . '][respondent]', array( 'options' => $respondent ), get_post_meta( $post->ID, 'tp_hb_extra_room_respondent', true ) ); ?>
                         </div>
                         <div class="remove">
                             <a data-id="<?php echo esc_attr( $post->ID ); ?>"
@@ -93,7 +92,7 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
                     </div>
                     <div class="type">
                         <h4><?php _e( 'Price Type', 'wp-hb-extra' ); ?></h4>
-						<?php tp_hb_extra_select( $field_name . '[0][respondent]', array( 'options' => $respondent ), '' ); ?>
+						<?php hb_extra_select( $field_name . '[0][respondent]', array( 'options' => $respondent ), '' ); ?>
                     </div>
                     <div class="remove">
                         <a data-id="" class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hb-extra' ); ?></a>
@@ -130,7 +129,7 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
             </div>
             <div class="type">
                 <h4><?php _e( 'Price Type', 'wp-hb-extra' ); ?></h4>
-				<?php tp_hb_extra_select( $field_name . '[{{ data.id }}][respondent]', array( 'options' => $respondent ), '' ); ?>
+				<?php hb_extra_select( $field_name . '[{{ data.id }}][respondent]', array( 'options' => $respondent ), '' ); ?>
             </div>
             <div class="remove">
                 <a data-id="{{ data.id }}"

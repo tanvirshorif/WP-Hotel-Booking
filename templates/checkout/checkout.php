@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$cart = WP_Hotel_Booking::instance()->cart;
+$cart = WPHB_Cart::instance();
 global $hb_settings;
 
 do_action( 'hotel_booking_before_checkout_form' );
@@ -29,11 +29,11 @@ do_action( 'hotel_booking_before_checkout_form' );
 					<?php foreach ( $rooms as $cart_id => $room ): ?>
 						<?php
 						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) continue;
-						$cart_extra = WP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
+						$cart_extra = $cart->get_extra_packages( $cart_id );
 						$sub_total  = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
 						?>
                         <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                            <td class="hb_room_type"<?php echo defined( 'TP_HB_EXTRA' ) && $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
+                            <td class="hb_room_type"<?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
                                 <a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
                             </td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?> </td>

@@ -26,19 +26,6 @@ if ( !function_exists( 'hb_generate_cart_item_id' ) ) {
 	}
 }
 
-/**
- * Get WPHB_Cart instance
- *
- * @param null $prop
- *
- * @return bool|WPHB_Cart|mixed
- */
-if ( !function_exists( 'hb_get_cart' ) ) {
-
-	function hb_get_cart( $prop = null ) {
-		return WPHB_Cart::instance( $prop );
-	}
-}
 
 /**
  * Generate an unique string

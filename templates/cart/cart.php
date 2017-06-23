@@ -4,11 +4,11 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$cart = WP_Hotel_Booking::instance()->cart;
+$cart = WPHB_Cart::instance();
 global $hb_settings;
 
 ?>
-<?php if ( WP_Hotel_Booking::instance()->cart->cart_items_count != 0 ) : ?>
+<?php if ( $cart->cart_items_count != 0 ) : ?>
     <div id="hotel-booking-cart">
 
         <form id="hb-cart-form" method="post">
@@ -28,10 +28,10 @@ global $hb_settings;
 					<?php foreach ( $rooms as $cart_id => $room ): ?>
 						<?php
 						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) continue;
-						$cart_extra = WP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
+						$cart_extra = $cart->get_extra_packages( $cart_id );
 						?>
                         <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                            <td<?php echo defined( 'TP_HB_EXTRA' ) && $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
+                            <td<?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
                                 <a href="javascript:void(0)" class="hb_remove_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
                                     <i class="fa fa-times"></i>
                                 </a>

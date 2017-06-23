@@ -349,7 +349,7 @@ if ( ! function_exists( 'hb_extra_types' ) ) {
 
 }
 
-if ( ! function_exists( 'tp_hb_extra_select' ) ) {
+if ( ! function_exists( 'hb_extra_select' ) ) {
 	/**
 	 * generate select field html
 	 *
@@ -358,7 +358,7 @@ if ( ! function_exists( 'tp_hb_extra_select' ) ) {
 	 *
 	 * @return html
 	 */
-	function tp_hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) {
+	function hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) {
 		?>
         <select name="<?php echo esc_attr( $name ); ?>"<?php echo sprintf( '%s', $multitye ? ' multiple' : '' ) ?>>
 			<?php if ( $options['options'] ): ?>
