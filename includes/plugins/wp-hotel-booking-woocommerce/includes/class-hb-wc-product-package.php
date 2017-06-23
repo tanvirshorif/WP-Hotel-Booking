@@ -22,7 +22,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 			// Should not call constructor of parent
 			//parent::__construct( $product );
 
-			if ( !class_exists( 'HB_Extra_Package' ) )
+			if ( !class_exists( 'WPHB_Extra_Package' ) )
 				return;
 
 			if ( is_numeric( $product ) && $product > 0 ) {
@@ -51,7 +51,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 //				$qty    = $parent->get_data( 'quantity' );
 //			}
 
-			$this->package = HB_Extra_Package::instance( $this->get_id(), array(
+			$this->package = WPHB_Extra_Package::instance( $this->get_id(), array(
 //				'check_in_date'  => $this->get_data( 'check_in_date' ),
 //				'check_out_date' => $this->get_data( 'check_out_date' ),
 				'room_quantity'  => $qty,
@@ -65,7 +65,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 //				$parent = WC()->cart->get_cart_item( $this->data['woo_cart_id'] );
 //				$qty    = $parent['quantity'];
 //			}
-//			$this->package = HB_Extra_Package::instance( $this->post, array(
+//			$this->package = WPHB_Extra_Package::instance( $this->post, array(
 //				'check_in_date'  => $this->data['check_in_date'],
 //				'check_out_date' => $this->data['check_out_date'],
 //				'room_quantity'  => $qty,
@@ -80,10 +80,10 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		 * @return boolean
 		 */
 		function is_sold_individually() {
-			if ( !class_exists( 'HB_Extra_Package' ) )
+			if ( !class_exists( 'WPHB_Extra_Package' ) )
 				return parent::is_sold_individually();
 
-			$package = HB_Extra_Package::instance( $this->get_id() );
+			$package = WPHB_Extra_Package::instance( $this->get_id() );
 
 			if ( !$package->respondent )
 				return parent::is_sold_individually();

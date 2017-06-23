@@ -42,14 +42,11 @@ if ( $field['attr'] ) {
 				$option = wp_parse_args( (array) $option, array( 'value' => '', 'text' => '' ) );
 			}
 			?>
-			<?php if ( ! ( $value ) ) {
-				?>
+			<?php if ( ! ( $value ) ) { ?>
                 <option value="<?php echo esc_attr( $option['value'] ); ?>"><?php echo esc_html( $option['text'] ); ?></option>
-			<?php } else {
-				?>
+			<?php } else { ?>
                 <option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? ' selected' : '' ?>><?php echo esc_html( $option['text'] ); ?></option>
 			<?php } ?>
-
 		<?php }
 	} ?>
 </select>

@@ -31,7 +31,7 @@ class HB_Room_Extra extends WPHB_Room {
 				if ( ! get_post( $post_id ) ) {
 					continue;
 				}
-				$package              = HB_Extra_Package::instance( $post_id );
+				$package              = WPHB_Extra_Package::instance( $post_id );
 				$ext                  = new stdClass();
 				$ext->ID              = (int) $post_id;
 				$ext->title           = $package->title;

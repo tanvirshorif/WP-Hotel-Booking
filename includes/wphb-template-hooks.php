@@ -1,7 +1,7 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
 }
 
 add_action( 'hb_before_search_result', 'hb_enqueue_lightbox_assets' );
@@ -41,3 +41,7 @@ add_action( 'the_post', array( 'WPHB_Room', 'hb_setup_room_data' ) );
 add_filter( 'the_content', 'hb_setup_shortcode_page_content' );
 add_filter( 'hotel_booking_single_room_infomation_tabs', 'hotel_display_pricing_plans' );
 add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', 'hotel_show_pricing' );
+
+add_action( 'hotel_booking_loop_after_item', 'hb_render_extra' );
+add_action( 'hotel_booking_after_add_room_to_cart_form', 'hb_render_extra' );
+add_action( 'hotel_booking_room_before_quantity', 'hb_extra_single_room_cart' );

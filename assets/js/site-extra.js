@@ -108,7 +108,7 @@
                     url: hotel_settings.ajax,
                     method: 'POST',
                     data: {
-                        action: 'tp_hotel_booking_remove_package',
+                        action: 'hotel_booking_remove_extra_cart',
                         cart_id: _cart_id
                     },
                     dataType: 'html',

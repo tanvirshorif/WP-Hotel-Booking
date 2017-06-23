@@ -81,7 +81,7 @@ if ( ! class_exists( 'WPHB_Currencies' ) ) {
 		public function switch_price( $price ) {
 
 			$settings = hb_settings();
-			$storage  = HB_SW_Curreny_Storage::instance();
+			$storage  = WPHB_Currency_Storage::instance();
 
 			$default_currency = $settings->get( 'currency', 'USD' );
 			$current_currency = $storage->get( 'currency' );

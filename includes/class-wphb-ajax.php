@@ -50,6 +50,8 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'admin_remove_order_items' => false,
 				'add_coupon_to_order'      => false,
 				'remove_coupon_on_order'   => false,
+				'delete_extra_package'     => false,
+				'remove_extra_cart'        => true,
 				'load_other_full_calendar' => false,
 				'dismiss_notice'           => true
 			);
@@ -690,7 +692,93 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 
 		/**
-		 * Load orther full calendar.
+		 * Admin delete extra package action.
+		 *
+		 * @since 2.0
+		 */
+		public static function delete_extra_package() {
+
+			if ( ! isset( $_POST ) || ! isset( $_POST['package_id'] ) ) {
+				return;
+			}
+
+			if ( wp_delete_post( $_POST['package_id'] ) || ! get_post( $_POST['package_id'] ) ) {
+				wp_send_json( array( 'status' => 'success' ) );
+			}
+		}
+
+		/**
+		 * Remove extra from cart.
+		 *
+		 * @since 2.0
+		 */
+		public static function remove_extra_cart() {
+			if ( ! isset( $_POST ) || ! defined( 'WPHB_BLOG_ID' ) ) {
+				return;
+			}
+
+			if ( ! isset( $_POST['cart_id'] ) || ! $_POST['cart_id'] ) {
+				wp_send_json( array(
+					'status'  => 'success',
+					'message' => __( 'Cart ID is not exists.', 'wp-hotel-booking' )
+				) );
+			}
+
+			$cart_id = sanitize_text_field( $_POST['cart_id'] );
+
+			// cart item is exists
+			$cart = WPHB_Cart::instance();
+			if ( $package_item = $cart->get_cart_item( $cart_id ) ) {
+				if ( $cart->remove_cart_item( $cart_id ) ) {
+					// room cart item id
+					$room    = $cart->get_cart_item( $package_item->parent_id );
+					$results = array(
+						'status'          => 'success',
+						'cart_id'         => $package_item->parent_id,
+						'permalink'       => get_permalink( $room->product_id ),
+						'name'            => sprintf( '%s', $room->product_data->name ) . ( $room->product_data->capacity_title ? sprintf( '(%s)', $room->product_data->capacity_title ) : '' ),
+						'quantity'        => $room->quantity,
+						'total'           => hb_format_price( $room->amount ),
+						// use to cart table
+						'package_id'      => $cart_id,
+						'item_total'      => hb_format_price( $room->amount_include_tax ),
+						'sub_total'       => hb_format_price( $cart->sub_total ),
+						'grand_total'     => hb_format_price( $cart->total ),
+						'advance_payment' => hb_format_price( $cart->advance_payment )
+					);
+
+					$extraRoom      = $cart->get_extra_packages( $package_item->parent_id );
+					$extra_packages = array();
+					if ( $extraRoom ) {
+						foreach ( $extraRoom as $cart_id => $cart_item ) {
+							$extra            = WPHB_Extra_Package::instance( $cart_item->product_id );
+							$extra_packages[] = array(
+								'package_title'      => sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->amount_singular ) ),
+								'cart_id'            => $cart_id,
+								'package_quantity'   => sprintf( 'x%s', $cart_item->quantity ),
+								'package_respondent' => $extra->respondent
+							);
+						}
+					}
+					$results['extra_packages'] = $extra_packages;
+
+					$results = apply_filters( 'hb_remove_package_results', $results, $package_item );
+
+					do_action( 'hb_extra_removed_package', $package_item );
+					hb_send_json( $results );
+				}
+
+			} else {
+				wp_send_json( array(
+					'status'  => 'warning',
+					'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' )
+				) );
+			}
+		}
+
+
+		/**
+		 * Load other full calendar.
 		 *
 		 * @since 2.0
 		 */

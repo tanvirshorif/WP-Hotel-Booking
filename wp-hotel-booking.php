@@ -176,6 +176,10 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currencies.php' );
 			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currency-storage.php' );
 
+			// extra package
+			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra.php' );
+			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-package.php' );
+
 			// booking
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-hooks.php' );

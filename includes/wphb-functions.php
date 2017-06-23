@@ -836,20 +836,21 @@ if ( ! function_exists( 'hb_day_name_min_js' ) ) {
 }
 
 /**
- * Get tax setting
+ * Get tax setting value.
+ *
+ * @since 2.0
  *
  * @return float|mixed
  */
 if ( ! function_exists( 'hb_get_tax_settings' ) ) {
 
 	function hb_get_tax_settings() {
-		$settings = WPHB_Settings::instance();
-		if ( $tax = $settings->get( 'tax' ) ) {
-			$tax = (float) $settings->get( 'tax' ) / 100;
-		}
 
-		if ( hb_price_including_tax() ) {
-			$tax = $tax;
+		$settings = hb_settings();
+		if ( $settings->get( 'price_including_tax' ) && $tax = $settings->get( 'tax' ) ) {
+			$tax = (float) ( $tax / 100 );
+		} else {
+			$tax = 0;
 		}
 
 		return $tax;

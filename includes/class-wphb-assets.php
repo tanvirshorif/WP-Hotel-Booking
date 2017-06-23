@@ -54,8 +54,13 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			wp_register_script( 'wp-admin-hotel-booking-select2', WPHB_PLUGIN_URL . 'assets/js/select2.min.js' );
 			if ( is_admin() ) {
 				$dependencies = array_merge( $dependencies, array( 'backbone' ) );
+
 				wp_register_style( 'wp-admin-hotel-booking', WPHB_PLUGIN_URL . 'assets/css/admin.tp-hotel-booking.min.css' );
 				wp_register_script( 'wp-admin-hotel-booking', WPHB_PLUGIN_URL . 'assets/js/admin.hotel-booking.js', $dependencies );
+
+				wp_register_script( 'tp-hb-extra-js', WPHB_PLUGIN_URL . 'assets/js/admin-extra.js', array(), WPHB_VERSION, true );
+				wp_enqueue_style( 'tp-hb-extra-css', WPHB_PLUGIN_URL . 'assets/css/admin-extra.min.css', array(), WPHB_VERSION );
+
 				wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
 				wp_register_script( 'wp-admin-hotel-booking-moment', WPHB_PLUGIN_URL . 'assets/js/moment.min.js', $dependencies );
 				wp_register_script( 'wp-admin-hotel-booking-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/fullcalendar.min.js', $dependencies );
@@ -63,6 +68,9 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			} else {
 				wp_register_style( 'wp-hotel-booking', WPHB_PLUGIN_URL . 'assets/css/hotel-booking.min.css' );
 				wp_register_script( 'wp-hotel-booking', WPHB_PLUGIN_URL . 'assets/js/hotel-booking.min.js', $dependencies, false, true );
+
+				wp_register_script( 'tp-hb-extra-js', WPHB_PLUGIN_URL . 'assets/js/site-extra.js', array(), WPHB_VERSION, true );
+				wp_enqueue_style( 'tp-hb-extra-css', WPHB_PLUGIN_URL . 'assets/css/site-extra.css', array(), WPHB_VERSION );
 
 				wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
@@ -114,7 +122,7 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			$upload_base_url  = $upload_dir['baseurl'];
 			$min_booking_date = get_option( 'tp_hotel_booking_minimum_booking_day' ) ? get_option( 'tp_hotel_booking_minimum_booking_day' ) : 1;
 			?>
-			<script type="text/javascript">
+            <script type="text/javascript">
                 var hotel_settings = {
                     ajax: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
                     settings: <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
@@ -126,7 +134,7 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
                     timezone: '<?php echo current_time( 'timestamp' ) ?>',
                     min_booking_date: <?php echo $min_booking_date; ?>
                 }
-			</script>
+            </script>
 			<?php
 		}
 	}

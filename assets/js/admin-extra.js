@@ -27,7 +27,7 @@
             $(document).on('click', '.tp_extra_form_fields .remove_button', function (e) {
                 e.preventDefault();
 
-                if (!confirm(hotel_booking_i18n.remove_confirm))
+                if (!confirm(hotel_booking_i18n.confirm_remove_extra))
                     return;
 
                 var _self = $(this),
@@ -39,7 +39,7 @@
                     type: 'POST',
                     data: {
                         package_id: package_id,
-                        action: 'tp_extra_package_remove'
+                        action: 'delete_extra_package'
                     }
                 }).done(function (res) {
                     if (typeof res.status !== 'undefined' && res.status === 'success') {

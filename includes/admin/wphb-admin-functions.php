@@ -34,6 +34,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'select_user'                   => __( 'Enter user login.', 'wp-hotel-booking' ),
 			'select_room'                   => __( 'Enter room name.', 'wp-hotel-booking' ),
 			'select_coupon'                 => __( 'Enter coupon code.', 'wp-hotel-booking' ),
+			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' )
 		);
 
 		return apply_filters( 'hb_admin_i18n', $i18n );
@@ -88,6 +89,14 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'type'   => 'textarea',
 				'std'    => '',
 				'editor' => true
+			),
+			array(
+				'name'    => 'room_extra',
+				'label'   => __( 'Addition Package', 'wp-hotel-booking' ),
+				'type'    => 'multiple',
+				'std'     => '',
+				'options' => hb_room_extra_options(),
+//				'filter'  => array( $this, 'meta_value' ),
 			)
 		);
 

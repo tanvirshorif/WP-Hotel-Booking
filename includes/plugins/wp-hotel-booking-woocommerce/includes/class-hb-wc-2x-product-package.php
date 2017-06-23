@@ -20,7 +20,7 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 	public function __construct($the_product, $args = null  ) {
 		parent::__construct( $the_product, $args );
 
-		if ( !class_exists( 'HB_Extra_Package' ) )
+		if ( !class_exists( 'WPHB_Extra_Package' ) )
 			return;
 	}
 
@@ -38,7 +38,7 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 			$qty    = $parent['quantity'];
 		}
 
-		$this->package = HB_Extra_Package::instance( $this->post, array(
+		$this->package = WPHB_Extra_Package::instance( $this->post, array(
 			'check_in_date'  => $this->data['check_in_date'],
 			'check_out_date' => $this->data['check_out_date'],
 			'room_quantity'  => $qty,
@@ -52,10 +52,10 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 	 * @return boolean
 	 */
 	function is_sold_individually() {
-		if ( !class_exists( 'HB_Extra_Package' ) )
+		if ( !class_exists( 'WPHB_Extra_Package' ) )
 			return parent::is_sold_individually();
 
-		$package = HB_Extra_Package::instance( $this->post );
+		$package = WPHB_Extra_Package::instance( $this->post );
 
 		if ( !$package->respondent )
 			return parent::is_sold_individually();
