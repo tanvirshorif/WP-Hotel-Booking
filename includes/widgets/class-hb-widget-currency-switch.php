@@ -131,6 +131,7 @@ if ( ! class_exists( 'HB_Widget_Currency_Switch' ) ) {
 			$instance               = array();
 			$instance['title']      = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 			$instance['currencies'] = ( ! empty( $new_instance['currencies'] ) ) ? $new_instance['currencies'] : array();
+
 			return $instance;
 		}
 	}

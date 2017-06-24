@@ -5,8 +5,9 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-if ( !class_exists( 'WC_Product_Simple' ) )
+if ( ! class_exists( 'WC_Product_Simple' ) ) {
 	return;
+}
 
 class HB_WC_Product_Room extends WC_Product_Simple {
 
@@ -19,6 +20,7 @@ class HB_WC_Product_Room extends WC_Product_Simple {
 
 	function get_price() {
 		$room = WPHB_Room::instance( $this->post, $this->data );
+
 		return $room->amount_singular_exclude_tax;
 	}
 

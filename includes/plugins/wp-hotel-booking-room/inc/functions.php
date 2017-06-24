@@ -6,6 +6,6 @@
  * @Last Modified time: 2016-04-21 14:59:44
  */
 
-if( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * WP Hotel Booking Unit Tests Bootstrap
  *
@@ -13,13 +14,14 @@ class WPHB_Unit_Tests_Bootstrap {
 	public $tests_dir;
 	/** @var string plugin directory */
 	public $plugin_dir;
+
 	/**
 	 * Setup the unit testing environment.
 	 *
 	 * @since 1.7
 	 */
 	public function __construct() {
-		ini_set( 'display_errors','on' );
+		ini_set( 'display_errors', 'on' );
 		error_reporting( E_ALL );
 		// Ensure server variable is set for WP email functions.
 		if ( ! isset( $_SERVER['SERVER_NAME'] ) ) {
@@ -37,7 +39,9 @@ class WPHB_Unit_Tests_Bootstrap {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 		}
+
 		return self::$instance;
 	}
 }
+
 WPHB_Unit_Tests_Bootstrap::instance();

@@ -6,7 +6,7 @@
  * @package       wp-hotel-booking/templates
  * @version       1.1.4
  */
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 

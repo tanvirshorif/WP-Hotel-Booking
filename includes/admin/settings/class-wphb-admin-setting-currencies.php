@@ -56,15 +56,15 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Currencies' ) ) {
 					'desc'  => __( 'Currency settings extension.', 'wp-hotel-booking' )
 				),
 				array(
-					'type'  => 'checkbox',
-					'id'    => 'tp_hotel_booking_currencies_enable',
-					'title' => __( 'Enable', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_currencies_enable',
+					'title'   => __( 'Enable', 'wp-hotel-booking' ),
 					'default' => 1
 				),
 				array(
-					'type'  => 'checkbox',
-					'id'    => 'tp_hotel_booking_currencies_multiple_allowed',
-					'title' => __( 'Is multiple allowed', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_currencies_multiple_allowed',
+					'title'   => __( 'Is multiple allowed', 'wp-hotel-booking' ),
 					'default' => 1
 				),
 				array(

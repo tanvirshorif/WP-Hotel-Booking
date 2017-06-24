@@ -6,12 +6,13 @@
  * @Last  Modified time: 2016-04-11 15:17:46
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( !is_user_logged_in() ) {
+if ( ! is_user_logged_in() ) {
 	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'wp-hotel-booking' ), wp_login_url( hb_get_account_url() ) );
+
 	return;
 }
 

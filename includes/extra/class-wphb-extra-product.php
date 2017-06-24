@@ -54,7 +54,7 @@ if ( ! class_exists( 'WPHB_Extra_Product' ) ) {
 		 *
 		 * @return array
 		 */
-		public function get_extra(){
+		public function get_extra() {
 
 			$extras = get_post_meta( $this->ID, $this->_meta_key, true );
 
@@ -73,8 +73,8 @@ if ( ! class_exists( 'WPHB_Extra_Product' ) ) {
 					$ext->respondent      = $package->respondent;
 					$ext->respondent_name = $package->respondent_name;
 					$ext->price           = hb_format_price( $ext->amount_singular );
-					$ext->selected       = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
-					$results[ $post_id ] = $ext;
+					$ext->selected        = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
+					$results[ $post_id ]  = $ext;
 				}
 
 			}

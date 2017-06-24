@@ -1374,7 +1374,7 @@ if ( ! function_exists( 'hb_do_transaction' ) ) {
 if ( ! function_exists( 'hb_handle_purchase_request' ) ) {
 	function hb_handle_purchase_request() {
 		$method_var = 'hb-transaction-method';
-		$cart = WPHB_Cart::instance();
+		$cart       = WPHB_Cart::instance();
 		if ( ! empty( $_REQUEST[ $method_var ] ) ) {
 			hb_get_payment_gateways();
 			$requested_transaction_method = sanitize_text_field( $_REQUEST[ $method_var ] );

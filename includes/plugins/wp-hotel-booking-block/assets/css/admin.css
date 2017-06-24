@@ -1,7 +1,8 @@
-.hotel_booking_calendar{
-	padding: 15px;
+.hotel_booking_calendar {
+    padding: 15px;
 }
-.calendar_setup{
+
+.calendar_setup {
     width: 100%;
     clear: both;
     border-bottom: 1px solid #ccc;
@@ -9,32 +10,40 @@
     margin-bottom: 20px;
     padding-bottom: 15px;
 }
-.calendar_setup select{
-	margin-top: 50px;
+
+.calendar_setup select {
+    margin-top: 50px;
 }
-hotel-calendar{
-	float: right;
+
+hotel-calendar {
+    float: right;
     width: 70%;
 }
-.hotel_block_pull_left{
+
+.hotel_block_pull_left {
     float: left;
     width: 50%;
 }
-.pull_room{
+
+.pull_room {
     float: left;
     width: 50%
 }
-.block-message{
+
+.block-message {
     text-align: center;
     font-size: 15px;
     font-weight: 600;
 }
-.block-message.success{
+
+.block-message.success {
     color: #28A220;
 }
-.block-message.error{
+
+.block-message.error {
     color: #E66A12;
 }
-.remove-plan{
+
+.remove-plan {
     display: block;
 }

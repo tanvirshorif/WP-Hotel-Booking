@@ -1,13 +1,15 @@
 <?php
 
-if ( !class_exists( 'WC_Product_Simple' ) )
+if ( ! class_exists( 'WC_Product_Simple' ) ) {
 	return;
+}
 
 global $woocommerce;
 
 if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 
 	require_once 'class-hb-wc-2x-product-package.php';
+
 	return;
 
 } else {
@@ -22,14 +24,15 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 			// Should not call constructor of parent
 			//parent::__construct( $product );
 
-			if ( !class_exists( 'WPHB_Extra_Package' ) )
+			if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 				return;
+			}
 
 			if ( is_numeric( $product ) && $product > 0 ) {
 				$this->set_id( $product );
 			} elseif ( $product instanceof self ) {
 				$this->set_id( absint( $product->get_id() ) );
-			} elseif ( !empty( $product->ID ) ) {
+			} elseif ( ! empty( $product->ID ) ) {
 				$this->set_id( absint( $product->ID ) );
 			}
 		}
@@ -54,8 +57,8 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 			$this->package = WPHB_Extra_Package::instance( $this->get_id(), array(
 //				'check_in_date'  => $this->get_data( 'check_in_date' ),
 //				'check_out_date' => $this->get_data( 'check_out_date' ),
-				'room_quantity'  => $qty,
-				'quantity'       => 1
+				'room_quantity' => $qty,
+				'quantity'      => 1
 			) );
 
 //			if ( !isset( $this->data['parent_id'] ) ) {
@@ -80,16 +83,19 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		 * @return boolean
 		 */
 		function is_sold_individually() {
-			if ( !class_exists( 'WPHB_Extra_Package' ) )
+			if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 				return parent::is_sold_individually();
+			}
 
 			$package = WPHB_Extra_Package::instance( $this->get_id() );
 
-			if ( !$package->respondent )
+			if ( ! $package->respondent ) {
 				return parent::is_sold_individually();
+			}
 
-			if ( $package->respondent === 'trip' )
+			if ( $package->respondent === 'trip' ) {
 				return true;
+			}
 
 			return false;
 		}
@@ -111,7 +117,10 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		 * @return bool
 		 */
 		public function exists( $context = 'view' ) {
-			return $this->get_id() && ( get_post_type( $this->get_id() ) == 'hb_extra_room' ) && ( !in_array( get_post_status( $this->get_id() ), array( 'draft', 'auto-draft' ) ) );
+			return $this->get_id() && ( get_post_type( $this->get_id() ) == 'hb_extra_room' ) && ( ! in_array( get_post_status( $this->get_id() ), array(
+					'draft',
+					'auto-draft'
+				) ) );
 		}
 
 		public function is_virtual() {

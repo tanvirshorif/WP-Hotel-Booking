@@ -423,7 +423,7 @@ if ( ! function_exists( 'hb_render_extra' ) ) {
 
 if ( ! function_exists( 'hb_extra_single_room_cart' ) ) {
 
-	function hb_extra_single_room_cart($post) {
+	function hb_extra_single_room_cart( $post ) {
 		ob_start();
 		hb_get_template( 'extra/extra-single-search-room.php', array( 'post' => $post ) );
 		echo ob_get_clean();

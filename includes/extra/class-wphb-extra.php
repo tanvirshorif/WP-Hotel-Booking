@@ -114,11 +114,11 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 				return false;
 			}
 
-			if ( ! isset( $_POST[ 'tp_hb_extra_room' ] ) || empty( $_POST[ 'tp_hb_extra_room' ] ) ) {
+			if ( ! isset( $_POST['tp_hb_extra_room'] ) || empty( $_POST['tp_hb_extra_room'] ) ) {
 				return false;
 			}
 
-			foreach ( (array) $_POST[ 'tp_hb_extra_room' ] as $post_id => $post ) {
+			foreach ( (array) $_POST['tp_hb_extra_room'] as $post_id => $post ) {
 
 				global $wpdb;
 				$query = $wpdb->prepare( "
@@ -175,10 +175,10 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		}
 
 		/**
-         * Get all extras to object.
-         *
-         * @since 2.0
-         *
+		 * Get all extras to object.
+		 *
+		 * @since 2.0
+		 *
 		 * @return array|null|object
 		 */
 		public function get_extra() {

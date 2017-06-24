@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
@@ -13,7 +13,8 @@ do_action( 'hotel_booking_before_checkout_form' );
 
     <div id="hotel-booking-payment">
 
-        <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo isset( $search_page ) ? $search_page : ''; ?>">
+        <form name="hb-payment-form" id="hb-payment-form" method="post"
+              action="<?php echo isset( $search_page ) ? $search_page : ''; ?>">
             <h3><?php _e( 'Booking Rooms', 'wp-hotel-booking' ); ?></h3>
             <table class="hb_table">
                 <thead>
@@ -28,7 +29,9 @@ do_action( 'hotel_booking_before_checkout_form' );
 				<?php if ( $rooms = $cart->get_rooms() ): ?>
 					<?php foreach ( $rooms as $cart_id => $room ): ?>
 						<?php
-						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) continue;
+						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) {
+							continue;
+						}
 						$cart_extra = $cart->get_extra_packages( $cart_id );
 						$sub_total  = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
 						?>
@@ -89,7 +92,7 @@ do_action( 'hotel_booking_before_checkout_form' );
                         <tr class="hb_payment_all">
                             <td colspan="7" class="hb-align-right">
                                 <label class="hb-align-right">
-                                    <input type="checkbox" name="pay_all" />
+                                    <input type="checkbox" name="pay_all"/>
 									<?php _e( 'I want to pay all', 'wp-hotel-booking' ); ?>
                                 </label>
                             </td>
@@ -99,7 +102,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 
             </table>
 
-			<?php if ( !is_user_logged_in() && !hb_settings()->get( 'guest_checkout' ) && get_option( 'users_can_register' ) ) : ?>
+			<?php if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) && get_option( 'users_can_register' ) ) : ?>
 
 				<?php printf( __( 'You have to <strong><a href="%s">login</a></strong> or <strong><a href="%s">register</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ), wp_registration_url() ) ?>
 
@@ -110,15 +113,16 @@ do_action( 'hotel_booking_before_checkout_form' );
 				<?php hb_get_template( 'checkout/addition-information.php' ); ?>
 				<?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' ); ?>
 
-                <input type="hidden" name="hotel-booking" value="place_order" />
-                <input type="hidden" name="action" value="hotel_booking_place_order" />
-                <input type="hidden" name="total_advance" value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
-                <input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>" />
+                <input type="hidden" name="hotel-booking" value="place_order"/>
+                <input type="hidden" name="action" value="hotel_booking_place_order"/>
+                <input type="hidden" name="total_advance"
+                       value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>"/>
+                <input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>"/>
                 <input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ) ?>">
 				<?php if ( $tos_page_id = hb_get_page_id( 'terms' ) ) { ?>
                     <p>
                         <label>
-                            <input type="checkbox" name="tos" value="1" />
+                            <input type="checkbox" name="tos" value="1"/>
 							<?php printf( __( 'I agree with ', 'wp-hotel-booking' ) . '<a href="%s" target="_blank">%s</a>', get_permalink( $tos_page_id ), get_the_title( $tos_page_id ) ); ?>
                         </label>
                     </p>

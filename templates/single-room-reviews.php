@@ -8,7 +8,7 @@
  * @package       wp-hotel-booking/templates
  * @version       1.6
  */
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
@@ -16,7 +16,7 @@ if ( !defined( 'ABSPATH' ) ) {
 global $hb_room;
 global $hb_settings;
 
-if ( !comments_open() ) {
+if ( ! comments_open() ) {
 	return;
 }
 ?>
@@ -24,10 +24,11 @@ if ( !comments_open() ) {
     <div id="comments">
         <h2>
 			<?php
-			if ( $hb_settings->get( 'enable_review_rating' ) && ( $count = $hb_room->get_review_count() ) )
+			if ( $hb_settings->get( 'enable_review_rating' ) && ( $count = $hb_room->get_review_count() ) ) {
 				printf( _n( '%s review for %s', '%s reviews for %s', $count, 'wp-hotel-booking' ), $count, get_the_title() );
-			else
+			} else {
 				_e( 'Reviews', 'wp-hotel-booking' );
+			}
 			?>
         </h2>
 
@@ -67,9 +68,9 @@ if ( !comments_open() ) {
 					'comment_notes_after'  => '',
 					'fields'               => array(
 						'author' => '<p class="comment-form-author">' . '<label for="author">' . __( 'Name', 'wp-hotel-booking' ) . ' <span class="required">*</span></label> ' .
-							'<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" aria-required="true" /></p>',
+						            '<input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" aria-required="true" /></p>',
 						'email'  => '<p class="comment-form-email"><label for="email">' . __( 'Email', 'wp-hotel-booking' ) . ' <span class="required">*</span></label> ' .
-							'<input id="email" name="email" type="text" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" aria-required="true" /></p>',
+						            '<input id="email" name="email" type="text" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" aria-required="true" /></p>',
 					),
 					'label_submit'         => __( 'Submit', 'wp-hotel-booking' ),
 					'logged_in_as'         => '',

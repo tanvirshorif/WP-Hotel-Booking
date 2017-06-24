@@ -6,15 +6,16 @@
  * @Last  Modified time: 2016-04-11 15:00:02
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 $user     = WPHB_User::get_current_user();
 $bookings = $user->get_bookings();
 
-if ( !$bookings ) {
+if ( ! $bookings ) {
 	_e( 'You have no order booking system', 'wp-hotel-booking' );
+
 	return;
 }
 

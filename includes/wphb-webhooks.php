@@ -1,39 +1,41 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-if ( !function_exists( 'hb_register_web_hook' ) ) {
+if ( ! function_exists( 'hb_register_web_hook' ) ) {
 	function hb_register_web_hook( $key, $param ) {
-		if ( !$key ) {
+		if ( ! $key ) {
 			return;
 		}
 		if ( empty( $GLOBALS['wp-hotel-booking']['web_hooks'] ) ) {
 			$GLOBALS['wp-hotel-booking']['web_hooks'] = array();
 		}
-		$GLOBALS['wp-hotel-booking']['web_hooks'][$key] = $param;
+		$GLOBALS['wp-hotel-booking']['web_hooks'][ $key ] = $param;
 		do_action( 'hb_register_web_hook', $key, $param );
 	}
 }
 
-if ( !function_exists( 'hb_get_web_hooks' ) ) {
+if ( ! function_exists( 'hb_get_web_hooks' ) ) {
 
 	function hb_get_web_hooks() {
 		$web_hooks = empty( $GLOBALS['wp-hotel-booking']['web_hooks'] ) ? array() : (array) $GLOBALS['wp-hotel-booking']['web_hooks'];
+
 		return apply_filters( 'hb_web_hooks', $web_hooks );
 	}
 }
 
-if ( !function_exists( 'hb_get_web_hook' ) ) {
+if ( ! function_exists( 'hb_get_web_hook' ) ) {
 
 	function hb_get_web_hook( $key ) {
 		$web_hooks = hb_get_web_hooks();
-		$web_hook  = empty( $web_hooks[$key] ) ? false : $web_hooks[$key];
+		$web_hook  = empty( $web_hooks[ $key ] ) ? false : $web_hooks[ $key ];
+
 		return apply_filters( 'hb_web_hook', $web_hook, $key );
 	}
 }
 
-if ( !function_exists( 'hb_process_web_hooks' ) ) {
+if ( ! function_exists( 'hb_process_web_hooks' ) ) {
 
 	function hb_process_web_hooks() {
 		// Grab registered web_hooks
@@ -42,7 +44,7 @@ if ( !function_exists( 'hb_process_web_hooks' ) ) {
 		// Loop through them and init callbacks
 
 		foreach ( $web_hooks as $key => $param ) {
-			if ( !empty( $_REQUEST[$param] ) ) {
+			if ( ! empty( $_REQUEST[ $param ] ) ) {
 				$web_hooks_processed           = true;
 				$request_scheme                = is_ssl() ? 'https://' : 'http://';
 				$requested_web_hook_url        = untrailingslashit( $request_scheme . $_SERVER['HTTP_HOST'] ) . $_SERVER['REQUEST_URI']; //REQUEST_URI includes the slash

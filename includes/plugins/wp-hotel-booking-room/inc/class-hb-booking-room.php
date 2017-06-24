@@ -5,11 +5,11 @@
  * @Last Modified by:   ducnvtt
  * @Last Modified time: 2016-04-21 16:33:24
  */
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
+if ( ! class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
 	class WP_Hotel_Booking_Room_Extenstion {
 
@@ -33,8 +33,12 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
                 <tr>
                     <th><?php _e( 'Enable book in single room', 'wp-hotel-booking-room' ); ?></th>
                     <td>
-                        <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name( 'enable_single_book' ) ); ?>" value="0" />
-                        <input type="checkbox" name="<?php echo esc_attr( $settings->get_field_name( 'enable_single_book' ) ); ?>" <?php checked( $settings->get( 'enable_single_book' ) ? 1 : 0, 1 ); ?> value="1" />
+                        <input type="hidden"
+                               name="<?php echo esc_attr( $settings->get_field_name( 'enable_single_book' ) ); ?>"
+                               value="0"/>
+                        <input type="checkbox"
+                               name="<?php echo esc_attr( $settings->get_field_name( 'enable_single_book' ) ); ?>" <?php checked( $settings->get( 'enable_single_book' ) ? 1 : 0, 1 ); ?>
+                               value="1"/>
                     </td>
                 </tr>
             </table>
@@ -42,7 +46,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 		}
 
 		public function init() {
-			if ( !hb_settings()->get( 'enable_single_book', 0 ) ) {
+			if ( ! hb_settings()->get( 'enable_single_book', 0 ) ) {
 				return;
 			}
 
@@ -56,8 +60,14 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_redirect' ), 10, 2 );
 
-			add_action( 'wp_ajax_hotel_booking_single_check_room_available', array( $this, 'hotel_booking_single_check_room_available' ) );
-			add_action( 'wp_ajax_nopriv_hotel_booking_single_check_room_available', array( $this, 'hotel_booking_single_check_room_available' ) );
+			add_action( 'wp_ajax_hotel_booking_single_check_room_available', array(
+				$this,
+				'hotel_booking_single_check_room_available'
+			) );
+			add_action( 'wp_ajax_nopriv_hotel_booking_single_check_room_available', array(
+				$this,
+				'hotel_booking_single_check_room_available'
+			) );
 		}
 
 		public function single_add_button() {
@@ -94,7 +104,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
 		public function check_room_availabel() {
 			// ajax referer
-			if ( !isset( $_POST['check-room-availabel-nonce'] ) || !check_ajax_referer( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ) ) {
+			if ( ! isset( $_POST['check-room-availabel-nonce'] ) || ! check_ajax_referer( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ) ) {
 				return;
 			}
 
@@ -109,12 +119,21 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 			$check_out_date = isset( $_POST['hotel_booking_room_check_out_timestamp'] ) ? sanitize_text_field( $_POST['hotel_booking_room_check_out_timestamp'] ) : '';
 			$check_out_date = $check_out_date + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
 
-			$args = apply_filters( 'hotel_booking_query_room_available', array( 'room_id' => $room_id, 'check_in_date' => $check_in_date, 'check_out_date' => $check_out_date ) );
+			$args = apply_filters( 'hotel_booking_query_room_available', array(
+				'room_id'        => $room_id,
+				'check_in_date'  => $check_in_date,
+				'check_out_date' => $check_out_date
+			) );
 			// get available room qty
 			$available = hotel_booking_get_qty( $args );
 
-			if ( !is_wp_error( $available ) ) {
-				wp_send_json( array( 'status' => true, 'qty' => $available, 'check_in_date' => date( 'm/d/Y', $check_in_date ), 'check_out_date' => date( 'm/d/Y', $check_out_date ) ) );
+			if ( ! is_wp_error( $available ) ) {
+				wp_send_json( array(
+					'status'         => true,
+					'qty'            => $available,
+					'check_in_date'  => date( 'm/d/Y', $check_in_date ),
+					'check_out_date' => date( 'm/d/Y', $check_out_date )
+				) );
 				die();
 			} else {
 				wp_send_json( array( 'status' => false, 'message' => $available->get_error_message() ) );
@@ -150,16 +169,19 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
 			// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
 			if ( $name ) {
-				$template = locate_template( array( "{$slug}-{$name}.php", $this->template_path() . "/{$slug}-{$name}.php" ) );
+				$template = locate_template( array(
+					"{$slug}-{$name}.php",
+					$this->template_path() . "/{$slug}-{$name}.php"
+				) );
 			}
 
 			// Get default slug-name.php
-			if ( !$template && $name && file_exists( TP_HB_BOOKING_ROOM_PATH . "/templates/{$slug}-{$name}.php" ) ) {
+			if ( ! $template && $name && file_exists( TP_HB_BOOKING_ROOM_PATH . "/templates/{$slug}-{$name}.php" ) ) {
 				$template = TP_HB_BOOKING_ROOM_PATH . "/templates/{$slug}-{$name}.php";
 			}
 
 			// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
-			if ( !$template ) {
+			if ( ! $template ) {
 				$template = locate_template( array( "{$slug}.php", $this->template_path() . "{$slug}.php" ) );
 			}
 
@@ -178,9 +200,9 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 		 * Get other templates passing attributes and including the file.
 		 *
 		 * @param string $template_name
-		 * @param array  $args          (default: array())
+		 * @param array $args (default: array())
 		 * @param string $template_path (default: '')
-		 * @param string $default_path  (default: '')
+		 * @param string $default_path (default: '')
 		 *
 		 * @return void
 		 */
@@ -191,8 +213,9 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
 			$located = $this->locate_template( $template_name, $template_path, $default_path );
 
-			if ( !file_exists( $located ) ) {
+			if ( ! file_exists( $located ) ) {
 				_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+
 				return;
 			}
 			// Allow 3rd party plugin filter template file from their plugin
@@ -218,17 +241,17 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 		 *
 		 * @param string $template_name
 		 * @param string $template_path (default: '')
-		 * @param string $default_path  (default: '')
+		 * @param string $default_path (default: '')
 		 *
 		 * @return string
 		 */
 		public function locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
-			if ( !$template_path ) {
+			if ( ! $template_path ) {
 				$template_path = $this->template_path();
 			}
 
-			if ( !$default_path ) {
+			if ( ! $default_path ) {
 				$default_path = TP_HB_BOOKING_ROOM_PATH . '/templates/';
 			}
 
@@ -241,7 +264,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 				)
 			);
 			// Get default template
-			if ( !$template ) {
+			if ( ! $template ) {
 				$template = $default_path . $template_name;
 			}
 
@@ -250,42 +273,42 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 		}
 
 		public function hotel_booking_single_check_room_available() {
-			if ( !isset( $_POST['hb-booking-single-room-check-nonce-action'] ) || !wp_verify_nonce( $_POST['hb-booking-single-room-check-nonce-action'], 'hb_booking_single_room_check_nonce_action' ) ) {
+			if ( ! isset( $_POST['hb-booking-single-room-check-nonce-action'] ) || ! wp_verify_nonce( $_POST['hb-booking-single-room-check-nonce-action'], 'hb_booking_single_room_check_nonce_action' ) ) {
 				return;
 			}
 
 			$errors = array();
 
-			if ( !isset( $_POST['room-id'] ) || !is_numeric( $_POST['check_in_date_timestamp'] ) ) {
+			if ( ! isset( $_POST['room-id'] ) || ! is_numeric( $_POST['check_in_date_timestamp'] ) ) {
 				$errors[] = __( 'Check in id is required.', 'wp-hotel-booking-room' );
 			} else {
 				$room_id = absint( $_POST['room-id'] );
 			}
 
-			if ( !isset( $_POST['room-name'] ) ) {
+			if ( ! isset( $_POST['room-name'] ) ) {
 				$errors[] = __( 'Check in name is required.', 'wp-hotel-booking-room' );
 			} else {
 				$room_name = sanitize_text_field( $_POST['room-name'] );
 			}
 
-			if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_in_date_timestamp'] ) || !is_numeric( $_POST['check_in_date_timestamp'] ) ) {
+			if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date_timestamp'] ) || ! is_numeric( $_POST['check_in_date_timestamp'] ) ) {
 				$errors[] = __( 'Check in date is required.', 'wp-hotel-booking-room' );
 			} else {
 				$checkindate_text = sanitize_text_field( $_POST['check_in_date'] );
-				$checkindate = absint( $_POST['check_in_date_timestamp'] );
+				$checkindate      = absint( $_POST['check_in_date_timestamp'] );
 			}
 
-			if ( !isset( $_POST['check_out_date_timestamp'] ) || !is_numeric( $_POST['check_out_date_timestamp'] ) ) {
+			if ( ! isset( $_POST['check_out_date_timestamp'] ) || ! is_numeric( $_POST['check_out_date_timestamp'] ) ) {
 				$errors[] = __( 'Check out date is required.', 'wp-hotel-booking-room' );
 			} else {
 				$checkoutdate_text = sanitize_text_field( $_POST['check_out_date'] );
-				$checkoutdate = absint( $_POST['check_out_date_timestamp'] );
+				$checkoutdate      = absint( $_POST['check_out_date_timestamp'] );
 			}
 
 			// valid request and require field
 			if ( empty( $errors ) ) {
 				$qty = hotel_booking_get_room_available( $room_id, array(
-					'check_in_date' => $checkindate,
+					'check_in_date'  => $checkindate,
 					'check_out_date' => $checkoutdate
 				) );
 
@@ -293,14 +316,14 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
 					// room has been found
 					wp_send_json( array(
-						'status' => true,
-						'check_in_date_text' => $checkindate_text,
+						'status'              => true,
+						'check_in_date_text'  => $checkindate_text,
 						'check_out_date_text' => $checkoutdate_text,
-						'check_in_date' => date( 'm/d/Y', $checkindate ),
-						'check_out_date' => date( 'm/d/Y', $checkoutdate ),
-						'room_id' => $room_id,
-						'room_name' => $room_name,
-						'qty' => $qty
+						'check_in_date'       => date( 'm/d/Y', $checkindate ),
+						'check_out_date'      => date( 'm/d/Y', $checkoutdate ),
+						'room_id'             => $room_id,
+						'room_name'           => $room_name,
+						'qty'                 => $qty
 					) );
 				} else {
 					$errors[] = sprintf( __( 'No room found in %s and %s', 'wp-hotel-booking-room' ), $checkindate_text, $checkoutdate_text );
@@ -311,7 +334,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 			wp_send_json( array( 'status' => false, 'messages' => $errors ) );
 		}
 
-		public static function instance(){
+		public static function instance() {
 			if ( ! self::$instance ) {
 				self::$instance = new self();
 			}

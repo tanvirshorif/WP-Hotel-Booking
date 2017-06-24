@@ -34,7 +34,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 		 * @since 2.0
 		 *
 		 */
-	public function __construct() {
+		public function __construct() {
 
 			$this->title = __( 'Lightboxs', 'wp-hotel-booking' );
 

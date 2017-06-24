@@ -26,7 +26,7 @@ class WP_Hotel_Booking_Payment_Authorize {
 	 * @return boolean
 	 */
 	function is_hotel_active() {
-		if ( !function_exists( 'is_plugin_active' ) ) {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
@@ -34,7 +34,7 @@ class WP_Hotel_Booking_Payment_Authorize {
 			$this->is_hotel_active = true;
 		}
 
-		if ( !$this->is_hotel_active ) {
+		if ( ! $this->is_hotel_active ) {
 			add_action( 'admin_notices', array( $this, 'add_notices' ) );
 		} else {
 			// add payment
@@ -67,10 +67,12 @@ class WP_Hotel_Booking_Payment_Authorize {
 	 * @param array
 	 */
 	function add_payment_classes( $payments ) {
-		if ( array_key_exists( $this->slug, $payments ) )
+		if ( array_key_exists( $this->slug, $payments ) ) {
 			return $payments;
+		}
 
-		$payments[$this->slug] = new HB_Payment_Gateway_Authorize_Sim();
+		$payments[ $this->slug ] = new HB_Payment_Gateway_Authorize_Sim();
+
 		return $payments;
 	}
 

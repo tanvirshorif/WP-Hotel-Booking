@@ -43,7 +43,7 @@ class WP_Hotel_Booking_Block {
 	 * @return null
 	 */
 	function plugins_loaded() {
-		if ( !function_exists( 'is_plugin_active' ) ) {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
@@ -51,10 +51,10 @@ class WP_Hotel_Booking_Block {
 			$this->is_hotel_active = true;
 		}
 
-		if ( !$this->is_hotel_active ) {
+		if ( ! $this->is_hotel_active ) {
 			add_action( 'admin_notices', array( $this, 'add_notices' ) );
 		} else {
-			if ( $this->is_hotel_active && !class_exists( 'Hotel_Booking_Block' ) ) {
+			if ( $this->is_hotel_active && ! class_exists( 'Hotel_Booking_Block' ) ) {
 				require_once TP_HB_BLOCK_DIR . '/inc/functions.php';
 				require_once TP_HB_BLOCK_DIR . '/inc/class-hb-block.php';
 			}

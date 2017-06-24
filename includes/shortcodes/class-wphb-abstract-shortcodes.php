@@ -1,7 +1,7 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
 }
 
 /**
@@ -9,15 +9,15 @@ if ( !defined( 'ABSPATH' ) ) {
  */
 abstract class WPHB_Shortcodes {
 
-    // shortcode name
-    protected $shortcode = null;
+	// shortcode name
+	protected $shortcode = null;
 
-    function __construct() {
-        add_shortcode( $this->shortcode, array( $this, 'add_shortcode' ) );
-    }
+	function __construct() {
+		add_shortcode( $this->shortcode, array( $this, 'add_shortcode' ) );
+	}
 
-    function add_shortcode( $atts, $content = null ) {
-        
-    }
+	function add_shortcode( $atts, $content = null ) {
+
+	}
 
 }

@@ -43,7 +43,7 @@ class WP_Hotel_Booking_Coupon {
 	 * @return null
 	 */
 	function plugins_loaded() {
-		if ( !function_exists( 'is_plugin_active' ) ) {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
@@ -51,7 +51,7 @@ class WP_Hotel_Booking_Coupon {
 			$this->is_hotel_active = true;
 		}
 
-		if ( !$this->is_hotel_active ) {
+		if ( ! $this->is_hotel_active ) {
 			add_action( 'admin_notices', array( $this, 'add_notices' ) );
 		} else {
 			if ( $this->is_hotel_active ) {
@@ -88,8 +88,11 @@ class WP_Hotel_Booking_Coupon {
             <tr>
                 <th><?php _e( 'Enable Coupon', 'tp-hotel-booking' ); ?></th>
                 <td>
-                    <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>" value="0" />
-                    <input type="checkbox" name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>" <?php checked( $settings->get( 'enable_coupon' ) ? 1 : 0, 1 ); ?> value="1" />
+                    <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>"
+                           value="0"/>
+                    <input type="checkbox"
+                           name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>" <?php checked( $settings->get( 'enable_coupon' ) ? 1 : 0, 1 ); ?>
+                           value="1"/>
                 </td>
             </tr>
         </table>
@@ -102,7 +105,7 @@ class WP_Hotel_Booking_Coupon {
 			?>
 			<?php
 			// if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ) {
-            $cart = WPHB_Cart::instance();
+			$cart = WPHB_Cart::instance();
 			if ( $coupon = $cart->coupon ) {
 				$coupon = HB_Coupon::instance( $coupon );
 				?>
@@ -120,8 +123,11 @@ class WP_Hotel_Booking_Coupon {
 			<?php } else { ?>
                 <tr class="hb_coupon">
                     <td colspan="8" class="hb-align-center">
-                        <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' ); ?>" style="width: 150px; vertical-align: top;" />
-                        <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' ); ?></button>
+                        <input type="text" name="hb-coupon-code" value=""
+                               placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' ); ?>"
+                               style="width: 150px; vertical-align: top;"/>
+                        <button type="button"
+                                id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' ); ?></button>
                     </td>
                 </tr>
 			<?php } ?>

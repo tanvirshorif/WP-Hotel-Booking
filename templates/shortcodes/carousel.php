@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
@@ -12,14 +12,14 @@ $items    = isset( $atts['number'] ) ? (int) $atts['number'] : 4;
         <h3><?php echo esc_html( $atts['title'] ); ?></h3>
 	<?php endif; ?>
     <!--navigation-->
-	<?php if ( ( !isset( $atts['navigation'] ) || $atts['navigation'] ) && count( $query->posts ) > $items ): ?>
+	<?php if ( ( ! isset( $atts['navigation'] ) || $atts['navigation'] ) && count( $query->posts ) > $items ): ?>
         <div class="navigation owl-buttons">
             <div class="prev"><span class="pe-7s-angle-left"></span></div>
             <div class="next"><span class="pe-7s-angle-right"></span></div>
         </div>
 	<?php endif; ?>
     <!--pagination-->
-	<?php if ( !isset( $atts['pagination'] ) || $atts['pagination'] ): ?>
+	<?php if ( ! isset( $atts['pagination'] ) || $atts['pagination'] ): ?>
         <div class="pagination"></div>
 	<?php endif; ?>
     <!--text_link-->
@@ -42,27 +42,27 @@ $items    = isset( $atts['number'] ) ? (int) $atts['number'] : 4;
     </div>
 </div>
 <script type="text/javascript">
-	(function ($) {
-		"use strict";
-		$(document).ready(function () {
-			var thimpress_hotel_booking_carousel = $('#<?php echo esc_js( $sliderId ) ?> .hb_room_carousel .rooms');
-			thimpress_hotel_booking_carousel.owlCarousel({
-				navigation     : <?php echo esc_js( ( !isset( $atts['navigation'] ) || $atts['navigation'] ) ? 'true' : 'false' )  ?>,
-				pagination     : <?php echo esc_js( ( !isset( $atts['pagination'] ) || $atts['pagination'] ) ? 'true' : 'false' )  ?>,
-				items          : <?php echo esc_js( $items ); ?>,
-				paginationSpeed: 600,
-				slideSpeed     : 600,
-				autoPlay       : true,
-				stopOnHover    : true
-			});
-			// next
-			$('#<?php echo esc_js( $sliderId ); ?> .navigation .next').click(function () {
-				thimpress_hotel_booking_carousel.trigger('owl.next');
-			});
-			// prev
-			$('#<?php echo esc_js( $sliderId ); ?> .navigation .prev').click(function () {
-				thimpress_hotel_booking_carousel.trigger('owl.prev');
-			});
-		});
-	})(jQuery);
+    (function ($) {
+        "use strict";
+        $(document).ready(function () {
+            var thimpress_hotel_booking_carousel = $('#<?php echo esc_js( $sliderId ) ?> .hb_room_carousel .rooms');
+            thimpress_hotel_booking_carousel.owlCarousel({
+                navigation: <?php echo esc_js( ( ! isset( $atts['navigation'] ) || $atts['navigation'] ) ? 'true' : 'false' )  ?>,
+                pagination: <?php echo esc_js( ( ! isset( $atts['pagination'] ) || $atts['pagination'] ) ? 'true' : 'false' )  ?>,
+                items: <?php echo esc_js( $items ); ?>,
+                paginationSpeed: 600,
+                slideSpeed: 600,
+                autoPlay: true,
+                stopOnHover: true
+            });
+            // next
+            $('#<?php echo esc_js( $sliderId ); ?> .navigation .next').click(function () {
+                thimpress_hotel_booking_carousel.trigger('owl.next');
+            });
+            // prev
+            $('#<?php echo esc_js( $sliderId ); ?> .navigation .prev').click(function () {
+                thimpress_hotel_booking_carousel.trigger('owl.prev');
+            });
+        });
+    })(jQuery);
 </script>

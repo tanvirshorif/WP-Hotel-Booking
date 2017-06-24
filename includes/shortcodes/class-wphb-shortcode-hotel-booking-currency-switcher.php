@@ -24,32 +24,33 @@ class HB_SW_Curreny_Switcher {
 
 	/**
 	 * render shortcode
+	 *
 	 * @param  [type] $att     [description]
 	 * @param  [type] $content [description]
+	 *
 	 * @return [type]          [description]
 	 */
-	public function render( $att, $content = null )
-	{
+	public function render( $att, $content = null ) {
 
 		$settings = hb_settings();
 
-		if( ! $settings->get( 'currencies_enable' ) || ! $settings->get( 'currencies_multiple_allowed' ) )
+		if ( ! $settings->get( 'currencies_enable' ) || ! $settings->get( 'currencies_multiple_allowed' ) ) {
 			return;
+		}
 
 		$html = array();
 
 		$html[] = $this->before();
 
-		if( $this->_template )
-		{
+		if ( $this->_template ) {
 			ob_start();
 			hb_get_template( $this->_template, $this->parse_attr( $att ) );
 			$html[] = ob_get_clean();
 		}
 
-		$html[]	= $this->after();
+		$html[] = $this->after();
 
-		return implode('', $html);
+		return implode( '', $html );
 
 	}
 
@@ -72,17 +73,15 @@ class HB_SW_Curreny_Switcher {
 	 * before shortcode render
 	 * @return html
 	 */
-	public function before()
-	{
-		return '<div class="hb_currency_switcher_wrap '.$this->_shortcode_name.'">';
+	public function before() {
+		return '<div class="hb_currency_switcher_wrap ' . $this->_shortcode_name . '">';
 	}
 
 	/**
 	 * after shortcode render
 	 * @return html
 	 */
-	public function after()
-	{
+	public function after() {
 		return '</div>';
 	}
 

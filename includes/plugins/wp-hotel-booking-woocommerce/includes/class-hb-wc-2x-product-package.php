@@ -17,11 +17,12 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 	public $total;
 	public $package = null;
 
-	public function __construct($the_product, $args = null  ) {
+	public function __construct( $the_product, $args = null ) {
 		parent::__construct( $the_product, $args );
 
-		if ( !class_exists( 'WPHB_Extra_Package' ) )
+		if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 			return;
+		}
 	}
 
 	/**
@@ -30,7 +31,7 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 	 */
 	function get_price() {
 		$qty = 1;
-		if ( !isset( $this->data['parent_id'] ) ) {
+		if ( ! isset( $this->data['parent_id'] ) ) {
 			$parent = WPHB_Cart::instance()->get_cart_item( $this->data['parent_id'] );
 			$qty    = $parent->quantity;
 		} else if ( isset( $this->data['woo_cart_id'] ) ) {
@@ -44,6 +45,7 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 			'room_quantity'  => $qty,
 			'quantity'       => 1
 		) );
+
 		return $this->package->amount_singular_exclude_tax();
 	}
 
@@ -52,16 +54,19 @@ class HB_WC_Product_Package extends WC_Product_Simple {
 	 * @return boolean
 	 */
 	function is_sold_individually() {
-		if ( !class_exists( 'WPHB_Extra_Package' ) )
+		if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 			return parent::is_sold_individually();
+		}
 
 		$package = WPHB_Extra_Package::instance( $this->post );
 
-		if ( !$package->respondent )
+		if ( ! $package->respondent ) {
 			return parent::is_sold_individually();
+		}
 
-		if ( $package->respondent === 'trip' )
+		if ( $package->respondent === 'trip' ) {
 			return true;
+		}
 
 		return false;
 	}

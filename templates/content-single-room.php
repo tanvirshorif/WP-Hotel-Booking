@@ -9,7 +9,7 @@
  * @version       1.6
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 ?>
@@ -23,6 +23,7 @@ do_action( 'hotel_booking_before_single_product' );
 
 if ( post_password_required() ) {
 	echo get_the_password_form();
+
 	return;
 }
 ?>

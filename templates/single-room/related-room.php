@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
@@ -28,28 +28,28 @@ $related = $room->get_related_rooms();
     </div>
 
     <script type="text/javascript">
-		(function ($) {
-			"use strict";
-			$(document).ready(function () {
-				var thimpress_hotel_booking_carousel_related = $('.hb_related_other_room ul.rooms');
-				thimpress_hotel_booking_carousel_related.owlCarousel({
-					navigation     : false,
-					pagination     : false,
-					items          : 3,
-					paginationSpeed: 600,
-					slideSpeed     : 600,
-					autoPlay       : true,
-					stopOnHover    : true
-				});
-				// next
-				$('.hb_related_other_room .navigation .next').click(function () {
-					thimpress_hotel_booking_carousel_related.trigger('owl.next');
-				});
-				// prev
-				$('.hb_related_other_room .navigation .prev').click(function () {
-					thimpress_hotel_booking_carousel_related.trigger('owl.prev');
-				});
-			});
-		})(jQuery);
+        (function ($) {
+            "use strict";
+            $(document).ready(function () {
+                var thimpress_hotel_booking_carousel_related = $('.hb_related_other_room ul.rooms');
+                thimpress_hotel_booking_carousel_related.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    items: 3,
+                    paginationSpeed: 600,
+                    slideSpeed: 600,
+                    autoPlay: true,
+                    stopOnHover: true
+                });
+                // next
+                $('.hb_related_other_room .navigation .next').click(function () {
+                    thimpress_hotel_booking_carousel_related.trigger('owl.next');
+                });
+                // prev
+                $('.hb_related_other_room .navigation .prev').click(function () {
+                    thimpress_hotel_booking_carousel_related.trigger('owl.prev');
+                });
+            });
+        })(jQuery);
     </script>
 <?php endif; ?>

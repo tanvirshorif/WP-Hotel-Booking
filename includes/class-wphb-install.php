@@ -337,7 +337,7 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 		 *
 		 * @param $blog_id
 		 */
-		static function create_new_blog( $blog_id) {
+		static function create_new_blog( $blog_id ) {
 			$plugin = 'wp-hotel-booking/wp-hotel-booking.php';
 			if ( is_plugin_active_for_network( $plugin ) ) {
 				// switch to current blog

@@ -1,7 +1,8 @@
 <?php
 
-if ( !class_exists( 'WC_Product_Simple' ) )
+if ( ! class_exists( 'WC_Product_Simple' ) ) {
 	return;
+}
 
 
 global $woocommerce;
@@ -9,6 +10,7 @@ global $woocommerce;
 if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 
 	require_once 'class-hb-wc-2x-product-room.php';
+
 	return;
 
 } else {
@@ -34,7 +36,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 				$this->set_id( $product );
 			} elseif ( $product instanceof self ) {
 				$this->set_id( absint( $product->get_id() ) );
-			} elseif ( !empty( $product->ID ) ) {
+			} elseif ( ! empty( $product->ID ) ) {
 				$this->set_id( absint( $product->ID ) );
 			}
 		}
@@ -64,7 +66,10 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		 * @return bool
 		 */
 		public function exists( $context = 'view' ) {
-			return $this->get_id() && ( get_post_type( $this->get_id() ) == 'hb_room' ) && ( !in_array( get_post_status( $this->get_id() ), array( 'draft', 'auto-draft' ) ) );
+			return $this->get_id() && ( get_post_type( $this->get_id() ) == 'hb_room' ) && ( ! in_array( get_post_status( $this->get_id() ), array(
+					'draft',
+					'auto-draft'
+				) ) );
 		}
 
 		public function is_virtual() {

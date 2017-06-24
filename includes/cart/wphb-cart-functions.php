@@ -6,12 +6,12 @@
  * @Last  Modified time: 2016-04-11 08:35:07
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 // generate cart item id
-if ( !function_exists( 'hb_generate_cart_item_id' ) ) {
+if ( ! function_exists( 'hb_generate_cart_item_id' ) ) {
 	function hb_generate_cart_item_id( $params = array() ) {
 		$cart_id = array();
 		foreach ( $params as $key => $param ) {
@@ -32,10 +32,11 @@ if ( !function_exists( 'hb_generate_cart_item_id' ) ) {
  *
  * @return mixed
  */
-if ( !function_exists( 'hb_uniqid' ) ) {
+if ( ! function_exists( 'hb_uniqid' ) ) {
 
 	function hb_uniqid() {
 		$hash = str_replace( '.', '', microtime( true ) . uniqid() );
+
 		return apply_filters( 'hb_generate_unique_hash', $hash );
 	}
 }
@@ -45,7 +46,7 @@ if ( !function_exists( 'hb_uniqid' ) ) {
  *
  * @return string
  */
-if ( !function_exists( 'hb_get_cart_description' ) ) {
+if ( ! function_exists( 'hb_get_cart_description' ) ) {
 
 	function hb_get_cart_description() {
 		$cart        = WPHB_Cart::instance();
@@ -53,6 +54,7 @@ if ( !function_exists( 'hb_get_cart_description' ) ) {
 		foreach ( $cart->get_rooms() as $room ) {
 			$description[] = sprintf( '%s (x %d)', $room->name, $room->quantity );
 		}
+
 		return join( ', ', $description );
 	}
 }
@@ -62,10 +64,11 @@ if ( !function_exists( 'hb_get_cart_description' ) ) {
  *
  * @return mixed
  */
-if ( !function_exists( 'hb_get_return_url' ) ) {
+if ( ! function_exists( 'hb_get_return_url' ) ) {
 
 	function hb_get_return_url() {
 		$url = hb_get_checkout_url();
+
 		return apply_filters( 'hb_return_url', $url );
 	}
 }
@@ -76,7 +79,7 @@ if ( !function_exists( 'hb_get_return_url' ) ) {
  *
  * @return bool
  */
-if ( !function_exists( 'hb_get_coupons_active' ) ) {
+if ( ! function_exists( 'hb_get_coupons_active' ) ) {
 
 	function hb_get_coupons_active( $date, $code = false ) {
 
@@ -111,11 +114,12 @@ if ( !function_exists( 'hb_get_coupons_active' ) ) {
 						break;
 					}
 				}
-				if ( !$found ) {
+				if ( ! $found ) {
 					$coupons = false;
 				}
 			}
 		}
+
 		return $coupons;
 	}
 }

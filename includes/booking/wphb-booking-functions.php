@@ -6,12 +6,12 @@
  * @Last  Modified time: 2016-04-25 16:27:58
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 // get booking
-if ( !function_exists( 'hb_get_booking' ) ) {
+if ( ! function_exists( 'hb_get_booking' ) ) {
 	function hb_get_booking( $book = null ) {
 		return WPHB_Booking::instance( $book );
 	}
@@ -23,9 +23,10 @@ if ( !function_exists( 'hb_get_booking' ) ) {
  * @param int
  * @param string
  */
-if ( !function_exists( 'hb_update_booking_status' ) ) {
+if ( ! function_exists( 'hb_update_booking_status' ) ) {
 	function hb_update_booking_status( $booking_id, $status ) {
 		$booking = WPHB_Booking::instance( $booking_id );
+
 		return $booking->update_status( $status );
 	}
 }
@@ -37,7 +38,7 @@ if ( !function_exists( 'hb_update_booking_status' ) ) {
  *
  * @return mixed|WP_Error
  */
-if ( !function_exists( 'hb_create_booking' ) ) {
+if ( ! function_exists( 'hb_create_booking' ) ) {
 	function hb_create_booking( $booking_info = array(), $order_items = array() ) {
 
 		$booking_info = wp_parse_args( $booking_info, array(
@@ -82,7 +83,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 		$booking->post->post_status  = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
 		if ( $args['status'] ) {
-			if ( !in_array( 'hb-' . $args['status'], array_keys( hb_get_booking_statuses() ) ) ) {
+			if ( ! in_array( 'hb-' . $args['status'], array_keys( hb_get_booking_statuses() ) ) ) {
 				return new WP_Error( 'hb_invalid_booking_status', __( 'Invalid booking status', 'wp-hotel-booking' ) );
 			}
 			$booking->post->post_status = 'hb-' . $args['status'];
@@ -108,6 +109,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 
 		// do action
 		do_action( 'hotel_booking_create_booking', $booking_id, $booking_info, $order_items );
+
 		return $booking_id;
 	}
 }
@@ -117,7 +119,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
  *
  * @return array
  */
-if ( !function_exists( 'hb_get_booking_statuses' ) ) {
+if ( ! function_exists( 'hb_get_booking_statuses' ) ) {
 
 	function hb_get_booking_statuses() {
 		$booking_statuses = array(
@@ -126,21 +128,22 @@ if ( !function_exists( 'hb_get_booking_statuses' ) ) {
 			'hb-processing' => _x( 'Processing', 'Booking status', 'wp-hotel-booking' ),
 			'hb-completed'  => _x( 'Completed', 'Booking status', 'wp-hotel-booking' ),
 		);
+
 		return apply_filters( 'hb_booking_statuses', $booking_statuses );
 	}
 }
 
-if ( !function_exists( 'hb_get_booking_meta' ) ) {
+if ( ! function_exists( 'hb_get_booking_meta' ) ) {
 	function hb_get_booking_meta( $booking_id = null, $meta_key = null, $uniqid = false ) {
 		return get_post_meta( $booking_id, $meta_key, $uniqid );
 	}
 }
 
-if ( !function_exists( 'hb_get_order_items' ) ) {
+if ( ! function_exists( 'hb_get_order_items' ) ) {
 	function hb_get_order_items( $order_id = null, $item_type = 'line_item', $parent = null ) {
 		global $wpdb;
 
-		if ( !$parent ) {
+		if ( ! $parent ) {
 			$query = $wpdb->prepare( "
                     SELECT booking.* FROM $wpdb->hotel_booking_order_items AS booking
                         RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
@@ -162,14 +165,15 @@ if ( !function_exists( 'hb_get_order_items' ) ) {
 }
 
 // insert order item
-if ( !function_exists( 'hb_add_order_item' ) ) {
+if ( ! function_exists( 'hb_add_order_item' ) ) {
 	function hb_add_order_item( $booking_id = null, $param = array() ) {
 		global $wpdb;
 
 		$booking_id = absint( $booking_id );
 
-		if ( !$booking_id )
+		if ( ! $booking_id ) {
 			return false;
+		}
 
 		$defaults = array(
 			'order_item_name' => '',
@@ -187,7 +191,10 @@ if ( !function_exists( 'hb_add_order_item' ) ) {
 				'order_id'          => $booking_id
 			),
 			array(
-				'%s', '%s', '%d', '%d'
+				'%s',
+				'%s',
+				'%d',
+				'%d'
 			)
 		);
 
@@ -200,7 +207,7 @@ if ( !function_exists( 'hb_add_order_item' ) ) {
 }
 
 // update order item
-if ( !function_exists( 'hb_update_order_item' ) ) {
+if ( ! function_exists( 'hb_update_order_item' ) ) {
 	function hb_update_order_item( $item_id = null, $param = array() ) {
 		global $wpdb;
 
@@ -216,7 +223,7 @@ if ( !function_exists( 'hb_update_order_item' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_remove_order_item' ) ) {
+if ( ! function_exists( 'hb_remove_order_item' ) ) {
 	function hb_remove_order_item( $order_item_id = null ) {
 		global $wpdb;
 
@@ -233,7 +240,7 @@ if ( !function_exists( 'hb_remove_order_item' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_get_parent_order_item' ) ) {
+if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
 	function hb_get_parent_order_item( $order_item_id = null ) {
 		global $wpdb;
 		$query = $wpdb->prepare( "
@@ -247,7 +254,7 @@ if ( !function_exists( 'hb_get_parent_order_item' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_get_sub_item_order_item_id' ) ) {
+if ( ! function_exists( 'hb_get_sub_item_order_item_id' ) ) {
 	function hb_get_sub_item_order_item_id( $order_item_id = null ) {
 		global $wpdb;
 		$query = $wpdb->prepare( "
@@ -260,7 +267,7 @@ if ( !function_exists( 'hb_get_sub_item_order_item_id' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_empty_booking_order_items' ) ) {
+if ( ! function_exists( 'hb_empty_booking_order_items' ) ) {
 	function hb_empty_booking_order_items( $booking_id = null ) {
 		global $wpdb;
 
@@ -277,21 +284,21 @@ if ( !function_exists( 'hb_empty_booking_order_items' ) ) {
 }
 
 // add order item meta
-if ( !function_exists( 'hb_add_order_item_meta' ) ) {
+if ( ! function_exists( 'hb_add_order_item_meta' ) ) {
 	function hb_add_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $unique = false ) {
 		return add_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $unique );
 	}
 }
 
 // update order item meta
-if ( !function_exists( 'hb_update_order_item_meta' ) ) {
+if ( ! function_exists( 'hb_update_order_item_meta' ) ) {
 	function hb_update_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $prev_value = false ) {
 		return update_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $prev_value );
 	}
 }
 
 // get order item meta
-if ( !function_exists( 'hb_get_order_item_meta' ) ) {
+if ( ! function_exists( 'hb_get_order_item_meta' ) ) {
 
 	function hb_get_order_item_meta( $item_id = null, $key = nul, $single = true ) {
 		return get_metadata( 'hotel_booking_order_item', $item_id, $key, $single );
@@ -299,7 +306,7 @@ if ( !function_exists( 'hb_get_order_item_meta' ) ) {
 }
 
 // delete order item meta
-if ( !function_exists( 'hb_delete_order_item_meta' ) ) {
+if ( ! function_exists( 'hb_delete_order_item_meta' ) ) {
 
 	function hb_delete_order_item_meta( $item_id = null, $meta_key = null, $meta_value = '', $delete_all = false ) {
 		return delete_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $delete_all );
@@ -307,10 +314,10 @@ if ( !function_exists( 'hb_delete_order_item_meta' ) ) {
 }
 
 // get sub total booking
-if ( !function_exists( 'hb_booking_subtotal' ) ) {
+if ( ! function_exists( 'hb_booking_subtotal' ) ) {
 
 	function hb_booking_subtotal( $booking_id = null ) {
-		if ( !$booking_id ) {
+		if ( ! $booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
 		}
 		$booking = WPHB_Booking::instance( $booking_id );
@@ -320,10 +327,10 @@ if ( !function_exists( 'hb_booking_subtotal' ) ) {
 }
 
 // get total booking
-if ( !function_exists( 'hb_booking_total' ) ) {
+if ( ! function_exists( 'hb_booking_total' ) ) {
 
 	function hb_booking_total( $booking_id = null ) {
-		if ( !$booking_id ) {
+		if ( ! $booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
 		}
 		$booking = WPHB_Booking::instance( $booking_id );
@@ -332,10 +339,10 @@ if ( !function_exists( 'hb_booking_total' ) ) {
 	}
 }
 // get total booking
-if ( !function_exists( 'hb_booking_tax_total' ) ) {
+if ( ! function_exists( 'hb_booking_tax_total' ) ) {
 
 	function hb_booking_tax_total( $booking_id = null ) {
-		if ( !$booking_id ) {
+		if ( ! $booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
 		}
 		$booking = WPHB_Booking::instance( $booking_id );
@@ -348,18 +355,18 @@ if ( !function_exists( 'hb_booking_tax_total' ) ) {
  * Checks to see if a user is booked room
  *
  * @param string $customer_email
- * @param int    $room_id
+ * @param int $room_id
  *
  * @return bool
  */
-if ( !function_exists( 'hb_customer_booked_room' ) ) {
+if ( ! function_exists( 'hb_customer_booked_room' ) ) {
 
 	function hb_customer_booked_room( $room_id ) {
 		return apply_filters( 'hb_customer_booked_room', true, $room_id );
 	}
 }
 
-if ( !function_exists( 'hb_get_booking_id_by_key' ) ) {
+if ( ! function_exists( 'hb_get_booking_id_by_key' ) ) {
 
 	function hb_get_booking_id_by_key( $booking_key ) {
 		global $wpdb;
@@ -370,7 +377,7 @@ if ( !function_exists( 'hb_get_booking_id_by_key' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_get_booking_status_label' ) ) {
+if ( ! function_exists( 'hb_get_booking_status_label' ) ) {
 
 	function hb_get_booking_status_label( $booking_id ) {
 		$statuses = hb_get_booking_statuses();
@@ -379,14 +386,15 @@ if ( !function_exists( 'hb_get_booking_status_label' ) ) {
 		} else {
 			$status = $booking_id;
 		}
-		return !empty( $statuses[$status] ) ? $statuses[$status] : __( 'Cancelled', 'wp-hotel-booking' );
+
+		return ! empty( $statuses[ $status ] ) ? $statuses[ $status ] : __( 'Cancelled', 'wp-hotel-booking' );
 	}
 }
 
-if ( !function_exists( 'hb_booking_get_check_in_date' ) ) {
+if ( ! function_exists( 'hb_booking_get_check_in_date' ) ) {
 	// get min check in date of booking order
 	function hb_booking_get_check_in_date( $booking_id = null ) {
-		if ( !$booking_id ) {
+		if ( ! $booking_id ) {
 			return;
 		}
 
@@ -396,15 +404,16 @@ if ( !function_exists( 'hb_booking_get_check_in_date' ) ) {
 			$data[] = hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true );
 		}
 		sort( $data );
+
 		return array_shift( $data );
 
 	}
 }
 
-if ( !function_exists( 'hb_booking_get_check_out_date' ) ) {
+if ( ! function_exists( 'hb_booking_get_check_out_date' ) ) {
 	// get min check in date of booking order
 	function hb_booking_get_check_out_date( $booking_id = null ) {
-		if ( !$booking_id ) {
+		if ( ! $booking_id ) {
 			return;
 		}
 
@@ -414,6 +423,7 @@ if ( !function_exists( 'hb_booking_get_check_out_date' ) ) {
 			$data[] = hb_get_order_item_meta( $item->order_item_id, 'check_out_date', true );
 		}
 		sort( $data );
+
 		return array_pop( $data );
 
 	}

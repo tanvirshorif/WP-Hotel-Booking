@@ -90,7 +90,7 @@ class WP_Hotel_Booking_Payment_Stripe {
 	}
 
 	function enqueue_scripts() {
-		if ( !class_exists( 'WPHB_Settings' ) ) {
+		if ( ! class_exists( 'WPHB_Settings' ) ) {
 			return;
 		}
 		// stripe and checkout assets

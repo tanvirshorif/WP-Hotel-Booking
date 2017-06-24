@@ -1,26 +1,28 @@
 <?php
 
-if ( !class_exists( 'WPHB_Settings' ) )
-    return;
+if ( ! class_exists( 'WPHB_Settings' ) ) {
+	return;
+}
 
 class HB_WC_Settings extends WPHB_Settings {
 
-    function __construct() {
-        add_filter( 'hb_admin_settings_tabs', array( $this, 'register_settings' ), 101 );
-        add_action( 'hb_admin_settings_tab_woocommerce', array( $this, 'admin_settings' ) );
-    }
+	function __construct() {
+		add_filter( 'hb_admin_settings_tabs', array( $this, 'register_settings' ), 101 );
+		add_action( 'hb_admin_settings_tab_woocommerce', array( $this, 'admin_settings' ) );
+	}
 
-    /**
-     * Register new settings tab with TP Hotel Booking
-     */
-    public function register_settings( $tabs ) {
-        $tabs['woocommerce'] = __( 'WooCommerce', 'hb-woocommerce' );
-        return $tabs;
-    }
+	/**
+	 * Register new settings tab with TP Hotel Booking
+	 */
+	public function register_settings( $tabs ) {
+		$tabs['woocommerce'] = __( 'WooCommerce', 'hb-woocommerce' );
 
-    public function admin_settings() {
-        include hb_wc_get_admin_view( 'wc-settings' );
-    }
+		return $tabs;
+	}
+
+	public function admin_settings() {
+		include hb_wc_get_admin_view( 'wc-settings' );
+	}
 
 }
 

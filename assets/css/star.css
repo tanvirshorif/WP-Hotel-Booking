@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'hotel-booking-star';
-    src:url('../fonts/hotel-booking-star.eot?f5rno8');
-    src:url('../fonts/hotel-booking-star.eot?#iefixf5rno8') format('embedded-opentype'),
+    src: url('../fonts/hotel-booking-star.eot?f5rno8');
+    src: url('../fonts/hotel-booking-star.eot?#iefixf5rno8') format('embedded-opentype'),
     url('../fonts/hotel-booking-star.ttf?f5rno8') format('truetype'),
     url('../fonts/hotel-booking-star.woff?f5rno8') format('woff'),
     url('../fonts/hotel-booking-star.svg?f5rno8#icomoon') format('svg');
@@ -26,6 +26,7 @@
 .icon-star-full:before {
     content: "\e600";
 }
+
 .icon-star-empty:before {
     content: "\e601";
 }

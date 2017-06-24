@@ -26,7 +26,7 @@ class WP_Hotel_Booking_Wpml_Support {
 	 * @return boolean
 	 */
 	function is_hotel_active() {
-		if ( !function_exists( 'is_plugin_active' ) ) {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
@@ -34,7 +34,7 @@ class WP_Hotel_Booking_Wpml_Support {
 			$this->is_hotel_active = true;
 		}
 
-		if ( !$this->is_hotel_active || !class_exists( 'SitePress' ) ) {
+		if ( ! $this->is_hotel_active || ! class_exists( 'SitePress' ) ) {
 			add_action( 'admin_notices', array( $this, 'add_notices' ) );
 		} else {
 			require_once HOTELBOOKING_WMPL_DIR . 'inc/class-hbwp-support.php';
