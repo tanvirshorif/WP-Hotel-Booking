@@ -1,24 +1,24 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-25 12:01:51
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 14:12:17
+ * Admin View: Booking items.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
+global $post;
 $hb_booking = WPHB_Booking::instance( $post->ID );
 $rooms = hb_get_order_items( $post->ID );
 ?>
-<style type="text/css">
-	#hb-booking-items .inside{
-		padding: 0;
-		margin: 0;
-	}
-</style>
+
 <div id="booking_items">
 
 	<table cellpadding="0" cellspacing="0" class="booking_item_table">

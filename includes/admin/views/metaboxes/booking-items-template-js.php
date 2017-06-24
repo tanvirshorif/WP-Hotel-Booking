@@ -1,15 +1,18 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date:   2016-04-06 16:40:46
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-08 13:27:40
+ * Admin View: Booking items template js.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
-
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
 
 <!--Template JS-->

@@ -1,50 +1,55 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date  :   2016-03-25 12:00:54
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 10:51:31
+ * WP Hotel Booking booking items meta box class.
+ *
+ * @class       WPHB_Admin_Metabox_Booking_Items
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Class
+ * @author      Thimpress, leehld
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
-class WPHB_Admin_Metabox_Booking_Items {
 
-	public $id = 'hb-booking-items';
+if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Items' ) ) {
 
-	public $title = '';
+	/**
+	 * Class WPHB_Admin_Metabox_Booking_Items.
+	 *
+	 * @since 2.0
+	 */
+	class WPHB_Admin_Metabox_Booking_Items extends WPHB_Abstract_Meta_Box {
 
-	public $context = 'advanced';
+		/**
+		 * @var string
+		 */
+		protected $id = 'hb-booking-items';
 
-	public $screen = 'hb_booking';
+		/**
+		 * @var string
+		 */
+		protected $screen = 'hb_booking';
 
-	public $priority = 'high';
+		/**
+		 * @var null
+		 */
+		protected $view = array( 'booking-items', 'booking-items-template-js' );
 
-	public $callback_args = null;
-
-	function __construct() {
-
-		$this->title = __( 'Booking Items', 'wp-hotel-booking' );
-
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
-		add_action( 'save_post', array( $this, 'update' ) );
-	}
-
-	public function add_meta_box() {
-		add_meta_box( $this->id, $this->title, array( $this, 'render' ), $this->screen, $this->context, $this->priority, $this->callback_args );
-	}
-
-	public function render( $post ) {
-		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
-	}
-
-	public function update( $post_id ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
+		/**
+		 * WPHB_Admin_Metabox_Booking_Details constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			$this->title = __( 'Booking Items', 'wp-hotel-booking' );
+			parent::__construct();
 		}
+
 	}
 
 }

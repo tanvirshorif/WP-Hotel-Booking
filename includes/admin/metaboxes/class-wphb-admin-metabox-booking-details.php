@@ -1,62 +1,78 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date  :   2016-03-24 16:36:36
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 10:51:34
+ * WP Hotel Booking booking details meta box class.
+ *
+ * @class       WPHB_Admin_Metabox_Booking_Details
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Class
+ * @author      Thimpress, leehld
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
-class WPHB_Admin_Metabox_Booking_Details {
 
-	public $id = 'hb-booking-details';
+if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Details' ) ) {
 
-	public $title = '';
+	/**
+	 * Class WPHB_Admin_Metabox_Booking_Details.
+	 *
+	 * @since 2.0
+	 */
+	class WPHB_Admin_Metabox_Booking_Details extends WPHB_Abstract_Meta_Box {
 
-	public $context = 'advanced';
+		/**
+		 * @var string
+		 */
+		protected $id = 'hb-booking-details';
 
-	public $screen = 'hb_booking';
+		/**
+		 * @var string
+		 */
+		protected $screen = 'hb_booking';
 
-	public $priority = 'high';
+		/**
+		 * @var null
+		 */
+		protected $view = 'booking-details';
 
-	public $callback_args = null;
-
-	function __construct() {
-
-		$this->title = __( 'Booking Details', 'wp-hotel-booking' );
-
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
-		add_action( 'save_post', array( __CLASS__, 'update' ) );
-	}
-
-	public function add_meta_box() {
-		add_meta_box( $this->id, $this->title, array( $this, 'render' ), $this->screen, $this->context, $this->priority, $this->callback_args );
-	}
-
-	public function render() {
-		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-details.php';
-	}
-
-	public static function update( $post_id ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
+		/**
+		 * WPHB_Admin_Metabox_Booking_Details constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			$this->title = __( 'Booking Details', 'wp-hotel-booking' );
+			parent::__construct();
 		}
 
-		if ( !isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || !wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
-			return;
-		}
+		/**
+		 * Update booking details.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $post_id
+		 */
+		public function update( $post_id ) {
+			parent::update( $post_id );
 
-		foreach ( $_POST as $k => $vl ) {
-			if ( strpos( $k, '_hb_' ) !== 0 ) {
-				continue;
+			if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
+				return;
 			}
 
-			update_post_meta( $post_id, $k, sanitize_text_field( $vl ) );
-			do_action( 'hb_booking_detail_update_meta_box_' . $k, $vl, $post_id );
-			do_action( 'hb_booking_detail_update_meta_box', $k, $vl, $post_id );
+			foreach ( $_POST as $k => $vl ) {
+				if ( strpos( $k, '_hb_' ) !== 0 ) {
+					continue;
+				}
+
+				update_post_meta( $post_id, $k, sanitize_text_field( $vl ) );
+				do_action( 'hb_booking_detail_update_meta_box_' . $k, $vl, $post_id );
+				do_action( 'hb_booking_detail_update_meta_box', $k, $vl, $post_id );
+			}
 		}
 	}
 

@@ -99,7 +99,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function addition_packages() {
-			include_once( WPHB_ABSPATH . 'includes/admin/views/addition-packages.php' );
+			include_once( WPHB_ABSPATH . 'includes/admin/views/settings/addition-packages.php' );
 		}
 
 		/**
@@ -118,7 +118,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 */
 		public function pricing_table() {
 			wp_enqueue_script( 'wp-util' );
-			include_once( WPHB_ABSPATH . 'includes/admin/views/pricing-table.php' );
+			include_once( WPHB_ABSPATH . 'includes/admin/views/settings/pricing-table.php' );
 		}
 	}
 

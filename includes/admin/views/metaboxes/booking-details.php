@@ -1,24 +1,24 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-25 09:32:53
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 13:47:55
+ * Admin View: Booking details.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
  */
-if ( !defined( 'ABSPATH' ) ) {
-    exit();
-}
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 $booking = WPHB_Booking::instance( $post->ID );
+
 ?>
 
-<style type="text/css">
-    #normal-sortables,
-    #hb-booking-details .ui-sortable-handle{
-        display: none;
-    }
-</style>
 <div id="booking_details">
     <?php wp_nonce_field( 'hotel-booking-metabox-booking-details', 'hotel_booking_metabox_booking_details_nonce' ); ?>
     <h2 class="hb_meta_title">

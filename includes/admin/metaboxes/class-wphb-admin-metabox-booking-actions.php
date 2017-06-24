@@ -1,48 +1,61 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date  :   2016-03-25 16:11:00
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 10:51:38
+ * WP Hotel Booking booking actions meta box class.
+ *
+ * @class       WPHB_Admin_Metabox_Booking_Actions
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Class
+ * @author      Thimpress, leehld
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
-class WPHB_Admin_Metabox_Booking_Actions {
 
-	public $id = 'hb-booking-actions';
+if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 
-	public $title = '';
+	/**
+	 * Class WPHB_Admin_Metabox_Booking_Actions.
+	 *
+	 * @since 2.0
+	 */
+	class WPHB_Admin_Metabox_Booking_Actions extends WPHB_Abstract_Meta_Box {
 
-	public $context = 'side';
+		/**
+		 * @var string
+		 */
+		protected $id = 'hb-booking-actions';
 
-	public $screen = 'hb_booking';
+		/**
+		 * @var string
+		 */
+		protected $context = 'side';
 
-	public $priority = 'high';
+		/**
+		 * @var string
+		 */
+		protected $screen = 'hb_booking';
 
-	public $callback_args = null;
+		/**
+		 * @var null
+		 */
+		protected $view = 'booking-actions';
 
-	function __construct() {
+		/**
+		 * WPHB_Admin_Metabox_Booking_Actions constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			$this->title = __( 'Booking Actions', 'wp-hotel-booking' );
+			parent::__construct();
 
-		$this->title = __( 'Booking Actions', 'wp-hotel-booking' );
-
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
-		add_action( 'save_post', array( $this, 'update' ) );
-	}
-
-	public function add_meta_box() {
-		add_meta_box( $this->id, $this->title, array( $this, 'render' ), $this->screen, $this->context, $this->priority, $this->callback_args );
-	}
-
-	public function render() {
-		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-actions.php';
-	}
-
-	public function update( $post_id ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
+			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
+			add_action( 'save_post', array( $this, 'update' ) );
 		}
 	}
 
