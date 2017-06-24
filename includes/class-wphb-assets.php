@@ -55,22 +55,20 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			if ( is_admin() ) {
 				$dependencies = array_merge( $dependencies, array( 'backbone' ) );
 
-				wp_register_style( 'wp-admin-hotel-booking', WPHB_PLUGIN_URL . 'assets/css/admin.tp-hotel-booking.min.css' );
+				wp_register_style( 'wp-admin-hotel-booking', WPHB_PLUGIN_URL . 'assets/css/admin-wphb.css' );
 				wp_register_script( 'wp-admin-hotel-booking', WPHB_PLUGIN_URL . 'assets/js/admin.hotel-booking.js', $dependencies );
 
 				wp_register_script( 'tp-hb-extra-js', WPHB_PLUGIN_URL . 'assets/js/admin-extra.js', array(), WPHB_VERSION, true );
-				wp_enqueue_style( 'tp-hb-extra-css', WPHB_PLUGIN_URL . 'assets/css/admin-extra.min.css', array(), WPHB_VERSION );
 
 				wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
 				wp_register_script( 'wp-admin-hotel-booking-moment', WPHB_PLUGIN_URL . 'assets/js/moment.min.js', $dependencies );
 				wp_register_script( 'wp-admin-hotel-booking-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/fullcalendar.min.js', $dependencies );
 				wp_register_style( 'wp-admin-hotel-booking-fullcalendar', WPHB_PLUGIN_URL . 'assets/css/fullcalendar.min.css' );
 			} else {
-				wp_register_style( 'wp-hotel-booking', WPHB_PLUGIN_URL . 'assets/css/hotel-booking.min.css' );
+				wp_register_style( 'wp-hotel-booking', WPHB_PLUGIN_URL . 'assets/css/wphb.css' );
 				wp_register_script( 'wp-hotel-booking', WPHB_PLUGIN_URL . 'assets/js/hotel-booking.min.js', $dependencies, false, true );
 
 				wp_register_script( 'tp-hb-extra-js', WPHB_PLUGIN_URL . 'assets/js/site-extra.js', array(), WPHB_VERSION, true );
-				wp_enqueue_style( 'tp-hb-extra-css', WPHB_PLUGIN_URL . 'assets/css/site-extra.css', array(), WPHB_VERSION );
 
 				wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 

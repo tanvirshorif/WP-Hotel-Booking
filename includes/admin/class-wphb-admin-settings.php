@@ -76,10 +76,7 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 					<?php do_action( 'hb_admin_settings_tab_' . $selected_tab ); ?>
 					<?php wp_nonce_field( 'hb_admin_settings_tab_' . $selected_tab, 'hb_admin_settings_tab_' . $selected_tab . '_field' ); ?>
 					<?php do_action( 'hb_admin_settings_tab_after', $selected_tab ); ?>
-                    <div class="clearfix"></div>
-                    <p class="clearfix">
-                        <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
-                    </p>
+                    <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
 
                 </form>
             </div>

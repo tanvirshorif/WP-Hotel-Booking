@@ -1,12 +1,28 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+
+/**
+ * Admin View: Admin meta box field - gallery.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 
 $meta_value      = get_post_meta( $post->ID, $field['name'], true );
 $upload_dir      = wp_upload_dir();
 $upload_base_url = $upload_dir['baseurl'];
+
 ?>
+
 <div class="hb-form-field-input">
     <ul>
 		<?php if ( $meta_value ): foreach ( $meta_value as $key => $id ): ?>
