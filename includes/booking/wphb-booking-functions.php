@@ -93,7 +93,7 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 
 		if ( $cart->coupon ) {
 			$booking_info['_hb_coupon_id']    = $cart->coupon;
-			$coupon                           = HB_Coupon::instance( $booking_info['_hb_coupon_id'] );
+			$coupon                           = WPHB_Coupon::instance( $booking_info['_hb_coupon_id'] );
 			$booking_info['_hb_coupon_code']  = $coupon->coupon_code;
 			$booking_info['_hb_coupon_value'] = $coupon->discount_value;
 		}

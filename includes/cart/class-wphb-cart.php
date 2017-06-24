@@ -697,7 +697,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			$settings = hb_settings();
 			$cart     = WPHB_Cart::instance();
 			if ( $settings->get( 'enable_coupon' ) && $coupon = $cart->coupon ) {
-				$coupon = HB_Coupon::instance( $coupon );
+				$coupon = WPHB_Coupon::instance( $coupon );
 
 				$booking_info['_hb_coupon_id']    = $coupon->ID;
 				$booking_info['_hb_coupon_code']  = $coupon->coupon_code;
@@ -941,18 +941,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		function admin_cart_package_after_item( $cart_params, $cart_id, $booking ) {
 			$html = array();
 			ob_start();
-			WP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-addition-services-title.php', true, array(
-				'room'    => $cart_params[ $cart_id ],
-				'cart_id' => $cart_id
-			), false );
 			$html[] = ob_get_clean();
 			foreach ( $cart_params as $id => $cart_item ) {
 				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
 					ob_start();
-					WP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-cart-extra-package.php', true, array(
-						'package' => $cart_item,
-						'booking' => $booking
-					), false );
 					$html[] = ob_get_clean();
 				}
 			}

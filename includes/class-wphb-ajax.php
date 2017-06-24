@@ -143,7 +143,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			$output   = ob_get_clean();
 			$response = array();
 			if ( $coupon ) {
-				$coupon   = HB_Coupon::instance( $coupon );
+				$coupon   = WPHB_Coupon::instance( $coupon );
 				$response = $coupon->validate();
 				if ( $response['is_valid'] ) {
 					$response['result'] = 'success';
@@ -629,7 +629,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 * @since 2.0
 		 */
 		public static function add_coupon_to_order() {
-			if ( ! check_ajax_referer( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ) || ! class_exists( 'HB_Coupon' ) ) {
+			if ( ! check_ajax_referer( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ) || ! class_exists( 'WPHB_Coupon' ) ) {
 				return;
 			}
 
@@ -640,7 +640,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			$order_id  = absint( $_POST['order_id'] );
 			$coupon_id = absint( $_POST['coupon_id'] );
 
-			$coupon   = HB_Coupon::instance( $coupon_id );
+			$coupon   = WPHB_Coupon::instance( $coupon_id );
 			$subtotal = hb_booking_subtotal( $order_id, false ); // subtotal without coupon
 
 			add_post_meta( $order_id, '_hb_coupon_id', $coupon_id );

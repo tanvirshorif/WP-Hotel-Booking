@@ -1,93 +1,114 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * WP Hotel Booking logger class.
+ *
+ * @class       WPHB_Logger
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Class
+ * @author      Thimpress, leehld
+ */
 
 /**
- * Allows log files to be written to for debugging purposes.
- *
- * @class        WPHB_Logger
- * @version        1.1.4
- * @package        WooCommerce/Classes
- * @category    Class
- * @author        WooThemes
+ * Prevent loading this file directly
  */
-class WPHB_Logger {
+defined( 'ABSPATH' ) || exit;
+
+
+if ( ! class_exists( 'WPHB_Logger' ) ) {
 
 	/**
-	 * @var array Stores open file _handles.
-	 * @access private
-	 */
-	private $_handles;
-
-	/**
-	 * Constructor for the logger.
-	 */
-	public function __construct() {
-		$this->_handles = array();
-	}
-
-
-	/**
-	 * Destructor.
-	 */
-	public function __destruct() {
-		foreach ( $this->_handles as $handle ) {
-			@fclose( $handle );
-		}
-	}
-
-
-	/**
-	 * Open log file for writing.
+	 * Class WPHB_Logger.
 	 *
-	 * @access private
-	 *
-	 * @param mixed $handle
-	 *
-	 * @return bool success
+	 * @since 2.0
 	 */
-	private function open( $handle ) {
-		if ( isset( $this->_handles[ $handle ] ) ) {
-			return true;
+	class WPHB_Logger {
+
+		/**
+		 * @var array Stores open file _handles.
+		 *
+		 * @access private
+		 */
+		private $_handles;
+
+		/**
+		 * WPHB_Logger constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			$this->_handles = array();
 		}
 
-		if ( $this->_handles[ $handle ] = @fopen( hb_get_log_file_path( $handle ), 'a' ) ) {
-			return true;
+		/**
+		 * WPHB_Logger destruct.
+		 *
+		 * @since 2.0
+		 */
+		public function __destruct() {
+			foreach ( $this->_handles as $handle ) {
+				@fclose( $handle );
+			}
 		}
 
-		return false;
-	}
+		/**
+		 * Open log file for writing.
+		 *
+		 * @since 2.0
+		 *
+		 * @access private
+		 *
+		 * @param mixed $handle
+		 *
+		 * @return bool success
+		 */
+		private function open( $handle ) {
+			if ( isset( $this->_handles[ $handle ] ) ) {
+				return true;
+			}
 
+			if ( $this->_handles[ $handle ] = @fopen( hb_get_log_file_path( $handle ), 'a' ) ) {
+				return true;
+			}
 
-	/**
-	 * Add a log entry to chosen file.
-	 *
-	 * @param string $handle
-	 * @param string $message
-	 */
-	public function add( $handle, $message ) {
-		if ( $this->open( $handle ) && is_resource( $this->_handles[ $handle ] ) ) {
-			$time = date_i18n( 'm-d-Y @ H:i:s -' ); // Grab Time
-			@fwrite( $this->_handles[ $handle ], $time . " " . $message . "\n" );
+			return false;
 		}
 
-		do_action( 'hotel_booking_log_add', $handle, $message );
-	}
 
+		/**
+		 * Add a log entry to chosen file.
+		 *
+		 * @since 2.0
+		 *
+		 * @param string $handle
+		 * @param string $message
+		 */
+		public function add( $handle, $message ) {
+			if ( $this->open( $handle ) && is_resource( $this->_handles[ $handle ] ) ) {
+				$time = date_i18n( 'm-d-Y @ H:i:s -' ); // Grab Time
+				@fwrite( $this->_handles[ $handle ], $time . " " . $message . "\n" );
+			}
 
-	/**
-	 * Clear entries from chosen file.
-	 *
-	 * @param mixed $handle
-	 */
-	public function clear( $handle ) {
-		if ( $this->open( $handle ) && is_resource( $this->_handles[ $handle ] ) ) {
-			@ftruncate( $this->_handles[ $handle ], 0 );
+			do_action( 'hotel_booking_log_add', $handle, $message );
 		}
 
-		do_action( 'hotel_booking_log_clear', $handle );
+
+		/**
+		 * Clear entries from chosen file.
+		 *
+		 * @since 2.0
+		 *
+		 * @param mixed $handle
+		 */
+		public function clear( $handle ) {
+			if ( $this->open( $handle ) && is_resource( $this->_handles[ $handle ] ) ) {
+				@ftruncate( $this->_handles[ $handle ], 0 );
+			}
+
+			do_action( 'hotel_booking_log_clear', $handle );
+		}
+
 	}
 
 }

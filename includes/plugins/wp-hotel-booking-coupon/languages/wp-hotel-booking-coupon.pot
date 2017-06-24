@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Package Name\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 17:31+0700\n"
+"POT-Creation-Date: 2017-06-24 16:30+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,90 +17,123 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-hotel-booking-coupon.php:76
+#: wp-hotel-booking-coupon.php:120
 msgid ""
 "The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>WP Hotel Booking "
 "Coupon</strong> add-on."
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:89
+#: wp-hotel-booking-coupon.php:140
 msgid "Enable Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:113
+#: wp-hotel-booking-coupon.php:172
 #, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:122
+#: wp-hotel-booking-coupon.php:180
 msgid "Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:123
+#: wp-hotel-booking-coupon.php:182
 msgid "Apply Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:137
+#: includes/class-wphb-coupon-post-types.php:53
 msgctxt "Coupons"
 msgid "Coupons"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:138
+#: includes/class-wphb-coupon-post-types.php:54
 msgctxt "Coupon"
 msgid "Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:139 wp-hotel-booking-coupon.php:141
+#: includes/class-wphb-coupon-post-types.php:55
+#: includes/class-wphb-coupon-post-types.php:57
 msgid "Coupons"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:140
+#: includes/class-wphb-coupon-post-types.php:56
 msgid "Parent Item:"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:142
+#: includes/class-wphb-coupon-post-types.php:58
 msgid "View Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:143
+#: includes/class-wphb-coupon-post-types.php:59
 msgid "Add New Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:144
+#: includes/class-wphb-coupon-post-types.php:60
 msgid "Add New"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:145
+#: includes/class-wphb-coupon-post-types.php:61
 msgid "Edit Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:146
+#: includes/class-wphb-coupon-post-types.php:62
 msgid "Update Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:147
+#: includes/class-wphb-coupon-post-types.php:63
 msgid "Search Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:148
+#: includes/class-wphb-coupon-post-types.php:64
 msgid "No coupon found"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:149
+#: includes/class-wphb-coupon-post-types.php:65
 msgid "No coupon found in Trash"
 msgstr ""
 
-#: inc/class-hb-coupon.php:110
+#: includes/class-wphb-coupon-post-types.php:95
+msgid "Type"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:96
+msgid "Validate From"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:97
+msgid "Validate To"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:98
+msgid "Minimum spend"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:99
+msgid "Maximum spend"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:100
+msgid "Usage"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:119
+msgid "Fixed cart"
+msgstr ""
+
+#: includes/class-wphb-coupon-post-types.php:122
+msgid "Percent cart"
+msgstr ""
+
+#: includes/class-wphb-coupon.php:179
 #, php-format
 msgid "The minimum spend for this coupon is %s."
 msgstr ""
 
-#: inc/class-hb-coupon.php:117
+#: includes/class-wphb-coupon.php:186
 #, php-format
 msgid "The maximum spend for this coupon is %s."
 msgstr ""
 
-#: inc/class-hb-coupon.php:125
+#: includes/class-wphb-coupon.php:194
 msgid "Coupon usage limit has been reached."
 msgstr ""

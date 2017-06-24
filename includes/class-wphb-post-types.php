@@ -45,10 +45,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_action( 'admin_menu', array( $this, 'remove_meta_boxes' ) );
 			add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
 
-			// add_filter( 'manage_edit-hb_room_type_columns', array( $this, 'taxonomy_columns' ) );
 			add_filter( 'manage_edit-hb_room_capacity_columns', array( $this, 'taxonomy_columns' ) );
-
-			// add_filter( 'manage_hb_room_type_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
 			add_filter( 'manage_hb_room_capacity_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
 
 			add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
@@ -58,8 +55,6 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-			//add_filter( 'pre_get_posts', array( $this, 'filter_post_type' ) );
-
 			add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
 			add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
 			add_filter( 'posts_where', array( $this, 'posts_where_paged' ), 999 );
@@ -67,66 +62,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
 			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
-
-			add_filter( 'manage_hb_coupon_posts_columns', array( $this, 'custom_coupon_columns' ) );
-			add_action( 'manage_hb_coupon_posts_custom_column', array( $this, 'custom_coupon_columns_filter' ) );
 		}
 
-		function custom_coupon_columns( $columns ) {
-			$columns['type']             = __( 'Type', 'wp-hotel-booking' );
-			$columns['from']             = __( 'Validate From', 'wp-hotel-booking' );
-			$columns['to']               = __( 'Validate To', 'wp-hotel-booking' );
-			$columns['minimum_spend']    = __( 'Minimum spend', 'wp-hotel-booking' );
-			$columns['maximum_spend']    = __( 'Maximum spend', 'wp-hotel-booking' );
-			$columns['limit_per_coupon'] = __( 'Usage limit per coupon', 'wp-hotel-booking' );
-			$columns['usage_count']      = __( 'Used', 'wp-hotel-booking' );
-			unset( $columns['date'] );
-
-			return $columns;
-		}
-
-		function custom_coupon_columns_filter( $column ) {
-			global $post;
-			switch ( $column ) {
-				case 'type':
-					switch ( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) ) {
-						case 'fixed_cart':
-							_e( 'Fixed cart', 'wp-hotel-booking' );
-							break;
-						case 'percent_cart':
-							_e( 'Percent cart', 'wp-hotel-booking' );
-							break;
-					}
-					break;
-				case 'from':
-				case 'to':
-					if ( $from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true ) ) {
-						echo date_i18n( hb_get_date_format(), $from );
-					} else {
-						echo '-';
-					}
-					break;
-				case 'minimum_spend':
-				case 'maximum_spend':
-					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
-						if ( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) == 'fixed_cart' ) {
-							echo hb_format_price( $value );
-						} else {
-							echo sprintf( '%s', $value . '%' );
-						}
-					} else {
-						echo '-';
-					}
-					break;
-				case 'limit_per_coupon':
-				case 'usage_count':
-					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
-						echo sprintf( '%s', $value );
-					} else {
-						echo '-';
-					}
-			}
-		}
 
 		function terms_orderby( $orderby, $args, $taxonomies ) {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {

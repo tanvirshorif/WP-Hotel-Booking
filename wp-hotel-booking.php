@@ -105,30 +105,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		}
 
 		/**
-		 * Include a file
-		 *
-		 * @param string
-		 * @param bool
-		 * @param array
-		 */
-		public function _include( $file, $root = true, $args = array(), $unique = true ) {
-			if ( $root ) {
-				$file = WPHB_ABSPATH . $file;
-			}
-			if ( is_array( $args ) ) {
-				extract( $args );
-			}
-
-			if ( file_exists( $file ) ) {
-				if ( $unique ) {
-					require_once $file;
-				} else {
-					require $file;
-				}
-			}
-		}
-
-		/**
 		 * Include required core files.
 		 *
 		 * @since 2.0

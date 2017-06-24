@@ -20,7 +20,7 @@ $tabsInfo[] = array(
 	'title'   => __( 'Additional Information', 'wp-hotel-booking' ),
 	'content' => $room->addition_information
 );
-$tabs       = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );
+$tabs       = apply_filters( 'hotel_booking_single_room_information_tabs', $tabsInfo );
 // prepend after li tabs single
 do_action( 'hotel_booking_before_single_room_infomation' );
 ?>
