@@ -1,7 +1,18 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Admin View: Addition packages setting page.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
 
 $settings = apply_filters( 'hotel_booking_addon_menus', array() );
 ?>

@@ -1,8 +1,19 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Admin View: Pricing table for single room.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
 
 $week_names = hb_date_names();
 

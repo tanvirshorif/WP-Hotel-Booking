@@ -1,8 +1,19 @@
 <?php
+
 /**
- * Block template admin
- * angularjs
+ * Admin View: Block special dates admin setting page.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Views
+ * @category    View
+ * @author      Thimpress, leehld
  */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
 global $wpdb;
 $rooms = $wpdb->get_results( $wpdb->prepare(
 	"SELECT ID, post_title FROM {$wpdb->posts} WHERE `post_type` = %s AND `post_status` = %s", 'hb_room', 'publish'
@@ -63,7 +74,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
             $scope.addSelected = false;
             $scope.removeSelected = false;
 
-            $scope.calendars = <?php echo json_encode( Hotel_Booking_Block::instance()->get_blocked(), true ) ?>;
+            $scope.calendars = <?php echo json_encode( WPHB_Block::instance()->get_blocked(), true ) ?>;
 
             // add new calendar
             $scope.add_calendar = function () {
@@ -82,7 +93,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
                 $scope.message = '';
 
                 $http.post(
-                    Hotel_Booking_Block.ajaxurl + '&action=hotel_block_update',
+                    WPHB_Block.ajaxurl + '&action=hotel_block_update',
                     {
                         data: JSON.stringify($scope.calendars)
                     }
@@ -90,7 +101,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
                     var status_ajax = 'error';
                     if (status === 200) {
                         if (typeof data.status === 'undefined' || data.status !== 'success') {
-                            $scope.message = Hotel_Booking_Block.error_ajax;
+                            $scope.message = WPHB_Block.error_ajax;
                         }
 
                         if (typeof data.data !== 'undefined') {
@@ -101,7 +112,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
                             }
                         }
                     } else {
-                        $scope.message = Hotel_Booking_Block.error_ajax;
+                        $scope.message = WPHB_Block.error_ajax;
                     }
                     $scope.status_ajax = status_ajax;
                 });
@@ -143,7 +154,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
             $scope.remove_calendar = function (id) {
                 $scope.message = '';
                 $http.post(
-                    Hotel_Booking_Block.ajaxurl + '&action=hotel_block_delete_post_type',
+                    WPHB_Block.ajaxurl + '&action=wphb_delete_block',
                     {
                         calendar_id: id
                     },
@@ -167,7 +178,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
                             $scope.calendars = data.data;
                         }
                     } else {
-                        $scope.message = Hotel_Booking_Block.error_ajax;
+                        $scope.message = WPHB_Block.error_ajax;
                     }
                     $scope.status_ajax = status_ajax;
                 });

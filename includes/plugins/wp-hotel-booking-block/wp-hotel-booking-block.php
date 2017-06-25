@@ -1,81 +1,128 @@
 <?php
+
 /*
-  Plugin Name: WP Hotel Booking Block Room
-  Plugin URI: http://thimpress.com/
-  Description: Block booking rooms for specific dates
-  Author: ThimPress
-  Version: 1.7.1
-  Author URI: http://thimpress.com
+    Plugin Name: WP Hotel Booking Block Room
+    Plugin URI: http://thimpress.com/
+    Description: Block booking rooms for specific dates
+    Author: ThimPress
+    Version: 2.0
+    Author URI: http://thimpress.com
+*/
+
+/**
+ * Prevent loading this file directly
  */
-// return;
-define( 'TP_HB_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
-define( 'TP_HB_BLOCK_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_BLOCK_VER', '1.7.1' );
+defined( 'ABSPATH' ) || exit;
 
-class WP_Hotel_Booking_Block {
 
-	public $is_hotel_active = false;
-
-	function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
-	}
+if ( ! class_exists( 'WP_Hotel_Booking_Block' ) ) {
 
 	/**
-	 * load_textdomain
-	 * @return null
+	 * Main WP Hotel Booking Block Class.
+	 *
+	 * @version    2.0
 	 */
-	public function load_textdomain() {
-		$default     = WP_LANG_DIR . '/plugins/wp-hotel-booking-block-' . get_locale() . '.mo';
-		$plugin_file = TP_HB_BLOCK_DIR . '/languages/wp-hotel-booking-block-' . get_locale() . '.mo';
-		$file        = false;
-		if ( file_exists( $default ) ) {
-			$file = $default;
-		} else {
-			$file = $plugin_file;
-		}
-		if ( $file ) {
-			load_textdomain( 'wp-hotel-booking-block', $file );
-		}
-	}
+	final class WP_Hotel_Booking_Block {
 
-	/**
-	 * plugin loaded
-	 * @return null
-	 */
-	function plugins_loaded() {
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		}
+		/**
+		 * WP Hotel Booking Block version.
+		 *
+		 * @var string
+		 */
+		public $_version = '2.0';
 
-		if ( ( class_exists( 'TP_Hotel_Booking' ) && is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) ) || ( is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
-			$this->is_hotel_active = true;
-		}
-
-		if ( ! $this->is_hotel_active ) {
-			add_action( 'admin_notices', array( $this, 'add_notices' ) );
-		} else {
-			if ( $this->is_hotel_active && ! class_exists( 'Hotel_Booking_Block' ) ) {
-				require_once TP_HB_BLOCK_DIR . '/inc/functions.php';
-				require_once TP_HB_BLOCK_DIR . '/inc/class-hb-block.php';
+		/**
+		 * WP_Hotel_Booking_Block constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			if ( self::wphb_is_active() ) {
+				$this->define_constants();
+				$this->includes();
+				$this->init_hooks();
+			} else {
+				add_action( 'admin_notices', array( $this, 'add_notices' ) );
 			}
 		}
-		/**
-		 * text-domain
-		 */
-		$this->load_textdomain();
-	}
 
-	/**
-	 * notice messages
-	 */
-	function add_notices() {
-		?>
-        <div class="error">
-            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Block Room</strong> add-on.' ); ?></p>
-        </div>
-		<?php
+		/**
+		 * Check WP Hotel Booking plugin active.
+		 *
+		 * @since 2.0
+		 *
+		 * @return bool
+		 */
+		public static function wphb_is_active() {
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
+
+			return is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' );
+		}
+
+		/**
+		 * Define WP Hotel Booking Coupon constants.
+		 *
+		 * @since 2.0
+		 */
+		private function define_constants() {
+			define( 'WPHB_BLOCK_ABSPATH', dirname( __FILE__ ) . '/' );
+			define( 'WPHB_BLOCK_URI', plugin_dir_url( __FILE__ ) );
+			define( 'WPHB_BLOCK_VER', $this->_version );
+		}
+
+		/**
+		 * Include required core files.
+		 *
+		 * @since 2.0
+		 */
+		public function includes() {
+			require_once WPHB_BLOCK_ABSPATH . '/includes/class-wphb-block.php';
+		}
+
+		/**
+		 * Main hooks.
+		 *
+		 * @since 2.0
+		 */
+		private function init_hooks() {
+			add_action( 'init', array( $this, 'load_text_domain' ) );
+		}
+
+
+		/**
+		 * Load text domain.
+		 *
+		 * @since 2.0
+		 */
+		public function load_text_domain() {
+			$default     = WP_LANG_DIR . '/plugins/wp-hotel-booking-block-' . get_locale() . '.mo';
+			$plugin_file = WPHB_BLOCK_ABSPATH . '/languages/wp-hotel-booking-block-' . get_locale() . '.mo';
+			if ( file_exists( $default ) ) {
+				$file = $default;
+			} else {
+				$file = $plugin_file;
+			}
+			if ( $file ) {
+				load_textdomain( 'wphb-block', $file );
+			}
+		}
+
+		/**
+		 * Admin notice when WP Hotel Booking not active.
+		 *
+		 * @since 2.0
+		 */
+		public function add_notices() { ?>
+            <div class="error">
+                <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Coupon</strong> add-on.' ); ?></p>
+            </div>
+			<?php
+		}
+
 	}
 
 }
 
-$hotel_block = new WP_Hotel_Booking_Block();
+new WP_Hotel_Booking_Block();
