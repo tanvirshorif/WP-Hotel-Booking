@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * WP Hotel Booking core functions.
+ *
+ * @version     2.0
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking_Statistic/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+/**
  * @Author: ducnvtt
  * @Date  :   2016-04-01 09:45:55
  * @Last  Modified by:   someone

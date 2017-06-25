@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Package Name\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 16:30+0700\n"
+"POT-Creation-Date: 2017-06-25 16:14+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-hotel-booking-coupon.php:120
-msgid ""
-"The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
-"Please install and/or activate before you can using <strong>WP Hotel Booking "
-"Coupon</strong> add-on."
-msgstr ""
-
-#: wp-hotel-booking-coupon.php:140
+#: wp-hotel-booking-coupon.php:142
 msgid "Enable Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:172
+#: wp-hotel-booking-coupon.php:174
 #, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:180
+#: wp-hotel-booking-coupon.php:182
 msgid "Coupon"
 msgstr ""
 
-#: wp-hotel-booking-coupon.php:182
+#: wp-hotel-booking-coupon.php:184
 msgid "Apply Coupon"
 msgstr ""
 

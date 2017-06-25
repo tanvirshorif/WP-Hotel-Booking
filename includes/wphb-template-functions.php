@@ -1,8 +1,19 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * WP Hotel Booking template functions.
+ *
+ * @version 	2.0
+ * @author 		ThimPress
+ * @package 	WP_Hotel_Booking_Statistic/Functions
+ * @category 	Functions
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'hb_template_path' ) ) {
 	function hb_template_path() {

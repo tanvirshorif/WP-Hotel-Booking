@@ -70,7 +70,7 @@ if ( ! class_exists( 'WPHB_Block' ) ) {
 				__( 'Block Special Date', 'wphb-block' ),
 				__( 'Block Special Date', 'wphb-block' ),
 				'manage_hb_booking',
-				'tp_hotel_block',
+				'wphb-block-dates',
 				array( $this, 'block_special_dates' )
 			);
 

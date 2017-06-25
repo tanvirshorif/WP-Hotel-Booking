@@ -1,3 +1,20 @@
+<?php
+
+/**
+ * Admin View: Admin statistic sidebar.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Statistic/Views
+ * @category    View
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
 <ul class="chart-legend">
     <li style="border-color: #b1d4ea" class="highlight_series tips" data-series="5">
         <strong><span class="amount">£0.00</span></strong> gross sales in this period

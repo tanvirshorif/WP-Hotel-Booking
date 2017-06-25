@@ -1,5 +1,20 @@
-<?php $hb_report_room = HB_Report_Room::instance(); ?>
 <?php
+
+/**
+ * Admin View: Admin statistic sidebar room.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Statistic/Views
+ * @category    View
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+$hb_report_room = WPHB_Statistic_Room::instance();
 $selected = array();
 if ( isset( $_GET['room_id'] ) ) {
 	$selected = (array) $_GET['room_id'];
@@ -7,8 +22,8 @@ if ( isset( $_GET['room_id'] ) ) {
 ?>
 <form method="GET">
 
-    <h4><?php _e( 'Rooms Search', 'wp-hotel-booking-report' ) ?></h4>
-	<?php wp_nonce_field( 'wp-hotel-booking-report', 'wp-hotel-booking-report' ); ?>
+    <h4><?php _e( 'Rooms Search', 'wphb-statistic' ) ?></h4>
+	<?php wp_nonce_field( 'wphb-statistic', 'wphb-statistic' ); ?>
     <input type="hidden" name="page"
            value="<?php echo isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '' ?>"/>
     <input type="hidden" name="tab" value="room"/>
@@ -40,7 +55,7 @@ if ( isset( $_GET['room_id'] ) ) {
 		<?php endforeach; ?>
     </select>
     <p>
-        <button type="submit" class="button"><?php _e( 'Show', 'wp-hotel-booking-report' ) ?></button>
+        <button type="submit" class="button"><?php _e( 'Show', 'wphb-statistic' ) ?></button>
     </p>
 
 </form>

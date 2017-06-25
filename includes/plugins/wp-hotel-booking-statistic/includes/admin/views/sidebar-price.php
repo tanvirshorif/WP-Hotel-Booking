@@ -1,5 +1,19 @@
 <?php
-$hb_report   = HB_Report_Price::instance();
+/**
+ * Admin View: Admin statistic sidebar price.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Statistic/Views
+ * @category    View
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+$hb_report   = WPHB_Statistic_Price::instance();
 $sidebarInfo = apply_filters( 'hotel_booking_sidebar_price_info', array() );
 ?>
 <ul class="chart-legend">

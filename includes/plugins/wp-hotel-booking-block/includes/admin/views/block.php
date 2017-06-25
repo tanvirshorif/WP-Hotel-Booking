@@ -4,7 +4,7 @@
  * Admin View: Block special dates admin setting page.
  *
  * @version     2.0
- * @package     WP_Hotel_Booking/Views
+ * @package     WP_Hotel_Booking_Block/Views
  * @category    View
  * @author      Thimpress, leehld
  */

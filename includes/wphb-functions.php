@@ -1,8 +1,19 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * WP Hotel Booking global functions.
+ *
+ * @version 	2.0
+ * @author 		ThimPress
+ * @package 	WP_Hotel_Booking/Functions
+ * @category 	Functions
+ * @author      Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 	function hb_get_max_capacity_of_rooms() {

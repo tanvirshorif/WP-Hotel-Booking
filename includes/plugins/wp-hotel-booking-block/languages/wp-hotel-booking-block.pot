@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Package Name\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 17:30+0700\n"
+"POT-Creation-Date: 2017-06-25 16:13+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,118 +17,111 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-hotel-booking-block.php:74
-msgid ""
-"The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
-"Please install and/or activate before you can using <strong>WP Hotel Booking "
-"Block Room</strong> add-on."
+#: includes/class-wphb-block.php:70 includes/class-wphb-block.php:71
+msgid "Block Special Date"
 msgstr ""
 
-#: inc/class-hb-block.php:37
+#: includes/class-wphb-block.php:89
 msgctxt "post type general name"
 msgid "Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:38
+#: includes/class-wphb-block.php:90
 msgctxt "post type singular name"
 msgid "Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:39
+#: includes/class-wphb-block.php:91
 msgctxt "admin menu"
 msgid "Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:40
+#: includes/class-wphb-block.php:92
 msgctxt "add new on admin bar"
 msgid "Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:41
+#: includes/class-wphb-block.php:93
 msgctxt "block"
 msgid "Add New"
 msgstr ""
 
-#: inc/class-hb-block.php:42
+#: includes/class-wphb-block.php:94
 msgid "Add New Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:43
+#: includes/class-wphb-block.php:95
 msgid "New Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:44
+#: includes/class-wphb-block.php:96
 msgid "Edit Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:45
+#: includes/class-wphb-block.php:97
 msgid "View Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:46
+#: includes/class-wphb-block.php:98
 msgid "All Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:47
+#: includes/class-wphb-block.php:99
 msgid "Search Blocked"
 msgstr ""
 
-#: inc/class-hb-block.php:48
+#: includes/class-wphb-block.php:100
 msgid "Parent Blocked:"
 msgstr ""
 
-#: inc/class-hb-block.php:49
+#: includes/class-wphb-block.php:101
 msgid "No blocked found."
 msgstr ""
 
-#: inc/class-hb-block.php:50
+#: includes/class-wphb-block.php:102
 msgid "No blocked found in Trash."
 msgstr ""
 
-#: inc/class-hb-block.php:55
+#: includes/class-wphb-block.php:104
 msgid "Blocked days."
 msgstr ""
 
-#: inc/class-hb-block.php:81 inc/class-hb-block.php:82
-msgid "Block Special Date"
-msgstr ""
-
-#: inc/class-hb-block.php:111
+#: includes/class-wphb-block.php:150
 msgid "Request has error. Please try again."
 msgstr ""
 
-#: inc/class-hb-block.php:120
+#: includes/class-wphb-block.php:189
 msgid "Something went wrong."
 msgstr ""
 
-#: inc/class-hb-block.php:140 inc/class-hb-block.php:141
+#: includes/class-wphb-block.php:211 includes/class-wphb-block.php:212
 msgid "Block item"
 msgstr ""
 
-#: inc/class-hb-block.php:171
+#: includes/class-wphb-block.php:245
 msgid "Update Completed."
 msgstr ""
 
-#: inc/class-hb-block.php:176
+#: includes/class-wphb-block.php:257
 msgid "You must Login System"
 msgstr ""
 
-#: inc/class-hb-block.php:257
+#: includes/class-wphb-block.php:352
 msgid "Something went wrong. Please try again!"
 msgstr ""
 
-#: inc/class-hb-block.php:263 inc/class-hb-block.php:267
+#: includes/class-wphb-block.php:362 includes/class-wphb-block.php:370
 msgid "Remove completed!"
 msgstr ""
 
-#: inc/admin/views/block.php:20
+#: includes/admin/views/block.php:32
 msgid "Remove Plan"
 msgstr ""
 
-#: inc/admin/views/block.php:34
+#: includes/admin/views/block.php:48
 msgid "Add Specific Calander"
 msgstr ""
 
-#: inc/admin/views/block.php:35
+#: includes/admin/views/block.php:49
 msgid "Update"
 msgstr ""
