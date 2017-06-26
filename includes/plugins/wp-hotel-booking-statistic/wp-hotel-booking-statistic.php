@@ -2,7 +2,7 @@
 
 /*
     Plugin Name: WP Hotel Booking Statistic
-    Plugin URI: http://thimpress.com/
+    Plugin URI: https://thimpress.com/
     Description: Statistic booking for WP Hotel Booking
     Author: ThimPress
     Version: 2.0
@@ -172,7 +172,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Statistic' ) ) {
 		public function add_notices() { ?>
             <div class="error">
                 <p>
-					<?php __( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Coupon</strong> add-on.', array( 'strong' => array() ) ), 'wphb-statistic' ); ?>
+					<?php __( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Statistic</strong> add-on.', array( 'strong' => array() ) ), 'wphb-statistic' ); ?>
                 </p>
             </div>
 			<?php

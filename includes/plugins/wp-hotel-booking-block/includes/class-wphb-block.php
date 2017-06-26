@@ -138,7 +138,6 @@ if ( ! class_exists( 'WPHB_Block' ) ) {
 			wp_enqueue_script( 'wphb_block_moment', WPHB_BLOCK_URI . 'assets/js/moment.min.js', array(), WPHB_BLOCK_VER );
 			wp_enqueue_script( 'wphb_block_lib_datepicker', WPHB_BLOCK_URI . 'assets/js/multipleDatePicker.min.js', array(), WPHB_BLOCK_VER );
 			wp_enqueue_style( 'wphb_block_lib_datepicker', WPHB_BLOCK_URI . 'assets/css/multiple-date-picker.min.css' );
-			wp_enqueue_script( 'wp-util' );
 
 			wp_enqueue_script( 'wphb_block', WPHB_BLOCK_URI . 'assets/js/admin.js', array(), WPHB_BLOCK_VER );
 			wp_enqueue_style( 'wphb_block', WPHB_BLOCK_URI . 'assets/css/admin.css' );

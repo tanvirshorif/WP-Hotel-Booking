@@ -117,7 +117,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function pricing_table() {
-			wp_enqueue_script( 'wp-util' );
 			include_once( WPHB_ABSPATH . 'includes/admin/views/settings/pricing-table.php' );
 		}
 	}

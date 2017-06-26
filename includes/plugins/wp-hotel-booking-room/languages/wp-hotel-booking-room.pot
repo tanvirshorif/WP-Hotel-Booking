@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Package Name\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 17:32+0700\n"
+"POT-Creation-Date: 2017-06-26 13:38+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,67 +17,71 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: inc/class-hb-booking-room.php:34
+#: wp-hotel-booking-room.php:139
 msgid "Enable book in single room"
 msgstr ""
 
-#: inc/class-hb-booking-room.php:124
-msgid "No room found."
+#: includes/class-wphb-booking-room.php:128
+msgid "Check in id is required."
 msgstr ""
 
-#: inc/class-hb-booking-room.php:260 inc/class-hb-booking-room.php:266
+#: includes/class-wphb-booking-room.php:134
+msgid "Check in name is required."
+msgstr ""
+
+#: includes/class-wphb-booking-room.php:140
 msgid "Check in date is required."
 msgstr ""
 
-#: inc/class-hb-booking-room.php:273
+#: includes/class-wphb-booking-room.php:147
 msgid "Check out date is required."
 msgstr ""
 
-#: inc/class-hb-booking-room.php:298
+#: includes/class-wphb-booking-room.php:174
 #, php-format
 msgid "No room found in %s and %s"
 msgstr ""
 
-#: templates/single-book-room.php:25
+#: templates/booking-form.php:26
 msgid "Please select number of room and packages(optional)"
 msgstr ""
 
-#: templates/single-book-room.php:35
+#: templates/booking-form.php:36
 msgid "Select Number Of Room"
 msgstr ""
 
-#: templates/single-book-room.php:48
+#: templates/booking-form.php:52
 msgid "Previous"
 msgstr ""
 
-#: templates/single-book-room.php:57
+#: templates/booking-form.php:63
 msgid "Add To Cart"
 msgstr ""
 
-#: templates/single-search-available.php:26
+#: templates/button.php:18
+msgid "Check Availability This Room"
+msgstr ""
+
+#: templates/search-available.php:27
 msgid "Please set arrival date and departure date before check available."
 msgstr ""
 
-#: templates/single-search-available.php:32
+#: templates/search-available.php:34
 msgid "Arrival Date"
 msgstr ""
 
-#: templates/single-search-available.php:37
+#: templates/search-available.php:40
 msgid "Departure Date"
 msgstr ""
 
-#: templates/single-search-available.php:44
+#: templates/search-available.php:49
 msgid "Check Available"
 msgstr ""
 
-#: templates/single-search-available.php:54
+#: templates/search-available.php:59
 msgid "Quantity Available"
 msgstr ""
 
-#: templates/single-search-available.php:57
+#: templates/search-available.php:62
 msgid "--- Quantity ---"
-msgstr ""
-
-#: templates/single-search-button.php:16
-msgid "Check Availability This Room"
 msgstr ""

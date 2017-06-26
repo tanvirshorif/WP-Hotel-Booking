@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: WP Hotel Booking WPML Support
-  Plugin URI: http://thimpress.com/
+  Plugin URI: https://thimpress.com/
   Description: Multilnguage CMS support
   Author: ThimPress
   Version: 1.7

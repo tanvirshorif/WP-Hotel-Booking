@@ -2,7 +2,7 @@
 
 /*
     Plugin Name: WP Hotel Booking Coupon
-    Plugin URI: http://thimpress.com/
+    Plugin URI: https://thimpress.com/
     Description: WP Hotel Booking Coupon
     Author: ThimPress
     Version: 2.0

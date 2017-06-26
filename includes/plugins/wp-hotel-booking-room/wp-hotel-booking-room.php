@@ -1,102 +1,193 @@
 <?php
 
+/*
+    Plugin Name: WP Hotel Booking Room
+    Plugin URI: https://thimpress.com/
+    Description: Support book room without search room
+    Author: ThimPress
+    Version: 2.0
+    Author URI: http://thimpress.com
+*/
+
 /**
- * Plugin Name: WP Hotel Booking Booking Room
- * Plugin URI: http://thimpress.com/
- * Description: Support book room without search room
- * Author: ThimPress
- * Version: 1.7.3
- * Text Domain: wp-hotel-booking-room
- * Domain Path: /languages/
+ * Prevent loading this file directly
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit;
 
-define( 'TP_HB_BOOKING_ROOM_PATH', plugin_dir_path( __FILE__ ) );
-define( 'TP_HB_BOOKING_ROOM_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_BOOKING_ROOM_INC_PATH', plugin_dir_path( __FILE__ ) . 'inc' );
 
-class WP_Hotel_Booking_Room {
-
-	static $instance = null;
-	public $available = false;
-	public $booking = null;
-
-	function __construct() {
-		// loaded
-		add_action( 'plugins_loaded', array( $this, 'loaded' ) );
-	}
-
-	function loaded() {
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		}
-
-		if ( ( class_exists( 'TP_Hotel_Booking' ) && is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) ) || ( is_plugin_active( 'WP-Hotel-Booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
-			$this->available = true;
-		}
-
-		if ( ! $this->available ) {
-			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
-		} else {
-			// include files
-			$this->_includes( 'functions.php' );
-			$this->_includes( 'class-hb-booking-room.php' );
-
-			// load text domain
-			$this->load_textdomain();
-
-			$this->booking = WP_Hotel_Booking_Room_Extenstion::instance();
-		}
-	}
+if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 
 	/**
-	 * load text domain
-	 * @return boolean
+	 * Main WP Hotel Booking Room Class.
+	 *
+	 * @version    2.0
 	 */
-	function load_textdomain() {
 
-		$prefix    = $text_domain = basename( TP_HB_BOOKING_ROOM_PATH );
-		$locale    = get_locale();
-		$file_name = $prefix . '-' . $locale . '.mo';
+	define( 'TP_HB_BOOKING_ROOM_PATH', plugin_dir_path( __FILE__ ) );
+	define( 'TP_HB_BOOKING_ROOM_URI', plugin_dir_url( __FILE__ ) );
+	define( 'TP_HB_BOOKING_ROOM_INC_PATH', plugin_dir_path( __FILE__ ) . 'inc' );
 
-		$file    = $plugin_file = TP_HB_BOOKING_ROOM_PATH . '/languages/' . $file_name;
-		$wp_file = WP_LANG_DIR . '/plugins/' . $file_name;
+	final class WP_Hotel_Booking_Room {
 
-		if ( file_exists( $wp_file ) ) {
-			$file = $wp_file;
+		/**
+		 * WP Hotel Booking Room version.
+		 *
+		 * @var string
+		 */
+		public $_version = '2.0';
+
+		/**
+		 * @var null
+		 */
+		static $instance = null;
+
+		/**
+		 * @var bool
+		 */
+		public $available = false;
+
+		/**
+		 * @var null
+		 */
+		public $booking = null;
+
+		/**
+		 * WP_Hotel_Booking_Room constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			add_action( 'plugins_loaded', array( $this, 'init' ) );
 		}
 
-		// loaded
-		return load_textdomain( $text_domain, $file );
-	}
-
-	function _includes( $file = '' ) {
-		$file = TP_HB_BOOKING_ROOM_INC_PATH . '/' . $file;
-		if ( file_exists( $file ) ) {
-			require_once $file;
-		}
-	}
-
-	function admin_notice() {
-		print( '<div class="error">
-					<p>The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Booking Room</strong> add-on.</p>
-				</div>' );
-	}
-
-	static function instance() {
-		if ( is_null( self::$instance ) ) {
-			return self::$instance = new self();
+		/**
+		 * Init WP_Hotel_Booking_Room.
+		 *
+		 * @since 2.0
+		 */
+		public function init() {
+			if ( self::wphb_is_active() ) {
+				$this->define_constants();
+				$this->includes();
+				$this->init_hooks();
+			} else {
+				add_action( 'admin_notices', array( $this, 'add_notices' ) );
+			}
 		}
 
-		return self::$instance;
-	}
+		/**
+		 * Check WP Hotel Booking plugin active.
+		 *
+		 * @since 2.0
+		 *
+		 * @return bool
+		 */
+		public static function wphb_is_active() {
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
 
+			return is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' );
+		}
+
+		/**
+		 * Define WP Hotel Booking Room constants.
+		 *
+		 * @since 2.0
+		 */
+		private function define_constants() {
+			define( 'WPHB_ROOM_ABSPATH', plugin_dir_path( __FILE__ ) );
+			define( 'WPHB_ROOM_URI', plugins_url( '', __FILE__ ) );
+			define( 'WPHB_ROOM_VER', $this->_version );
+		}
+
+		/**
+		 * Main hooks.
+		 *
+		 * @since 2.0
+		 */
+		private function init_hooks() {
+			add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
+			add_action( 'init', array( $this, 'load_text_domain' ) );
+		}
+
+		/**
+		 * Include required core files.
+		 *
+		 * @since 2.0
+		 */
+		public function includes() {
+			require_once WPHB_ROOM_ABSPATH . '/includes/class-wphb-booking-room.php';
+		}
+
+		/**
+		 * Admin setting option.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $tab
+		 */
+		public function admin_settings( $tab ) {
+			if ( $tab !== 'room' ) {
+				return;
+			}
+			$settings   = hb_settings();
+			$field_name = $settings->get_field_name( 'enable_single_book' );
+			?>
+            <table class="form-table">
+                <tr>
+                    <th><?php _e( 'Enable book in single room', 'wphb-booking-room' ); ?></th>
+                    <td>
+                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0"/>
+                        <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>"
+						       <?php checked( $settings->get( 'enable_single_book' ) ? 1 : 0, 1 ); ?>value="1"/>
+                    </td>
+                </tr>
+            </table>
+			<?php
+		}
+
+		/**
+		 * Load text domain.
+		 *
+		 * @since 2.0
+		 */
+		function load_text_domain() {
+			$default     = WP_LANG_DIR . '/plugins/wp-hotel-booking-room-' . get_locale() . '.mo';
+			$plugin_file = WPHB_ROOM_ABSPATH . '/languages/wp-hotel-booking-room-' . get_locale() . '.mo';
+			if ( file_exists( $default ) ) {
+				$file = $default;
+			} else {
+				$file = $plugin_file;
+			}
+			if ( $file ) {
+				load_textdomain( 'wphb-booking-room', $file );
+			}
+		}
+
+		/**
+		 * Admin notice when WP Hotel Booking not active.
+		 *
+		 * @since 2.0
+		 */
+		public function add_notices() { ?>
+            <div class="error">
+                <p>
+					<?php __( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on.', array( 'strong' => array() ) ), 'wphb-booking-room' ); ?>
+                </p>
+            </div>
+			<?php
+		}
+
+		static function instance() {
+			if ( is_null( self::$instance ) ) {
+				return self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
+
+	}
 }
 
-function WP_Hotel_Booking_Room() {
-	return WP_Hotel_Booking_Room::instance();
-}
-
-$GLOBALS['WP_Hotel_Booking_Room'] = WP_Hotel_Booking_Room();
+WP_Hotel_Booking_Room::instance();

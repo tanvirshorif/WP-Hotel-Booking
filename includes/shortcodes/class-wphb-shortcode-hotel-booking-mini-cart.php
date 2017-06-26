@@ -10,7 +10,6 @@ class WPHB_Shortcode_Hotel_Booking_Mini_Cart extends WPHB_Shortcodes {
 	public function __construct() {
 		parent::__construct();
 //        add_action( 'wp_footer', array( $this, 'mini_cart' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'utils' ) );
 	}
 
 	function add_shortcode( $atts, $content = null ) {
@@ -37,10 +36,6 @@ class WPHB_Shortcode_Hotel_Booking_Mini_Cart extends WPHB_Shortcodes {
 
 	function mini_cart() {
 		echo hb_get_template_content( 'cart/mini_cart_layout.php' );
-	}
-
-	function utils() {
-		wp_enqueue_script( 'wp-util' );
 	}
 
 }
