@@ -3,7 +3,7 @@
 /**
  * Class HB_Payment_Gateway_Stripe
  */
-class HB_Payment_Gateway_Stripe extends WPHB_Payment_Gateway_Base {
+class HB_Payment_Gateway_Stripe extends WPHB_Abstract_Payment_Gateway {
 
 	/**
 	 * @var array

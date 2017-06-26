@@ -37,6 +37,15 @@ if ( ! class_exists( 'WP_Hotel_Booking_Statistic' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
+			add_action( 'plugins_loaded', array( $this, 'init' ) );
+		}
+
+		/**
+		 * Init WP_Hotel_Booking_Statistic.
+		 *
+		 * @since 2.0
+		 */
+		public function init() {
 			if ( self::wphb_is_active() ) {
 				$this->define_constants();
 				$this->includes();

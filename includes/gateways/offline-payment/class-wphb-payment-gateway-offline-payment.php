@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class HB_Payment_Gateway_Stripe
  */
-class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base {
+class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Abstract_Payment_Gateway {
 	/**
 	 * @var array
 	 */

@@ -134,7 +134,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-post-types.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-roles.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-sessions.php' );
-			include_once( WPHB_ABSPATH . 'includes/gateways/class-wphb-payment-gateway-base.php' );
 
 			include_once( WPHB_ABSPATH . 'includes/wphb-core-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class WPHB_Payment_Gateway_Paypal
  */
-class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
+class WPHB_Payment_Gateway_Paypal extends WPHB_Abstract_Payment_Gateway {
 	/**
 	 * @var null
 	 */

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 17:30+0700\n"
+"POT-Creation-Date: 2017-06-26 10:09+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,62 +17,55 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-hotel-booking-authorize-sim.php:83
-msgid ""
-"The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
-"Please install and/or activate before you can using <strong>WP Hotel Booking "
-"Authorize Payment</strong> add-on."
-msgstr ""
-
-#: inc/class-hb-payment-gateway-authorize-sim.php:57
+#: includes/class-wphb-authorize-payment.php:82
 msgid "Authorize"
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:58
-#: inc/class-hb-payment-gateway-authorize-sim.php:243
+#: includes/class-wphb-authorize-payment.php:83
+#: includes/class-wphb-authorize-payment.php:292
 msgid "Pay with Authorize.net"
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:74
+#: includes/class-wphb-authorize-payment.php:100
 msgid "This transaction has been approved."
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:75
+#: includes/class-wphb-authorize-payment.php:101
 msgid "This transaction has been declined."
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:76
+#: includes/class-wphb-authorize-payment.php:102
 msgid "There has been an error processing this transaction."
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:77
+#: includes/class-wphb-authorize-payment.php:103
 msgid " This transaction is being held for review."
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:228
+#: includes/class-wphb-authorize-payment.php:274
 msgid "Cancel Payment"
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:230
+#: includes/class-wphb-authorize-payment.php:276
 msgid "Click here to return our homepage"
 msgstr ""
 
-#: inc/class-hb-payment-gateway-authorize-sim.php:267
+#: includes/class-wphb-authorize-payment.php:319
 msgid "Pay with Authorize"
 msgstr ""
 
-#: inc/views/authorize-sim-settings.php:21
+#: includes/views/settings.php:31
 msgid "Enable"
 msgstr ""
 
-#: inc/views/authorize-sim-settings.php:28
+#: includes/views/settings.php:40
 msgid "Sandbox Mode"
 msgstr ""
 
-#: inc/views/authorize-sim-settings.php:35
+#: includes/views/settings.php:49
 msgid "API Login ID"
 msgstr ""
 
-#: inc/views/authorize-sim-settings.php:41
+#: includes/views/settings.php:56
 msgid "Transaction Key"
 msgstr ""
