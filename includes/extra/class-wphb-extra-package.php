@@ -263,7 +263,7 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 			$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
 
 			if ( $tax ) {
-				$tax_price = apply_filters( 'hotel_booking_extra_package_regular_price_incl_tax', hb_get_tax_settings(), $price, $this );
+				$tax_price = apply_filters( 'hotel_booking_extra_regular_price_tax', hb_get_tax_settings(), $price, $this );
 				$price     = (float) ( $price * ( 1 + $tax_price ) );
 			}
 
