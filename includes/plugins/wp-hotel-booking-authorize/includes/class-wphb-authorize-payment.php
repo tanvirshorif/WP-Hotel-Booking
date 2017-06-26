@@ -25,6 +25,11 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 	class WPHB_Payment_Gateway_Authorize extends WPHB_Abstract_Payment_Gateway {
 
 		/**
+		 * @var string
+		 */
+		protected $_slug = 'authorize';
+
+		/**
 		 * @var null
 		 */
 		protected $_production_authorize_url = null;
@@ -36,6 +41,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 
 		/**
 		 * Current Authorize using
+         *
 		 * @var null
 		 */
 		protected $_authorize_url = null;
@@ -56,6 +62,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 
 		/**
 		 * Secret key
+         *
 		 * @var null
 		 */
 		protected $_secret_key = null;
@@ -72,13 +79,12 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 
 		/**
 		 * WPHB_Payment_Gateway_Authorize constructor.
-         * 
-         * @since 2.0
+		 *
+		 * @since 2.0
 		 */
-		function __construct() {
+		public function __construct() {
 			parent::__construct();
 
-			$this->_slug        = 'authorize';
 			$this->_title       = __( 'Authorize', 'wphb-authorize-payment' );
 			$this->_description = __( 'Pay with Authorize.net', 'wphb-authorize-payment' );
 			$this->_settings    = WPHB_Settings::instance()->get( 'authorize' );
@@ -108,7 +114,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 			add_filter( 'hotel_booking_checkout_tpl', array( $this, 'checkout_order_pay' ) );
 			// template args hook
 			add_filter( 'hotel_booking_checkout_tpl_template_args', array( $this, 'checkout_order_pay_args' ) );
-            // order-pay confirm. only authorize
+			// order-pay confirm. only authorize
 			add_action( 'hotel_booking_order_pay_after', array( $this, 'authorize_form' ) );
 		}
 
@@ -117,7 +123,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		function init() {
+		public function init() {
 			// settings form, frontend payment select form
 			add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
 			$this->payment_callback();
@@ -128,7 +134,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		function payment_callback() {
+		public function payment_callback() {
 			ob_start();
 			if ( ! isset( $_POST ) ) {
 				return;
@@ -182,7 +188,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @return string
 		 */
-		function checkout_order_pay() {
+		public function checkout_order_pay() {
 			if ( ! empty( $_GET['hb-order-pay'] ) &&
 			     ! empty( $_GET['hb-order-pay-nonce'] ) &&
 			     wp_verify_nonce( $_GET['hb-order-pay-nonce'], 'hb-order-pay-nonce' )
@@ -204,7 +210,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @return array
 		 */
-		function checkout_order_pay_args( $args ) {
+		public function checkout_order_pay_args( $args ) {
 			if ( ! empty( $_GET['hb-order-pay'] ) &&
 			     ! empty( $_GET['hb-order-pay-nonce'] ) &&
 			     wp_verify_nonce( sanitize_text_field( $_GET['hb-order-pay-nonce'] ), 'hb-order-pay-nonce' )
@@ -220,7 +226,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		function authorize_form() {
+		public function authorize_form() {
 			if ( empty( $_GET['hb-order-pay'] ) ||
 			     empty( $_GET['hb-order-pay-nonce'] ) ||
 			     ! wp_verify_nonce( sanitize_text_field( $_GET['hb-order-pay-nonce'] ), 'hb-order-pay-nonce' )
@@ -306,7 +312,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @return mixed
 		 */
-		function payment_method_title() {
+		public function payment_method_title() {
 			return $this->_description;
 		}
 
@@ -315,7 +321,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		function form() {
+		public function form() {
 			echo __( 'Pay with Authorize', 'wphb-authorize-payment' );
 		}
 
@@ -347,7 +353,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @return array
 		 */
-		function process_checkout( $booking_id = null ) {
+		public function process_checkout( $booking_id = null ) {
 			return array(
 				'result'   => 'success',
 				'redirect' => $this->_get_authorize_basic_checkout_url( $booking_id )
@@ -359,7 +365,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		function admin_settings() {
+		public function admin_settings() {
 			include_once WPHB_AUTHORIZE_PAYMENT_ABSPATH . '/includes/views/settings.php';
 		}
 
@@ -370,7 +376,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 *
 		 * @return bool
 		 */
-		function is_enable() {
+		public function is_enable() {
 			return empty( $this->_settings['enable'] ) || $this->_settings['enable'] == 'on';
 		}
 
