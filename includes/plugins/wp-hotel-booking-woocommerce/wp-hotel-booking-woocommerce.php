@@ -79,7 +79,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 			}
 
 			if ( ! $plugin ) {
-				return is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) || is_plugin_active( 'woocommerce/woocommerce.php' );
+				return is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && is_plugin_active( 'woocommerce/woocommerce.php' );
 			} else {
 				return is_plugin_active( "$plugin/$plugin.php" );
 			}
@@ -116,12 +116,10 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 */
 		public function includes() {
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-woocommerce.php';
-//
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-room.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-package.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-checkout.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-booking.php';
-
 		}
 
 		/**
@@ -171,10 +169,10 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function add_wphb_notices() { ?>
+		public function add_wphb_notices() { ?>
             <div class="error">
                 <p>
-					<?php __( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-woocommerce' ); ?>
+					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-woocommerce' ); ?>
                 </p>
             </div>
 			<?php
@@ -185,10 +183,10 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function add_woo_notices() { ?>
+		public function add_woo_notices() { ?>
             <div class="error">
                 <p>
-					<?php __( wp_kses( 'The <strong>Woocommerce</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-woocommerce' ); ?>
+					<?php _e( wp_kses( 'The <strong>Woocommerce</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-woocommerce' ); ?>
                 </p>
             </div>
 			<?php

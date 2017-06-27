@@ -22,11 +22,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 	 *
 	 * @version    2.0
 	 */
-
-	define( 'TP_HB_BOOKING_ROOM_PATH', plugin_dir_path( __FILE__ ) );
-	define( 'TP_HB_BOOKING_ROOM_URI', plugin_dir_url( __FILE__ ) );
-	define( 'TP_HB_BOOKING_ROOM_INC_PATH', plugin_dir_path( __FILE__ ) . 'inc' );
-
 	final class WP_Hotel_Booking_Room {
 
 		/**
@@ -117,7 +112,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		 * @since 2.0
 		 */
 		public function includes() {
-			require_once WPHB_ROOM_ABSPATH . '/includes/class-wphb-booking-room.php';
+			require_once WPHB_ROOM_ABSPATH . 'includes/class-wphb-booking-room.php';
 		}
 
 		/**
@@ -173,7 +168,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		public function add_notices() { ?>
             <div class="error">
                 <p>
-					<?php __( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on.', array( 'strong' => array() ) ), 'wphb-booking-room' ); ?>
+					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on.', array( 'strong' => array() ) ), 'wphb-booking-room' ); ?>
                 </p>
             </div>
 			<?php

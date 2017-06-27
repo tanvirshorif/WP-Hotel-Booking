@@ -1,73 +1,142 @@
 <?php
+
 /*
-  Plugin Name: WP Hotel Booking WPML Support
-  Plugin URI: https://thimpress.com/
-  Description: Multilnguage CMS support
-  Author: ThimPress
-  Version: 1.7
-  Author URI: http://thimpress.com
+    Plugin Name: WP Hotel Booking WPML Support
+    Plugin URI: https://thimpress.com/
+    Description: Integrated WPML with WP Hotel Booking
+    Author: ThimPress
+    Version: 2.0
+    Author URI: http://thimpress.com
+*/
+
+/**
+ * Prevent loading this file directly
  */
+defined( 'ABSPATH' ) || exit;
 
-define( 'HOTELBOOKING_WMPL_DIR', plugin_dir_path( __FILE__ ) );
-define( 'HOTELBOOKING_WMPL_URI', plugins_url( '', __FILE__ ) );
-define( 'HOTELBOOKING_WMPL_VER', '1.7' );
 
-class WP_Hotel_Booking_Wpml_Support {
-
-	public $is_hotel_active = false;
-	public $slug = 'stripe';
-
-	function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'is_hotel_active' ) );
-	}
+if ( ! class_exists( 'WP_Hotel_Booking_WPML_Support' ) ) {
 
 	/**
-	 * is hotel booking activated
-	 * @return boolean
+	 * Main WP Hotel Booking WPML Support Class.
+	 *
+	 * @version    2.0
 	 */
-	function is_hotel_active() {
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	final class WP_Hotel_Booking_Wpml_Support {
+
+		/**
+		 * WP Hotel Booking WPML Support version.
+		 *
+		 * @var string
+		 */
+		public $_version = '2.0';
+
+		/**
+		 * WP_Hotel_Booking_Woocommerce constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+			add_action( 'plugins_loaded', array( $this, 'init' ) );
 		}
 
-		if ( ( class_exists( 'TP_Hotel_Booking' ) && is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) ) || ( is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
-			$this->is_hotel_active = true;
+		/**
+		 * Init WP_Hotel_Booking_Woocommerce.
+		 *
+		 * @since 2.0
+		 */
+		public function init() {
+
+			if ( ! function_exists( 'is_plugin_active' ) ) {
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
+
+			if ( is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'SitePress' ) ) {
+				$this->define_constants();
+				$this->includes();
+				$this->init_hooks();
+			} else if ( ! is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) {
+				add_action( 'admin_notices', array( $this, 'add_wphb_notices' ) );
+			} else if ( ! class_exists( 'SitePress' ) ) {
+				add_action( 'admin_notices', array( $this, 'add_wpml_notices' ) );
+			}
+
 		}
 
-		if ( ! $this->is_hotel_active || ! class_exists( 'SitePress' ) ) {
-			add_action( 'admin_notices', array( $this, 'add_notices' ) );
-		} else {
-			require_once HOTELBOOKING_WMPL_DIR . 'inc/class-hbwp-support.php';
+		/**
+		 * Define WP Hotel Booking Woocommerce constants.
+		 *
+		 * @since 2.0
+		 */
+		private function define_constants() {
+			define( 'WPHB_WPML_ABSPATH', plugin_dir_path( __FILE__ ) );
+			define( 'WPHB_WPML_VER', $this->_version );
 		}
 
-		$this->load_text_domain();
+		/**
+		 * Main hooks.
+		 *
+		 * @since 2.0
+		 */
+		private function init_hooks() {
+			add_action( 'init', array( $this, 'load_text_domain' ) );
+		}
+
+		/**
+		 * Include required core files.
+		 *
+		 * @since 2.0
+		 */
+		public function includes() {
+			require_once WPHB_WPML_ABSPATH . 'includes/class-wphb-support.php';
+		}
+
+		/**
+		 * Load text domain.
+		 *
+		 * @since 2.0
+		 */
+		function load_text_domain() {
+			$default     = WP_LANG_DIR . '/plugins/wp-hotel-booking-wpml-support-' . get_locale() . '.mo';
+			$plugin_file = WPHB_WPML_ABSPATH . 'languages/wp-hotel-booking-wpml-support-' . get_locale() . '.mo';
+			if ( file_exists( $default ) ) {
+				$file = $default;
+			} else {
+				$file = $plugin_file;
+			}
+			if ( $file ) {
+				load_textdomain( 'wphb-wpml', $file );
+			}
+		}
+
+		/**
+		 * Admin notice when WP Hotel Booking not active.
+		 *
+		 * @since 2.0
+		 */
+		public function add_wphb_notices() { ?>
+            <div class="error">
+                <p>
+					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-wpml' ); ?>
+                </p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Admin notice when Woocommerce not active.
+		 *
+		 * @since 2.0
+		 */
+		public function add_wpml_notices() { ?>
+            <div class="error">
+                <p>
+					<?php _e( wp_kses( 'The <strong>WPML Multilingual CMS</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-wpml' ); ?>
+                </p>
+            </div>
+			<?php
+		}
 	}
-
-	function load_text_domain() {
-		$default     = WP_LANG_DIR . '/plugins/wp-hotel-booking-wpml-support-' . get_locale() . '.mo';
-		$plugin_file = HOTELBOOKING_WMPL_DIR . '/languages/wp-hotel-booking-wpml-support-' . get_locale() . '.mo';
-		$file        = false;
-		if ( file_exists( $default ) ) {
-			$file = $default;
-		} else {
-			$file = $plugin_file;
-		}
-		if ( $file ) {
-			load_textdomain( 'wp-hotel-booking-wpml-support', $file );
-		}
-	}
-
-	/**
-	 * notices missing tp-hotel-booking plugin
-	 */
-	function add_notices() {
-		?>
-        <div class="error">
-            <p><?php _e( '<strong>WP Hotel Booking / WPML Multilingual CMS</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking support WPML</strong> add-on' ); ?></p>
-        </div>
-		<?php
-	}
-
 }
 
-new WP_Hotel_Booking_Wpml_Support();
+new WP_Hotel_Booking_WPML_Support();
