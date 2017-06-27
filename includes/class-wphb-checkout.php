@@ -42,6 +42,14 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 		public $payment_method = '';
 
 		/**
+		 * WPHB_Checkout constructor.
+		 *
+		 * @since 2.0
+		 */
+		public function __construct() {
+		}
+
+		/**
 		 * Creates temp new booking if needed.
 		 *
 		 * @since 2.0

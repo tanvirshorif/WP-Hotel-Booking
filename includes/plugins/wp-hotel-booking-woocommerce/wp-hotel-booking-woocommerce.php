@@ -44,7 +44,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
-//			add_action( 'plugins_loaded', array( $this, 'init' ) );
+			add_action( 'plugins_loaded', array( $this, 'init' ) );
 		}
 
 		/**
@@ -115,13 +115,13 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 * @since 2.0
 		 */
 		public function includes() {
-			require_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/class-hb-wc-product-room.php';
-			require_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/class-hb-wc-product-package.php';
-			require_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/class-hb-wc-checkout.php';
-			require_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/class-hb-wc-booking.php';
+			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-woocommerce.php';
+//
+			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-room.php';
+			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-package.php';
+			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-checkout.php';
+			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-booking.php';
 
-			require_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/class-wphb-woocommerce.php';
-			require_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/wphb-wc-functions.php';
 		}
 
 		/**
@@ -145,7 +145,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 * @since 2.0
 		 */
 		public function admin_settings() {
-			include_once WPHB_WOO_PAYMENT_ABSPATH . '/includes/views/settings.php';
+			include_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/admin/views/settings.php';
 		}
 
 		/**

@@ -85,13 +85,15 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
-		 * Check xxx enable tax.
+		 * Check Woocommerce enable tax.
+		 *
+		 * @since 2.0
 		 *
 		 * @param $enable
 		 *
 		 * @return bool
 		 */
-		function tax_enable( $enable ) {
+		public function tax_enable( $enable ) {
 			if ( get_option( 'woocommerce_tax_display_shop' ) === 'incl' ) {
 				return true;
 			}
@@ -101,6 +103,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 		/**
 		 * WP Hotel Booking add to cart action.
+		 *
+		 * @since 2.0
 		 *
 		 * @param $cart_item_id
 		 * @param $params
@@ -142,6 +146,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * WP Hotel Booking remove cart item action.
 		 *
+		 * @since 2.0
+		 *
 		 * @param $cart_item_id
 		 * @param $remove_params
 		 */
@@ -174,6 +180,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 		/**
 		 * Remove cart item in hotel booking cart.
+		 *
+		 * @since 2.0
 		 *
 		 * @param $cart_item_key
 		 * @param $cart
@@ -209,6 +217,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 		/**
 		 * Woocommerce update cart action.
+		 *
+		 * @since 2.0
 		 *
 		 * @param $return
 		 * @param $cart_item_key
@@ -250,6 +260,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Woocommerce restore cart item.
 		 *
+		 * @since 2.0
+		 *
 		 * @param $cart_item_id
 		 * @param $cart
 		 *
@@ -257,11 +269,11 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		 */
 		public function woocommerce_restore_cart_item( $cart_item_id, $cart ) {
 			if ( ! $cart_item = $cart->get_cart_item( $cart_item_id ) ) {
-				return;
+				return false;
 			}
 
 			if ( ! isset( $cart_item['check_in_date'] ) || ! isset( $cart_item['check_out_date'] ) ) {
-				return;
+				return false;
 			}
 
 			do_action( 'hb_wc_restore_cart_item', $cart_item_id, $cart );
@@ -288,28 +300,32 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Get cart item form session.
 		 *
+		 * @since 2.0
+		 *
 		 * @param $session_data
 		 * @param $values
 		 * @param $key
 		 *
 		 * @return mixed
 		 */
-		function get_cart_item_from_session( $session_data, $values, $key ) {
+		public function get_cart_item_from_session( $session_data, $values, $key ) {
 			$session_data['data']->set_props( $values );
 
 			return $session_data;
 		}
 
 		/**
-		 * woocommerce_cart_package_item_class
+		 * Woocommerce cart extra package item class.
 		 *
-		 * @param  string $class
-		 * @param  array $cart_item
-		 * @param  string $cart_item_key
+		 * @since 2.0
 		 *
-		 * @return string $class
+		 * @param $class
+		 * @param $cart_item
+		 * @param $cart_item_key
+		 *
+		 * @return string
 		 */
-		function woocommerce_cart_package_item_class( $class, $cart_item, $cart_item_key ) {
+		public function woocommerce_cart_package_item_class( $class, $cart_item, $cart_item_key ) {
 
 			$class = array(
 				$class
@@ -328,8 +344,16 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			return implode( ' ', $class );
 		}
 
-		// woo change status
-		function woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
+		/**
+		 * Order Woocommerce changed status.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $order_id
+		 * @param $old_status
+		 * @param $new_status
+		 */
+		public function woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
 			if ( $booking_id = hb_get_post_id_meta( '_hb_woo_order_id', $order_id ) ) {
 				if ( in_array( $new_status, array( 'completed', 'pending', 'processing', 'cancelled' ) ) ) {
 					WPHB_Booking::instance( $booking_id )->update_status( $new_status );
@@ -340,11 +364,13 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
-		 * hotel_cart_url
+		 * WP Hotel Booking cart url.
 		 *
-		 * @param  string url address
+		 * @since 2.0
 		 *
-		 * @return woocommerce cart url
+		 * @param $url
+		 *
+		 * @return mixed
 		 */
 		public function hotel_cart_url( $url ) {
 			global $woocommerce;
@@ -358,34 +384,53 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
-		 * hotel_checkout_url
+		 * WP Hotel Booking checkout url.
 		 *
-		 * @param  string url address
+		 * @since 2.0
 		 *
-		 * @return woocommerce checkout url
+		 * @param $url
+		 *
+		 * @return mixed
 		 */
 		public function hotel_checkout_url( $url ) {
 			global $woocommerce;
 			if ( ! $woocommerce->cart ) {
 				return $url;
 			}
-
 			$url = $woocommerce->cart->get_checkout_url() ? $woocommerce->cart->get_checkout_url() : $url;
 
 			return $url;
 		}
 
-		// woo product class process
-		function product_class( $classname, $product_type, $post_type, $product_id ) {
+		/**
+		 * Woocommerce product class.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $classname
+		 * @param $product_type
+		 * @param $post_type
+		 * @param $product_id
+		 *
+		 * @return string
+		 */
+		public function product_class( $classname, $product_type, $post_type, $product_id ) {
 			if ( 'hb_room' == get_post_type( $product_id ) ) {
-				$classname = 'HB_WC_Product_Room';
+				$classname = 'WPHB_WC_Product_Room';
 			} else if ( 'hb_extra_room' == get_post_type( $product_id ) ) {
-				$classname = 'HB_WC_Product_Package';
+				$classname = 'WPHB_WC_Product_Package';
 			}
 
 			return $classname;
 		}
 
+		/**
+		 * Parse request.
+		 *
+		 * @since 2.0
+		 *
+		 * @return bool|mixed
+		 */
 		private function _parse_request() {
 			$segments = parse_url( hb_get_request( '_wp_http_referer' ) );
 			$request  = false;
@@ -400,9 +445,17 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			return $request;
 		}
 
-		// add product class param
-		function add_cart_item( $cart_item, $cart_id ) {
-			//print_r($cart_item['data']->get_id());die();
+		/**
+		 * Add product class param.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $cart_item
+		 * @param $cart_id
+		 *
+		 * @return mixed
+		 */
+		public function add_cart_item( $cart_item, $cart_id ) {
 			$post_type = get_post_type( $cart_item['data']->get_id() );
 
 			if ( in_array( $post_type, array( 'hb_room', 'hb_extra_room' ) ) ) {
@@ -423,54 +476,59 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
-		 * return currency of woocommerce setting
+		 * Get Woocommerce currency setting.
 		 *
-		 * @param  string CURRENCY
+		 * @since 2.0
 		 *
-		 * @return string CURRENCY
+		 * @param $currency
+		 *
+		 * @return string
 		 */
 		public function woocommerce_currency( $currency ) {
 			return get_woocommerce_currency();
 		}
 
 		/**
-		 * return currency symbol of woocommerce setting
+		 * Get Woocommerce setting currency symbol.
 		 *
-		 * @param  string $symbol symbol
-		 * @param  string $currency currency
+		 * @since 2.0
 		 *
-		 * @return string $symbol   symbol
+		 * @param $symbol
+		 * @param $currency
+		 *
+		 * @return string
 		 */
 		public function woocommerce_currency_symbol( $symbol, $currency ) {
 			return get_woocommerce_currency_symbol( $currency );
 		}
 
 		/**
-		 * woocommerce_price_format get price within currency format using woocommerce setting
+		 * Get price with Woocommerce format.
 		 *
-		 * @param  price formated $price_format
-		 * @param  (float) $price         price
-		 * @param  (string) $with_currency currency setting tp-hotel-booking
+		 * @since 2.0
 		 *
-		 * @return string price formated
+		 * @param $price_format
+		 * @param $price
+		 * @param $with_currency
+		 *
+		 * @return string
 		 */
 		public function woocommerce_price_format( $price_format, $price, $with_currency ) {
 			return wc_price( $price );
 		}
 
 		/**
-		 * room tax
+		 * Room price tax.
 		 *
-		 * @param  [type] $tax_price
-		 * @param  [type] $room
-		 * @param  [type] $tax
+		 * @since 2.0
 		 *
-		 * @return [type]
+		 * @param $tax_price
+		 * @param $room
+		 *
+		 * @return float|string
 		 */
-		function room_price_tax( $tax_price, $room ) {
-			remove_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
-			// woo get price
-			$product = ( $room );
+		public function room_price_tax( $tax_price, $room ) {
+			remove_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10 );
 
 			add_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
 
@@ -495,15 +553,17 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
-		 * package tax price
+		 * Extra package price tax.
 		 *
-		 * @param  [type] $tax_price [description]
-		 * @param  [type] $room      [description]
-		 * @param  [type] $tax       [description]
+		 * @since 2.0
 		 *
-		 * @return [type]            [description]
+		 * @param $tax_price
+		 * @param $price
+		 * @param $package
+		 *
+		 * @return float|string
 		 */
-		function packages_regular_price_tax( $tax_price, $price, $package ) {
+		public function packages_regular_price_tax( $tax_price, $price, $package ) {
 
 			if ( ! function_exists( 'wc_get_price_including_tax' ) ) {
 				$product = wc_get_product( $package->ID );
@@ -528,12 +588,14 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Price include tax.
 		 *
+		 * @since 2.0
+		 *
 		 * @param $tax
 		 * @param $cart
 		 *
 		 * @return bool
 		 */
-		function price_including_tax( $tax, $cart ) {
+		public function price_including_tax( $tax, $cart ) {
 			if ( ! $cart ) {
 				return $tax;
 			}
@@ -547,6 +609,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Cart item total amount.
 		 *
+		 * @since 2.0
+		 *
 		 * @param $amount
 		 * @param $cart_id
 		 * @param $cart_item
@@ -554,12 +618,14 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		 *
 		 * @return mixed
 		 */
-		function cart_item_total_amount( $amount, $cart_id, $cart_item, $product ) {
+		public function cart_item_total_amount( $amount, $cart_id, $cart_item, $product ) {
 			return $amount;
 		}
 
 		/**
 		 * WP Hotel Booking cart item amount singular.
+		 *
+		 * @since 2.0
 		 *
 		 * @param $amount
 		 * @param $cart_id
@@ -568,7 +634,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		 *
 		 * @return string
 		 */
-		function hotel_booking_cart_item_amount_singular( $amount, $cart_id, $cart_item, $product ) {
+		public function hotel_booking_cart_item_amount_singular( $amount, $cart_id, $cart_item, $product ) {
 			if ( wc_tax_enabled() && get_option( 'woocommerce_tax_display_cart' ) === 'incl' ) {
 				// woo get price
 				if ( get_post_type( $cart_item->product_id ) === 'hb_room' ) {
@@ -585,9 +651,11 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Cart tax.
 		 *
+		 * @since 2.0
+		 *
 		 * @return string
 		 */
-		function cart_tax_display() {
+		public function cart_tax_display() {
 			global $woocommerce;
 
 			return wc_price( $woocommerce->cart->get_taxes_total() );
@@ -596,9 +664,11 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Cart result total.
 		 *
+		 * @since 2.0
+		 *
 		 * @return string
 		 */
-		function cart_total_result_display() {
+		public function cart_total_result_display() {
 			global $woocommerce;
 
 			return wc_price( $woocommerce->cart->total );
@@ -607,11 +677,13 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		/**
 		 * Trigger booking changed status.
 		 *
+		 * @since 2.0
+		 *
 		 * @param $booking_id
 		 * @param $old_status
 		 * @param $new_status
 		 */
-		function booking_status_changed( $booking_id, $old_status, $new_status ) {
+		public function booking_status_changed( $booking_id, $old_status, $new_status ) {
 			if ( $old_status === $new_status ) {
 				return;
 			}
@@ -635,8 +707,10 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 		/**
 		 * Redirect cart and checkout WP Hotel Booking pages to Woocommerce pages.
+		 *
+		 * @since 2.0
 		 */
-		function template_redirect() {
+		public function template_redirect() {
 			global $post;
 			if ( ! $post ) {
 				return;
@@ -652,6 +726,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 		/**
 		 * Woocommerce sort rooms as product with extra packages.
+		 *
+		 * @since 2.0
 		 */
 		public function woocommerce_sort_rooms() {
 			global $woocommerce;

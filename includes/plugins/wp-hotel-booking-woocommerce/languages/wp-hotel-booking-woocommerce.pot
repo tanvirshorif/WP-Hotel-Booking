@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Package Name\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 17:33+0700\n"
+"POT-Creation-Date: 2017-06-27 09:12+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,34 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: includes/class-hb-wc-booking.php:68
-msgid "Via WooCommerce"
-msgstr ""
-
-#: includes/class-hb-wc-checkout.php:111 includes/class-hb-wc-checkout.php:117
-msgid "Empty Booking Notes"
-msgstr ""
-
-#: includes/class-hb-wc-settings.php:17
-#: includes/admin/views/wc-settings.php:10
+#: wp-hotel-booking-woocommerce.php:137 includes/admin/views/settings.php:19
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/admin/views/wc-is-not-installed.php:2
-msgid ""
-"The <strong>WooCommerce</strong> is not installed and/or activated. Please "
-"install and/or activate before you can using <strong>WP Hotel Booking "
-"WooCommerce</strong> add-on."
+#: includes/class-wphb-wc-booking.php:98
+msgid "Via WooCommerce"
 msgstr ""
 
-#: includes/admin/views/wc-settings.php:11
+#: includes/class-wphb-wc-checkout.php:152
+#: includes/class-wphb-wc-checkout.php:158
+msgid "Empty Booking Notes"
+msgstr ""
+
+#: includes/admin/views/settings.php:20
 msgid "Settings for WooCommerce addon"
 msgstr ""
 
-#: includes/admin/views/wc-settings.php:14
+#: includes/admin/views/settings.php:23
 msgid "Enable"
 msgstr ""
 
-#: includes/admin/views/wc-settings.php:20
+#: includes/admin/views/settings.php:31
 msgid "Check this option to enable make booking payments via WooCommerce"
 msgstr ""
