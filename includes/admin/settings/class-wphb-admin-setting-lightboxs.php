@@ -75,4 +75,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 
 }
 
-new WPHB_Admin_Setting_Lightboxs();
+return new WPHB_Admin_Setting_Lightboxs();

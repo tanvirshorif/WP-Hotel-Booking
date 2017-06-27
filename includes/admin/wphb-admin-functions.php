@@ -57,9 +57,9 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'name'  => 'num_of_rooms',
 				'label' => __( 'Quantity', 'wp-hotel-booking' ),
 				'type'  => 'number',
-				'std'   => '100',
+				'std'   => '10',
 				'desc'  => __( 'The number of rooms', 'wp-hotel-booking' ),
-				'min'   => 1,
+				'min'   => 0,
 				'max'   => 100
 			),
 			array(

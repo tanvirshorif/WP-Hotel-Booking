@@ -112,11 +112,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		public function includes() {
 
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-autoloader.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-template-loader.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-ajax.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-install.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-shortcodes.php' );
-
 			if ( is_admin() ) {
 				include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin.php' );
 			} else {
@@ -124,6 +119,11 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 					include_once( WPHB_ABSPATH . 'includes/aq_resizer.php' );
 				}
 			}
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-template-loader.php' );
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-ajax.php' );
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-install.php' );
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-shortcodes.php' );
+
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-assets.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-settings.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-comments.php' );

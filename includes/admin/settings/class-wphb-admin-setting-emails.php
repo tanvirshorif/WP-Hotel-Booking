@@ -180,4 +180,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 }
 
-new WPHB_Admin_Setting_Emails();
+return new WPHB_Admin_Setting_Emails();

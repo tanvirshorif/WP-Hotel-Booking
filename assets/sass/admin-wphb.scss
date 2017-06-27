@@ -108,11 +108,6 @@ form[name="hb-admin-settings-form"] {
   width: auto;
 }
 
-th.column-room_capacity,
-th.column-room_type {
-  width: 100px;
-}
-
 .hb-admin-sub-tab a {
   outline: none;
   box-shadow: none;
@@ -143,10 +138,6 @@ th.column-room_type {
 
 .post-type-hb_room .column-author {
   width: 150px;
-}
-
-.post-type-hb_room td.column-room_capacity {
-  text-align: right;
 }
 
 .post-type-hb_booking .column-title {
@@ -1004,7 +995,6 @@ th.column-room_type {
   transition: background-position .1s linear;
 }
 
-
 //================================== Extra css ==========================================//
 .tp_extra_form_field_settings {
   border: 1px solid #dedede;
@@ -1103,4 +1093,21 @@ th.column-room_type {
 
 .tp_extra_add_item {
   float: right;
+}
+
+.wp-list-table {
+  thead {
+    #thumb {
+      width: 70px;
+    }
+  }
+  .thumb.column-thumb {
+    a {
+      position: relative;
+      .sale-label {
+        position: absolute;
+        width: 100%;
+      }
+    }
+  }
 }

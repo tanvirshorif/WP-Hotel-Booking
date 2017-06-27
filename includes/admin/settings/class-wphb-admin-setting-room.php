@@ -161,4 +161,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 
 }
 
-new WPHB_Admin_Setting_Room();
+return new WPHB_Admin_Setting_Room();

@@ -118,4 +118,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Info' ) ) {
 
 }
 
-new WPHB_Admin_Setting_Hotel_Info();
+return new WPHB_Admin_Setting_Hotel_Info();

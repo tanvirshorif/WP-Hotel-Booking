@@ -126,4 +126,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
 }
 
-new WPHB_Admin_Setting_Payments();
+return new WPHB_Admin_Setting_Payments();

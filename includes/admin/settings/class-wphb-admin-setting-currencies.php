@@ -94,4 +94,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Currencies' ) ) {
 
 }
 
-new WPHB_Admin_Setting_Currencies();
+return new WPHB_Admin_Setting_Currencies();

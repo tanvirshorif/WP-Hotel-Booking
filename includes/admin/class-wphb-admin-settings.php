@@ -37,18 +37,22 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 			$tabs = array();
 
 			// use WP_Hotel_Booking::instance() return null active hook
-			$tabs[] = include 'settings/class-wphb-admin-setting-general.php';
-			$tabs[] = include 'settings/class-wphb-admin-setting-hotel-info.php';
-			$tabs[] = include 'settings/class-wphb-admin-setting-lightboxs.php';
-			$tabs[] = include 'settings/class-wphb-admin-setting-emails.php';
-			$tabs[] = include 'settings/class-wphb-admin-setting-payments.php';
-			$tabs[] = include 'settings/class-wphb-admin-setting-room.php';
-			$tabs[] = include 'settings/class-wphb-admin-setting-currencies.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-general.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-hotel-info.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-lightboxs.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-emails.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-payments.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-room.php';
+			$tabs[] = include_once 'settings/class-wphb-admin-setting-currencies.php';
 
 			return apply_filters( 'hotel_booking_admin_setting_pages', $tabs );
 		}
 
-		// output page settings
+		/**
+		 * Output settings page.
+         *
+         * @since 2.0
+		 */
 		public static function output() {
 			self::get_settings_pages();
 			$tabs         = hb_admin_settings_tabs();

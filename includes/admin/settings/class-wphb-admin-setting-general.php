@@ -171,4 +171,4 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 
 }
 
-new WPHB_Admin_Setting_General();
+return new WPHB_Admin_Setting_General();

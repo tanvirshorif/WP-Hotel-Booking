@@ -132,10 +132,6 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 
 		// create options default
 		static function create_options() {
-			if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
-				include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin-settings.php' );
-			}
-
 			$settings_pages = WPHB_Admin_Settings::get_settings_pages();
 
 			foreach ( $settings_pages as $setting ) {

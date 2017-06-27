@@ -226,20 +226,19 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 *
 		 * @return mixed
 		 */
-		function custom_room_columns( $a ) {
-			$a['room_type']           = __( 'Room Type', 'wp-hotel-booking' );
-			$a['room_capacity']       = __( 'Max Children', 'wp-hotel-booking' );
-			$a['room_price_plan']     = __( 'Price', 'wp-hotel-booking' );
-			$a['room_average_rating'] = __( 'Average Rating', 'wp-hotel-booking' );
+		function custom_room_columns( $columns ) {
+			unset( $columns['title'] );
+			unset( $columns['author'] );
+			unset( $columns['comments'] );
+			$columns['thumb']               = __( '<i class="fa fa-picture-o"></i>', 'wp-hotel-booking' );
+			$columns['title']               = __( 'Title', 'wp-hotel-booking' );
+			$columns['room_quantity']       = __( 'Quantity', 'wp-hotel-booking' );
+			$columns['room_capacity']       = __( 'Capacity', 'wp-hotel-booking' );
+			$columns['room_price_plan']     = __( 'Price', 'wp-hotel-booking' );
+			$columns['room_average_rating'] = __( 'Average Rating', 'wp-hotel-booking' );
+			$columns['comments']            = __( '<i class="dashicons dashicons-admin-comments"></i>', 'wp-hotel-booking' );
 
-			// move comments to the last of list
-			if ( isset( $a['comments'] ) ) {
-				$t = $a['comments'];
-				unset( $a['comments'] );
-				$a['comments'] = $t;
-			}
-
-			return $a;
+			return $columns;
 		}
 
 		/**
@@ -250,26 +249,41 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		function custom_room_columns_filter( $column ) {
 			global $post;
 			switch ( $column ) {
-				case 'room_type':
-					$terms = wp_get_post_terms( $post->ID, 'hb_room_type' );
-
-					$cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
-					$cap    = get_term( $cap_id, 'hb_room_capacity' );
-
-					if ( $cap && isset( $cap->name ) ) {
-						// printf( '%s (%s)', $type->name, $cap->name );
-						$room_types = array();
-						foreach ( $terms as $key => $term ) {
-							$room_types[] = $term->name;
-						}
-						printf( '%s (%s)', implode( ', ', $room_types ), $cap->name );
+				case 'thumb':
+					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'thumbnail', false );
+					if ( ! empty( $image ) ) {
+						$image = $image[0];
+					} else {
+						$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
 					}
+					$number = get_post_meta( $post->ID, '_hb_num_of_rooms', true );
+					if ( $number ) {
+						$sale_icon = ' <img class="sale-label" src="' . esc_url( WPHB_PLUGIN_URL . '/assets/images/sale.png' ) . '">';
+					} else {
+						$sale_icon = '';
+					}
+					echo '<a href="' . esc_url( admin_url( 'post.php?post=' . absint( $post->ID ) . '&action=edit' ) ) . '">' . wp_kses_post( $sale_icon ) .
+					     '<img width="50" height="50" class="room-thumbnail" src="' . esc_url( str_replace( '-150x150', '', $image ) ) . '"></a>';
+					break;
+				case 'room_quantity':
+					echo get_post_meta( $post->ID, '_hb_num_of_rooms', true );
 					break;
 				case 'room_capacity':
-					echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
+					$cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
+					$cap    = '';
+					if ( $cap_id ) {
+						$cap = get_term_meta( $cap_id, 'hb_max_number_of_adults', true );
+						$cap .= ( $cap > 1 ) ? __( ' Adults', 'wp-hotel-booking' ) : __( ' Adult', 'wp-hotel-booking' );
+					}
+					$max_child = get_post_meta( $post->ID, '_hb_max_child_per_room', true );
+					if ( $max_child ) {
+						$cap .= ' - ' . $max_child;
+						$cap .= ( $max_child > 1 ) ? __( ' Children', 'wp-hotel-booking' ) : __( ' Child', 'wp-hotel-booking' );
+					}
+					echo $cap;
 					break;
 				case 'room_price_plan':
-					echo '<a href="' . admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) . '">' . __( 'View Price', 'wp-hotel-booking' ) . '</a>';
+					echo '<a href="' . admin_url( 'admin.php?page=wphb-pricing-table&hb-room=' . $post->ID ) . '">' . __( 'View Price', 'wp-hotel-booking' ) . '</a>';
 					break;
 				case 'room_average_rating':
 					$room   = WPHB_Room::instance( $post->ID );
