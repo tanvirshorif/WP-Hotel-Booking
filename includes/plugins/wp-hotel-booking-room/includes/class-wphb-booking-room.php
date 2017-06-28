@@ -86,11 +86,11 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 		 * @since 2.0
 		 */
 		public function enqueue_scripts() {
-			wp_enqueue_script( 'magnific-popup', WPHB_ROOM_URI . 'assets/js/jquery.magnific-popup.min.js', array( 'jquery-ui-datepicker' ), WPHB_ROOM_VER, true );
-			wp_enqueue_style( 'magnific-popup', WPHB_ROOM_URI . 'assets/css/magnific-popup.css', array(), WPHB_ROOM_VER, true );
+			wp_enqueue_script( 'magnific-popup', WPHB_ROOM_URI . '/assets/js/jquery.magnific-popup.min.js', array( 'jquery-ui-datepicker' ), WPHB_ROOM_VER, true );
+			wp_enqueue_style( 'magnific-popup', WPHB_ROOM_URI . '/assets/css/magnific-popup.css', array(), WPHB_ROOM_VER, true );
 
-			wp_enqueue_style( 'wphb-booking-room', WPHB_ROOM_URI . 'assets/css/site.css', array(), WPHB_ROOM_VER );
-			wp_enqueue_script( 'wphb-booking-room', WPHB_ROOM_URI . 'assets/js/site.js', array(), WPHB_ROOM_VER );
+			wp_enqueue_style( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/css/site.css', array(), WPHB_ROOM_VER );
+			wp_enqueue_script( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/js/site.js', array(), WPHB_ROOM_VER );
 		}
 
 		/**

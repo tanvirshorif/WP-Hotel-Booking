@@ -3,10 +3,10 @@
 /**
  * WP Hotel Booking template functions.
  *
- * @version 	2.0
- * @author 		ThimPress
- * @package 	WP_Hotel_Booking_Statistic/Functions
- * @category 	Functions
+ * @version    2.0
+ * @author        ThimPress
+ * @package    WP_Hotel_Booking_Statistic/Functions
+ * @category    Functions
  * @author      Thimpress, leehld
  */
 
@@ -173,33 +173,25 @@ if ( ! function_exists( 'hb_enqueue_lightbox_assets' ) ) {
 if ( ! function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
 
 	function hb_lightbox_assets_lightbox2() {
-		wp_enqueue_script( 'lightbox2', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' );
-		wp_enqueue_style( 'lightbox2', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' );
-		?>
-        <script type="text/javascript">
-            jQuery(function () {
-
-            });
-        </script>
-		<?php
-
+		wp_enqueue_script( 'wphb-lightbox2' );
+		wp_enqueue_style( 'wphb-lightbox2' );
 	}
 }
 
-if ( ! function_exists( 'hb_lightbox_assets_fancyBox' ) ) {
-
-	function hb_lightbox_assets_fancyBox() {
-		wp_enqueue_script( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' );
-		wp_enqueue_style( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' );
-		?>
-        <script type="text/javascript">
-            jQuery(function ($) {
-                $(".hb-room-gallery").fancybox();
-            });
-        </script>
-		<?php
-	}
-}
+//if ( ! function_exists( 'hb_lightbox_assets_fancyBox' ) ) {
+//
+//	function hb_lightbox_assets_fancyBox() {
+//		wp_enqueue_script( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' );
+//		wp_enqueue_style( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' );
+//		?>
+<!--        <script type="text/javascript">-->
+<!--            jQuery(function ($) {-->
+<!--                $(".hb-room-gallery").fancybox();-->
+<!--            });-->
+<!--        </script>-->
+<!--		--><?php
+//	}
+//}
 
 if ( ! function_exists( 'hb_display_message' ) ) {
 
@@ -427,7 +419,7 @@ if ( ! function_exists( 'hotel_booking_single_room_gallery' ) ) {
 if ( ! function_exists( 'hb_render_extra' ) ) {
 
 	function hb_render_extra() {
-		hb_get_template( 'extra/extra-search-room.php' );
+		hb_get_template( 'extra/search-room.php' );
 	}
 
 }
@@ -436,7 +428,7 @@ if ( ! function_exists( 'hb_extra_single_room_cart' ) ) {
 
 	function hb_extra_single_room_cart( $post ) {
 		ob_start();
-		hb_get_template( 'extra/extra-single-search-room.php', array( 'post' => $post ) );
+		hb_get_template( 'extra/single-search-room.php', array( 'post' => $post ) );
 		echo ob_get_clean();
 	}
 

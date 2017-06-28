@@ -65,11 +65,11 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			define( 'WPHB_FILE', __FILE__ );
 			define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 			define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) . '/' );
-			define( 'WPHB_VERSION', $this->_version );
 			define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 			define( 'WPHB_ABSPATH', dirname( __FILE__ ) . '/' );
 			define( 'WPHB_INCLUDES', WPHB_ABSPATH . 'includes/' );
+			define( 'WPHB_VERSION', $this->_version );
 		}
 
 		/**
