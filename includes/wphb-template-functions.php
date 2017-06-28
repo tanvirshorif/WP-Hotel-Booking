@@ -184,12 +184,12 @@ if ( ! function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
 //		wp_enqueue_script( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' );
 //		wp_enqueue_style( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' );
 //		?>
-<!--        <script type="text/javascript">-->
-<!--            jQuery(function ($) {-->
-<!--                $(".hb-room-gallery").fancybox();-->
-<!--            });-->
-<!--        </script>-->
-<!--		--><?php
+    <!--        <script type="text/javascript">-->
+    <!--            jQuery(function ($) {-->
+    <!--                $(".hb-room-gallery").fancybox();-->
+    <!--            });-->
+    <!--        </script>-->
+    <!--		--><?php
 //	}
 //}
 
@@ -411,15 +411,6 @@ if ( ! function_exists( 'hotel_booking_single_room_gallery' ) ) {
 
 	function hotel_booking_single_room_gallery() {
 		hb_get_template( 'single-room/gallery.php' );
-	}
-
-}
-
-
-if ( ! function_exists( 'hb_render_extra' ) ) {
-
-	function hb_render_extra() {
-		hb_get_template( 'extra/search-room.php' );
 	}
 
 }

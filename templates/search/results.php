@@ -1,18 +1,35 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template for displaying search room results.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/search/results.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
+
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 do_action( 'hb_before_search_result' );
-?>
-<?php
+
 global $hb_search_rooms;
 ?>
 <div id="hotel-booking-results">
 	<?php if ( $results && ! empty( $hb_search_rooms['data'] ) ): ?>
         <h3><?php _e( 'Search results', 'wp-hotel-booking' ); ?></h3>
-		<?php hb_get_template( 'search/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) ); ?>
+        <ul class="hb-search-results">
+			<?php hb_get_template( 'search/room.php', array(
+				'results' => $hb_search_rooms['data'],
+				'atts'    => $atts
+			) ); ?>
+        </ul>
         <nav class="rooms-pagination">
 			<?php
 			echo paginate_links( apply_filters( 'hb_pagination_args', array(
@@ -35,3 +52,5 @@ global $hb_search_rooms;
         </p>
 	<?php endif; ?>
 </div>
+
+<?php do_action( 'hb_after_search_result' ); ?>

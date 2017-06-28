@@ -31,11 +31,6 @@ if ( ! class_exists( 'WPHB_Room' ) ) {
 		protected static $_instance = array();
 
 		/**
-		 * @var null|WP_Post
-		 */
-		public $post = null;
-
-		/**
 		 * @return null or array
 		 */
 		public $_review_details = null;
@@ -48,7 +43,7 @@ if ( ! class_exists( 'WPHB_Room' ) ) {
 		 */
 		public function __construct( $post, $params = null ) {
 			add_action( 'the_post', array( __CLASS__, 'hb_setup_room_data' ) );
-			parent::__construct( $this->post, $params );
+			parent::__construct( $post, $params );
 		}
 
 		/**

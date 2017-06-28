@@ -1,10 +1,23 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template for displaying price breakdown of each room when search room.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/search/price-breakdown.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
 
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
+
 <div class="hb-booking-room-details">
     <span class="hb_search_room_item_detail_price_close">
         <i class="fa fa-times"></i>

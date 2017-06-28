@@ -83,9 +83,6 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 * @since 2.0
 		 */
 		public static function hotel_booking( $atts ) {
-			if ( ! class_exists( 'WPHB_Room' ) ) {
-				WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
-			}
 
 			$start_date = hb_get_request( 'hb_check_in_date' );
 			if ( $start_date ) {
@@ -111,11 +108,10 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 
 			$page = hb_get_request( 'hotel-booking' );
 
-			$template      = 'search/search.php';
+			$template      = 'search/form.php';
 			$template_args = array();
 
 			// find the url for form action
-			$search_permalink = '';
 			if ( $search_page = $atts['search_page'] ) {
 				if ( is_numeric( $search_page ) ) {
 					$search_permalink = get_the_permalink( $search_page );
@@ -136,6 +132,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			 */
 			switch ( $page ) {
 				case 'results':
+
 					if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
 						break;
 					}
@@ -149,9 +146,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 							'max_child'      => $max_child
 						)
 					);
+
 					break;
 				default:
-					$template = 'search/search.php';
 					break;
 			}
 			$template = apply_filters( 'hotel_booking_shortcode_template', $template );

@@ -23,7 +23,7 @@ if ( ! class_exists( 'WPHB_Extra_Product' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Extra_Product extends WPHB_Room {
+	class WPHB_Extra_Product extends WPHB_Abstract_Product {
 
 		/**
 		 * @var array

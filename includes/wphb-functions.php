@@ -3,10 +3,10 @@
 /**
  * WP Hotel Booking global functions.
  *
- * @version 	2.0
- * @author 		ThimPress
- * @package 	WP_Hotel_Booking/Functions
- * @category 	Functions
+ * @version    2.0
+ * @author        ThimPress
+ * @package    WP_Hotel_Booking/Functions
+ * @category    Functions
  * @author      Thimpress, leehld
  */
 
@@ -1221,14 +1221,15 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 
 		if ( $search = $wpdb->get_results( $query ) ) {
 			foreach ( $search as $k => $p ) {
-				$room                        = WPHB_Room::instance( $p, array(
+				$room = WPHB_Room::instance( $p, array(
 					'check_in_date'  => date( 'm/d/Y', $check_in_date_to_time ),
 					'check_out_date' => date( 'm/d/Y', $check_out_date_to_time ),
 					'quantity'       => 1
 				) );
+
 				$room->post->available_rooms = (int) $p->available_rooms;
 
-				$room = apply_filters( 'hotel_booking_query_seach_parser', $room );
+				$room = apply_filters( 'hotel_booking_query_search_parser', $room );
 				if ( $room ) {
 					$results[ $k ] = $room;
 				}
@@ -1809,26 +1810,6 @@ if ( ! function_exists( 'is_room_taxonomy' ) ) {
 	 */
 	function is_room_taxonomy() {
 		return is_tax( get_object_taxonomies( 'hb_room' ) );
-	}
-
-}
-
-if ( ! function_exists( 'hb_render_label_shortcode' ) ) {
-
-	/**
-	 * Returns html label shortcode search.
-	 * @return html
-	 */
-	function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' ) {
-		$show = false;
-		if ( ! isset( $atts[ $name ] ) || strtolower( $atts[ $name ] ) === $check ) {
-			$show = true;
-		}
-		if ( $show === false ) {
-			return;
-		}
-
-		echo '<label>' . sprintf( __( '%1$s', 'wp-hotel-booking' ), $text ) . '</label>';
 	}
 
 }

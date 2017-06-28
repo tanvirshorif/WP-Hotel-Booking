@@ -663,8 +663,13 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 				if ( is_array( $image ) ) {
 					echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
 				} else {
-					sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
+					echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
 				}
+			}
+
+			if ( ! $attachID ) {
+				$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
+				echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ) );
 			}
 
 			return $image;
