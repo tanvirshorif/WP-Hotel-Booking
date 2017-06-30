@@ -202,6 +202,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 			$product_id          = absint( $_POST['room-id'] );
 			$param               = array();
+			$qty                 = '';
 			$param['product_id'] = sanitize_text_field( $product_id );
 			if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) ) {
 				hb_send_json( array(
@@ -226,10 +227,11 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			$param = apply_filters( 'hotel_booking_add_cart_params', $param );
 			do_action( 'hotel_booking_before_add_to_cart', $_POST );
 			// add to cart
-			$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
+			$cart = WPHB_Cart::instance();
+			$cart_item_id = $cart->add_to_cart( $product_id, $param, $qty );
 
 			if ( ! is_wp_error( $cart_item_id ) ) {
-				$cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
+				$cart_item = $cart->get_cart_item( $cart_item_id );
 				$room      = $cart_item->product_data;
 
 				do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $cart_item, $_POST );
@@ -242,7 +244,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 					'name'      => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
 					'quantity'  => $qty,
 					'cart_id'   => $cart_item_id,
-					'total'     => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
+					'total'     => hb_format_price( $cart->get_cart_item( $cart_item_id )->amount )
 				);
 
 				$results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );

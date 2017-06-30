@@ -52,7 +52,7 @@ defined( 'ABSPATH' ) || exit;
 				?>
             </td>
             <td class="hb_search_item_price">
-				<?php echo hb_format_price( $room->amount_singular ); ?>
+				<?php echo hb_format_price( $room->post->amount_singular ); ?>
             </td>
         </tr>
         </tfoot>

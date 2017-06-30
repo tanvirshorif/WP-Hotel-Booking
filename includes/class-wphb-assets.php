@@ -75,8 +75,8 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 				// rooms slider widget
 				wp_register_script( 'wphb-library-owl-carousel', WPHB_PLUGIN_URL . 'assets/js/owl.carousel.min.js', $dependencies, WPHB_VERSION, true );
 				// lightbox
-				wp_register_style( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/js/lightbox.min.js', array(), WPHB_VERSION );
-				wp_register_script( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/css/lightbox.min.css', $dependencies, WPHB_VERSION, true );
+				wp_register_style( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/css/lightbox.min.css', array(), WPHB_VERSION );
+				wp_register_script( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/js/lightbox.min.js', $dependencies, WPHB_VERSION, true );
 			}
 
 			/**

@@ -16,6 +16,8 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+
+$show_label = ! isset( $atts['show_label'] ) || $atts['show_label'] === 'true';
 ?>
 
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
@@ -23,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
         <ul class="hb-form-table">
 
             <li class="hb-form-field">
-				<?php echo ! $atts['show_label'] || $atts['show_label'] === 'true' ? __( 'Arrival Date', 'wp-hotel-booking' ) : ''; ?>
+				<?php echo $show_label ? __( 'Arrival Date', 'wp-hotel-booking' ) : ''; ?>
                 <div class="hb-form-field-input hb_input_field">
                     <input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr( uniqid() ); ?>"
                            class="hb_input_date_check" value="<?php echo esc_attr( $atts['check_in_date'] ); ?>"
@@ -32,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
             </li>
 
             <li class="hb-form-field">
-				<?php echo ! $atts['show_label'] || $atts['show_label'] === 'true' ? __( 'Departure Date', 'wp-hotel-booking' ) : ''; ?>
+				<?php echo $show_label ? __( 'Departure Date', 'wp-hotel-booking' ) : ''; ?>
                 <div class="hb-form-field-input hb_input_field">
                     <input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr( uniqid() ) ?>"
                            class="hb_input_date_check" value="<?php echo esc_attr( $atts['check_out_date'] ); ?>"
@@ -41,7 +43,7 @@ defined( 'ABSPATH' ) || exit;
             </li>
 
             <li class="hb-form-field">
-				<?php echo ! $atts['show_label'] || $atts['show_label'] === 'true' ? __( 'Adults', 'wp-hotel-booking' ) : ''; ?>
+				<?php echo $show_label ? __( 'Adults', 'wp-hotel-booking' ) : ''; ?>
                 <div class="hb-form-field-input">
 					<?php
 					hb_dropdown_numbers(
@@ -60,7 +62,7 @@ defined( 'ABSPATH' ) || exit;
             </li>
 
             <li class="hb-form-field">
-				<?php echo ! $atts['show_label'] || $atts['show_label'] === 'true' ? __( 'Children', 'wp-hotel-booking' ) : ''; ?>
+				<?php echo $show_label ? __( 'Children', 'wp-hotel-booking' ) : ''; ?>
                 <div class="hb-form-field-input">
 					<?php
 					hb_dropdown_numbers(

@@ -1839,7 +1839,6 @@ if ( ! function_exists( 'is_room' ) ) {
 if ( ! function_exists( 'hb_get_url' ) ) {
 
 	function hb_get_url( $params = array() ) {
-		global $hb_settings;
 		$query_str = '';
 		if ( ! empty( $params ) ) {
 			$query_str = '?hotel-booking-params=' . base64_encode( serialize( $params ) );
