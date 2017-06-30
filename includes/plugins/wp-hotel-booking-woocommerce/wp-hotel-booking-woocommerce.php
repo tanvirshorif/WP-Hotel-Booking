@@ -32,6 +32,11 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		public $_version = '2.0';
 
 		/**
+		 * @var string
+		 */
+		public $_slug = 'woocommerce';
+
+		/**
 		 * Hold the instance of WP_Hotel_Booking_Woocommerce.
 		 *
 		 * @var null
@@ -102,10 +107,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 * @since 2.0
 		 */
 		private function init_hooks() {
-			add_filter( 'hb_admin_settings_tabs', array( $this, 'register_settings' ), 101 );
-			add_action( 'hb_admin_settings_tab_woocommerce', array( $this, 'admin_settings' ) );
-
 			add_action( 'init', array( $this, 'load_text_domain' ) );
+			add_filter( 'hb_payment_gateways', array( $this, 'add_payment_gateway' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
 
@@ -123,27 +126,22 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		}
 
 		/**
-		 * Register new settings tab with WP Hotel Booking.
-         *
-         * @since 2.0
-         *
-         * @param $tabs
-         *
-         * @return array
-		 */
-		public function register_settings( $tabs ) {
-			$tabs['woocommerce'] = __( 'WooCommerce', 'wphb-woocommerce' );
-
-			return $tabs;
-		}
-
-		/**
-		 * Admin setting page.
+		 * Add Authorize to WP Hotel Booking payment gateways.
 		 *
 		 * @since 2.0
+		 *
+		 * @param $payments
+		 *
+		 * @return mixed
 		 */
-		public function admin_settings() {
-			include_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/admin/views/settings.php';
+		public function add_payment_gateway( $payments ) {
+			if ( array_key_exists( $this->_slug, $payments ) ) {
+				return $payments;
+			}
+
+			$payments[ $this->_slug ] = new WPHB_Woocommerce();
+
+			return $payments;
 		}
 
 		/**
@@ -211,6 +209,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 			if ( ! self::$_instance ) {
 				self::$_instance = new self();
 			}
+
 			return self::$_instance;
 		}
 

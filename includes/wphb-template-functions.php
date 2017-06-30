@@ -178,21 +178,6 @@ if ( ! function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
 	}
 }
 
-//if ( ! function_exists( 'hb_lightbox_assets_fancyBox' ) ) {
-//
-//	function hb_lightbox_assets_fancyBox() {
-//		wp_enqueue_script( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' );
-//		wp_enqueue_style( 'fancyBox', WPHB_PLUGIN_URL . 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' );
-//		?>
-    <!--        <script type="text/javascript">-->
-    <!--            jQuery(function ($) {-->
-    <!--                $(".hb-room-gallery").fancybox();-->
-    <!--            });-->
-    <!--        </script>-->
-    <!--		--><?php
-//	}
-//}
-
 if ( ! function_exists( 'hb_display_message' ) ) {
 
 	function hb_display_message() {

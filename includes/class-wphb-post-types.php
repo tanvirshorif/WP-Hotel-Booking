@@ -48,6 +48,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'manage_edit-hb_room_capacity_columns', array( $this, 'taxonomy_columns' ) );
 			add_filter( 'manage_hb_room_capacity_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
 
+			add_action( 'create_hb_room_capacity', array( $this, 'save_capacity_fields' ) );
+			add_action( 'hb_room_capacity_add_form_fields', array( $this, 'add_capacity_fields' ) );
+			add_action( 'hb_room_capacity_edit_form_fields', array( $this, 'edit_capacity_fields' ) );
+			add_action( 'edited_hb_room_capacity', array( $this, 'save_capacity_fields' ) );
+
 			add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
 
 			add_filter( 'manage_hb_room_posts_columns', array( $this, 'custom_room_columns' ) );
@@ -64,6 +69,57 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
 		}
 
+
+		/**
+		 * Add capacity field in create room capacity terms page.
+		 */
+		public function add_capacity_fields() {
+			?>
+            <div class="form-field">
+                <label for="room_capacity"><?php _e( 'Capacity' ); ?></label>
+                <input type="number" min="1" name="room_capacity" id="room_capacity" value="" size="25">
+                <p class="description"><?php _e( 'Number adult in room capacity.', 'wp-hotel-booking' ); ?></p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Add capacity field in edit room capacity page.
+		 *
+		 * @param $tag
+		 */
+		public function edit_capacity_fields( $tag ) {
+			$term_id  = $tag->term_id;
+			$capacity = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
+			?>
+
+            <tr class="form-field">
+                <th scope="row" valign="top">
+                    <label for="capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></label>
+                </th>
+                <td>
+                    <input type="number" min="1" name="room_capacity" id="room_capacity" size="25"
+                           value="<?php echo esc_attr( $capacity ); ?>"><br/>
+                    <span class="description"><?php _e( 'Number adult in room capacity.', 'wp-hotel-booking' ); ?></span>
+                </td>
+            </tr>
+			<?php
+		}
+
+		/**
+         * Active save room capacity;
+         *
+		 * @param $term_id
+		 */
+		public function save_capacity_fields( $term_id ) {
+			if ( ! $term_id ) {
+				return;
+			}
+
+			if ( $_POST['room_capacity'] ) {
+				update_term_meta( $term_id, 'hb_max_number_of_adults', sanitize_title( $_POST['room_capacity'] ) );
+			}
+		}
 
 		function terms_orderby( $orderby, $args, $taxonomies ) {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {

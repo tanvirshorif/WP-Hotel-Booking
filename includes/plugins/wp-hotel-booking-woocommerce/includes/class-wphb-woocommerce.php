@@ -22,7 +22,12 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Woocommerce {
+	class WPHB_Woocommerce extends WPHB_Abstract_Payment_Gateway {
+
+		/**
+		 * @var string
+		 */
+		protected $_slug = 'woocommerce';
 
 		/**
 		 * WPHB_Woocommerce constructor.
@@ -30,6 +35,9 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
+			parent::__construct();
+
+			$this->_title = __( 'Woocommerce', 'wphb-stripe-payment' );
 			// filter WPHB currency to WC currency
 			add_filter( 'hb_currency', array( $this, 'woocommerce_currency' ), 50 );
 			add_filter( 'hotel_booking_payment_current_currency', array( $this, 'woocommerce_currency' ), 50 );
@@ -769,6 +777,15 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			}
 
 			$woocommerce->cart->cart_contents = $woo_cart_contents;
+		}
+
+		/**
+		 * Admin setting page.
+		 *
+		 * @since 2.0
+		 */
+		public function admin_settings() {
+			include_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/admin/views/settings.php';
 		}
 	}
 }
