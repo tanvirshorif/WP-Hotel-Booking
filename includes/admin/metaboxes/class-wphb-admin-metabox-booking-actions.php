@@ -53,9 +53,6 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 		public function __construct() {
 			$this->title = __( 'Booking Actions', 'wp-hotel-booking' );
 			parent::__construct();
-
-			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
-			add_action( 'save_post', array( $this, 'update' ) );
 		}
 	}
 

@@ -24,6 +24,7 @@ if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 if ( ! function_exists( 'hb_admin_i18n' ) ) {
 	function hb_admin_i18n() {
 		$i18n = array(
+			'choose_images'                 => __( 'Choose images', 'wp-hotel-booking' ),
 			'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'wp-hotel-booking' ),
 			'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'wp-hotel-booking' ),
 			'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'wp-hotel-booking' ),
@@ -240,7 +241,8 @@ if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 			new WPHB_Admin_Metabox_Booking_Details(), // booking details
 			new WPHB_Admin_Metabox_Booking_Items(), // booking items
 			new WPHB_Admin_Metabox_Booking_Actions(), // booking actions
-			new WPHB_Admin_Metabox_Room_Price() // room price
+			new WPHB_Admin_Metabox_Room_Price(), // room price
+//			new WPHB_Admin_Metabox_Room_Settings() // room setting
 		);
 
 		return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );
