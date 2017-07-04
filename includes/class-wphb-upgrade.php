@@ -29,10 +29,8 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 		 * Upgrade function.
 		 */
 		public static function upgrade() {
-			$version = get_option( 'hotel_booking_version', false );
-			if ( ! $version || version_compare( $version, '2.0', ' < ' ) ) {
+			if ( empty(WPHB_VERSION) || version_compare( WPHB_VERSION, '2.0', ' < ' ) ) {
 				self::update_metadata();
-				self::update_hooks();
 				self::deactivate_plugins();
 			}
 		}
@@ -297,15 +295,6 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 			/**
 			 * End upgrade room capacities
 			 */
-		}
-
-		/**
-		 * Update core hooks from old version.
-		 *
-		 * @since 2.0
-		 */
-		public static function update_hooks() {
-
 		}
 
 		/**

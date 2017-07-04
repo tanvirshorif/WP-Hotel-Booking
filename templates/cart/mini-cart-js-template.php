@@ -1,45 +1,58 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template for displaying mini cart js template layout.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/cart/mini-cart-js-template.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
 
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
+
 <script type="text/html" id="tmpl-hb-minicart-item">
+
     <div class="hb_mini_cart_item active" data-cart-id="{{ data.cart_id }}">
 
         <div class="hb_mini_cart_top">
-
             <h4 class="hb_title"><a href="{{{ data.permalink }}}">{{ data.name }}</a></h4>
             <span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
-
         </div>
 
         <div class="hb_mini_cart_number">
-
             <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
             <span>{{ data.quantity }}</span>
-
         </div>
 
         <div class="hb_mini_cart_price">
-
             <label><?php _e( 'Price: ', 'wp-hotel-booking' ); ?></label>
             <span>{{{ data.total }}}</span>
-
         </div>
     </div>
-</script>
-<script type="text/html" id="tmpl-hb-minicart-footer">
-    <div class="hb_mini_cart_footer">
 
+</script>
+
+<script type="text/html" id="tmpl-hb-minicart-footer">
+
+    <div class="hb_mini_cart_footer">
         <a href="<?php echo hb_get_checkout_url() ?>"
            class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
         <a href="<?php echo hb_get_cart_url(); ?>"
            class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
-
     </div>
+
 </script>
+
 <script type="text/html" id="tmpl-hb-minicart-empty">
+
     <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty!', 'wp-hotel-booking' ); ?></p>
+
 </script>

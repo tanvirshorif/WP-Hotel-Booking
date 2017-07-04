@@ -81,8 +81,6 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			// create term default. Eg: Room Capacities
 			// create tables
 			self::create_tables();
-
-			update_option( 'hotel_booking_version', WPHB_VERSION );
 		}
 
 		// create options default

@@ -665,8 +665,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 			$alt = get_post_meta( $attachID, '_wp_attachment_image_alt', true );
 
 			$image = $this->renderImage( $attachID, $size, false, 'large' );
-
-			if ( $echo && $image ) {
+			if ( $echo && $image[0] ) {
 				if ( is_array( $image ) ) {
 					echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
 				} else {

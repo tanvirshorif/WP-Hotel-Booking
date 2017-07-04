@@ -218,7 +218,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 
 				<?php if ( ! empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ): ?>
 
-					<?php hb_get_template( 'cart/mini_cart.php' ); ?>
+					<?php hb_get_template( 'cart/mini-cart.php' ); ?>
 
 				<?php else: ?>
 

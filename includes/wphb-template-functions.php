@@ -547,28 +547,11 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 	}
 
 }
-if ( ! function_exists( 'hotel_display_pricing_plans' ) ) {
-
-	function hotel_display_pricing_plans( $tabs ) {
-		if ( ! hb_settings()->get( 'display_pricing_plans' ) ) {
-			return $tabs;
-		}
-
-		$tabs[] = array(
-			'id'      => 'hb_room_pricing_plans',
-			'title'   => __( 'Pricing Plans', 'wp-hotel-booking' ),
-			'content' => ''
-		);
-
-		return $tabs;
-	}
-
-}
 
 if ( ! function_exists( 'hotel_show_pricing' ) ) {
 
 	function hotel_show_pricing() {
-		hb_get_template( 'loop/pricing_plan.php' );
+		hb_get_template( 'loop/pricing-plan.php' );
 	}
 
 }
@@ -576,7 +559,7 @@ if ( ! function_exists( 'hotel_show_pricing' ) ) {
 add_action( 'wp_footer', 'hb_print_mini_cart_template' );
 if ( ! function_exists( 'hb_print_mini_cart_template' ) ) {
 	function hb_print_mini_cart_template() {
-		echo hb_get_template_content( 'cart/mini_cart_layout.php' );
+		echo hb_get_template_content( 'cart/mini-cart-js-template.php' );
 	}
 }
 

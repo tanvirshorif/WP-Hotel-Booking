@@ -38,7 +38,6 @@ if ( ! class_exists( 'WPHB_Comments' ) ) {
 
 			// details title tab
 			add_action( 'hotel_booking_single_room_after_tabs_hb_room_reviews', array( __CLASS__, 'comments_count' ) );
-			add_filter( 'hotel_booking_single_room_information_tabs', array( __CLASS__, 'addTabReviews' ) );
 
 		}
 
@@ -126,29 +125,6 @@ if ( ! class_exists( 'WPHB_Comments' ) ) {
 		public static function comments_count() {
 			global $hb_room;
 			echo '<span class="comment-count">(' . $hb_room->get_review_count() . ')</span>';
-		}
-
-		/**
-		 * Add tab review in single room page.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $tabsInfo
-		 *
-		 * @return array
-		 */
-		public static function addTabReviews( $tabsInfo ) {
-			if ( ! comments_open() ) {
-				return $tabsInfo;
-			}
-
-			$tabsInfo[] = array(
-				'id'      => 'hb_room_reviews',
-				'title'   => __( 'Reviews', 'wp-hotel-booking' ),
-				'content' => ''
-			);
-
-			return $tabsInfo;
 		}
 
 	}

@@ -205,3 +205,5 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 	}
 
 }
+
+new WPHB_Extra();

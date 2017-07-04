@@ -1,19 +1,26 @@
 <?php
+
 /**
- * gallery lightbox
+ * The template for displaying room gallery lightbox in archive room page.
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.1.4
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/loop/gallery-lightbox.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
 
-$gallery = $room->gallery;
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
-<?php if ( $gallery ): ?>
+
+<?php $gallery = $room->gallery; ?>
+
+<?php if ( $gallery ) { ?>
     <div class="hb-room-type-gallery">
 		<?php foreach ( $gallery as $image ) { ?>
             <a class="hb-room-gallery" data-fancybox-group="hb-room-gallery-<?php echo esc_attr( $room->post->ID ); ?>"
@@ -24,4 +31,4 @@ $gallery = $room->gallery;
             </a>
 		<?php } ?>
     </div>
-<?php endif; ?>
+<?php } ?>

@@ -1,14 +1,29 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template for displaying cart page.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/cart/cart.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
 
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 $cart = WPHB_Cart::instance();
 global $hb_settings;
-
 ?>
-<?php if ( $cart->cart_items_count != 0 ) : ?>
+
+<?php if ( $cart->cart_items_count != 0 ) { ?>
     <div id="hotel-booking-cart">
 
         <form id="hb-cart-form" method="post">
@@ -19,13 +34,13 @@ global $hb_settings;
                 <th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
                 <th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
                 <th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
+                <th class="hb_check_in"><?php _e( 'Check in', 'wp-hotel-booking' ); ?></th>
+                <th class="hb_check_out"><?php _e( 'Check out', 'wp-hotel-booking' ); ?></th>
                 <th class="hb_night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
                 <th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
                 </thead>
-				<?php if ( $rooms = $cart->get_rooms() ): ?>
-					<?php foreach ( $rooms as $cart_id => $room ): ?>
+				<?php if ( $rooms = $cart->get_rooms() ) { ?>
+					<?php foreach ( $rooms as $cart_id => $room ) { ?>
 						<?php
 						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) {
 							continue;
@@ -56,9 +71,9 @@ global $hb_settings;
                             </td>
                         </tr>
 						<?php do_action( 'hotel_booking_cart_after_item', $room, $cart_id ); ?>
-					<?php endforeach; ?>
+					<?php } ?>
 
-				<?php endif; ?>
+				<?php } ?>
 
 				<?php do_action( 'hotel_booking_before_cart_total' ); ?>
 
@@ -69,7 +84,7 @@ global $hb_settings;
                             </span>
                     </td>
                 </tr>
-				<?php if ( $tax = hb_get_tax_settings() ) : ?>
+				<?php if ( $tax = hb_get_tax_settings() ) { ?>
                     <tr class="hb_advance_tax">
                         <td colspan="8">
 							<?php _e( 'Tax', 'wp-hotel-booking' ); ?>
@@ -79,7 +94,7 @@ global $hb_settings;
                             <span class="hb-align-right"><?php echo apply_filters( 'hotel_booking_cart_tax_display', abs( $tax * 100 ) . '%' ); ?></span>
                         </td>
                     </tr>
-				<?php endif; ?>
+				<?php } ?>
                 <tr class="hb_advance_grand_total">
                     <td colspan="8">
 						<?php _e( 'Grand Total', 'wp-hotel-booking' ); ?>
@@ -87,14 +102,14 @@ global $hb_settings;
                     </td>
                 </tr>
 				<?php $advance_payment = ''; ?>
-				<?php if ( $advance_payment = $cart->advance_payment ) : ?>
+				<?php if ( $advance_payment = $cart->advance_payment ) { ?>
                     <tr class="hb_advance_payment">
                         <td colspan="8">
 							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
                             <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $advance_payment ); ?></span>
                         </td>
                     </tr>
-				<?php endif; ?>
+				<?php } ?>
 
                 <tr>
 					<?php wp_nonce_field( 'hb_cart_field', 'hb_cart_field' ); ?>
@@ -108,11 +123,11 @@ global $hb_settings;
         </form>
     </div>
 
-<?php else: ?>
+<?php } else { ?>
     <!--Empty cart-->
     <div class="hb-message message">
         <div class="hb-message-content">
 			<?php _e( 'Your cart is empty!', 'wp-hotel-booking' ) ?>
         </div>
     </div>
-<?php endif; ?>
+<?php } ?>

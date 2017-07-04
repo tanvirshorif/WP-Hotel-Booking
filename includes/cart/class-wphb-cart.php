@@ -829,8 +829,8 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		 * @return [type]                [description]
 		 */
 		public function mini_cart_layout( $located, $template_name, $args, $template_path, $default_path ) {
-			if ( $template_name === 'cart/mini_cart_layout.php' ) {
-				return hb_locate_template( 'shortcodes/mini_cart_extra_layout.php' );
+			if ( $template_name === 'cart/mini-cart-js-template.php' ) {
+				return hb_locate_template( 'shortcodes/mini-cart-js-template.php' );
 			}
 
 			return $located;
