@@ -30,7 +30,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$actions = array(
 				'fetch_customer_info'      => true,
@@ -227,7 +227,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			$param = apply_filters( 'hotel_booking_add_cart_params', $param );
 			do_action( 'hotel_booking_before_add_to_cart', $_POST );
 			// add to cart
-			$cart = WPHB_Cart::instance();
+			$cart         = WPHB_Cart::instance();
 			$cart_item_id = $cart->add_to_cart( $product_id, $param, $qty );
 
 			if ( ! is_wp_error( $cart_item_id ) ) {

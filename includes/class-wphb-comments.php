@@ -69,7 +69,7 @@ if ( ! class_exists( 'WPHB_Comments' ) ) {
 					trailingslashit( get_template_directory() ) . 'wp-hotel-booking',
 					trailingslashit( get_stylesheet_directory() ),
 					trailingslashit( get_template_directory() ),
-					trailingslashit( WP_Hotel_Booking::instance()->plugin_path( 'templates/' ) )
+					trailingslashit( WPHB_ABSPATH . 'templates/' )
 				);
 
 				foreach ( $check_dirs as $dir ) {

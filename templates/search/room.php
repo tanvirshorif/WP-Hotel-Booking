@@ -62,7 +62,8 @@ global $hb_settings;
                         </li>
                         <li class="hb_search_price">
                             <label><?php _e( 'Price:', 'wp-hotel-booking' ); ?></label>
-                            <span class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
+                            <span class="hb_search_item_price">
+							<?php echo hb_format_price( $room->amount_singular ); ?></span>
                             <div class="hb_view_price">
                                 <a href=""
                                    class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>

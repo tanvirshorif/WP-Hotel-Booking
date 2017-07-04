@@ -224,7 +224,7 @@ if ( ! class_exists( 'WPHB_Meta_Box' ) ) {
 					update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
 				}
 
-				if ( ! $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) {
+				if ( empty( $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) ) {
 					update_post_meta( $post_id, $this->_args['meta_key_prefix'] . 'room_extra', '' );
 				}
 			}

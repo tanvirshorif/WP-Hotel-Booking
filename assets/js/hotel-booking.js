@@ -806,6 +806,13 @@
 
         TPHB_Extra_Site.init();
 
+        $('.hb_room_gallery').camera({
+            height: '470px',
+            loader: 'none',
+            pagination: false,
+            thumbnails: true
+        });
+
         $.datepicker.setDefaults({dateFormat: hotel_booking_i18n.date_time_format});
         // $.datepicker.setDefaults({dateFormat: 'mm/dd/yy'});
         var today = new Date();

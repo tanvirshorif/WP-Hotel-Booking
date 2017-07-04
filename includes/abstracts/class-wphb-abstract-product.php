@@ -345,8 +345,8 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 
 			$nights = hb_count_nights_two_dates( $end_date, $start_date );
 			for ( $i = 0; $i < $nights; $i ++ ) {
-				$c_date = $start_date_to_time + $i * DAY_IN_SECONDS;
-				$date   = date( 'w', $c_date );
+				$start_date = $start_date_to_time + $i * DAY_IN_SECONDS;
+				$date       = date( 'w', $start_date );
 				if ( ! isset( $details[ $date ] ) ) {
 					$details[ $date ] = array(
 						'count' => 0,
@@ -354,7 +354,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 					);
 				}
 				$details[ $date ]['count'] ++;
-				$details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
+				$details[ $date ]['price'] += $this->get_total( $start_date, 1, 1, $tax );
 				$room_details_total        += $details[ $date ]['price'];
 			}
 			$this->_room_details_total = $room_details_total;
@@ -414,8 +414,9 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 		 * @return float|int|mixed
 		 */
 		public function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ) {
-			$nights = 0;
-			$total  = 0;
+			$nights  = 0;
+			$total   = 0;
+			$to_time = '';
 			if ( is_null( $from ) && is_null( $to ) ) {
 				$to_time   = (int) $this->check_out_date;
 				$from_time = (int) $this->check_in_date;
@@ -428,7 +429,13 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 				if ( ! is_numeric( $to ) ) {
 					$to_time = strtotime( $to );
 				} else {
-					$to_time = $to;
+					// if $to is date => calculate normally
+					if ( $to >= DAY_IN_SECONDS ) {
+						$to_time = $to;
+					} else {
+						// if set $to is integer => $to is nights
+						$nights = $to;
+					}
 				}
 			}
 

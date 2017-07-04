@@ -79,6 +79,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		 */
 		private function init_hooks() {
 			register_activation_hook( __FILE__, array( 'WPHB_Install', 'install' ) );
+			register_activation_hook( __FILE__, array( 'WPHB_Upgrade', 'upgrade' ) );
 			register_activation_hook( __FILE__, array( 'WPHB_Install', 'uninstall' ) );
 
 			add_action( 'init', array( $this, 'init' ), 20 );
@@ -87,7 +88,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			// create new blog in multisite
 			add_action( 'wpmu_new_blog', array( 'WPHB_Install', 'create_new_blog' ) );
 			// delete table in multisite
-			add_filter( 'wpmu_drop_tables', array( 'WPHB_Install', 'delete_blog_table' ) );
+			add_filter( 'wpmu_drop_tables', array( 'WPHB_Install', 'delete_tables' ) );
 		}
 
 		/**
@@ -122,6 +123,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-template-loader.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-ajax.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-install.php' );
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-upgrade.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-shortcodes.php' );
 
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-assets.php' );

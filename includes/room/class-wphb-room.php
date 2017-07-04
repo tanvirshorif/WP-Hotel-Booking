@@ -42,35 +42,7 @@ if ( ! class_exists( 'WPHB_Room' ) ) {
 		 * @param null $params
 		 */
 		public function __construct( $post, $params = null ) {
-			add_action( 'the_post', array( __CLASS__, 'hb_setup_room_data' ) );
 			parent::__construct( $post, $params );
-		}
-
-		/**
-		 * Setup room data.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $post
-		 *
-		 * @return bool|mixed
-		 */
-		public static function hb_setup_room_data( $post ) {
-			unset( $GLOBALS['hb_room'] );
-
-			if ( is_int( $post ) ) {
-				$post = get_post( $post );
-			}
-
-			if ( ! $post ) {
-				$post = $GLOBALS['post'];
-			}
-
-			if ( empty( $post->post_type ) || ! in_array( $post->post_type, array( 'hb_room' ) ) ) {
-				return false;
-			}
-
-			return $GLOBALS['hb_room'] = WPHB_Room::instance( $post );
 		}
 
 		/**

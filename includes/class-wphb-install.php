@@ -37,36 +37,6 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 		 */
 		public static function install() {
 
-			if ( ! defined( 'HB_INSTALLING' ) ) {
-				define( 'HB_INSTALLING', true );
-			}
-
-			self::$upgrade = apply_filters( 'hotel_booking_upgrade_file_vesion', array(
-					'1.1.5.1' => 'admin/update/wphb-upgrade_1.1.5.1.php'
-				)
-			);
-
-			$tp_plugins = array(
-				'tp-hotel-booking/tp-hotel-booking.php',
-				'tp-hotel-booking-authorize-sim/tp-hotel-booking-authorize-sim.php',
-				'tp-hotel-booking-block/tp-hotel-booking-block.php',
-				'tp-hotel-booking-coupon',
-				'tp-hotel-booking-coupon.php',
-				'tp-hotel-booking-report/tp-hotel-booking-report.php',
-				'tp-hotel-booking-room/tp-hotel-booking-room.php',
-				'tp-hotel-booking-stripe/tp-hotel-booking-stripe.php',
-				'tp-hotel-booking-woocommerce/tp-hotel-booking-woocommerce.php',
-				'tp-hotel-booking-wpml-support/tp-hotel-booking-wpml-support.php'
-			);
-
-			foreach ( $tp_plugins as $plugin ) {
-				if ( is_multisite() ) {
-					deactivate_plugins( $plugin, false, true );
-				} else {
-					deactivate_plugins( $plugin, false, false );
-				}
-			}
-
 			global $wpdb;
 			if ( is_multisite() ) {
 				// store the current blog id
@@ -109,25 +79,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			self::create_options();
 
 			// create term default. Eg: Room Capacities
-			// self::create_terms();
 			// create tables
 			self::create_tables();
 
-			// upgrade database
-			self::upgrade_database();
-
 			update_option( 'hotel_booking_version', WPHB_VERSION );
-		}
-
-		// upgrade database
-		static function upgrade_database() {
-			hotel_booking_set_table_name();
-			$version = get_option( 'hotel_booking_version', false );
-			foreach ( self::$upgrade as $ver => $update ) {
-				if ( ! $version || version_compare( $version, $ver, '<' ) ) {
-					include_once $update;
-				}
-			}
 		}
 
 		// create options default
@@ -202,50 +157,8 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 		}
 
-		// create terms default for system
-		static function create_terms() {
-			if ( ! class_exists( 'WPHB_Post_Types' ) ) {
-				include_once( WPHB_ABSPATH . 'includes/class-wphb-post-types.php' );
-			}
-
-			// register taxonomies
-			WPHB_Post_Types::register_taxonomies();
-
-			$taxonomies = array(
-				'hb_room_capacity' => array(
-					'double' => array(
-						'hb_max_number_of_adults' => 2
-					),
-					'single' => array(
-						'hb_max_number_of_adults' => 1,
-						'alias_of'                => 2
-					)
-				)
-			);
-
-			// insert term
-			foreach ( $taxonomies as $taxonomy => $terms ) {
-				foreach ( $terms as $term => $term_op ) {
-					if ( ! get_term_by( 'slug', sanitize_title( $term ), $taxonomy ) ) {
-						$term = wp_insert_term( $term, $taxonomy, array() );
-
-						if ( ! is_wp_error( $term ) ) {
-							foreach ( $term_op as $k => $v ) {
-								add_term_meta( $term['term_id'], $k, $v, true );
-							}
-						}
-					}
-				}
-			}
-		}
-
 		// create tables. Eg: booking_items
 		static function create_tables() {
-			self::schema();
-		}
-
-		// do create table
-		static function schema() {
 			global $wpdb;
 
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

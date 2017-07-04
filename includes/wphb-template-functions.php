@@ -414,7 +414,7 @@ if ( ! function_exists( 'hb_extra_single_room_cart' ) ) {
 if ( ! function_exists( 'hotel_booking_single_room_infomation' ) ) {
 
 	function hotel_booking_single_room_infomation() {
-		hb_get_template( 'single-room/details.php' );
+		hb_get_template( 'single-room/tabs.php' );
 	}
 
 }
@@ -577,5 +577,35 @@ add_action( 'wp_footer', 'hb_print_mini_cart_template' );
 if ( ! function_exists( 'hb_print_mini_cart_template' ) ) {
 	function hb_print_mini_cart_template() {
 		echo hb_get_template_content( 'cart/mini_cart_layout.php' );
+	}
+}
+
+if ( ! function_exists( 'hb_global_room_data' ) ) {
+
+	function hb_global_room_data( $post ) {
+		/**
+		 * Setup room data.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $post
+		 *
+		 * @return bool|mixed
+		 */
+		unset( $GLOBALS['hb_room'] );
+
+		if ( is_int( $post ) ) {
+			$post = get_post( $post );
+		}
+
+		if ( ! $post ) {
+			$post = $GLOBALS['post'];
+		}
+
+		if ( empty( $post->post_type ) || ! in_array( $post->post_type, array( 'hb_room' ) ) ) {
+			return false;
+		}
+
+		return $GLOBALS['hb_room'] = WPHB_Room::instance( $post );
 	}
 }

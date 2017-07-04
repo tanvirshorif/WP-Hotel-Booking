@@ -23,6 +23,7 @@ defined( 'ABSPATH' ) || exit;
         <i class="fa fa-times"></i>
     </span>
 	<?php $details = $room->get_booking_room_details(); ?>
+
     <table class="hb_search_room_pricing_price">
         <tbody>
 		<?php foreach ( $details as $day => $info ): ?>
@@ -52,7 +53,7 @@ defined( 'ABSPATH' ) || exit;
 				?>
             </td>
             <td class="hb_search_item_price">
-				<?php echo hb_format_price( $room->post->amount_singular ); ?>
+				<?php echo hb_format_price( $room->amount_singular ); ?>
             </td>
         </tr>
         </tfoot>

@@ -58,9 +58,9 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 				wp_enqueue_script( 'wphb-vue', WPHB_PLUGIN_URL . 'assets/js/vue.js', $dependencies, WPHB_VERSION, true );
 
 				wp_register_style( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/css/admin-wphb.css' );
-				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin-wphb.js', $dependencies, WPHB_VERSION, true );
+//				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin-wphb.js', $dependencies, WPHB_VERSION, true );
 
-//				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin.hotel-booking.js', $dependencies, WPHB_VERSION, true );
+				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin.hotel-booking.js', $dependencies, WPHB_VERSION, true );
 				wp_localize_script( 'wphb-admin', 'hotel_booking_i18n', hb_admin_i18n() );
 
 				wp_register_script( 'wphb-library-moment', WPHB_PLUGIN_URL . 'assets/js/moment.min.js', $dependencies, WPHB_VERSION, true );
@@ -103,7 +103,7 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 				wp_enqueue_script( 'wphb-site' );
 
 				wp_enqueue_script( 'wphb-library-owl-carousel' );
-				wp_enqueue_script( 'wp-hotel-booking-gallery' );
+				wp_enqueue_script( 'wphb-library-gallery' );
 			}
 			wp_enqueue_style( 'wphb-libraries' );
 			wp_enqueue_script( 'wphb-select2' );
