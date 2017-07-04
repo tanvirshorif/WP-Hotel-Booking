@@ -213,11 +213,11 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				$qty = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
 			}
 
-			// validate checkin, checkout date
+			// validate check in, check out date
 			if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) ) {
 				hb_send_json( array(
 					'status'  => 'warning',
-					'message' => __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' )
+					'message' => __( 'Check in date, check out date is invalid.', 'wp-hotel-booking' )
 				) );
 			} else {
 				$param['check_in_date']  = sanitize_text_field( $_POST['check_in_date'] );
@@ -229,6 +229,8 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			// add to cart
 			$cart         = WPHB_Cart::instance();
 			$cart_item_id = $cart->add_to_cart( $product_id, $param, $qty );
+
+			var_dump( $cart->cart_contents );
 
 			if ( ! is_wp_error( $cart_item_id ) ) {
 				$cart_item = $cart->get_cart_item( $cart_item_id );

@@ -318,7 +318,7 @@
                 },
                 error: function () {
                     button.removeClass('hb_loading');
-                    hotel_checkout_fetch_error([hotel_booking_i18n.waring.try_again]);
+                    hotel_checkout_fetch_error([hotel_booking_i18n.warning.try_again]);
                 }
 
             });
@@ -497,7 +497,7 @@
                     select.addClass('hotel_booking_invalid_quantity');
                     //message
                     room_title.find('.hb_success_message').remove();
-                    room_title.append('<label class="hb_success_message">' + hotel_booking_i18n.waring.room_select + '</label>');
+                    room_title.append('<label class="hb_success_message">' + hotel_booking_i18n.warning.room_select + '</label>');
                     var timeOut = setTimeout(function () {
                         room_title.find('.hb_success_message').remove();
                     }, 2000);
@@ -514,6 +514,7 @@
                         button.addClass('hb_loading');
                     },
                     success: function (code) {
+                        console.log(code);
                         _form.hb_overlay_ajax_stop();
                         code = parseJSON(code);
                         if (typeof code.message !== 'undefined') {
@@ -545,7 +546,7 @@
                     error: function () {
                         // searchResult.hb_overlay_ajax_stop();
                         button.removeClass('hb_loading');
-                        alert(hotel_booking_i18n.waring.try_again);
+                        alert(hotel_booking_i18n.warning.try_again);
                     }
                 });
                 return false;
@@ -574,7 +575,7 @@
                 }).done(function (res) {
                     res = parseJSON(res);
                     if (typeof res.status === 'undefined' || res.status !== 'success')
-                        alert(hotel_booking_i18n.waring.try_again);
+                        alert(hotel_booking_i18n.warning.try_again);
 
                     // update woo cart when remove room from cart
                     $('body').trigger('hb_removed_item_to_cart');
@@ -616,7 +617,7 @@
                 }).done(function (res) {
                     res = parseJSON(res);
                     if (typeof res.status === 'undefined' || res.status !== 'success') {
-                        alert(hotel_booking_i18n.waring.try_again);
+                        alert(hotel_booking_i18n.warning.try_again);
                         return;
                     }
 

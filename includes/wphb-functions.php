@@ -702,7 +702,7 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 			'check_out_date_must_be_greater' => __( 'Check out date must be greater than the check in.', 'wp-hotel-booking' ),
 			'enter_coupon_code'              => __( 'Please enter coupon code.', 'wp-hotel-booking' ),
 			'review_rating_required'         => __( 'Please select a rating.', 'wp-hotel-booking' ),
-			'waring'                         => array(
+			'warning'                         => array(
 				'room_select' => __( 'Please select room number.', 'wp-hotel-booking' ),
 				'try_again'   => __( 'Please try again!', 'wp-hotel-booking' )
 			),

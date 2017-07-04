@@ -210,13 +210,12 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		public static function hotel_booking_mini_cart( $atts ) {
 			?>
             <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
+
 				<?php if ( isset( $atts['title'] ) && $atts['title'] ): ?>
-
                     <h3><?php echo esc_html( $atts['title'] ); ?></h3>
-
 				<?php endif; ?>
 
-				<?php if ( ! empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ): ?>
+				<?php if ( ! empty( WPHB_Cart::instance()->cart_contents ) ): ?>
 
 					<?php hb_get_template( 'cart/mini-cart.php' ); ?>
 

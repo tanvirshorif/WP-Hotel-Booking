@@ -28,7 +28,7 @@ $rooms = $cart->get_rooms();
 
 	<?php foreach ( $rooms as $key => $room ) { ?>
 		<?php if ( $cart_item = $cart->get_cart_item( $key ) ) { ?>
-			<?php hb_get_template( 'loop/mini-cart-item.php', array( 'cart_id' => $key, 'room' => $room ) ); ?>
+			<?php hb_get_template( 'cart/mini-cart-item.php', array( 'cart_id' => $key, 'room' => $room ) ); ?>
 		<?php } ?>
 	<?php } ?>
 

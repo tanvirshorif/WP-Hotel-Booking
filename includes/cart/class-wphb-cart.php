@@ -94,10 +94,6 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			 * after mini cart item loop
 			 */
 			add_action( 'hotel_booking_before_mini_cart_loop_price', array( $this, 'mini_cart_loop' ), 10, 2 );
-			/**
-			 * wp.template layout filter
-			 */
-			add_filter( 'hb_get_template', array( $this, 'mini_cart_layout' ), 10, 5 );
 
 			/**
 			 * sortable cart item
@@ -162,23 +158,18 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 					$return = count( $this->get_cart_contents() );
 					break;
 
-				// old
-				case 'total_rooms':
-					$return = $this->get_total_rooms();
-					break;
-				case 'total_nights':
-					$return = $this->get_total_nights();
-					break;
 				case 'sub_total':
 					$return = $this->get_sub_total();
 					break;
+
 				case 'total':
 					$return = $this->get_total();
 					break;
+
 				case 'advance_payment':
 					$return = $this->get_advance_payment();
 					break;
-				// end old
+
 				default:
 					$return = '';
 					break;
@@ -815,25 +806,6 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				}
 			}
 			add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
-		}
-
-		/**
-		 * wp.template hook template
-		 *
-		 * @param  [type] $located       [description]
-		 * @param  [type] $template_name [description]
-		 * @param  [type] $args          [description]
-		 * @param  [type] $template_path [description]
-		 * @param  [type] $default_path  [description]
-		 *
-		 * @return [type]                [description]
-		 */
-		public function mini_cart_layout( $located, $template_name, $args, $template_path, $default_path ) {
-			if ( $template_name === 'cart/mini-cart-js-template.php' ) {
-				return hb_locate_template( 'shortcodes/mini-cart-js-template.php' );
-			}
-
-			return $located;
 		}
 
 		/**
