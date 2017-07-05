@@ -41,7 +41,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 
 		/**
 		 * Current Authorize using
-         *
+		 *
 		 * @var null
 		 */
 		protected $_authorize_url = null;
@@ -62,7 +62,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 
 		/**
 		 * Secret key
-         *
+		 *
 		 * @var null
 		 */
 		protected $_secret_key = null;

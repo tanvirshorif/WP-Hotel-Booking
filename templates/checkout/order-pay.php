@@ -1,28 +1,47 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template for displaying booking via Authorize payment gateway.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/checkout/order-pay.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ *
+ * @param       customer
+ */
 
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
-<?php $book = WPHB_Booking::instance( $booking_id ); ?>
 
-<?php $currency_symbol = hb_get_currency_symbol( $book->currency ); ?>
 
-<?php if ( $book->get_status() !== 'completed' ): ?>
+<?php $booking = WPHB_Booking::instance( $booking_id ); ?>
+
+<?php $currency_symbol = hb_get_currency_symbol( $booking->currency ); ?>
+
+<?php if ( $booking->get_status() !== 'completed' ) { ?>
 	<?php do_action( 'hotel_booking_order_pay_before' ); ?>
-    <h3><?php printf( __( 'Booking ID: %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ) ?></h3>
+
+    <h3>
+		<?php printf( __( 'Booking ID: %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ) ?>
+    </h3>
     <p>
         <strong><?php _e( 'Payment status: ' ) ?></strong>
-		<?php printf( '%s', ucfirst( $book->get_status() ) ) ?>
+		<?php printf( '%s', ucfirst( $booking->get_status() ) ) ?>
     </p>
     <p>
         <strong><?php _e( 'Booking Date: ' ) ?></strong>
-		<?php printf( '%s', get_the_date( '', $book->id ) ) ?>
+		<?php printf( '%s', get_the_date( '', $booking->id ) ) ?>
     </p>
     <p>
         <strong><?php _e( 'Payment Method: ', 'wp-hotel-booking' ) ?></strong>
-		<?php printf( '%s', $book->method_title ) ?>
+		<?php printf( '%s', $booking->method_title ) ?>
     </p>
     <p>
         <strong><?php _e( 'Total: ', 'wp-hotel-booking' ) ?></strong>
@@ -30,12 +49,13 @@ if ( ! defined( 'ABSPATH' ) ) {
     </p>
     <p>
         <strong><?php _e( 'Advance Payment: ', 'wp-hotel-booking' ) ?></strong>
-		<?php printf( '%s', hb_format_price( $book->advance_payment, $currency_symbol ) ) ?>
+		<?php printf( '%s', hb_format_price( $booking->advance_payment, $currency_symbol ) ) ?>
     </p>
+
 	<?php do_action( 'hotel_booking_order_pay_after' ); ?>
-    <!--_hb_advance_payment-->
-<?php else: ?>
 
-    <h3><?php printf( __( '%s was pay completed', 'wp-hotel-booking' ), $book->get_booking_number() ) ?></h3>
+<?php } else { ?>
 
-<?php endif; ?>
+    <h3><?php printf( __( '%s was pay completed', 'wp-hotel-booking' ), $booking->get_booking_number() ) ?></h3>
+
+<?php } ?>

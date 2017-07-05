@@ -83,7 +83,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			register_activation_hook( __FILE__, array( 'WPHB_Install', 'uninstall' ) );
 
 			add_action( 'init', array( $this, 'init' ), 20 );
-			add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
 
 			// create new blog in multisite
 			add_action( 'wpmu_new_blog', array( 'WPHB_Install', 'create_new_blog' ) );
@@ -136,6 +135,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-post-types.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-roles.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-sessions.php' );
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-checkout.php' );
 
 			include_once( WPHB_ABSPATH . 'includes/wphb-core-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );

@@ -71,31 +71,6 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 		public $quantity = null;
 
 		/**
-		 * @var null
-		 */
-		public $price = null;
-
-		/**
-		 * @var null
-		 */
-		public $price_tax = null;
-
-		/**
-		 * @var null
-		 */
-		public $regular_price_tax = null;
-
-		/**
-		 * @var null
-		 */
-		public $regular_price = null;
-
-		/**
-		 * @var null
-		 */
-		public $respondent = null;
-
-		/**
 		 * WPHB_Extra_Package constructor.
 		 *
 		 * @since 2.0

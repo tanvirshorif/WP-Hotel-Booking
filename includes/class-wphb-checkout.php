@@ -47,6 +47,25 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
+			add_action( 'template_redirect', array( $this, 'handle_purchase_request' ), 999 );
+		}
+
+		/**
+		 * Redirect checkout to cart page when complete payment or cart empty.
+		 *
+		 * @since 2.0
+		 */
+		public function handle_purchase_request() {
+			$method_var = 'hb-transaction-method';
+			$cart       = WPHB_Cart::instance();
+			if ( ! empty( $_REQUEST[ $method_var ] ) ) {
+				hb_get_payment_gateways();
+				$requested_transaction_method = sanitize_text_field( $_REQUEST[ $method_var ] );
+				hb_do_transaction( $requested_transaction_method );
+			} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && ! count( $cart->cart_contents ) ) {
+				wp_redirect( hb_get_cart_url() );
+				exit();
+			}
 		}
 
 		/**
@@ -183,3 +202,5 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 	}
 
 }
+
+new WPHB_Checkout();

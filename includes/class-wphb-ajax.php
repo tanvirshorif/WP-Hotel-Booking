@@ -78,7 +78,8 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'post_status' => 'any'
 			);
 			// set_transient( 'hotel_booking_customer_email_' . WPHB_BLOG_ID, $email, DAY_IN_SECONDS );
-			WP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
+			$cart = WPHB_Cart::instance();
+			$cart->set_customer( 'customer_email', $email );
 			if ( $posts = get_posts( $args ) ) {
 				$customer       = $posts[0];
 				$customer->data = array();
@@ -229,8 +230,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			// add to cart
 			$cart         = WPHB_Cart::instance();
 			$cart_item_id = $cart->add_to_cart( $product_id, $param, $qty );
-
-			var_dump( $cart->cart_contents );
 
 			if ( ! is_wp_error( $cart_item_id ) ) {
 				$cart_item = $cart->get_cart_item( $cart_item_id );

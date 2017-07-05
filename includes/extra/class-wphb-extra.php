@@ -57,8 +57,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 			$parent_quantity = 1;
 			if ( isset( $params['order_item_id'] ) ) {
 				$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
-			} else if ( ! is_admin() && isset( $params['parent_id'] ) && WP_Hotel_Booking::instance()->cart ) {
-				$cart   = WPHB_Cart::instance();
+			} else if ( ! is_admin() && isset( $params['parent_id'] ) && $cart   = WPHB_Cart::instance() ) {
 				$parent = $cart->get_cart_item( $params['parent_id'] );
 				if ( $parent ) {
 					$parent_quantity = $parent->quantity;
@@ -103,11 +102,11 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		}
 
 		/**
-		 * Save extra packages actions.
-		 *
-		 * @since 2.0
-		 *
-		 * @return bool|int|string|WP_Error
+         * Save extra packages actions.
+         *
+         * @since 2.0
+         *
+		 * @return bool
 		 */
 		public function save_extra() {
 			if ( ! isset( $_POST ) || empty( $_POST ) ) {
@@ -118,12 +117,14 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 				return false;
 			}
 
+			global $wpdb;
+
 			foreach ( (array) $_POST['tp_hb_extra_room'] as $post_id => $post ) {
 
-				global $wpdb;
 				$query = $wpdb->prepare( "
 				SELECT * FROM $wpdb->posts WHERE `ID` = %d AND `post_type` = %s
 			", $post_id, 'hb_extra_room' );
+
 
 				$results = $wpdb->get_results( $query, OBJECT );
 
@@ -167,11 +168,9 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 						add_post_meta( $post_id, 'tp_hb_extra_room_' . $key, $value );
 					}
 				}
-
-				return $post_id;
 			}
 
-			return false;
+			return true;
 		}
 
 		/**

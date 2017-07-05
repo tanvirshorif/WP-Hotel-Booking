@@ -28,7 +28,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 		/**
 		 * @var int
 		 */
-		public $quantity = 1;
+		protected $quantity = 1;
 
 		/**
 		 * @var null
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 		 * @param null $params
 		 */
 		public function __construct( $post, $params = null ) {
-			if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
+			if ( is_numeric( $post ) && $post && ( get_post_type( $post ) == 'hb_room' || get_post_type( $post ) == 'hb_extra_room' ) ) {
 				$this->post = get_post( $post );
 			} else if ( $post instanceof WP_Post || is_object( $post ) ) {
 				$this->post = $post;

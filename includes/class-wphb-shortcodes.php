@@ -215,15 +215,13 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
                     <h3><?php echo esc_html( $atts['title'] ); ?></h3>
 				<?php endif; ?>
 
-				<?php if ( ! empty( WPHB_Cart::instance()->cart_contents ) ): ?>
+				<?php $cart = WPHB_Cart::instance(); ?>
 
+				<?php if ( $cart->cart_contents ) { ?>
 					<?php hb_get_template( 'cart/mini-cart.php' ); ?>
-
-				<?php else: ?>
-
+				<?php } else { ?>
                     <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty.', 'wp-hotel-booking' ) ?></p>
-
-				<?php endif; ?>
+				<?php } ?>
             </div>
 			<?php
 		}
@@ -337,18 +335,10 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 * @since 2.0
 		 */
 		public static function hotel_booking_checkout( $atts ) {
-			$customer              = new stdClass;
-			$customer->title       = '';
-			$customer->first_name  = '';
-			$customer->last_name   = '';
-			$customer->email       = '';
-			$customer->address     = '';
-			$customer->state       = '';
-			$customer->city        = '';
-			$customer->postal_code = '';
-			$customer->country     = '';
-			$customer->phone       = '';
-			$customer->fax         = '';
+			$customer = new stdClass;
+
+			$customer->title = $customer->first_name = $customer->last_name = $customer->email = $customer->address = $customer->state = '';
+			$customer->city  = $customer->postal_code = $customer->country = $customer->phone = $customer->fax = '';
 
 			if ( is_user_logged_in() ) {
 				$user = WPHB_User::get_current_user();

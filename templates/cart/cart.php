@@ -101,12 +101,12 @@ global $hb_settings;
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ) ?></span>
                     </td>
                 </tr>
-				<?php $advance_payment = ''; ?>
-				<?php if ( $advance_payment = $cart->advance_payment ) { ?>
+
+				<?php if ( hb_get_advance_payment() ) { ?>
                     <tr class="hb_advance_payment">
                         <td colspan="8">
 							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
-                            <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $advance_payment ); ?></span>
+                            <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $cart->advance_payment ); ?></span>
                         </td>
                     </tr>
 				<?php } ?>

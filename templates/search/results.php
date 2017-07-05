@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'hb_before_search_result' );
 
 global $hb_search_rooms;
+$cart = WPHB_Cart::instance();
 ?>
 
 <div id="hotel-booking-results">
