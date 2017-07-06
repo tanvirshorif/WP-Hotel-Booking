@@ -25,7 +25,8 @@ defined( 'ABSPATH' ) || exit;
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Email', 'wp-hotel-booking' ); ?></label>
                 <div class="hb-form-field-input">
-                    <input type="email" name="existing-customer-email" value=""
+                    <input type="email" name="existing-customer-email"
+                           value="<?php echo esc_attr( WPHB_Cart::instance()->customer_email ); ?>"
                            placeholder="<?php _e( 'Your email here', 'wp-hotel-booking' ); ?>"/>
                 </div>
             </li>

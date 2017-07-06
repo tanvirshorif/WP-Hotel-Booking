@@ -56,19 +56,19 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 					'desc'  => __( 'Payment General options for system.', 'wp-hotel-booking' )
 				),
 				array(
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_guest_checkout',
+					'title'   => __( 'Guest Checkout', 'wp-hotel-booking' ),
+					'desc'    => __( 'Allows customers to checkout without creating an account.', 'wp-hotel-booking' ),
+					'default' => 1
+				),
+				array(
 					'type'    => 'number',
 					'id'      => 'tp_hotel_booking_cancel_payment',
 					'title'   => __( 'Cancel Payment', 'wp-hotel-booking' ),
 					'desc'    => __( 'Cancel Payment after hour(s)', 'wp-hotel-booking' ),
 					'default' => 12,
 					'min'     => 1,
-				),
-				array(
-					'type'    => 'checkbox',
-					'id'      => 'tp_hotel_booking_guest_checkout',
-					'title'   => __( 'Process', 'wp-hotel-booking' ),
-					'desc'    => __( 'Allows customers to checkout without creating an account.', 'wp-hotel-booking' ),
-					'default' => 1
 				),
 				array(
 					'type' => 'section_end',

@@ -129,9 +129,13 @@ do_action( 'hotel_booking_before_checkout_form' );
 
             </table>
 
-			<?php if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) && get_option( 'users_can_register' ) ) { ?>
+			<?php if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) ) { ?>
 
-				<?php printf( __( 'You have to <strong><a href="%s">login</a></strong> or <strong><a href="%s">register</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ), wp_registration_url() ) ?>
+				<?php if ( get_option( 'users_can_register' ) ) {
+					printf( __( 'You have to <strong><a href="%s">login</a></strong> or <strong><a href="%s">register</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ), wp_registration_url() );
+				} else {
+					printf( __( 'You have to <strong><a href="%s">login</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ) );
+				} ?>
 
 			<?php } else { ?>
 

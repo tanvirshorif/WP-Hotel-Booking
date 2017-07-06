@@ -57,7 +57,11 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 			}
 			$this->_load_settings();
 
+			// update booking sub total
 			add_filter( 'hb_cart_sub_total', array( $this, 'apply_sub_total_discount' ), 999 );
+			// update booking transaction
+			add_filter( 'hotel_booking_cart_generate_transaction', array( $this, 'add_coupon_transaction' ) );
+
 		}
 
 		/**
@@ -146,6 +150,7 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 			return $discount < $sub_total ? $sub_total - $discount : 0;
 		}
 
+
 		/**
 		 * Get cart sub total with discount.
 		 *
@@ -196,6 +201,78 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 			}
 
 			return $return;
+		}
+
+		/**
+		 * Add coupon in cart generate transaction.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $booking_info
+		 *
+		 * @return mixed
+		 */
+		public function add_coupon_transaction( $booking_info ) {
+			$cart = WPHB_Cart::instance();
+			if ( $cart->coupon ) {
+				$coupon                           = WPHB_Coupon::instance( $cart->coupon );
+				$booking_info['_hb_coupon_id']    = $coupon->ID;
+				$booking_info['_hb_coupon_code']  = $coupon->coupon_code;
+				$booking_info['_hb_coupon_value'] = $coupon->discount_value;
+			}
+
+			return $booking_info;
+		}
+
+
+		/**
+		 * Get coupons active.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $date
+		 * @param bool $code
+		 *
+		 * @return array|bool
+		 */
+		public function get_coupons_active( $date, $code = false ) {
+
+			$coupons = false;
+			if ( $code ) {
+				$args = array(
+					'post_type'      => 'hb_coupon',
+					'posts_per_page' => 999,
+					'meta_query'     => array(
+						'relation' => 'AND',
+						array(
+							'key'     => '_hb_coupon_date_from_timestamp',
+							'compare' => '<=',
+							'value'   => $date
+						),
+						array(
+							'key'     => '_hb_coupon_date_to_timestamp',
+							'compare' => '>=',
+							'value'   => $date
+						)
+					)
+				);
+
+				if ( $coupons = get_posts( $args ) ) {
+					$found = false;
+					foreach ( $coupons as $coupon ) {
+						if ( strcmp( $coupon->post_title, $code ) == 0 ) {
+							$coupons = $coupon;
+							$found   = true;
+							break;
+						}
+					}
+					if ( ! $found ) {
+						$coupons = false;
+					}
+				}
+			}
+
+			return $coupons;
 		}
 
 		/**

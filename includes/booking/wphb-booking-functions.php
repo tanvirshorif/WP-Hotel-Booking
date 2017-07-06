@@ -41,28 +41,6 @@ if ( ! function_exists( 'hb_update_booking_status' ) ) {
 if ( ! function_exists( 'hb_create_booking' ) ) {
 	function hb_create_booking( $booking_info = array(), $order_items = array() ) {
 
-		$booking_info = wp_parse_args( $booking_info, array(
-			'_hb_tax'                     => '',
-			'_hb_advance_payment'         => '',
-			'_hb_advance_payment_setting' => '',
-			'_hb_currency'                => '',
-			'_hb_user_id'                 => get_current_blog_id(),
-			'_hb_method'                  => '',
-			'_hb_method_title'            => '',
-			'_hb_method_id'               => '',
-			// customer
-			'_hb_customer_title'          => '',
-			'_hb_customer_first_name'     => '',
-			'_hb_customer_last_name'      => '',
-			'_hb_customer_address'        => '',
-			'_hb_customer_city'           => '',
-			'_hb_customer_state'          => '',
-			'_hb_customer_postal_code'    => '',
-			'_hb_customer_country'        => '',
-			'_hb_customer_phone'          => '',
-			'_hb_customer_email'          => '',
-			'_hb_customer_fax'            => ''
-		) );
 		// return WP_Error if cart is empty
 		$cart = WPHB_Cart::instance();
 		if ( $cart->cart_items_count === 0 ) {
@@ -77,7 +55,10 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 			'parent'        => 0
 		);
 
-		$booking                     = WPHB_Booking::instance( $args['booking_id'] );
+
+		// instance empty pending booking
+		$booking = WPHB_Booking::instance( $args['booking_id'] );
+
 		$booking->post->post_title   = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
 		$booking->post->post_content = hb_get_request( 'addition_information' ) ? hb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'wp-hotel-booking' );
 		$booking->post->post_status  = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
@@ -91,16 +72,8 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 
 		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
 
-		if ( $cart->coupon ) {
-			$booking_info['_hb_coupon_id']    = $cart->coupon;
-			$coupon                           = WPHB_Coupon::instance( $booking_info['_hb_coupon_id'] );
-			$booking_info['_hb_coupon_code']  = $coupon->coupon_code;
-			$booking_info['_hb_coupon_value'] = $coupon->discount_value;
-		}
-
-		$booking->set_booking_info(
-			$booking_info
-		);
+		// update booking info
+		$booking->set_booking_info( $booking_info );
 
 		$booking_id = $booking->update( $order_items );
 

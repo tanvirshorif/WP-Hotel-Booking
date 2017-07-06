@@ -36,20 +36,15 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'fetch_customer_info'      => true,
 				'place_order'              => true,
 				'parse_search_params'      => true,
-				'apply_coupon'             => true,
-				'remove_coupon'            => true,
 				'ajax_add_to_cart'         => true,
 				'ajax_remove_item_cart'    => true,
 				'load_order_user'          => false,
 				'load_room_ajax'           => false,
 				'check_room_available'     => false,
 				'load_order_item'          => false,
-				'load_coupon_ajax'         => false,
 				'admin_add_order_item'     => false,
 				'admin_remove_order_item'  => false,
 				'admin_remove_order_items' => false,
-				'add_coupon_to_order'      => false,
-				'remove_coupon_on_order'   => false,
 				'delete_extra_package'     => false,
 				'remove_extra_cart'        => true,
 				'load_other_full_calendar' => false,
@@ -127,57 +122,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'params'  => $params
 			) );
 			hb_send_json( $return );
-		}
-
-		/**
-		 * Apply coupon.
-		 *
-		 * @since 2.0
-		 */
-		public static function apply_coupon() {
-			! session_id() && session_start();
-			$code = hb_get_request( 'code' );
-			ob_start();
-			$today  = strtotime( date( 'm/d/Y' ) );
-			$coupon = hb_get_coupons_active( $today, $code );
-
-			$output   = ob_get_clean();
-			$response = array();
-			if ( $coupon ) {
-				$coupon   = WPHB_Coupon::instance( $coupon );
-				$response = $coupon->validate();
-				if ( $response['is_valid'] ) {
-					$response['result'] = 'success';
-					$response['type']   = get_post_meta( $coupon->ID, '_hb_coupon_discount_type', true );
-					$response['value']  = get_post_meta( $coupon->ID, '_hb_coupon_discount_value', true );
-					if ( ! session_id() ) {
-						session_start();
-					}
-					// set session
-					WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
-					hb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
-				}
-			} else {
-				$response['message'] = __( 'Coupon does not exist!', 'wp-hotel-booking' );
-			}
-			hb_send_json( $response );
-		}
-
-		/**
-		 * Remove coupon.
-		 *
-		 * @since 2.0
-		 */
-		public static function remove_coupon() {
-			! session_id() && session_start();
-			// delete_transient( 'hb_user_coupon_' . session_id() );
-			WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
-			hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
-			hb_send_json(
-				array(
-					'result' => 'success'
-				)
-			);
 		}
 
 		/**
@@ -443,37 +387,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		}
 
 		/**
-		 * Ajax load coupons code.
-		 *
-		 * @since 2.0
-		 */
-		public static function load_coupon_ajax() {
-			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
-				return;
-			}
-
-			$code = sanitize_text_field( $_POST['coupon'] );
-			$time = time();
-
-			global $wpdb;
-			$sql = $wpdb->prepare( "
-				SELECT coupon.ID, coupon.post_title FROM $wpdb->posts AS coupon
-					INNER JOIN $wpdb->postmeta AS start ON start.post_id = coupon.ID
-					INNER JOIN $wpdb->postmeta AS end ON end.post_id = coupon.ID
-				WHERE
-					coupon.post_type = %s
-					AND coupon.post_title LIKE %s
-					AND coupon.post_status = %s
-					AND start.meta_key = %s
-					AND end.meta_key = %s
-					AND ( start.meta_value <= %d AND end.meta_value >= %d )
-			", 'hb_coupon', '%' . $wpdb->esc_like( $code ) . '%', 'publish', '_hb_coupon_date_from_timestamp', '_hb_coupon_date_to_timestamp', $time, $time
-			);
-
-			wp_send_json( apply_filters( 'hotel_admin_get_coupons', $wpdb->get_results( $sql ) ) );
-		}
-
-		/**
 		 * Book manual add order item.
 		 *
 		 * @since 2.0
@@ -614,72 +527,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 					hb_remove_order_item( $o_i_d );
 				}
 			}
-
-			$post = get_post( $order_id );
-			ob_start();
-			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items.php';
-			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items-template-js.php';
-			$html = ob_get_clean();
-			wp_send_json( array(
-				'status' => true,
-				'html'   => $html
-			) );
-		}
-
-		/**
-		 * Add new coupon.
-		 *
-		 * @since 2.0
-		 */
-		public static function add_coupon_to_order() {
-			if ( ! check_ajax_referer( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ) || ! class_exists( 'WPHB_Coupon' ) ) {
-				return;
-			}
-
-			if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
-				return;
-			}
-
-			$order_id  = absint( $_POST['order_id'] );
-			$coupon_id = absint( $_POST['coupon_id'] );
-
-			$coupon   = WPHB_Coupon::instance( $coupon_id );
-			$subtotal = hb_booking_subtotal( $order_id, false ); // subtotal without coupon
-
-			add_post_meta( $order_id, '_hb_coupon_id', $coupon_id );
-			add_post_meta( $order_id, '_hb_coupon_code', $coupon->coupon_code );
-			add_post_meta( $order_id, '_hb_coupon_value', $coupon->get_discount_value( $subtotal ) );
-
-			$post = get_post( $order_id );
-			ob_start();
-			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items.php';
-			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items-template-js.php';
-			$html = ob_get_clean();
-			wp_send_json( array(
-				'status' => true,
-				'html'   => $html
-			) );
-		}
-
-		/**
-		 * Remove coupon order.
-		 *
-		 * @since 2.0
-		 */
-		public static function remove_coupon_on_order() {
-			if ( ! check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
-				return;
-			}
-
-			if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
-				return;
-			}
-
-			$order_id = absint( $_POST['order_id'] );
-
-			delete_post_meta( $order_id, '_hb_coupon_id' );
-			delete_post_meta( $order_id, '_hb_coupon_code' );
-			delete_post_meta( $order_id, '_hb_coupon_value' );
 
 			$post = get_post( $order_id );
 			ob_start();

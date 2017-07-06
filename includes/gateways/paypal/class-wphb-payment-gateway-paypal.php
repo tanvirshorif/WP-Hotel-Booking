@@ -245,31 +245,6 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Abstract_Payment_Gateway {
 	}
 
 	/**
-	 * Retrieve order by paypal txn_id
-	 *
-	 * @param $txn_id
-	 *
-	 * @return int
-	 */
-	function get_order_id( $txn_id ) {
-
-		$args = array(
-			'meta_key'    => '_hb_method_id',
-			'meta_value'  => $txn_id,
-			'numberposts' => 1, //we should only have one, so limit to 1
-		);
-
-		$bookings = hb_get_bookings( $args );
-		if ( $bookings ) {
-			foreach ( $bookings as $booking ) {
-				return $booking->ID;
-			}
-		}
-
-		return 0;
-	}
-
-	/**
 	 * Get Paypal checkout url
 	 *
 	 * @param $booking_id
@@ -293,12 +268,20 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Abstract_Payment_Gateway {
 		$nonce        = wp_create_nonce( 'hb-paypal-nonce' );
 		$paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];
 		$custom       = array( 'booking_id' => $booking_id, 'booking_key' => $booking->booking_key );
+
+		$cart        = WPHB_Cart::instance();
+		$description = array();
+		foreach ( $cart->get_rooms() as $room ) {
+			$description[] = sprintf( '%s (x %d)', $room->name, $room->quantity );
+		}
+		$cart_description = join( ', ', $description );
+
 		if ( $advance_payment && ! $pay_all ) {
 			$custom['advance_payment'] = $advance_payment;
 		}
 		$query = array(
 			'business'      => $paypal_email,
-			'item_name'     => hb_get_cart_description(),
+			'item_name'     => $cart_description,
 			'return'        => add_query_arg( array(
 				'hb-transaction-method' => 'paypal-standard',
 				'paypal-nonce'          => $nonce

@@ -23,14 +23,14 @@ defined( 'ABSPATH' ) || exit;
             <label for="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : '' ?>">
 				<?php echo esc_html( $field['title'] ) ?>
             </label>
-			<?php if ( isset( $field['desc'] ) ) { ?>
-                <p class="description"><?php echo esc_html( $field['desc'] ) ?></p>
-			<?php } ?>
 		<?php } ?>
     </th>
     <td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ) ?>">
 		<?php if ( isset( $field['id'] ) ) : ?>
 			<?php wp_editor( $content, $field['id'], isset( $field['options'] ) ? $field['options'] : array() ); ?>
 		<?php endif; ?>
+		<?php if ( isset( $field['desc'] ) ) { ?>
+            <p class="description"><?php echo esc_html( $field['desc'] ) ?></p>
+		<?php } ?>
     </td>
 </tr>

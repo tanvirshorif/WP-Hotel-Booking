@@ -303,7 +303,7 @@ defined( 'ABSPATH' ) || exit;
 						<?php wp_nonce_field( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ); ?>
                         <input type="hidden" name="order_id" value="{{ data.order_id }}"/>
                         <!-- <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" /> -->
-                        <input type="hidden" name="action" value="hotel_booking_add_coupon_to_order"/>
+                        <input type="hidden" name="action" value="wphb_coupon_add_booking_coupon"/>
                         <button type="reset"
                                 class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
                         <button type="submit"

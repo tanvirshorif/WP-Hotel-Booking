@@ -73,7 +73,9 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 		 *
 		 * @since 2.0
 		 *
-		 * @return mixed|WP_Error
+		 * @param null $order
+		 *
+		 * @return mixed|null|WP_Error
 		 * @throws Exception
 		 */
 		public function create_booking( $order = null ) {
@@ -84,11 +86,12 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 			// generate transaction
 			$cart        = WPHB_Cart::instance();
 			$transaction = $cart->generate_transaction( $order );
+
 			// allow hook
 			$booking_info = apply_filters( 'hotel_booking_checkout_booking_info', $transaction->booking_info, $transaction );
 			$order_items  = apply_filters( 'hotel_booking_checkout_booking_order_items', $transaction->order_items, $transaction );
 
-			if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
+			if ( $cart->cart_items_count === 0 ) {
 				hb_send_json( array(
 					'result'  => 'fail',
 					'message' => __( 'Your cart is empty.', 'wp-hotel-booking' )
@@ -109,7 +112,7 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 				$booking_info['post_content'] = hb_get_request( 'addition_information' );
 				$booking->set_booking_info( $booking_info );
 				// update booking info meta post
-				$booking_id = $booking->update( $order_items );
+				$booking_id = $booking->update( $order );
 			} else {
 				$booking_id = hb_create_booking( $booking_info, $order_items );
 			}

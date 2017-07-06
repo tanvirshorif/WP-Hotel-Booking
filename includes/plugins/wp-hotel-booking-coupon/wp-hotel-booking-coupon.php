@@ -77,6 +77,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		 */
 		private function define_constants() {
 			define( 'WPHB_COUPON_ABSPATH', dirname( __FILE__ ) . '/' );
+			define( 'WPHB_COUPON_URI', plugin_dir_url( __FILE__ ) );
 			define( 'WPHB_COUPON_VER', $this->_version );
 		}
 
@@ -88,6 +89,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		public function includes() {
 			require_once WPHB_COUPON_ABSPATH . '/includes/class-wphb-coupon.php';
 			require_once WPHB_COUPON_ABSPATH . '/includes/class-wphb-coupon-post-types.php';
+			require_once WPHB_COUPON_ABSPATH . '/includes/class-wphb-coupon-ajax.php';
 		}
 
 		/**
@@ -97,7 +99,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		 */
 		private function init_hooks() {
 			add_action( 'init', array( $this, 'load_text_domain' ) );
-			add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'hotel_booking_before_cart_total', array( $this, 'add_form' ) );
 		}
 
@@ -134,31 +137,16 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		}
 
 		/**
-		 * Add enable coupon setting in General tab.
+		 * Enqueue scripts.
 		 *
 		 * @since 2.0
-		 *
-		 * @param $settings
 		 */
-		public function admin_settings( $settings ) {
-			if ( $settings !== 'general' ) {
-				return;
+		public function enqueue_scripts() {
+			if ( is_admin() ) {
+				wp_enqueue_script( 'wphb-coupon-admin', WPHB_COUPON_URI . '/assets/js/admin.wphb-coupon.js', array( 'jQuery' ), WPHB_COUPON_VER, true );
+			} else {
+				wp_enqueue_script( 'wphb-coupon-site', WPHB_COUPON_URI . '/assets/js/wphb-coupon.js', array( 'jQuery' ), WPHB_COUPON_VER, true );
 			}
-			$settings = hb_settings();
-			?>
-            <table class="form-table">
-                <tr>
-                    <th><?php _e( 'Enable Coupon', 'wphb-coupon' ); ?></th>
-                    <td>
-						<?php $field_name = $settings->get_field_name( 'enable_coupon' ); ?>
-                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0"/>
-                        <input type="checkbox"
-                               name="<?php echo esc_attr( $field_name ); ?>" <?php checked( $settings->get( 'enable_coupon' ) ? 1 : 0, 1 ); ?>
-                               value="1"/>
-                    </td>
-                </tr>
-            </table>
-			<?php
 		}
 
 		/**
@@ -168,34 +156,30 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		 */
 		public function add_form() {
 
-			$settings = hb_settings();
+			$cart = WPHB_Cart::instance();
+			if ( $coupon = $cart->coupon ) {
+				$coupon = WPHB_Coupon::instance( $coupon );
+				?>
+                <tr class="hb_coupon">
+                    <td class="hb_coupon_remove" colspan="8">
+                        <p class="hb-remove-coupon" align="right">
+                            <a href="" id="hb-remove-coupon"><i class="fa fa-times"></i></a>
+                        </p>
+                        <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'wphb-coupon' ), $coupon->coupon_code ); ?></span>
+                        <span class="hb-align-right">-<?php echo hb_format_price( $coupon->discount_value ); ?></span>
+                    </td>
+                </tr>
+			<?php } else { ?>
+                <tr class="hb_coupon">
+                    <td colspan="8" class="hb-align-center">
+                        <input type="text" name="hb-coupon-code" value=""
+                               placeholder="<?php _e( 'Coupon', 'wphb-coupon' ); ?>"/>
+                        <button type="button"
+                                id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'wphb-coupon' ); ?></button>
+                    </td>
+                </tr>
+			<?php }
 
-			if ( $settings->get( 'enable_coupon' ) ) {
-				$cart = WPHB_Cart::instance();
-				if ( $coupon = $cart->coupon ) {
-					$coupon = WPHB_Coupon::instance( $coupon );
-					?>
-                    <tr class="hb_coupon">
-                        <td class="hb_coupon_remove" colspan="8">
-                            <p class="hb-remove-coupon" align="right">
-                                <a href="" id="hb-remove-coupon"><i class="fa fa-times"></i></a>
-                            </p>
-                            <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'wphb-coupon' ), $coupon->coupon_code ); ?></span>
-                            <span class="hb-align-right">-<?php echo hb_format_price( $coupon->discount_value ); ?></span>
-                        </td>
-                    </tr>
-				<?php } else { ?>
-                    <tr class="hb_coupon">
-                        <td colspan="8" class="hb-align-center">
-                            <input type="text" name="hb-coupon-code" value=""
-                                   placeholder="<?php _e( 'Coupon', 'wphb-coupon' ); ?>"/>
-                            <button type="button"
-                                    id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'wphb-coupon' ); ?></button>
-                        </td>
-                    </tr>
-				<?php }
-
-			}
 		}
 
 	}

@@ -437,11 +437,7 @@
             _doc.on('change', '#booking-item-checkall', _self.toggle_checkbox)
             // add room
             _doc.on('click', '#add_room_item', _self.add_room_item)
-            // add coupon
-                .on('click', '#add_coupon', _self.add_coupon)
-                //remove coupon
-                .on('click', '#remove_coupon', _self.remove_coupon)
-                // sync
+            // sync
                 .on('click', '#action_sync', _self.action_sync)
                 // edit
                 .on('click', '#booking_items .actions .edit', _self.edit_room)
@@ -547,35 +543,7 @@
             });
             return false;
         },
-        add_coupon: function (e, target, data) {
-            e.preventDefault();
-            var _self = $(this),
-                _order_id = _self.attr('data-order-id');
-            $(this).hb_modal_box({
-                tmpl: 'hb-coupons',
-                settings: {
-                    order_id: _order_id
-                }
-            });
 
-            return false;
-        },
-        remove_coupon: function (e, target, data) {
-            e.preventDefault();
-            var _self = $(this),
-                _order_id = _self.attr('data-order-id'),
-                _coupon_id = _self.attr('data-coupon-id')
-            $(this).hb_modal_box({
-                tmpl: 'hb-confirm',
-                settings: {
-                    order_id: _order_id,
-                    coupon_id: _coupon_id,
-                    action: 'hotel_booking_remove_coupon_on_order'
-                }
-            });
-
-            return false;
-        },
         action_sync: function (e) {
             e.preventDefault();
 
@@ -725,38 +693,6 @@
                         _self.parent().find('input[name="check_out_date_timestamp"]').val(timestamp);
 
                         _check_in.datepicker('option', 'maxDate', date);
-                    }
-                });
-
-            } else if (target === 'hb-coupons') {
-                var _select = form.find('.booking_coupon_code');
-                // select2
-                _select.select2({
-                    placeholder: hotel_booking_i18n.select_coupon,
-                    minimumInputLength: 3,
-                    ajax: {
-                        url: ajaxurl,
-                        dataType: 'json',
-                        type: 'POST',
-                        quietMillis: 50,
-                        data: function (coupon) {
-                            return {
-                                coupon: coupon.term,
-                                action: 'hotel_booking_load_coupon_ajax',
-                                nonce: hotel_settings.nonce
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.post_title,
-                                        id: item.ID
-                                    }
-                                })
-                            };
-                        },
-                        cache: true
                     }
                 });
 
