@@ -52,12 +52,12 @@ if ( ! class_exists( 'WPHB_Coupon_Ajax' ) ) {
 		 * @since 2.0
 		 */
 		public static function apply_coupon() {
+
 			! session_id() && session_start();
 			$code = hb_get_request( 'code' );
 			ob_start();
-			$today  = strtotime( date( 'm/d/Y' ) );
-			$coupon = WPHB_Coupon::instance()->get_coupons_active( $today, $code );
-
+			$today    = strtotime( date( 'm/d/Y' ) );
+			$coupon   = WPHB_Coupon::instance()->get_coupons_active( $today, $code );
 			$output   = ob_get_clean();
 			$response = array();
 			if ( $coupon ) {
@@ -156,10 +156,12 @@ if ( ! class_exists( 'WPHB_Coupon_Ajax' ) ) {
 			add_post_meta( $order_id, '_hb_coupon_value', $coupon->get_discount_value( $subtotal ) );
 
 			$post = get_post( $order_id );
+
 			ob_start();
 			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items.php';
 			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items-template-js.php';
 			$html = ob_get_clean();
+
 			wp_send_json( array(
 				'status' => true,
 				'html'   => $html

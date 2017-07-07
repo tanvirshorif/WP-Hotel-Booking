@@ -143,9 +143,12 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		 */
 		public function enqueue_scripts() {
 			if ( is_admin() ) {
-				wp_enqueue_script( 'wphb-coupon-admin', WPHB_COUPON_URI . '/assets/js/admin.wphb-coupon.js', array( 'jQuery' ), WPHB_COUPON_VER, true );
+				wp_enqueue_script( 'wphb-coupon-admin', WPHB_COUPON_URI . '/assets/js/admin.wphb-coupon.js', array( 'jquery' ), WPHB_COUPON_VER, true );
+				wp_localize_script( 'wphb-coupon-admin', 'wphb_coupon', array(
+					'select_coupon' => __( 'Enter coupon code.', 'wphb-coupon' ),
+				) );
 			} else {
-				wp_enqueue_script( 'wphb-coupon-site', WPHB_COUPON_URI . '/assets/js/wphb-coupon.js', array( 'jQuery' ), WPHB_COUPON_VER, true );
+				wp_enqueue_script( 'wphb-coupon-site', WPHB_COUPON_URI . '/assets/js/wphb-coupon.js', array( 'jquery' ), WPHB_COUPON_VER, true );
 			}
 		}
 
@@ -155,7 +158,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		 * @since 2.0
 		 */
 		public function add_form() {
-
 			$cart = WPHB_Cart::instance();
 			if ( $coupon = $cart->coupon ) {
 				$coupon = WPHB_Coupon::instance( $coupon );
@@ -179,7 +181,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
                     </td>
                 </tr>
 			<?php }
-
 		}
 
 	}

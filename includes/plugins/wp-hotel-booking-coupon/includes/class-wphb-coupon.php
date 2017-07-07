@@ -62,6 +62,8 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 			// update booking transaction
 			add_filter( 'hotel_booking_cart_generate_transaction', array( $this, 'add_coupon_transaction' ) );
 
+			add_action( 'hb_booking_status_changed', array( $this, 'update_coupon_usage' ), 10, 3 );
+
 		}
 
 		/**
@@ -222,6 +224,36 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 			}
 
 			return $booking_info;
+		}
+
+		/**
+		 * Update coupon usage count.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $booking_id
+		 * @param $old_status
+		 * @param $new_status
+		 */
+		public function update_coupon_usage( $booking_id, $old_status, $new_status ) {
+			if ( $coupons = get_post_meta( $booking_id, '_hb_coupon_id' ) ) {
+				if ( ! $coupons ) {
+					return;
+				}
+				foreach ( $coupons as $coupon ) {
+					$usage_count = get_post_meta( $coupon, '_hb_usage_count', true );
+					if ( strpos( $new_status, 'completed' ) == 0 ) {
+						$usage_count ++;
+					} else {
+						if ( $usage_count > 0 ) {
+							$usage_count --;
+						} else {
+							$usage_count = 0;
+						}
+					}
+					update_post_meta( $coupon, '_hb_usage_count', $usage_count );
+				}
+			}
 		}
 
 

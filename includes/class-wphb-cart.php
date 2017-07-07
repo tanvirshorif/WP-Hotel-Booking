@@ -224,7 +224,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		 *
 		 * @since 2.0
 		 *
-		 * @return mixed|void
+		 * @return mixed
 		 */
 		public function get_cart_contents() {
 			// load cart session object
@@ -290,6 +290,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				if ( isset( $this->customer_sessions->session['coupon'] ) ) {
 					$this->coupon = $this->customer_sessions->session['coupon'];
 				}
+
 				$this->customer_id = apply_filters( 'hotel_booking_load_customer_from_session', $this->customer_id );
 				$this->coupon      = apply_filters( 'hotel_booking_load_customer_from_session', $this->coupon );
 			}
@@ -928,8 +929,8 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		}
 
 		/**
-         * Instance instead of new Class.
-         *
+		 * Instance instead of new Class.
+		 *
 		 * @param null $appfix
 		 *
 		 * @return WPHB_Cart
@@ -1313,3 +1314,4 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 
 }
 
+WPHB_Cart::instance();

@@ -36,6 +36,8 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 			// custom coupon columns
 			add_filter( 'manage_hb_coupon_posts_columns', array( $this, 'custom_coupon_columns' ) );
 			add_action( 'manage_hb_coupon_posts_custom_column', array( $this, 'custom_coupon_columns_filter' ) );
+
+			add_action( 'admin_init', array( $this, 'coupon_meta_boxes' ), 50 );
 		}
 
 		/**
@@ -149,6 +151,105 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 					} else {
 						echo '-';
 					}
+			}
+		}
+
+
+		/**
+		 * Coupon meta box settings.
+		 *
+		 * @since 2.0
+		 */
+		public function coupon_meta_boxes() {
+			if ( class_exists( 'WPHB_Meta_Box' ) ) {
+				// coupon meta box
+				WPHB_Meta_Box::instance(
+					'coupon_settings',
+					array(
+						'title'           => __( 'Coupon Settings', 'wphb-coupon' ),
+						'post_type'       => 'hb_coupon',
+						'meta_key_prefix' => '_hb_',
+						'context'         => 'normal',
+						'priority'        => 'high'
+					),
+					array()
+				)->add_field(
+					array(
+						'name'  => 'coupon_description',
+						'label' => __( 'Description', 'wphb-coupon' ),
+						'type'  => 'textarea',
+						'std'   => ''
+					),
+					array(
+						'name'    => 'coupon_discount_type',
+						'label'   => __( 'Discount type', 'wphb-coupon' ),
+						'type'    => 'select',
+						'std'     => '',
+						'options' => array(
+							'fixed_cart'   => __( 'Cart discount', 'wphb-coupon' ),
+							'percent_cart' => __( 'Cart % discount', 'wphb-coupon' )
+						)
+					),
+					array(
+						'name'  => 'coupon_discount_value',
+						'label' => __( 'Discount value', 'wphb-coupon' ),
+						'type'  => 'number',
+						'std'   => '',
+						'min'   => 0,
+						'step'  => 0.1
+					),
+					array(
+						'name'   => 'coupon_date_from',
+						'label'  => __( 'Validate from', 'wphb-coupon' ),
+						'type'   => 'datetime',
+						'filter' => 'hb_meta_box_field_coupon_date'
+					),
+					array(
+						'name'  => 'coupon_date_from_timestamp',
+						'label' => '',
+						'type'  => 'hidden'
+					),
+					array(
+						'name'   => 'coupon_date_to',
+						'label'  => __( 'Validate until', 'wphb-coupon' ),
+						'type'   => 'datetime',
+						'filter' => 'hb_meta_box_field_coupon_date'
+					),
+					array(
+						'name'  => 'coupon_date_to_timestamp',
+						'label' => '',
+						'type'  => 'hidden'
+					),
+					array(
+						'name'  => 'minimum_spend',
+						'label' => __( 'Minimum spend', 'wphb-coupon' ),
+						'type'  => 'number',
+						'desc'  => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'wphb-coupon' ),
+						'min'   => 0,
+						'step'  => 0.1
+					),
+					array(
+						'name'  => 'maximum_spend',
+						'label' => __( 'Maximum spend', 'wphb-coupon' ),
+						'type'  => 'number',
+						'desc'  => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'wphb-coupon' ),
+						'min'   => 0,
+						'step'  => 0.1
+					),
+					array(
+						'name'  => 'limit_per_coupon',
+						'label' => __( 'Usage limit per coupon', 'wphb-coupon' ),
+						'type'  => 'number',
+						'desc'  => __( 'How many times this coupon can be used before it is void.', 'wphb-coupon' ),
+						'min'   => 0
+					),
+					array(
+						'name'   => 'used',
+						'label'  => __( 'Used', 'wphb-coupon' ),
+						'type'   => 'label',
+						'filter' => 'hb_meta_box_field_coupon_used'
+					)
+				);
 			}
 		}
 	}

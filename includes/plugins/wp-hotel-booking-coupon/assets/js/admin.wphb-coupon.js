@@ -54,7 +54,7 @@
                 var _select = form.find('.booking_coupon_code');
                 // select2
                 _select.select2({
-                    placeholder: hotel_booking_i18n.select_coupon,
+                    placeholder: wphb_coupon.select_coupon,
                     minimumInputLength: 3,
                     ajax: {
                         url: ajaxurl,

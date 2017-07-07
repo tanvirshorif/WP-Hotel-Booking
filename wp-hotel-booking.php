@@ -84,6 +84,8 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 
 			add_action( 'init', array( $this, 'init' ), 20 );
 
+//			add_action( 'wp_loaded', array( 'WPHB_Cart', 'wp_loaded' ) );
+
 			// create new blog in multisite
 			add_action( 'wpmu_new_blog', array( 'WPHB_Install', 'create_new_blog' ) );
 			// delete table in multisite
@@ -102,6 +104,8 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 
 			// Load class instances.
 			$this->user = hb_get_current_user();
+
+//			$this->cart = WPHB_Cart::instance();
 		}
 
 		/**

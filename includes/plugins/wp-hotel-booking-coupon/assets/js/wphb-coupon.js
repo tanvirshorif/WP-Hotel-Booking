@@ -1,8 +1,22 @@
 ;(function ($) {
 
-    alert('xxx');
-
     var $doc = $(document);
+
+    function parseJSON(data) {
+        if (!$.isPlainObject(data)) {
+            var m = data.match(/<!-- HB_AJAX_START -->(.*)<!-- HB_AJAX_END -->/);
+            try {
+                if (m) {
+                    data = $.parseJSON(m[1]);
+                } else {
+                    data = $.parseJSON(data);
+                }
+            } catch (e) {
+                data = {};
+            }
+        }
+        return data;
+    }
 
     function applyCoupon() {
         var $coupon = $('input[name="hb-coupon-code"]');

@@ -34,7 +34,6 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'monthNamesShort'               => hb_month_name_short_js(),
 			'select_user'                   => __( 'Enter user login.', 'wp-hotel-booking' ),
 			'select_room'                   => __( 'Enter room name.', 'wp-hotel-booking' ),
-			'select_coupon'                 => __( 'Enter coupon code.', 'wp-hotel-booking' ),
 			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' )
 		);
 
@@ -100,95 +99,6 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 			)
 		);
 
-		// coupon meta box
-		WPHB_Meta_Box::instance(
-			'coupon_settings',
-			array(
-				'title'           => __( 'Coupon Settings', 'wp-hotel-booking' ),
-				'post_type'       => 'hb_coupon',
-				'meta_key_prefix' => '_hb_',
-				'context'         => 'normal',
-				'priority'        => 'high'
-			),
-			array()
-		)->add_field(
-			array(
-				'name'  => 'coupon_description',
-				'label' => __( 'Description', 'wp-hotel-booking' ),
-				'type'  => 'textarea',
-				'std'   => ''
-			),
-			array(
-				'name'    => 'coupon_discount_type',
-				'label'   => __( 'Discount type', 'wp-hotel-booking' ),
-				'type'    => 'select',
-				'std'     => '',
-				'options' => array(
-					'fixed_cart'   => __( 'Cart discount', 'wp-hotel-booking' ),
-					'percent_cart' => __( 'Cart % discount', 'wp-hotel-booking' )
-				)
-			),
-			array(
-				'name'  => 'coupon_discount_value',
-				'label' => __( 'Discount value', 'wp-hotel-booking' ),
-				'type'  => 'number',
-				'std'   => '',
-				'min'   => 0,
-				'step'  => 0.1
-			),
-			array(
-				'name'   => 'coupon_date_from',
-				'label'  => __( 'Validate from', 'wp-hotel-booking' ),
-				'type'   => 'datetime',
-				'filter' => 'hb_meta_box_field_coupon_date'
-			),
-			array(
-				'name'  => 'coupon_date_from_timestamp',
-				'label' => '',
-				'type'  => 'hidden'
-			),
-			array(
-				'name'   => 'coupon_date_to',
-				'label'  => __( 'Validate until', 'wp-hotel-booking' ),
-				'type'   => 'datetime',
-				'filter' => 'hb_meta_box_field_coupon_date'
-			),
-			array(
-				'name'  => 'coupon_date_to_timestamp',
-				'label' => '',
-				'type'  => 'hidden'
-			),
-			array(
-				'name'  => 'minimum_spend',
-				'label' => __( 'Minimum spend', 'wp-hotel-booking' ),
-				'type'  => 'number',
-				'desc'  => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'wp-hotel-booking' ),
-				'min'   => 0,
-				'step'  => 0.1
-			),
-			array(
-				'name'  => 'maximum_spend',
-				'label' => __( 'Maximum spend', 'wp-hotel-booking' ),
-				'type'  => 'number',
-				'desc'  => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'wp-hotel-booking' ),
-				'min'   => 0,
-				'step'  => 0.1
-			),
-			array(
-				'name'  => 'limit_per_coupon',
-				'label' => __( 'Usage limit per coupon', 'wp-hotel-booking' ),
-				'type'  => 'number',
-				'desc'  => __( 'How many times this coupon can be used before it is void.', 'wp-hotel-booking' ),
-				'min'   => 0
-			),
-			array(
-				'name'   => 'used',
-				'label'  => __( 'Used', 'wp-hotel-booking' ),
-				'type'   => 'label',
-				'filter' => 'hb_meta_box_field_coupon_used'
-			)
-		);
-
 		WPHB_Meta_Box::instance(
 			'gallery_settings',
 			array(
@@ -209,30 +119,6 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 }
 
 add_action( 'admin_init', 'hb_add_meta_boxes', 50 );
-
-add_action( 'hb_booking_status_changed', 'hb_booking_status_completed_action', 10, 3 );
-if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
-	function hb_booking_status_completed_action( $booking_id, $old_status, $new_status ) {
-		if ( $coupons = get_post_meta( $booking_id, '_hb_coupon_id' ) ) {
-			if ( ! $coupons ) {
-				return;
-			}
-			foreach ( $coupons as $coupon ) {
-				$usage_count = get_post_meta( $coupon, '_hb_usage_count', true );
-				if ( strpos( $new_status, 'completed' ) == 0 ) {
-					$usage_count ++;
-				} else {
-					if ( $usage_count > 0 ) {
-						$usage_count --;
-					} else {
-						$usage_count = 0;
-					}
-				}
-				update_post_meta( $coupon, '_hb_usage_count', $usage_count );
-			}
-		}
-	}
-}
 
 add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
 if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
