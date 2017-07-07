@@ -478,3 +478,35 @@ if ( ! function_exists( 'hb_get_return_url' ) ) {
 		return apply_filters( 'hb_return_url', $url );
 	}
 }
+
+if ( ! function_exists( 'hb_get_user' ) ) {
+	/**
+     * Get user.
+     *
+	 * @param null $user
+	 *
+	 * @return WPHB_User
+	 */
+	function hb_get_user( $user = null ) {
+		return WPHB_User::get_user( $user );
+	}
+
+}
+
+if ( ! function_exists( 'hb_get_current_user' ) ) {
+	/**
+     * Get current user data.
+     *
+	 * @return WPHB_User
+	 */
+	function hb_get_current_user() {
+		global $hb_curent_user;
+
+		if ( ! $hb_curent_user ) {
+			$hb_curent_user = WPHB_User::get_current_user();
+		}
+
+		return $hb_curent_user;
+	}
+
+}

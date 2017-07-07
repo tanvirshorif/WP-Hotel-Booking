@@ -366,7 +366,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 * @since 2.0
 		 */
 		public function admin_settings() {
-			include_once WPHB_AUTHORIZE_PAYMENT_ABSPATH . '/includes/views/settings.php';
+			include_once WPHB_AUTHORIZE_PAYMENT_ABSPATH . '/includes/admin/views/settings.php';
 		}
 
 		/**

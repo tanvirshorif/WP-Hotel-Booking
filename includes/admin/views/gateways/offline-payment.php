@@ -1,25 +1,21 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 09:10:23
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 14:50:51
+ * Admin View: Offline payment payment gateway setting page.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Stripe/Views
+ * @category    View
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 $settings = WPHB_Settings::instance();
 $payment  = $settings->get( 'offline-payment' );
-$payment  = wp_parse_args(
-	$payment,
-	array(
-		'enable'        => 'off',
-		'email_subject' => 'Offline payment email subject',
-		'email_content' => 'Offline payment email content'
-	)
-);
+$payment  = wp_parse_args( $payment, array( 'enable' => 'off' ) );
 
 $field_name = $settings->get_field_name( 'offline-payment' );
 ?>

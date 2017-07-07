@@ -91,7 +91,7 @@ if ( ! class_exists( 'WPHB_Autoloader' ) ) {
 				$path = WPHB_INCLUDES . '/admin/metaboxes/';
 			} else if ( strpos( $class, 'wphb_payment_gateway_' ) === 0 ) {
 				// payment gateways
-				$path = WPHB_INCLUDES . 'gateways/' . substr( str_replace( '_', '-', $class ), 21 ) . '/';
+				$path = WPHB_INCLUDES . 'gateways/';
 			} else if ( stripos( $class, 'hb_widget_' ) === 0 ) {
 				// widgets
 				$path = WPHB_INCLUDES . '/widgets/';

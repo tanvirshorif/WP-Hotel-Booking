@@ -138,6 +138,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-resizer.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-post-types.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-roles.php' );
+			include_once( WPHB_ABSPATH . 'includes/class-wphb-user.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-sessions.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-cart.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-checkout.php' );
@@ -164,10 +165,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-hooks.php' );
 			include_once( WPHB_ABSPATH . 'includes/booking/class-wphb-booking.php' );
-
-			// users
-			include_once( WPHB_ABSPATH . 'includes/user/wphb-user-functions.php' );
-			include_once( WPHB_ABSPATH . 'includes/user/class-wphb-user.php' );
 
 		}
 

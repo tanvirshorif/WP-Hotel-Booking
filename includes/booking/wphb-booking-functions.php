@@ -10,27 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-// get booking
-if ( ! function_exists( 'hb_get_booking' ) ) {
-	function hb_get_booking( $book = null ) {
-		return WPHB_Booking::instance( $book );
-	}
-}
-
-/**
- * Update booking status
- *
- * @param int
- * @param string
- */
-if ( ! function_exists( 'hb_update_booking_status' ) ) {
-	function hb_update_booking_status( $booking_id, $status ) {
-		$booking = WPHB_Booking::instance( $booking_id );
-
-		return $booking->update_status( $status );
-	}
-}
-
 /**
  * Creates new booking
  *
@@ -103,12 +82,6 @@ if ( ! function_exists( 'hb_get_booking_statuses' ) ) {
 		);
 
 		return apply_filters( 'hb_booking_statuses', $booking_statuses );
-	}
-}
-
-if ( ! function_exists( 'hb_get_booking_meta' ) ) {
-	function hb_get_booking_meta( $booking_id = null, $meta_key = null, $uniqid = false ) {
-		return get_post_meta( $booking_id, $meta_key, $uniqid );
 	}
 }
 

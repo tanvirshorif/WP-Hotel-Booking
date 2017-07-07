@@ -299,7 +299,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 		 * @since 2.0
 		 */
 		public function admin_settings() {
-			include_once WPHB_STRIPE_PAYMENT_ABSPATH . '/includes/views/settings.php';
+			include_once WPHB_STRIPE_PAYMENT_ABSPATH . '/includes/admin/views/settings.php';
 		}
 
 		/**

@@ -1,14 +1,17 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 09:12:34
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-29 09:12:50
+ * Admin View: Paypal payment gateway setting page.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Stripe/Views
+ * @category    View
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 $settings = WPHB_Settings::instance();
 $paypal   = $settings->get( 'paypal' );

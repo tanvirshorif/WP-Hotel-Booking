@@ -159,7 +159,7 @@ if ( ! class_exists( 'WPHB_Coupon_Ajax' ) ) {
 
 			ob_start();
 			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items.php';
-			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items-template-js.php';
+			require_once WPHB_COUPON_ABSPATH . '/includes/admin/views/booking-coupon-js-template.php';
 			$html = ob_get_clean();
 
 			wp_send_json( array(

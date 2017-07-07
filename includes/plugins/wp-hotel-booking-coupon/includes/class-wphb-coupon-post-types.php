@@ -202,7 +202,7 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'   => 'coupon_date_from',
 						'label'  => __( 'Validate from', 'wphb-coupon' ),
 						'type'   => 'datetime',
-						'filter' => 'hb_meta_box_field_coupon_date'
+						'filter' => 'wphb_coupon_get_coupon_date_meta_box_field'
 					),
 					array(
 						'name'  => 'coupon_date_from_timestamp',
@@ -213,7 +213,7 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'   => 'coupon_date_to',
 						'label'  => __( 'Validate until', 'wphb-coupon' ),
 						'type'   => 'datetime',
-						'filter' => 'hb_meta_box_field_coupon_date'
+						'filter' => 'wphb_coupon_get_coupon_date_meta_box_field'
 					),
 					array(
 						'name'  => 'coupon_date_to_timestamp',
@@ -247,7 +247,7 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'   => 'used',
 						'label'  => __( 'Used', 'wphb-coupon' ),
 						'type'   => 'label',
-						'filter' => 'hb_meta_box_field_coupon_used'
+						'filter' => 'wphb_coupon_get_coupon_usage_meta_box_field'
 					)
 				);
 			}

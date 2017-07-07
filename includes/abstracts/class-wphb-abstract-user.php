@@ -102,7 +102,7 @@ if ( ! class_exists( 'WPHB_Abstract_User' ) ) {
 
 			if ( ! empty( $results ) ) {
 				foreach ( $results as $k => $booking_id ) {
-					$bookings[] = hb_get_booking( $booking_id );
+					$bookings[] = WPHB_Booking::instance( $booking_id );
 				}
 			}
 

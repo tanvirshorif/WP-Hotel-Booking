@@ -61,8 +61,10 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 			add_filter( 'hb_cart_sub_total', array( $this, 'apply_sub_total_discount' ), 999 );
 			// update booking transaction
 			add_filter( 'hotel_booking_cart_generate_transaction', array( $this, 'add_coupon_transaction' ) );
-
+			// update coupon usage count
 			add_action( 'hb_booking_status_changed', array( $this, 'update_coupon_usage' ), 10, 3 );
+			// update coupon meta box
+			add_filter( 'hb_meta_box_update_meta_value', 'update_coupon_date_meta', 10, 3 );
 
 		}
 
@@ -254,6 +256,34 @@ if ( ! class_exists( 'WPHB_Coupon' ) ) {
 					update_post_meta( $coupon, '_hb_usage_count', $usage_count );
 				}
 			}
+		}
+
+
+		/**
+		 * Add coupon date meta to meta box class save meta.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $value
+		 * @param $field_name
+		 * @param $meta_box_name
+		 *
+		 * @return false|int|string
+		 */
+		public function update_coupon_date_meta( $value, $field_name, $meta_box_name ) {
+			if ( in_array( $field_name, array(
+					'coupon_date_from',
+					'coupon_date_to'
+				) ) && $meta_box_name == 'coupon_settings'
+			) {
+				if ( isset( $_POST[ '_hb_' . $field_name . '_timestamp' ] ) ) {
+					$value = sanitize_text_field( $_POST[ '_hb_' . $field_name . '_timestamp' ] );
+				} else {
+					$value = strtotime( $value );
+				}
+			}
+
+			return $value;
 		}
 
 

@@ -395,46 +395,6 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
 
 add_action( 'admin_print_scripts', 'hb_admin_js_template' );
 
-if ( ! function_exists( 'hb_meta_box_coupon_date' ) ) {
-
-	function hb_meta_box_coupon_date( $value, $field_name, $meta_box_name ) {
-		if ( in_array( $field_name, array(
-				'coupon_date_from',
-				'coupon_date_to'
-			) ) && $meta_box_name == 'coupon_settings'
-		) {
-			if ( isset( $_POST[ '_hb_' . $field_name . '_timestamp' ] ) ) {
-				$value = sanitize_text_field( $_POST[ '_hb_' . $field_name . '_timestamp' ] );
-			} else {
-				$value = strtotime( $value );
-			}
-		}
-
-		return $value;
-	}
-}
-
-add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_date', 10, 3 );
-
-if ( ! function_exists( 'hb_meta_box_field_coupon_date' ) ) {
-
-	function hb_meta_box_field_coupon_date( $value ) {
-		if ( intval( $value ) ) {
-			return date( hb_get_date_format(), $value );
-		}
-
-		return $value;
-	}
-}
-
-if ( ! function_exists( 'hb_meta_box_field_coupon_used' ) ) {
-	function hb_meta_box_field_coupon_used( $value ) {
-		global $post;
-
-		return intval( get_post_meta( $post->ID, '_hb_usage_count', true ) );
-	}
-}
-
 if ( ! function_exists( 'hb_get_rooms' ) ) {
 	/**
 	 * get all of post have post type hb_room
@@ -493,8 +453,6 @@ if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 
 			remove_meta_box( 'mymetabox_revslider_0', 'hb_room', 'normal' );
 			remove_meta_box( 'mymetabox_revslider_0', 'hb_booking', 'normal' );
-			// remove_meta_box( 'mymetabox_revslider_0', 'hb_customer', 'normal' );
-			remove_meta_box( 'mymetabox_revslider_0', 'hb_coupon', 'normal' );
 			remove_meta_box( 'submitdiv', 'hb_booking', 'side' );
 		}
 	}
