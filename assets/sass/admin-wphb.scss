@@ -1111,3 +1111,52 @@ form[name="hb-admin-settings-form"] {
     }
   }
 }
+
+//=================================================================================================//
+
+#list-extra-services {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #E5E5E5;
+  margin-top: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  .list-extra-header {
+    th {
+      font-weight: 400;
+      box-sizing: border-box;
+      font-size: 14px;
+      padding: 10px;
+      border-bottom: 1px solid #E5E5E5;
+    }
+  }
+  .title {
+    width: 10%;
+  }
+  .description {
+    width: 30%;
+  }
+  .price {
+    width: 20%;
+    input {
+      width: 45%;
+    }
+  }
+  .type {
+    width: 20%;
+  }
+  .actions {
+    width: 20%;
+  }
+  tr {
+    td {
+      input, textarea {
+        display: none;
+      }
+    }
+    &.edit {
+      input, textarea {
+        display: block;
+      }
+    }
+  }
+}

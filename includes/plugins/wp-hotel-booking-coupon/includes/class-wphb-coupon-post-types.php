@@ -37,7 +37,10 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 			add_filter( 'manage_hb_coupon_posts_columns', array( $this, 'custom_coupon_columns' ) );
 			add_action( 'manage_hb_coupon_posts_custom_column', array( $this, 'custom_coupon_columns_filter' ) );
 
+			// coupon meta box
 			add_action( 'admin_init', array( $this, 'coupon_meta_boxes' ), 50 );
+			// update coupon meta box
+			add_filter( 'hb_meta_box_update_meta_value', array( $this, 'update_coupon_date_meta' ), 10, 3 );
 		}
 
 		/**
@@ -146,10 +149,11 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 					}
 					break;
 				case 'limit_per_coupon':
+					echo intval( get_post_meta( $post->ID, '_hb_usage_count', true ) ) . ' / ';
 					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
 						echo sprintf( '%s', $value );
 					} else {
-						echo '-';
+						echo __( 'Unlimited', 'wphb-coupon' );
 					}
 			}
 		}
@@ -202,7 +206,7 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'   => 'coupon_date_from',
 						'label'  => __( 'Validate from', 'wphb-coupon' ),
 						'type'   => 'datetime',
-						'filter' => 'wphb_coupon_get_coupon_date_meta_box_field'
+						'filter' => array( $this, 'get_coupon_date_meta_box_field' )
 					),
 					array(
 						'name'  => 'coupon_date_from_timestamp',
@@ -213,7 +217,7 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'   => 'coupon_date_to',
 						'label'  => __( 'Validate until', 'wphb-coupon' ),
 						'type'   => 'datetime',
-						'filter' => 'wphb_coupon_get_coupon_date_meta_box_field'
+						'filter' => array( $this, 'get_coupon_date_meta_box_field' )
 					),
 					array(
 						'name'  => 'coupon_date_to_timestamp',
@@ -247,10 +251,66 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'   => 'used',
 						'label'  => __( 'Used', 'wphb-coupon' ),
 						'type'   => 'label',
-						'filter' => 'wphb_coupon_get_coupon_usage_meta_box_field'
+						'filter' => array( $this, 'get_coupon_usage_meta_box_field' )
 					)
 				);
 			}
+		}
+
+		/**
+		 * Transfer coupon date from timestamp data to date in meta box field.
+		 *
+		 * @param $value
+		 *
+		 * @return false|string
+		 */
+		public function get_coupon_date_meta_box_field( $value ) {
+			if ( intval( $value ) ) {
+				return date( hb_get_date_format(), $value );
+			}
+
+			return $value;
+		}
+
+		/**
+		 * Get coupon usage meta box field.
+		 *
+		 * @param $value
+		 *
+		 * @return int
+		 */
+		public function get_coupon_usage_meta_box_field( $value ) {
+			global $post;
+
+			return intval( get_post_meta( $post->ID, '_hb_usage_count', true ) );
+		}
+
+
+		/**
+		 * Add coupon date meta to meta box class save meta.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $value
+		 * @param $field_name
+		 * @param $meta_box_name
+		 *
+		 * @return false|int|string
+		 */
+		public function update_coupon_date_meta( $value, $field_name, $meta_box_name ) {
+			if ( in_array( $field_name, array(
+					'coupon_date_from',
+					'coupon_date_to'
+				) ) && $meta_box_name == 'coupon_settings'
+			) {
+				if ( isset( $_POST[ '_hb_' . $field_name . '_timestamp' ] ) ) {
+					$value = sanitize_text_field( $_POST[ '_hb_' . $field_name . '_timestamp' ] );
+				} else {
+					$value = strtotime( $value );
+				}
+			}
+
+			return $value;
 		}
 	}
 }

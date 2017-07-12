@@ -1,28 +1,26 @@
-(function ($, Vue, wp, wphb_admin) {
-
-    // create the media frame
-    var select_image_frame = wp.media({
-        // set the title of the modal
-        title: wphb_admin.choose_images,
-        // the the modal show only image files
-        library: {
-            type: 'application/image',
-            multiple: true
-        }
-    });
+(function ($, Vue, wp, wphb_extra) {
 
     $(document).ready(function () {
-        select_image_frame.on('select', function () {
-            var attachment = select_image_frame.state().get('selection');
-            console.log(attachment);
-        });
 
-        var WPHB_Admin = new Vue({
-            el: '.attachment.add-new',
+        var WPHB_Extra = new Vue({
+            el: '#list-extra-services',
             data: {
-                message: 'yyy'
+                extras: wphb_extra,
+                isEdit: false
+            },
+            methods: {
+                add_extra: function () {
+
+                },
+                edit_extra: function () {
+                    this.isEdit = true
+                },
+                delete_extra: function (id) {
+                    this.isEdit = false
+                }
             }
         });
+
     });
 
-})(jQuery, window.Vue, window.wp, window.hotel_booking_i18n);
+})(jQuery, window.Vue, window.wp, window.wphb_extra);

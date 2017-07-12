@@ -38,6 +38,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		public function __construct() {
 			add_filter( 'hotel_booking_get_product_class', array( $this, 'product_class' ), 10, 3 );
 			add_action( 'hotel_booking_room_details_quantity', array( $this, 'admin_booking_room_details' ), 10, 3 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'localize_script' ) );
 			add_action( 'admin_init', array( $this, 'save_extra' ) );
 		}
 
@@ -57,7 +58,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 			$parent_quantity = 1;
 			if ( isset( $params['order_item_id'] ) ) {
 				$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
-			} else if ( ! is_admin() && isset( $params['parent_id'] ) && $cart   = WPHB_Cart::instance() ) {
+			} else if ( ! is_admin() && isset( $params['parent_id'] ) && $cart = WPHB_Cart::instance() ) {
 				$parent = $cart->get_cart_item( $params['parent_id'] );
 				if ( $parent ) {
 					$parent_quantity = $parent->quantity;
@@ -102,10 +103,10 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		}
 
 		/**
-         * Save extra packages actions.
-         *
-         * @since 2.0
-         *
+		 * Save extra packages actions.
+		 *
+		 * @since 2.0
+		 *
 		 * @return bool
 		 */
 		public function save_extra() {
@@ -187,6 +188,31 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 			", 'hb_extra_room' );
 
 			return $wpdb->get_results( $query, OBJECT );
+		}
+
+		/**
+		 * Print js extras data.
+		 *
+		 * @since 2.0
+		 */
+		public function localize_script() {
+			$extras = $this->get_extra();
+
+			$localize_script = array();
+
+			if ( is_array( $extras ) ) {
+				foreach ( $extras as $extra ) {
+					$localize_script[] = array(
+						'id'              => $extra->ID,
+						'title'           => $extra->post_title,
+						'description'     => $extra->post_content,
+						'price'           => get_post_meta( $extra->ID, 'tp_hb_extra_room_price', true ),
+						'respondent_name' => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent_name', true ),
+						'respondent'      => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent', true )
+					);
+				}
+			}
+			wp_localize_script( 'wphb-admin', 'wphb_extra', ( $localize_script ) );
 		}
 
 		/**

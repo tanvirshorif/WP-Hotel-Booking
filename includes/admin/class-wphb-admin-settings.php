@@ -36,10 +36,8 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 
 			$tabs = array();
 
-			// use WP_Hotel_Booking::instance() return null active hook
 			$tabs[] = include_once 'settings/class-wphb-admin-setting-general.php';
 			$tabs[] = include_once 'settings/class-wphb-admin-setting-hotel-info.php';
-			$tabs[] = include_once 'settings/class-wphb-admin-setting-lightboxs.php';
 			$tabs[] = include_once 'settings/class-wphb-admin-setting-emails.php';
 			$tabs[] = include_once 'settings/class-wphb-admin-setting-payments.php';
 			$tabs[] = include_once 'settings/class-wphb-admin-setting-room.php';

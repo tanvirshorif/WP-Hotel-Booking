@@ -1433,18 +1433,6 @@ if ( ! function_exists( 'hb_format_order_number' ) ) {
 	}
 }
 
-if ( ! function_exists( 'hb_get_support_lightboxs' ) ) {
-	function hb_get_support_lightboxs() {
-		$lightboxs = array(
-			'lightbox2' => 'Lightbox 2'
-			// ,
-			// 'fancyBox'  => 'fancyBox'
-		);
-
-		return apply_filters( 'hb_lightboxs', $lightboxs );
-	}
-}
-
 if ( ! function_exists( 'hb_get_countries' ) ) {
 	function hb_get_countries() {
 		$countries = array(

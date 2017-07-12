@@ -86,6 +86,10 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Currencies' ) ) {
 						'transient' => __( 'Transient', 'wp-hotel-booking' )
 					),
 					'default' => 'session'
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'currency_settings'
 				)
 			) );
 		}

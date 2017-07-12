@@ -160,19 +160,6 @@ if ( ! function_exists( 'hb_get_template_content' ) ) {
 if ( ! function_exists( 'hb_enqueue_lightbox_assets' ) ) {
 
 	function hb_enqueue_lightbox_assets() {
-		$settings          = WPHB_Settings::instance();
-		$lightbox_settings = $settings->get( 'lightbox' );
-		if ( ! $lightbox_settings ) {
-			return;
-		}
-		// if( empty( $lightbox_settings['lightbox'] ) ) return;
-		do_action( 'hb_lightbox_assets_' . $lightbox_settings );
-	}
-}
-
-if ( ! function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
-
-	function hb_lightbox_assets_lightbox2() {
 		wp_enqueue_script( 'wphb-lightbox2' );
 		wp_enqueue_style( 'wphb-lightbox2' );
 	}

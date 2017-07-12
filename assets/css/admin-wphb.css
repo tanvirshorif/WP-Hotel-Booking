@@ -911,3 +911,32 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   .wp-list-table .thumb.column-thumb a .sale-label {
     position: absolute;
     width: 100%; }
+
+#list-extra-services {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #E5E5E5;
+  margin-top: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
+  #list-extra-services .list-extra-header th {
+    font-weight: 400;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 10px;
+    border-bottom: 1px solid #E5E5E5; }
+  #list-extra-services .title {
+    width: 10%; }
+  #list-extra-services .description {
+    width: 30%; }
+  #list-extra-services .price {
+    width: 20%; }
+    #list-extra-services .price input {
+      width: 45%; }
+  #list-extra-services .type {
+    width: 20%; }
+  #list-extra-services .actions {
+    width: 20%; }
+  #list-extra-services tr td input, #list-extra-services tr td textarea {
+    display: none; }
+  #list-extra-services tr.edit input, #list-extra-services tr.edit textarea {
+    display: block; }
