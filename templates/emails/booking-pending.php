@@ -1,15 +1,20 @@
 <?php
-/*
- * @Author : leehld
- * @Date   : 5/24/2017
- * @Last Modified by: leehld
- * @Last Modified time: 5/24/2017
+/**
+ * The template for displaying customer pending booking email.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/booking-pending.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
 /**
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+
 
 // email heading
 hb_get_template( 'emails/email-header.php',

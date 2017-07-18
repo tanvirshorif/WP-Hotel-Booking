@@ -115,7 +115,7 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 		$customer_email_heading_desc = __( 'Your booking is pending until the payment is completed', 'wp-hotel-booking' );
 
 
-		$customer_body = hb_get_template_content( 'emails/booking-accepted.php', array(
+		$customer_body = hb_get_template_content( 'emails/booking-pending.php', array(
 			'booking'            => $booking,
 			'email_heading'      => $customer_email_heading,
 			'email_heading_desc' => $customer_email_heading_desc

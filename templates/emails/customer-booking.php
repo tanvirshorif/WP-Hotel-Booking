@@ -1,14 +1,19 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 11:14:34
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-14 15:02:21
+ * The template for displaying customer booking email.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/customer-booking.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 // email heading
 hb_get_template( 'emails/email-header.php',

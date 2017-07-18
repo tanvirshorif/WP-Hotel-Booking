@@ -1,13 +1,19 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 10:46:27
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 16:55:46
+ * The email template for displaying customer booking detail.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/booking-details.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
 
 <h2 class="section-title"><?php echo __( 'Booking ', 'wp-hotel-booking' ) . $booking->get_booking_number(); ?></h2>

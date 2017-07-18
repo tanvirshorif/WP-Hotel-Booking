@@ -1,14 +1,20 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 10:37:32
- * @Last  Modified by:   someone
- * @Last  Modified time: 2016-05-11 16:42:47
+ * The template for displaying admin booking email.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/admin/admin-new-booking.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 // email heading
 hb_get_template( 'emails/email-header.php',
