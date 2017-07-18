@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
 <?php $value = hb_settings()->get( $field['id'] ); ?>
 
-<tr valign="top">
+<tr valign="top" <?php echo $field['class'] ? 'class="' . $field['class'] . '"' : ''; ?>>
     <th scope="row">
 		<?php if ( isset( $field['title'] ) ) { ?>
             <label for="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : '' ?>">

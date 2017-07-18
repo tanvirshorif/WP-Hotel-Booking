@@ -55,29 +55,39 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'desc'  => __( 'General options for system.', 'wp-hotel-booking' )
 				),
 				array(
-					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_search_page_id',
-					'title' => __( 'Search Page', 'wp-hotel-booking' )
+					'type'    => 'number',
+					'id'      => 'tp_hotel_booking_minimum_booking_day',
+					'title'   => __( 'Minimum booking day', 'wp-hotel-booking' ),
+					'default' => 1,
+					'min'     => 0,
+					'step'    => 'any'
 				),
 				array(
-					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_checkout_page_id',
-					'title' => __( 'Checkout Page', 'wp-hotel-booking' )
+					'type'    => 'number',
+					'id'      => 'tp_hotel_booking_tax',
+					'title'   => __( 'Tax', 'wp-hotel-booking' ),
+					'default' => 10,
+					'min'     => 0,
+					'step'    => 'any'
 				),
 				array(
-					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_cart_page_id',
-					'title' => __( 'Cart Page', 'wp-hotel-booking' )
+					'type'    => 'number',
+					'id'      => 'tp_hotel_booking_advance_payment',
+					'title'   => __( 'Advance Payment', 'wp-hotel-booking' ),
+					'desc'    => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
+					'default' => 50,
+					'min'     => 0,
+					'max'     => 100
 				),
 				array(
-					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_account_page_id',
-					'title' => __( 'Account Page', 'wp-hotel-booking' )
+					'type' => 'section_end',
+					'id'   => 'general_settings'
 				),
 				array(
-					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_terms_page_id',
-					'title' => __( 'Terms And Conditions Page', 'wp-hotel-booking' )
+					'type'  => 'section_start',
+					'id'    => 'currency_settings',
+					'title' => __( 'Currency Options', 'wp-hotel-booking' ),
+					'desc'  => __( 'The options for display rooms price on the frontend.', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'select',
@@ -119,50 +129,42 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'max'     => 3,
 				),
 				array(
-					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_minimum_booking_day',
-					'title'   => __( 'Minimum booking day', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_currencies_enable',
+					'title'   => __( 'Enable Switch Currency', 'wp-hotel-booking' ),
 					'default' => 1,
-					'min'     => 0,
-					'step'    => 'any'
-				),
-				array(
-					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_tax',
-					'title'   => __( 'Tax', 'wp-hotel-booking' ),
-					'default' => 10,
-					'min'     => 0,
-					'step'    => 'any'
+					'desc'    => __( 'Enable switch currency', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => 'tp_hotel_booking_price_including_tax',
-					'title'   => __( 'Price including tax', 'wp-hotel-booking' ),
+					'id'      => 'tp_hotel_booking_currencies_multiple_allowed',
+					'title'   => __( 'Switch Multiple Currencies', 'wp-hotel-booking' ),
 					'default' => 1,
+					'desc'    => __( 'Allow switch multiple currencies', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'select',
-					'id'      => 'tp_hotel_booking_price_display',
-					'title'   => __( 'Price display', 'wp-hotel-booking' ),
+					'id'      => 'tp_hotel_booking_currencies_aggregator',
+					'title'   => __( 'Currency aggregator', 'wp-hotel-booking' ),
 					'options' => array(
-						'min'        => __( 'Min', 'wp-hotel-booking' ),
-						'max'        => __( 'Max', 'wp-hotel-booking' ),
-						'min_to_max' => __( 'Min to Max', 'wp-hotel-booking' )
+						'yahoo'  => 'http://finance.yahoo.com',
+						'google' => 'http://google.com/finance'
 					),
-					'default' => 1,
+					'default' => 'yahoo',
 				),
 				array(
-					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_advance_payment',
-					'title'   => __( 'Advance Payment', 'wp-hotel-booking' ),
-					'desc'    => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
-					'default' => 50,
-					'min'     => 0,
-					'max'     => 100
+					'type'    => 'select',
+					'id'      => 'tp_hotel_booking_currencies_storage',
+					'title'   => __( 'Currency storage', 'wp-hotel-booking' ),
+					'options' => array(
+						'session'   => __( 'Session', 'wp-hotel-booking' ),
+						'transient' => __( 'Transient', 'wp-hotel-booking' )
+					),
+					'default' => 'session'
 				),
 				array(
 					'type' => 'section_end',
-					'id'   => 'general_settings'
+					'id'   => 'currency_settings'
 				)
 			) );
 		}

@@ -80,6 +80,23 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'title'   => __( 'Catalog images size', 'wp-hotel-booking' )
 				),
 				array(
+					'type'    => 'select',
+					'id'      => 'tp_hotel_booking_price_display',
+					'title'   => __( 'Price display', 'wp-hotel-booking' ),
+					'options' => array(
+						'min'        => __( 'Min', 'wp-hotel-booking' ),
+						'max'        => __( 'Max', 'wp-hotel-booking' ),
+						'min_to_max' => __( 'Min to Max', 'wp-hotel-booking' )
+					),
+					'default' => 'min',
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_price_including_tax',
+					'title'   => __( 'Price including tax', 'wp-hotel-booking' ),
+					'default' => 1,
+				),
+				array(
 					'id'      => 'tp_hotel_booking_catalog_display_rating',
 					'title'   => __( 'Display rating', 'wp-hotel-booking' ),
 					'type'    => 'checkbox',

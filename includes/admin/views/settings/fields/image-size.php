@@ -20,7 +20,7 @@ $width  = hb_settings()->get( $field['id'] . '_width', isset( $field['default'][
 $height = hb_settings()->get( $field['id'] . '_height', isset( $field['default']['height'] ) ? $field['default']['height'] : 270 );
 ?>
 
-    <tr valign="top">
+    <tr valign="top" <?php echo $field['class'] ? 'class="' . $field['class'] . '"' : ''; ?>>
         <th scope="row">
 			<?php if ( isset( $field['title'] ) ) { ?>
                 <label for="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : '' ?>">
