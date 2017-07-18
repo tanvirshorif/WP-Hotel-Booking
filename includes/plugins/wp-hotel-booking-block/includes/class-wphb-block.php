@@ -135,14 +135,13 @@ if ( ! class_exists( 'WPHB_Block' ) ) {
 		 */
 		public function enqueue_scripts() {
 			wp_enqueue_script( 'wphb_block_angular', WPHB_BLOCK_URI . 'assets/js/angular.min.js', array(), WPHB_BLOCK_VER );
-			wp_enqueue_script( 'wphb_block_moment', WPHB_BLOCK_URI . 'assets/js/moment.min.js', array(), WPHB_BLOCK_VER );
 			wp_enqueue_script( 'wphb_block_lib_datepicker', WPHB_BLOCK_URI . 'assets/js/multipleDatePicker.min.js', array(), WPHB_BLOCK_VER );
 			wp_enqueue_style( 'wphb_block_lib_datepicker', WPHB_BLOCK_URI . 'assets/css/multiple-date-picker.min.css' );
 
 			wp_enqueue_script( 'wphb_block', WPHB_BLOCK_URI . 'assets/js/admin.js', array(), WPHB_BLOCK_VER );
 			wp_enqueue_style( 'wphb_block', WPHB_BLOCK_URI . 'assets/css/admin.css' );
 
-			wp_localize_script( 'wphb_booking_block', 'WPHB_Block',
+			wp_localize_script( 'wphb_block', 'WPHB_Block',
 				apply_filters( 'wphb_block_l18n',
 					array(
 						'ajaxurl'    => admin_url( 'admin-ajax.php?schema=hotel-block' ),

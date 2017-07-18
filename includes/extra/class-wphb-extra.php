@@ -212,7 +212,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 					);
 				}
 			}
-			wp_localize_script( 'wphb-admin', 'wphb_extra', ( $localize_script ) );
+			wp_localize_script( 'wphb-admin', 'wphb_extra', $localize_script );
 		}
 
 		/**

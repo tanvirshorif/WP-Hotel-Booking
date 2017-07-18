@@ -1,5 +1,4 @@
 <?php
-
 /*
     Plugin Name: WP Hotel Booking Block Room
     Plugin URI: https://thimpress.com/

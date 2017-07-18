@@ -23,13 +23,13 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
 <div class="wrap" ng-app="hotel_booking_block">
 
     <form ng-submit="submit()" ng-controller="hotel_booking_calendar">
-        <p class="block-message {{ status_ajax}}">{{ message}}</p>
+        <p class="block-message {{ status_ajax}}">{{ message }}</p>
         <div class="hotel_booking_calendar">
             <!--Loop Start-->
             <div class="calendar_setup" ng-repeat="block in calendars">
                 <!--Remove button-->
                 <a href="javascript:void(0)" class="button remove-plan"
-                   ng-click="remove_calendar( block.id )"><?php _e( 'Remove Plan', 'wp-hotel-booking-block' ); ?></a>
+                   ng-click="remove_calendar( block.id )"><?php _e( 'Remove Plan', 'wphb-block' ); ?></a>
 
                 <!--room in rooms-->
                 <select ng-model="block.post_id" ng-multiple="true"
@@ -43,10 +43,9 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
             <!--Loop End-->
         </div>
 
-        <p style="clear: both"></p>
         <a class="button" id="hotel_add_calendar"
-           ng-click="add_calendar()"><?php _e( 'Add Specific Calander', 'wp-hotel-booking-block' ); ?></a>
-        <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking-block' ) ?></button>
+           ng-click="add_calendar()"><?php _e( 'Add Specific Calender', 'wphb-block' ); ?></a>
+        <button class="button button-primary"><?php _e( 'Update', 'wphb-block' ) ?></button>
 
     </form>
 
@@ -79,12 +78,12 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
             // add new calendar
             $scope.add_calendar = function () {
                 $scope.message = '';
-                var unique_time = moment().valueOf(),
-                    new_calendar = {
-                        id: unique_time,
-                        post_id: [],
-                        selected: []
-                    }
+                var unique_time = moment().valueOf();
+                var new_calendar = {
+                    id: unique_time,
+                    post_id: [],
+                    selected: []
+                };
                 $scope.calendars[unique_time] = new_calendar;
             };
 

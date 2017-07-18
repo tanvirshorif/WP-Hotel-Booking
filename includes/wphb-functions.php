@@ -4,10 +4,10 @@
  * WP Hotel Booking global functions.
  *
  * @version    2.0
- * @author        ThimPress
+ * @author     ThimPress
  * @package    WP_Hotel_Booking/Functions
- * @category    Functions
- * @author      Thimpress, leehld
+ * @category   Functions
+ * @author     Thimpress, leehld
  */
 
 /**
@@ -16,19 +16,18 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
+	/**
+	 * Get max capacity of rooms.
+	 *
+	 * @return mixed
+	 */
 	function hb_get_max_capacity_of_rooms() {
 		static $max = null;
-//	if ( !is_null( $max ) ) {
-//		return $max;
-//	}
 		$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
 		if ( $terms ) {
 			foreach ( $terms as $term ) {
 				$cap = get_term_meta( $term->term_id, 'hb_max_number_of_adults', true );
-				/**
-				 * @since  1.1.2
-				 * use term meta
-				 */
+				// use term meta
 				if ( ! $cap ) {
 					$cap = get_option( "hb_taxonomy_capacity_{$term->term_id}" );
 				}
@@ -48,19 +47,18 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 }
 
 if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
+	/**
+	 * Get min capacity of rooms.
+	 *
+	 * @return mixed
+	 */
 	function hb_get_min_capacity_of_rooms() {
 		static $min = null;
-//	if ( !is_null( $max ) ) {
-//		return $max;
-//	}
 		$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
 		if ( $terms ) {
 			foreach ( $terms as $term ) {
 				$cap = get_term_meta( $term->term_id, 'hb_max_number_of_adults', true );
-				/**
-				 * @since  1.1.2
-				 * use term meta
-				 */
+				//use term meta
 				if ( ! $cap ) {
 					$cap = get_option( "hb_taxonomy_capacity_{$term->term_id}" );
 				}
