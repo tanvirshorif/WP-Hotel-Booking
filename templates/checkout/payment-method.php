@@ -11,13 +11,11 @@
  * @author      Thimpress, leehld
  */
 
-
 /**
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
 ?>
-
 
 <?php $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) ); ?>
 

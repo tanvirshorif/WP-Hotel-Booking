@@ -13,7 +13,6 @@
  * @param       customer
  */
 
-
 /**
  * Prevent loading this file directly
  */

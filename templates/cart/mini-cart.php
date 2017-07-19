@@ -18,7 +18,6 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-
 <?php
 $cart  = WPHB_Cart::instance();
 $rooms = $cart->get_rooms();

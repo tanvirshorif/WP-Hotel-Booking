@@ -13,13 +13,11 @@
  * @param       customer
  */
 
-
 /**
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
 ?>
-
 
 <?php $booking = WPHB_Booking::instance( $booking_id ); ?>
 

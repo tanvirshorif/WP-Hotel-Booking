@@ -13,13 +13,11 @@
  * @param       customer
  */
 
-
 /**
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
 ?>
-
 
 <div class="hb-order-new-customer" id="hb-order-new-customer">
     <div class="hb-col-padding hb-col-border">
