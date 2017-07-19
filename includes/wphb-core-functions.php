@@ -15,6 +15,180 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+
+//========================================== Email Booking functions start ===========================================//
+
+if ( ! function_exists( 'hb_send_booking_mail' ) ) {
+	/**
+	 * Send email for booking processes.
+	 *
+	 * @param null $booking
+	 * @param null $to
+	 * @param string $subject
+	 * @param string $heading
+	 * @param string $desc
+	 *
+	 * @return bool
+	 */
+	function hb_send_booking_mail( $booking = null, $to = null, $subject = '', $heading = '', $desc = '' ) {
+		if ( ! ( $booking || $to ) ) {
+			return false;
+		}
+
+		$settings = hb_settings();
+
+		$format  = $settings->get( 'email_new_booking_format', 'html' );
+		$headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
+
+		add_filter( 'wp_mail_from', 'hb_set_mail_from' );
+		add_filter( 'wp_mail_from_name', 'hb_set_mail_from_name' );
+		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+
+		$email = hb_get_template_content( 'emails/booking/booking-email.php', array(
+			'booking'            => $booking,
+			'email_heading'      => $heading,
+			'email_heading_desc' => $desc
+		) );
+
+		if ( ! $email ) {
+			return false;
+		}
+
+		$send = wp_mail( $to, $subject, $email, $headers );
+
+		remove_filter( 'wp_mail_from', 'hb_set_mail_from' );
+		remove_filter( 'wp_mail_from_name', 'hb_set_mail_from_name' );
+		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+
+		return $send;
+	}
+}
+
+if ( ! function_exists( 'hb_send_admin_booking_email' ) ) {
+	/**
+	 * Send email for admin when booking completed.
+	 *
+	 * @param null $booking
+	 * @param $settings
+	 * @param $status
+	 *
+	 * @return bool
+	 */
+	function hb_send_admin_booking_email( $booking = null, $settings, $status ) {
+
+		$to = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
+
+		$subject = $settings->get( 'email_new_booking_subject', '[{site_title}] Reservation completed ({order_number}) - {order_date}' );
+		$find    = array(
+			'order-date'   => '{order_date}',
+			'order-number' => '{order_number}',
+			'site-title'   => '{site_title}'
+		);
+
+		$replace = array(
+			'order-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+			'order-number' => hb_format_order_number( $booking->id ),
+			'site-title'   => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
+		);
+
+		$subject = str_replace( $find, $replace, $subject );
+
+		if ( 'booking_completed' == $status ) {
+			$heading = $settings->get( 'email_new_booking_heading', __( 'New Booking Payment', 'wp-hotel-booking' ) );
+			$desc    = $settings->get( 'email_new_booking_heading_desc', __( 'The customer has completed the transaction', 'wp-hotel-booking' ) );
+		} else {
+			$heading = __( 'New customer booking', 'wp-hotel-booking' );
+			$desc    = __( 'You have a new booking room', 'wp-hotel-booking' );
+		}
+
+		return hb_send_booking_mail( $booking, $to, $subject, $heading, $desc );
+	}
+}
+
+if ( ! function_exists( 'hb_send_customer_booking_email' ) ) {
+	/**
+	 * Send email for customer when booking completed.
+	 *
+	 * @param null $booking
+	 * @param $settings
+	 * @param $status
+	 *
+	 * @return bool
+	 */
+	function hb_send_customer_booking_email( $booking = null, $settings, $status ) {
+
+		if ( 'booking_completed' == $status ) {
+			$subject = $settings->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
+			$heading = __( 'Thanks for your booking', 'wp-hotel-booking' );
+			$desc    = __( 'Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!', 'wp-hotel-booking' );
+		} else {
+			$subject = __( 'Booking pending', 'wp-hotel-booking' );
+			$heading = __( 'Your booking is pending', 'wp-hotel-booking' );
+			$desc    = __( 'Your booking is pending until the payment is completed', 'wp-hotel-booking' );
+		}
+
+		return hb_send_booking_mail( $booking, $booking->customer_email, $subject, $heading, $desc );
+	}
+}
+
+if ( ! function_exists( 'hb_set_mail_from' ) ) {
+	/**
+	 * Filter email from.
+	 *
+	 * @param $email
+	 *
+	 * @return mixed
+	 */
+	function hb_set_mail_from( $email ) {
+		$settings = hb_settings();
+		if ( $email = $settings->get( 'email_general_from_email', get_option( 'admin_email' ) ) ) {
+			if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+				return $email;
+			}
+		}
+
+		return $email;
+	}
+}
+
+if ( ! function_exists( 'hb_set_mail_from_name' ) ) {
+	/**
+	 * Filter email from name.
+	 *
+	 * @param $name
+	 *
+	 * @return mixed
+	 */
+	function hb_set_mail_from_name( $name ) {
+		$settings = hb_settings();
+		if ( $name = $settings->get( 'email_general_from_name' ) ) {
+			return $name;
+		}
+
+		return $name;
+	}
+}
+
+if ( ! function_exists( 'hb_set_html_content_type' ) ) {
+	/**
+	 * Filter content type to text/html for email.
+	 *
+	 * @return string
+	 */
+	function hb_set_html_content_type() {
+		$settings = hb_settings();
+		$format   = $settings->get( 'email_new_booking_format', 'html' );
+		if ( 'html' == $format ) {
+			return 'text/html';
+		} else {
+			return 'text/plain';
+		}
+	}
+}
+
+//============================================ Email Booking functions end ===========================================//
+
+
 /**
  * @Author: ducnvtt
  * @Date  :   2016-04-01 09:45:55
@@ -468,8 +642,8 @@ if ( ! function_exists( 'hb_dashboard_statistic' ) ) {
 if ( ! function_exists( 'hb_get_return_url' ) ) {
 
 	/**
-     * Get check out return URL.
-     *
+	 * Get check out return URL.
+	 *
 	 * @return mixed
 	 */
 	function hb_get_return_url() {
@@ -481,8 +655,8 @@ if ( ! function_exists( 'hb_get_return_url' ) ) {
 
 if ( ! function_exists( 'hb_get_user' ) ) {
 	/**
-     * Get user.
-     *
+	 * Get user.
+	 *
 	 * @param null $user
 	 *
 	 * @return WPHB_User
@@ -495,8 +669,8 @@ if ( ! function_exists( 'hb_get_user' ) ) {
 
 if ( ! function_exists( 'hb_get_current_user' ) ) {
 	/**
-     * Get current user data.
-     *
+	 * Get current user data.
+	 *
 	 * @return WPHB_User
 	 */
 	function hb_get_current_user() {

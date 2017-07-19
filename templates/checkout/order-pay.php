@@ -56,6 +56,6 @@ defined( 'ABSPATH' ) || exit;
 
 <?php } else { ?>
 
-    <h3><?php printf( __( '%s was pay completed', 'wp-hotel-booking' ), $booking->get_booking_number() ) ?></h3>
+    <h3><?php printf( __( '%s was pay completed', 'wp-hotel-booking' ), hb_format_order_number( $booking->id ) ) ?></h3>
 
 <?php } ?>

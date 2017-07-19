@@ -233,7 +233,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 		 */
 		public function process_checkout( $booking_id = null ) {
 			$cart = WPHB_Cart::instance();
-			$book = WPHB_Booking::instance( $booking_id );
+			$booking = WPHB_Booking::instance( $booking_id );
 
 			$cus_id = $this->add_customer( $booking_id );
 
@@ -246,7 +246,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 				'description' => sprintf(
 					__( '%s - Order %s', 'wphb-stripe-payment' ),
 					esc_html( get_bloginfo( 'name' ) ),
-					$book->get_booking_number()
+					hb_format_order_number( $booking->id )
 				)
 			);
 
@@ -259,10 +259,10 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 				);
 			} else {
 				if ( $response->id ) {
-					if ( (float) $advance_pay === (float) $book->total ) {
-						$book->update_status( 'completed' );
+					if ( (float) $advance_pay === (float) $booking->total ) {
+						$booking->update_status( 'completed' );
 					} else {
-						$book->update_status( 'processing' );
+						$booking->update_status( 'processing' );
 					}
 					WP_Hotel_Booking::instance()->empty_cart();
 					$return = array(

@@ -346,17 +346,6 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 		}
 
 		/**
-		 * Format booking number id.
-		 *
-		 * @since 2.0
-		 *
-		 * @return string
-		 */
-		public function get_booking_number() {
-			return hb_format_order_number( $this->id );
-		}
-
-		/**
 		 * Mark booking as complete.
 		 *
 		 * @since 2.0

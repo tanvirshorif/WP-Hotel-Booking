@@ -2,7 +2,7 @@
 /**
  * The template for displaying email booking footer.
  *
- * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/email-header.php.
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/booking/header.php.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Templates

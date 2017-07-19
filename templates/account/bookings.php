@@ -40,7 +40,7 @@ if ( ! $bookings ) {
 		<?php foreach ( $bookings as $k => $booking ) : ?>
 
             <tr>
-                <td><?php printf( '%s', $booking->get_booking_number() ) ?></td>
+                <td><?php printf( '%s', hb_format_order_number( $booking->id )) ?></td>
                 <td><?php printf( '%s', date_i18n( hb_get_date_format(), strtotime( $booking->post_date ) ) ) ?></td>
                 <td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
                 <td><?php printf( '%s', hb_get_booking_status_label( $booking->id ) ) ?></td>

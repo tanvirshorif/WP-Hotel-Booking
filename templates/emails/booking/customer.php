@@ -2,7 +2,7 @@
 /**
  * The email template for displaying customer details.
  *
- * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/customer-details.php.
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/booking/customer.php.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Templates
