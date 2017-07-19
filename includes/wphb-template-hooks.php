@@ -50,8 +50,6 @@ add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 add_filter( 'the_content', 'hb_setup_shortcode_page_content' );
 add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', 'hotel_show_pricing' );
 
-add_action( 'hotel_booking_room_before_quantity', 'hb_extra_single_room_cart' );
-
 
 
 // remove old action

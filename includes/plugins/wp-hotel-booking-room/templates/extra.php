@@ -1,15 +1,24 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date:   2016-04-21 17:04:52
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-21 17:10:38
+ * The template for extra packages of available room.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/extra.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Room/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
-// HB_Room_Extra instead of HB_Room
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 $extra_product = WPHB_Extra_Product::instance( $post->id );
 $room_extra    = $room_extra->get_extra();
 ?>

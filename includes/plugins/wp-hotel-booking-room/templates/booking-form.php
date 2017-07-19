@@ -1,19 +1,24 @@
 <?php
+
 /**
- * @Author: ducnvtt
- * @Date:   2016-04-21 09:15:52
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-21 16:05:07
+ * The template for booking form in single room.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/booking-form.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Room/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
-global $post;
-if ( ! $post ) {
-	return;
-}
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
+
+<?php global $post; ?>
 
 <!--Single search form-->
 <script type="text/html" id="tmpl-hb-room-load-form-cart">

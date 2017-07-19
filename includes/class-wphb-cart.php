@@ -112,6 +112,12 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			// update init hook
 			add_action( 'init', array( $this, 'cart_update' ), 999 );
 
+			// add extra package items in cart and checkout page
+			add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_extra_item' ), 10, 2 );
+
+			// add extra package items in mini cart
+			add_action( 'hotel_booking_mini_cart_item', array( $this, 'mini_cart_extra_loop' ), 10, 2 );
+
 
 //======================================= Extra cart hooks ============================================================//
 			/**
@@ -125,11 +131,6 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
 
 			/**
-			 * after mini cart item loop
-			 */
-			add_action( 'hotel_booking_before_mini_cart_loop_price', array( $this, 'mini_cart_loop' ), 10, 2 );
-
-			/**
 			 * sortable cart item
 			 */
 			add_filter( 'hotel_booking_load_cart_from_session', array(
@@ -137,16 +138,6 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				'hotel_booking_load_cart_from_session'
 			), 10, 1 );
 
-
-			/**
-			 * append package into cart
-			 */
-			add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ), 10, 2 );
-
-			/**
-			 * append package into cart admin
-			 */
-			add_action( 'hotel_booking_admin_cart_after_item', array( $this, 'admin_cart_package_after_item' ), 10, 3 );
 
 			// email new booking hook
 			add_action( 'hotel_booking_email_new_booking', array( $this, 'email_new_booking' ), 10, 3 );
@@ -977,13 +968,14 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		}
 
 		/**
-		 * extra package each cart item
-		 *
-		 * @param
-		 *
-		 * @return
+         * Add extra items in mini cart.
+         *
+         * @since 2.0
+         *
+		 * @param $room
+		 * @param $cart_id
 		 */
-		public function mini_cart_loop( $room, $cart_id ) {
+		public function mini_cart_extra_loop( $room, $cart_id ) {
 			$cart_item = $this->get_cart_item( $cart_id );
 			if ( ! $cart_item ) {
 				return;
@@ -998,7 +990,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			}
 
 			ob_start();
-			hb_get_template( 'extra/mini-cart-extra.php', array( 'packages' => $packages ) );
+			hb_get_template( 'cart/mini-cart-extra-item.php', array( 'extras' => $packages ) );
 			echo ob_get_clean();
 		}
 
@@ -1051,44 +1043,26 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			return $results;
 		}
 
-		// cart fontend
-		public function cart_package_after_item( $room, $cart_id ) {
+		/**
+         * Add extra package items in cart and checkout frontend page.
+         *
+         * @since 2.0
+         *
+		 * @param $room
+		 * @param $cart_id
+		 */
+		public function cart_extra_item( $room, $cart_id ) {
 			$cart           = WPHB_Cart::instance();
 			$extra_packages = $cart->get_extra_packages( $cart_id );
 
 			if ( $extra_packages ) {
-				if ( is_hb_checkout() ) {
-					$page = 'checkout';
-				} else {
-					$page = 'cart';
-				}
-
-				hb_get_template( 'extra/addition-services-title.php', array(
-					'page'    => $page,
-					'room'    => $room,
-					'cart_id' => $cart_id
-				) );
 				foreach ( $extra_packages as $package_cart_id => $cart_item ) {
-					hb_get_template( 'extra/cart-extra-package.php', array(
+					hb_get_template( 'cart/cart-extra-item.php', array(
 						'cart_id' => $package_cart_id,
-						'package' => $cart_item
+						'extra' => $cart_item
 					) );
 				}
 			}
-		}
-
-		// cart admin
-		public function admin_cart_package_after_item( $cart_params, $cart_id, $booking ) {
-			$html = array();
-			ob_start();
-			$html[] = ob_get_clean();
-			foreach ( $cart_params as $id => $cart_item ) {
-				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
-					ob_start();
-					$html[] = ob_get_clean();
-				}
-			}
-			echo implode( '', $html );
 		}
 
 		// email new booking

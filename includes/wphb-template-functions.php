@@ -387,17 +387,6 @@ if ( ! function_exists( 'hotel_booking_single_room_gallery' ) ) {
 
 }
 
-if ( ! function_exists( 'hb_extra_single_room_cart' ) ) {
-
-	function hb_extra_single_room_cart( $post ) {
-		ob_start();
-		hb_get_template( 'extra/single-search-room.php', array( 'post' => $post ) );
-		echo ob_get_clean();
-	}
-
-}
-
-
 if ( ! function_exists( 'hotel_booking_single_room_infomation' ) ) {
 
 	function hotel_booking_single_room_infomation() {

@@ -1,14 +1,24 @@
 <?php
-/**
- * @Author: ducnvtt
- * @Date:   2016-04-21 08:44:34
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-21 15:57:25
- */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
 
+/**
+ * The template for search available room from.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/search-available.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking_Room/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
+
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 global $post;
 if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_room' ) {
 	return;

@@ -70,6 +70,14 @@ global $hb_settings;
 								<?php echo hb_format_price( $room->total ); ?>
                             </td>
                         </tr>
+						<?php if ( $cart_extra ) { ?>
+                            <tr class="hb_addition_services_title" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
+                                <td colspan="<?php echo ( 'checkout' === is_hb_checkout() ) ? 6 : 7 ?>">
+									<?php _e( 'Addition Services', 'wp-hotel-booking' ); ?>
+                                </td>
+                            </tr>
+						<?php } ?>
+                        <!--add extra package items in cart page-->
 						<?php do_action( 'hotel_booking_cart_after_item', $room, $cart_id ); ?>
 					<?php } ?>
 

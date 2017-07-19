@@ -48,7 +48,7 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 				$this,
 				'check_room_available'
 			) );
-
+			add_action( 'hotel_booking_room_before_quantity', array( $this, 'extra_single_room' ) );
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_redirect' ), 10, 2 );
 		}
 
@@ -91,6 +91,19 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 
 			wp_enqueue_style( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/css/site.css', array(), WPHB_ROOM_VER );
 			wp_enqueue_script( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/js/site.js', array(), WPHB_ROOM_VER );
+		}
+
+		/**
+		 * Show extra in search room form.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $post
+		 */
+		public function extra_single_room( $post ) {
+			ob_start();
+			wphb_room_get_template( 'extra.php', array( 'post' => $post ) );
+			echo ob_get_clean();
 		}
 
 		/**

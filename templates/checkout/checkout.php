@@ -74,6 +74,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 								<?php echo hb_format_price( $room->total ); ?>
                             </td>
                         </tr>
+                        <!--add extra package items in checkout page-->
 						<?php do_action( 'hotel_booking_cart_after_item', $room, $cart_id ); ?>
 					<?php } ?>
 				<?php } ?>

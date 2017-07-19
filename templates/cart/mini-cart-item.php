@@ -36,7 +36,8 @@ defined( 'ABSPATH' ) || exit;
         <span><?php printf( '%s', $cart_item->quantity ); ?></span>
     </div>
 
-	<?php do_action( 'hotel_booking_before_mini_cart_loop_price', $room, $cart_id ); ?>
+    <!--add extra items in mini cart-->
+	<?php do_action( 'hotel_booking_mini_cart_item', $room, $cart_id ); ?>
 
     <div class="hb_mini_cart_price">
         <label><?php _e( 'Price: ', 'wp-hotel-booking' ); ?></label>
