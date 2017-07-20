@@ -1,20 +1,23 @@
 <?php
+
 /**
- * Pagination - Show numbered pagination for catalog pages
+ * The template for displaying page pagination in in archive room page.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/pagination.php
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/loop/pagination.php.
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
-global $wp_query;
+<?php global $wp_query;
 
 if ( $wp_query->max_num_pages <= 1 ) {
 	return;

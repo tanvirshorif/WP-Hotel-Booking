@@ -63,19 +63,7 @@ if ( ! class_exists( 'WPHB_Comments' ) ) {
 		 */
 		public static function load_comments_template( $template ) {
 			if ( get_post_type() === 'hb_room' ) {
-				$check_dirs = array(
-					trailingslashit( get_stylesheet_directory() ) . 'wp-hotel-booking',
-					trailingslashit( get_template_directory() ) . 'wp-hotel-booking',
-					trailingslashit( get_stylesheet_directory() ),
-					trailingslashit( get_template_directory() ),
-					trailingslashit( WPHB_ABSPATH . 'templates/' )
-				);
-
-				foreach ( $check_dirs as $dir ) {
-					if ( file_exists( trailingslashit( $dir ) . 'single-room-reviews.php' ) ) {
-						return trailingslashit( $dir ) . 'single-room-reviews.php';
-					}
-				}
+				$template = WPHB_ABSPATH . 'templates/single-room/reviews.php';
 			}
 
 			return $template;

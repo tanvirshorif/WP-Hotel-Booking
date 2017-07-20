@@ -13,10 +13,17 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
+
+/**
+ * Show message on shortcodes
+ */
+add_action( 'hotel_booking_wrapper_shortcode_start', 'hb_display_message' );
+
 
 add_action( 'hb_before_search_result', 'hb_enqueue_lightbox_assets' );
-
-add_action( 'hb_wrapper_start', 'hb_display_message' );
 
 // single-room.php hook template
 add_action( 'hotel_booking_before_main_content', 'hotel_booking_before_main_content' );

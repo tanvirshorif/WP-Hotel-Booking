@@ -1,9 +1,23 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * The template for displaying related rooms in single room page.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/single-room/related-room.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
 
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 $room    = WPHB_Room::instance( get_the_ID() );
 $related = $room->get_related_rooms();
 ?>

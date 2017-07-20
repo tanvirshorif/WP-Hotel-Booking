@@ -700,7 +700,7 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 			'check_out_date_must_be_greater' => __( 'Check out date must be greater than the check in.', 'wp-hotel-booking' ),
 			'enter_coupon_code'              => __( 'Please enter coupon code.', 'wp-hotel-booking' ),
 			'review_rating_required'         => __( 'Please select a rating.', 'wp-hotel-booking' ),
-			'warning'                         => array(
+			'warning'                        => array(
 				'room_select' => __( 'Please select room number.', 'wp-hotel-booking' ),
 				'try_again'   => __( 'Please try again!', 'wp-hotel-booking' )
 			),
@@ -1706,26 +1706,44 @@ if ( ! function_exists( 'hb_dropdown_countries' ) ) {
 	}
 }
 
-/**
- * Add a message to queue
- *
- * @param        $message
- * @param string $type
- */
 if ( ! function_exists( 'hb_add_message' ) ) {
+	/**
+	 * Add message to show in wrapper shortcodes start.
+	 *
+	 * @param $message
+	 * @param string $type
+	 */
 	function hb_add_message( $message, $type = 'message' ) {
 		$messages = get_transient( 'hb_message_' . session_id() );
 		if ( empty( $messages ) ) {
 			$messages = array();
 		}
-
 		$messages[] = array(
 			'type'    => $type,
 			'message' => $message
 		);
-
 		// hold in transient for 3 minutes
 		set_transient( 'hb_message_' . session_id(), $messages, MINUTE_IN_SECONDS * 3 );
+	}
+}
+
+if ( ! function_exists( 'hb_display_message' ) ) {
+	/**
+	 * Show message in wrapper shortcodes start.
+	 */
+	function hb_display_message() {
+		if ( $messages = get_transient( 'hb_message_' . session_id() ) ) {
+			foreach ( $messages as $message ) {
+				?>
+                <div class="hb-message <?php echo esc_attr( $message['type'] ); ?>">
+                    <div class="hb-message-content">
+						<?php echo esc_html( $message['message'] ); ?>
+                    </div>
+                </div>
+				<?php
+			}
+		}
+		delete_transient( 'hb_message_' . session_id() );
 	}
 }
 

@@ -1,12 +1,27 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template display shortcode for rooms carousel.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/shortcodes/best-reviews.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
 
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 $sliderId = 'hotel_booking_slider_' . uniqid();
 $items    = isset( $atts['number'] ) ? (int) $atts['number'] : 4;
 ?>
+
 <div id="<?php echo esc_attr( $sliderId ); ?>" class="hb_room_carousel_container tp-hotel-booking">
 	<?php if ( isset( $atts['title'] ) && $atts['title'] ): ?>
         <h3><?php echo esc_html( $atts['title'] ); ?></h3>

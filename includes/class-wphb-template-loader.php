@@ -68,11 +68,7 @@ if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 					$taxonomy = substr( $term->taxonomy, 3 );
 				}
 
-				if ( is_tax( 'hb_room_type' ) || is_tax( 'hb_room_capacity' ) ) {
-					$file = 'taxonomy-' . $taxonomy . '.php';
-				} else {
-					$file = 'archive-room.php';
-				}
+				$file = 'archive-room.php';
 
 				$find[] = 'taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
 				$find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '-' . $term->slug . '.php';

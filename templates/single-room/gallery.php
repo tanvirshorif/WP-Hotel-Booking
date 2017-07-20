@@ -11,12 +11,13 @@
  * @author      Thimpress, leehld
  */
 
-
 /**
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+?>
 
+<?php
 global $hb_room;
 $galleries = $hb_room->get_galleries( false );
 ?>

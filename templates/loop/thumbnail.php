@@ -11,7 +11,6 @@
  * @author      Thimpress, leehld
  */
 
-
 /**
  * Prevent loading this file directly
  */

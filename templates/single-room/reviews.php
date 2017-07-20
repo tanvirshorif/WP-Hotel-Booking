@@ -1,18 +1,23 @@
 <?php
+
 /**
- * Display single room reviews (comments)
+ * The template for displaying room reviews in single room page.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/single-room-reviews.php
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/single-room/reviews.php.
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
 
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
 
+<?php
 global $hb_room;
 global $hb_settings;
 
@@ -35,7 +40,7 @@ if ( ! comments_open() ) {
 		<?php if ( have_comments() ) : ?>
 
             <ol class="commentlist">
-				<?php wp_list_comments( apply_filters( 'hb_room_review_list_args', array( 'callback' => 'hb_comments' ) ) ); ?>
+				<?php wp_list_comments( apply_filters( 'hb_room_review_list_args', array( 'callback' => 'hb_room_review_item' ) ) ); ?>
             </ol>
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :

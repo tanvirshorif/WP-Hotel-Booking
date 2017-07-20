@@ -1,19 +1,22 @@
 <?php
 /**
- * The Template for displaying all archive products
+ * The Template for displaying archive room page.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/archive-room.php
+ * Override this template by copying it to yourtheme/wp-hotel-booking/archive-room.php
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
 
-get_header(); ?>
+<?php get_header(); ?>
 
 <?php
 /**

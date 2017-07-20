@@ -153,9 +153,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			}
 			$template = apply_filters( 'hotel_booking_shortcode_template', $template );
 			ob_start();
-			do_action( 'hb_wrapper_start' );
+			do_action( 'hotel_booking_wrapper_shortcode_start' );
 			hb_get_template( $template, $template_args );
-			do_action( 'hb_wrapper_end' );
+			do_action( 'hotel_booking_wrapper_shortcode_end' );
 
 			return ob_get_clean();
 		}
@@ -177,7 +177,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$query  = new WP_Query( $args );
 
 			if ( $query->have_posts() ):
-				hb_get_template( 'shortcodes/lastest_reviews.php', array( 'atts' => $atts, 'query' => $query ) );
+				hb_get_template( 'shortcodes/latest-reviews.php', array( 'atts' => $atts, 'query' => $query ) );
 			endif;
 		}
 
@@ -198,7 +198,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$query  = new WP_Query( $args );
 
 			if ( $query->have_posts() ):
-				hb_get_template( 'shortcodes/best_reviews.php', array( 'atts' => $atts, 'query' => $query ) );
+				hb_get_template( 'shortcodes/best-reviews.php', array( 'atts' => $atts, 'query' => $query ) );
 			endif;
 		}
 
@@ -310,7 +310,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$query = new WP_Query( $args );
 
 			if ( $query->have_posts() ):
-				hb_get_template( 'shortcodes/carousel.php', array( 'atts' => $atts, 'query' => $query ) );
+				hb_get_template( 'shortcodes/rooms-carousel.php', array( 'atts' => $atts, 'query' => $query ) );
 			endif;
 		}
 
@@ -322,9 +322,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		public static function hotel_booking_cart( $atts ) {
 			$template = apply_filters( 'hotel_booking_cart_template', 'cart/cart.php' );
 			ob_start();
-			do_action( 'hb_wrapper_start' );
+			do_action( 'hotel_booking_wrapper_shortcode_start' );
 			hb_get_template( $template, $atts );
-			do_action( 'hb_wrapper_end' );
+			do_action( 'hotel_booking_wrapper_shortcode_end' );
 
 			return ob_get_clean();
 		}
@@ -359,9 +359,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$template      = apply_filters( 'hotel_booking_checkout_tpl', 'checkout/checkout.php' );
 			$template_args = apply_filters( 'hotel_booking_checkout_tpl_template_args', array( 'customer' => $customer ) );
 			ob_start();
-			do_action( 'hb_wrapper_start' );
+			do_action( 'hotel_booking_wrapper_shortcode_start' );
 			hb_get_template( $template, $template_args );
-			do_action( 'hb_wrapper_end' );
+			do_action( 'hotel_booking_wrapper_shortcode_end' );
 
 			return ob_get_clean();
 		}
@@ -374,9 +374,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		public static function hotel_booking_account( $atts ) {
 			$template = apply_filters( 'hotel_booking_account_template', 'account/account.php' );
 			ob_start();
-			do_action( 'hb_wrapper_start' );
+			do_action( 'hotel_booking_wrapper_shortcode_start' );
 			hb_get_template( $template, $atts );
-			do_action( 'hb_wrapper_end' );
+			do_action( 'hotel_booking_wrapper_shortcode_end' );
 
 			return ob_get_clean();
 		}
@@ -396,9 +396,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$atts['currencies'] = explode( ',', $atts['currencies'] );
 
 			ob_start();
-			do_action( 'hb_wrapper_start' );
-			hb_get_template( 'shortcodes/switcher.php', $atts );
-			do_action( 'hb_wrapper_end' );
+			do_action( 'hotel_booking_wrapper_shortcode_start' );
+			hb_get_template( 'shortcodes/currency-switcher.php', $atts );
+			do_action( 'hotel_booking_wrapper_shortcode_end' );
 
 			return ob_get_clean();
 		}

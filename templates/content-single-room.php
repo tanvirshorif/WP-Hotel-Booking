@@ -1,26 +1,22 @@
 <?php
 /**
- * The template for displaying product content in the single-product.php template
+ * The template for displaying single room content in single room page.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/content-single-room.php
+ * Override this template by copying it to yourtheme/wp-hotel-booking/content-single-room.php
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
 
 <?php
-/**
- * hotel_booking_before_single_product hook
- *
- */
-do_action( 'hotel_booking_before_single_product' );
-
 if ( post_password_required() ) {
 	echo get_the_password_form();
 
@@ -77,6 +73,4 @@ if ( post_password_required() ) {
 	do_action( 'hotel_booking_after_single_room' );
 	?>
 
-</div><!-- #product-<?php the_ID(); ?> -->
-
-<?php do_action( 'hotel_booking_after_single_product' ); ?>
+</div>

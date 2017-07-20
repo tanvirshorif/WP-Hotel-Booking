@@ -1,18 +1,19 @@
 <?php
 /**
- * The template for displaying room content in the archive-room.php template
+ * The template for displaying room content in archive room page.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/content-room.php
+ * Override this template by copying it to yourtheme/wp-hotel-booking/content-room.php
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 ?>
 
 <li id="room-<?php the_ID(); ?>" <?php post_class(); ?>>

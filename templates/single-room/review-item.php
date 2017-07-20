@@ -1,12 +1,27 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * The template for displaying single review in single room page.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/single-room/review.php.
+ *
+ * @version     2.0
+ * @package     WP_Hotel_Booking/Templates
+ * @category    Templates
+ * @author      Thimpress, leehld
+ */
 
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+?>
+
+<?php
 $rating   = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
 $settings = WPHB_Settings::instance();
 ?>
+
 <li itemprop="review" itemscope itemtype="http://schema.org/Review" <?php comment_class(); ?>
     id="li-comment-<?php comment_ID() ?>">
 

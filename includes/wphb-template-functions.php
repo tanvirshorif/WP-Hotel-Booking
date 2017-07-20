@@ -165,14 +165,6 @@ if ( ! function_exists( 'hb_enqueue_lightbox_assets' ) ) {
 	}
 }
 
-if ( ! function_exists( 'hb_display_message' ) ) {
-
-	function hb_display_message() {
-		hb_get_template( 'messages.php' );
-	}
-
-}
-
 /* * **************************************************************** Loop ***************************************************************** */
 
 if ( ! function_exists( 'hotel_booking_page_title' ) ) {
@@ -374,7 +366,7 @@ if ( ! function_exists( 'hotel_booking_loop_room_price' ) ) {
 if ( ! function_exists( 'hotel_booking_after_room_loop' ) ) {
 
 	function hotel_booking_after_room_loop() {
-		hb_get_template( 'pagination.php' );
+		hb_get_template( 'loop/pagination.php' );
 	}
 
 }
@@ -395,18 +387,17 @@ if ( ! function_exists( 'hotel_booking_single_room_infomation' ) ) {
 
 }
 
-if ( ! function_exists( 'hb_comments' ) ) {
-
+if ( ! function_exists( 'hb_room_review_item' ) ) {
 	/**
-	 * Output the Review comments template.
+	 * Output the review item in single room page.
 	 *
-	 * @param WP_Comment object
-	 * @param mixed
-	 * @param int
+	 * @param $comment
+	 * @param $args
+	 * @param $depth
 	 */
-	function hb_comments( $comment, $args, $depth ) {
+	function hb_room_review_item( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
-		hb_get_template( 'single-room/review.php', array( 'comment' => $comment, 'args' => $args, 'depth' => $depth ) );
+		hb_get_template( 'single-room/review-item.php', array( 'comment' => $comment, 'args' => $args, 'depth' => $depth ) );
 	}
 
 }
