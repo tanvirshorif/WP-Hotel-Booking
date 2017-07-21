@@ -38,7 +38,7 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 		}
 		if ( ! $max ) {
 			global $wpdb;
-			$results = $wpdb->get_results( "SELECT MAX(meta_value) as max FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
+			$results = $wpdb->get_results( "SELECT MAX(meta_value) as max FROM $wpdb->termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
 			$max     = $results[0]['max'];
 		}
 
@@ -69,7 +69,7 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 		}
 		if ( ! $min ) {
 			global $wpdb;
-			$results = $wpdb->get_results( "SELECT MIN(meta_value) as min FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
+			$results = $wpdb->get_results( "SELECT MIN(meta_value) as min FROM $wpdb->termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
 			$min     = $results[0]['min'];
 		}
 
@@ -102,13 +102,7 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 			}
 		}
 
-//	if ( !$return ) {
-//		global $wpdb;
-//		$return = $wpdb->get_results( "SELECT term_id as value,meta_value as text FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
-//		asort( $return );
-//	}
-
-		ksort( $return );
+        ksort( $return );
 
 		return $return;
 	}

@@ -13,14 +13,13 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+?>
 
-
-$week_names = hb_date_names();
-
+<?php
 $room_id = intval( hb_get_request( 'hb-room' ) );
 
-$plans = hb_room_get_pricing_plans( $room_id );
-
+$week_names   = hb_date_names();
+$plans        = hb_room_get_pricing_plans( $room_id );
 $regular_plan = null;
 
 foreach ( $plans as $k => $plan ) {
@@ -31,7 +30,6 @@ foreach ( $plans as $k => $plan ) {
 }
 
 $count_plants = count( $plans );
-
 ?>
 
 <div class="wrap" id="tp_hotel_booking_pricing">
@@ -42,28 +40,21 @@ $count_plants = count( $plans );
             &nbsp;&nbsp;<?php echo hb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
         </p>
 		<?php if ( $room_id ) : ?>
-            <div class="hb-pricing-table regular-price clearfix">
-                <h3 class="hb-pricing-table-title">
-                    <span><?php _e( 'Regular price', 'wp-hotel-booking' ); ?></span>
-                    <input type="text" class="datepicker"
-                           name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
-                           size="10" readonly="readonly"/>
-                    <input type="hidden"
-                           name="date-start-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
+            <div class="hb-pricing-table regular-price">
+                <input type="hidden" class="datepicker"
+                       name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
+                       size="10" readonly="readonly"/>
+                <input type="hidden"
+                       name="date-start-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
 
-                    <input type="text" class="datepicker"
-                           name="date-end[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
-                           size="10" readonly="readonly"/>
-                    <input type="hidden"
-                           name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
-                </h3>
+                <input type="hidden" class="datepicker"
+                       name="date-end[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
+                       size="10" readonly="readonly"/>
+                <input type="hidden"
+                       name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
                 <div class="hb-pricing-controls">
-                    <a href="" class="dashicons dashicons-edit" data-action="edit"
-                       title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
                     <a href="" class="dashicons dashicons-admin-page" data-action="clone"
                        title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
-                    <a href="" class="dashicons dashicons-trash" data-action="remove"
-                       title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
                 </div>
                 <div class="hb-pricing-list">
                     <table>
@@ -85,7 +76,7 @@ $count_plants = count( $plans );
 									<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                     <input class="hb-pricing-price" type="number" min="0" step="any"
                                            name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]"
-                                           value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
+                                           value="<?php echo esc_attr( $price ); ?>" size="10"/>
                                 </td>
 							<?php } ?>
                         </tr>
@@ -94,8 +85,7 @@ $count_plants = count( $plans );
                 </div>
             </div>
 
-            <div class="clearfix"></div>
-            <h3 class="clearfix">
+            <h3>
 				<?php _e( 'Other plan', 'wp-hotel-booking' ); ?>
                 <span class="count"><?php printf( _n( '(%d plan)', '(%d plans)', $count_plants, 'wp-hotel-booking' ), $count_plants ); ?></span>
             </h3>
@@ -125,9 +115,6 @@ $count_plants = count( $plans );
                                        value="<?php echo esc_attr( $end ); ?>"/>
                             </h3>
                             <div class="hb-pricing-controls">
-                                <a href="" class="dashicons dashicons-edit" data-action="edit"
-                                   title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
-                                <!-- <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php //_e( 'Clone', 'wp-hotel-booking' ); ?>"></a> -->
                                 <a href="" class="dashicons dashicons-trash" data-action="remove"
                                    title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
                             </div>
@@ -149,8 +136,7 @@ $count_plants = count( $plans );
 												<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                                 <input class="hb-pricing-price" type="number" min="0" step="any"
                                                        name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $i ); ?>]"
-                                                       value="<?php echo esc_attr( $price ); ?>" size="10"
-                                                       readonly="readonly"/>
+                                                       value="<?php echo esc_attr( $price ); ?>" size="10"/>
                                             </td>
 										<?php } ?>
                                     </tr>
@@ -170,10 +156,6 @@ $count_plants = count( $plans );
                 <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
             </p>
 			<?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>
-            <!-- <p>
-                <button type="button" class="button hb-add-new-plan"><?php //_e( 'Add Plan', 'wp-hotel-booking' ); ?></button>
-                <button class="button button-primary"><?php //_e( 'Update', 'wp-hotel-booking' ); ?></button>
-            </p> -->
 		<?php endif; ?>
     </form>
 </div>
@@ -188,9 +170,6 @@ $count_plants = count( $plans );
             <input type="hidden" name="date-end-timestamp[__INDEX__]"/>
         </h3>
         <div class="hb-pricing-controls">
-            <a href="" class="dashicons dashicons-edit" data-action="edit"
-               title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
-
             <# if( typeof data.clone !== 'undefined' && data.clone === true ) { #>
                 <a href="" class="dashicons dashicons-admin-page" data-action="clone"
                    title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>

@@ -28,7 +28,7 @@ $field = wp_parse_args(
 	)
 );
 if ( $field['editor'] ) {
-	wp_editor( $field['std'], $field['name'] );
+	wp_editor( $field['std'], $field['name'], array( 'textarea_rows' => 10 ) );
 } else {
 	printf(
 		'<textarea name="%s" id="%s" placeholder="%s">%s</textarea>',

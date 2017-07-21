@@ -1,3 +1,37 @@
+/**
+ * Admin crete room page
+ */
+.post-type-hb_room #gallery_settings .hb-form-field-input {
+  margin-left: 0; }
+
+.post-type-hb_room #gallery_settings ul {
+  margin: 5px;
+  padding: 0;
+  overflow: hidden; }
+  .post-type-hb_room #gallery_settings ul li.attachment {
+    width: 15%;
+    padding: 5px;
+    cursor: move;
+    float: left;
+    margin: 0; }
+    .post-type-hb_room #gallery_settings ul li.attachment:hover .centered {
+      opacity: 0.4; }
+
+.post-type-hb_room #gallery_settings .hb-form-field-input-inner {
+  margin-left: 0; }
+
+.post-type-hb_room #gallery_settings .attachment-preview {
+  cursor: move; }
+
+/**
+ * Room regular price and pricing plans.
+ */
+.hb-pricing-list th, .hb-pricing-list td {
+  padding: 5px 5px 5px 0; }
+
+.hb-pricing-list tbody td input {
+  width: 100%; }
+
 .clearfix:after {
   content: '';
   display: block;
@@ -25,14 +59,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   .hb-form-field .hb-form-field-input-inner {
     margin-left: 20px; }
 
-/* pricing table */
-#hb-booking-items {
-  overflow: hidden; }
-  #hb-booking-items .hb-pricing-list, #hb-booking-items .hb-pricing-table, #hb-booking-items table {
-    width: 100%; }
-  #hb-booking-items .hb-pricing-table input[type="number"] {
-    width: 100px; }
-
 #hb-pricing-plan-list {
   overflow: hidden;
   clear: both; }
@@ -42,7 +68,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   position: relative;
   margin-bottom: 20px;
   background-color: #FFF;
-  float: left;
   clear: both; }
 
 .hb-pricing-table-title {
@@ -51,16 +76,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   font-size: 16px;
   height: 32px;
   line-height: 32px; }
-
-.hb-pricing-list {
-  border-top: 1px solid #EEE;
-  padding: 10px 5px 5px 10px; }
-
-.hb-pricing-list th, .hb-pricing-list td {
-  padding: 5px 5px 5px 0; }
-
-.hb-pricing-list tbody th {
-  text-align: left; }
 
 .hb-pricing-controls {
   position: absolute;
@@ -215,53 +230,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
     position: relative;
     border: 1px solid #DDD;
 }*/
-#gallery_settings .hb-form-field-input {
-  margin-left: 0; }
-
-/*
-#gallery_settings:before{
-    content: '';
-    border: 10px solid #DDD;
-    display: inline-block;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    position: absolute;
-    top: -20px;
-    left: 35px;
-}
-#gallery_settings:after{
-    content: '';
-    border: 9px solid #F5F5F5;
-    display: inline-block;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    position: absolute;
-    top: -18px;
-    left: 36px;
-}*/
-#gallery_settings ul {
-  margin: 5px;
-  padding: 0;
-  overflow: hidden; }
-
-#gallery_settings ul li.attachment {
-  width: 10%;
-  padding: 5px;
-  cursor: move;
-  float: left;
-  margin: 0; }
-
-#gallery_settings ul li.attachment:hover .centered {
-  opacity: 0.4; }
-
-#gallery_settings .attachment-preview {
-  cursor: move; }
-
-.form-field #gallery_settings {
-  width: 95%; }
-
 .attachment.add-new .dashicons {
   font-size: 40px;
   line-height: 55px;
@@ -515,8 +483,8 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
 
 .tp_hotel_booking_tabs_settings {
   /*width: 20%;
-  max-width: 300px;
-  float: left;*/ }
+    max-width: 300px;
+    float: left;*/ }
 
 .tp_hotel_booking_tabs_settings li {
   display: inline-block; }

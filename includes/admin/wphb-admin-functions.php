@@ -73,7 +73,12 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 							'name'    => 'text'
 						)
 					)
-				)
+				),
+				'except'  => sprintf( wp_kses( __( '<i>You need create <a href="%s" target="_blank">room capacities</a> to select number of adults</i>', 'wp-hotel-booking' ),
+					array(
+						'i' => array(),
+						'a' => array( 'href' => array(), 'target' => array() )
+					) ), admin_url( 'edit-tags.php?taxonomy=hb_room_capacity&post_type=hb_room' ) )
 			),
 			array(
 				'name'  => 'max_child_per_room',

@@ -133,7 +133,7 @@
 /**/
 .hb-order-existing-customer, .hb-order-new-customer, .hb-payment-form, .hb-addition-information {
   /*float: left;
-  width: 48.5%;*/
+    width: 48.5%;*/
   position: relative;
   margin-bottom: 40px; }
 

@@ -91,18 +91,6 @@
                     });
                     $('#hb-no-plan-message').hide();
                     break;
-                case 'edit':
-                    if ($button.hasClass('dashicons-edit')) {
-                        $('input', $table).removeAttr('readonly');
-                        $('input', $table).datepicker("enable");
-                        $button.removeClass('dashicons-edit').addClass('dashicons-yes');
-                        $('.hb-pricing-table .dashicons-yes').not($button).trigger('click')
-                    } else {
-                        $('input', $table).attr('readonly', 'readonly');
-                        $('input', $table).datepicker("disable");
-                        $button.removeClass('dashicons-yes').addClass('dashicons-edit');
-                    }
-                    break;
                 case 'remove':
                     if (confirm(hotel_booking_i18n.confirm_remove_pricing_table)) {
                         if ($table.siblings('.hb-pricing-table').length == 0) {
