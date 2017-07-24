@@ -1,26 +1,31 @@
 <?php
-/**
- * @Author: ducnvtt
- * @Date  :   2016-03-31 14:42:40
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-25 16:27:58
- */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
 
 /**
- * Creates new booking
+ * WP Hotel Booking core booking functions.
  *
- * @param array $args
- *
- * @return mixed|WP_Error
+ * @version     2.0
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
  */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+
 if ( ! function_exists( 'hb_create_booking' ) ) {
+	/**
+	 * Create new booking.
+	 *
+	 * @param array $booking_info
+	 * @param array $order_items
+	 *
+	 * @return int|WP_Error
+	 */
 	function hb_create_booking( $booking_info = array(), $order_items = array() ) {
-
-		// return WP_Error if cart is empty
 		$cart = WPHB_Cart::instance();
 		if ( $cart->cart_items_count === 0 ) {
 			return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
@@ -33,7 +38,6 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 			'booking_id'    => 0,
 			'parent'        => 0
 		);
-
 
 		// instance empty pending booking
 		$booking = WPHB_Booking::instance( $args['booking_id'] );

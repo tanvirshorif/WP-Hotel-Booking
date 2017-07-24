@@ -98,18 +98,7 @@ $rooms      = hb_get_order_items( $post->ID );
                    data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Sync', 'wp-hotel-booking' ); ?></a>
             </th>
             <th class="right" colspan="4">
-				<?php if ( ! $hb_booking->coupon_id ) : ?>
-
-                    <a href="#" class="button" id="add_coupon"
-                       data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Coupon', 'wp-hotel-booking' ); ?></a>
-
-				<?php else: ?>
-
-                    <a href="#" class="button" id="remove_coupon"
-                       data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"
-                       data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ) ?>"><?php _e( 'Remove Coupon', 'wp-hotel-booking' ); ?></a>
-
-				<?php endif; ?>
+				<?php do_action( 'hb_booking_items_actions', $hb_booking ); ?>
                 <a href="#" class="button" id="add_room_item"
                    data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
             </th>

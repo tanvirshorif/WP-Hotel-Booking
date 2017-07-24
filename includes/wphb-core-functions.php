@@ -1,11 +1,11 @@
 <?php
 
 /**
- * WP Hotel Booking core functions.
+ * WP Hotel Booking global core functions.
  *
  * @version     2.0
  * @author      ThimPress
- * @package     WP_Hotel_Booking_Statistic/Functions
+ * @package     WP_Hotel_Booking/Functions
  * @category    Core Functions
  * @author      Thimpress, leehld
  */
@@ -14,6 +14,29 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+
+
+if ( ! function_exists( 'wphb_booking_status_description' ) ) {
+	/**
+	 * Get booking status description.
+	 *
+	 * @param $status
+	 *
+	 * @return mixed
+	 */
+	function wphb_booking_status_description( $status ) {
+		static $descriptions = null;
+		$descriptions = array(
+			'hb-pending'    => __( 'Booking received in case user buy a course but doesn\'t finalise the booking.', 'wp-hotel-booking' ),
+			'hb-processing' => __( 'Payment received and the booking is awaiting fulfillment.', 'wp-hotel-booking' ),
+			'hb-completed'  => __( 'Booking fulfilled and complete.', 'wp-hotel-booking' ),
+			'hb-cancelled'  => __( 'The booking is cancelled by an admin or the customer.', 'wp-hotel-booking' )
+		);
+
+		return apply_filters( 'hb_booking_status_description', ! empty( $descriptions[ $status ] ) ? $descriptions[ $status ] : '' );
+	}
+
+}
 
 /**
  * set table name.

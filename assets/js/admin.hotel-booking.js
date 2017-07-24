@@ -17,6 +17,7 @@
             return 0;
         }
     }
+
     function isEmail(email) {
         return new RegExp('^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$').test(email);
     }
@@ -360,6 +361,8 @@
 
         $('#hb-booking-details select').select2();
 
+        // $('#hb-booking-actions select').select2();
+
         $('.hb-form-field .hb-form-field-input select').select2();
 
         $('input[name="tp_hotel_booking_email_new_booking_enable"]').on('change _change', function () {
@@ -422,10 +425,13 @@
 
             _doc.on('click', '.section h4 .edit', _self.edit_customer)
 
-            _doc.on('change', '#booking-item-checkall', _self.toggle_checkbox)
-            // add room
-            _doc.on('click', '#add_room_item', _self.add_room_item)
-            // sync
+            // update booking status description
+                .on('change', 'select[name="_hb_booking_status"]', _self.update_booking_status_description)
+
+                .on('change', '#booking-item-checkall', _self.toggle_checkbox)
+                // add room
+                .on('click', '#add_room_item', _self.add_room_item)
+                // sync
                 .on('click', '#action_sync', _self.action_sync)
                 // edit
                 .on('click', '#booking_items .actions .edit', _self.edit_room)
@@ -441,30 +447,6 @@
                 // on save action
                 .on('hb_before_update_action', this.save_action);
         },
-        edit_customer: function (e, target, data) {
-            e.preventDefault();
-            var _self = $(this),
-                _section = _self.parents('.section:first'),
-                _details = _section.find('.details'),
-                _edit_input = _section.find('.edit_details');
-
-            if (!_edit_input.hasClass('active')) {
-                _self.hide();
-                _details.hide();
-                _edit_input.addClass('active');
-            }
-        },
-        toggle_checkbox: function (e) {
-            e.preventDefault();
-            var _self = $(this),
-                _checkox = $('#booking_items input[name*="book_item"]');
-
-            if (_self.is(':checked')) {
-                _checkox.attr('checked', true);
-            } else {
-                _checkox.attr('checked', false);
-            }
-        },
         edit_customer: function (e) {
             e.preventDefault();
             var _self = $(this),
@@ -478,6 +460,15 @@
                 _edit_input.addClass('active');
             }
         },
+        update_booking_status_description: function (e) {
+            var $sel = $(e.target),
+                $option = $sel.find('option:selected');
+            $sel.siblings('.description').hide().html($option.attr('data-desc'))
+                .removeClass(function (c, d) {
+                    var m = d.match(/(hb-.*)\s?/);
+                    return m ? m[0] : '';
+                }).addClass($option.val()).show();
+        },
         toggle_checkbox: function (e) {
             e.preventDefault();
             var _self = $(this),
@@ -490,7 +481,7 @@
             }
         },
         select2: function () {
-            $('#booking_details_section #_hb_user_id').select2({
+            $('#_hb_user_id').select2({
                 placeholder: hotel_booking_i18n.select_user,
                 minimumInputLength: 3,
                 ajax: {

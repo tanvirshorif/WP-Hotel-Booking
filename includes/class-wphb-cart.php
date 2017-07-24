@@ -835,6 +835,8 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 
 		/**
 		 * Generate transaction and transfer cart content to booking info.
+         *
+         * @since 2.0
 		 *
 		 * @param null $payment_method
 		 *
@@ -857,7 +859,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				'_hb_advance_payment'         => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
 				'_hb_advance_payment_setting' => $settings->get( 'advance_payment', 50 ),
 				'_hb_currency'                => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
-				'_hb_user_id'                 => get_current_blog_id(),
+				'_hb_user_id'                 => get_current_user_id(),
 				'_hb_method'                  => $payment_method->slug,
 				'_hb_method_title'            => $payment_method->title,
 				// customer

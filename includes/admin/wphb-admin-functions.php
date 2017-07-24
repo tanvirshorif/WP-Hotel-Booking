@@ -184,8 +184,11 @@ if ( ! function_exists( 'hb_manage_booking_column' ) ) {
 				$echo[] = hb_format_order_number( $post_id );
 				break;
 			case 'customer':
-				$echo[] = hb_get_customer_fullname( $post_id, true );
-				$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<br /><strong><small><a href="%s">%s</a></small></strong>', get_edit_user_link( $booking->user_id ), $user->user_login ) : '';
+				$echo[] = hb_get_customer_fullname( $post_id, true ) .'<br />';
+				$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( wp_kses( '<strong>[<a href="%s">%s</a>]</strong>', array(
+					'strong' => array(),
+					'a'      => array( 'href' => array() )
+				) ), get_edit_user_link( $booking->user_id ), $user->user_login ) : __( '[Guest]', 'wp-hotel-booking' );
 				break;
 			case 'total':
 				global $hb_settings;

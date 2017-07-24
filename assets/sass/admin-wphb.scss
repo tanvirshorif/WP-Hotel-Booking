@@ -1,5 +1,5 @@
 /**
- * Admin crete room page
+ * Admin room page
  */
 .post-type-hb_room {
     #gallery_settings {
@@ -44,6 +44,24 @@
             input {
                 width: 100%;
             }
+        }
+    }
+}
+
+/**
+ * Admin booking page.
+ */
+.post-type-hb_booking {
+    #post-body {
+        #normal-sortables {
+            min-height: 0;
+        }
+    }
+    #hb-booking-actions {
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
     }
 }

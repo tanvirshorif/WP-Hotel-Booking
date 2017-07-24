@@ -106,6 +106,11 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 			add_action( 'init', array( $this, 'load_text_domain' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+			// add add coupon action in admin booking page
+			add_action( 'hb_booking_items_actions', array( $this, 'booking_items_actions' ) );
+
+			// add coupon form in cart page
 			add_action( 'hotel_booking_before_cart_total', array( $this, 'add_form' ) );
 		}
 
@@ -154,6 +159,25 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 				) );
 			} else {
 				wp_enqueue_script( 'wphb-coupon-site', WPHB_COUPON_URI . '/assets/js/wphb-coupon.js', array( 'jquery' ), WPHB_COUPON_VER, true );
+			}
+		}
+
+		/**
+		 * Add coupon actions in admin booking page.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $booking
+		 */
+		public function booking_items_actions( $booking ) {
+			if ( ! $booking->coupon_id ) { ?>
+                <a href="#" class="button" id="add_coupon"
+                   data-order-id="<?php echo esc_attr( $booking->id ) ?>"><?php _e( 'Add Coupon', 'wphb-coupon' ); ?></a>
+			<?php } else { ?>
+                <a href="#" class="button" id="remove_coupon"
+                   data-order-id="<?php echo esc_attr( $booking->id ) ?>"
+                   data-coupon-id="<?php echo esc_attr( $booking->coupon_id ) ?>"><?php _e( 'Remove Coupon', 'wphb-coupon' ); ?></a>
+				<?php
 			}
 		}
 
