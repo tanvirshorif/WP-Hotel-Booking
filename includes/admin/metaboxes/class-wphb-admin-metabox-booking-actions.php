@@ -54,6 +54,31 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 			$this->title = __( 'Booking Actions', 'wp-hotel-booking' );
 			parent::__construct();
 		}
+
+		/**
+		 * Update booking details.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $post_id
+		 */
+		public function update( $post_id ) {
+			parent::update( $post_id );
+
+			if ( ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_actions_nonce'], 'hotel-booking-metabox-booking-actions' ) ) {
+				return;
+			}
+
+			foreach ( $_POST as $key => $value ) {
+				if ( strpos( $key, '_hb_' ) !== 0 ) {
+					continue;
+				}
+
+				update_post_meta( $post_id, $key, sanitize_text_field( $value ) );
+				do_action( 'hb_booking_detail_update_meta_box_' . $key, $value, $post_id );
+//				do_action( 'hb_booking_detail_update_meta_box', $key, $value, $post_id );
+			}
+		}
 	}
 
 }

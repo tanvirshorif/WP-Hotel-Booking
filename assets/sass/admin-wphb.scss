@@ -52,16 +52,155 @@
  * Admin booking page.
  */
 .post-type-hb_booking {
+    // archive booking page
+    .search-box {
+        display: none;
+    }
+
+    // edit booking page
     #post-body {
         #normal-sortables {
             min-height: 0;
         }
     }
-    #hb-booking-actions {
+    #booking-actions {
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
+        }
+        ul {
+            li {
+                margin-bottom: 15px;
+                label {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        .major-publishing-actions {
+            padding: 10px;
+            clear: both;
+            border-top: 1px solid #ddd;
+            background: #f5f5f5;
+            #delete-action {
+                float: left;
+                line-height: 28px;
+                a {
+                    color: #a00;
+                }
+            }
+            #publishing-action {
+                text-align: right;
+                float: right;
+                line-height: 23px;
+            }
+            .clear {
+                clear: both;
+            }
+        }
+    }
+
+    #booking-details {
+        margin: 20px 0;
+    }
+
+    #booking-items {
+        margin-bottom: 20px;
+        table {
+            border: 1px solid #DDD;
+            width: 100%;
+            margin-bottom: 25px;
+            thead {
+                th {
+                    height: 30px;
+                    text-align: left;
+                    font-size: 16px;
+                    padding: 15px 10px;
+                    border: 1px solid #DDD;
+                }
+            }
+            tbody {
+                td {
+                    padding: 15px 10px;
+                    font-size: 16px;
+                    border: 1px solid #DDD;
+                }
+            }
+        }
+        .booking-actions {
+            clear: both;
+            .delete-items, .actions {
+                display: inline-block;
+            }
+            .actions {
+                float: right;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    #booking-customer {
+        .hb-form-field {
+            margin: 0 0 25px 0;
+            display: inline-block;
+            width: 49%;
+            label {
+                display: inline-block;
+                width: 80px;
+            }
+        }
+        .booking-notes {
+            label {
+                display: block;
+                margin-bottom: 10px;
+            }
+            textarea {
+                width: calc(100% - 85px);
+                margin-left: 85px;
+            }
+        }
+    }
+}
+
+/**
+ * Admin booking detail
+ */
+#hb-booking-details {
+    .hb-booking-details {
+        display: inline-block;
+    }
+    .booking-user-data {
+        display: inline-block;
+        width: calc(100% - 200px);
+        position: relative;
+        .user-avatar {
+            display: inline-block;
+        }
+        .order-user-meta {
+            display: inline-block;
+            position: absolute;
+            margin-left: 20px;
+            .user-display-name {
+                margin-bottom: 10px;
+                a {
+                    text-decoration: none;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+    .booking-data {
+        display: inline-block;
+        width: 200px;
+        float: right;
+        .booking-data-number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .booking-date {
+            font-size: 14px;
+            font-style: italic;
+            margin-bottom: 5px;
         }
     }
 }
@@ -678,60 +817,60 @@ form[name="hb-admin-settings-form"] {
     color: #776C6C;
 }
 
-#booking_details {
-    padding: 8px 12px;
-    color: #776C6C;
-    overflow: hidden;
-}
-
-#booking_details h1,
-#booking_details h2,
-#booking_details h3,
-#booking_details h4,
-#booking_details h5,
-#booking_details h6,
-#booking_details input,
-#booking_details select,
-#booking_details textarea {
-    margin: 3px;
-    padding: 3px;
-    width: 90%;
-}
-
-#booking_details ul {
-    margin: 0;
-}
-
-#booking_details_section label {
-    display: block;
-    padding: 5px 0;
-}
-
-#booking_details_section .section {
-    width: 32%;
-    float: left;
-    margin: 0 5px;
-}
-
-#booking_details_section .section h4 a {
-    font-size: 14px;
-    color: #9E9393;
-    padding: 0 5px;
-    float: right;
-}
-
-#booking_details_section .section .edit_details {
-    display: none
-}
-
-#booking_details_section .section .edit_details.active {
-    display: block;
-}
-
-#booking_details_section .section .edit_col {
-    width: 50%;
-    float: left;
-}
+//#booking_details {
+//    padding: 8px 12px;
+//    color: #776C6C;
+//    overflow: hidden;
+//}
+//
+//#booking_details h1,
+//#booking_details h2,
+//#booking_details h3,
+//#booking_details h4,
+//#booking_details h5,
+//#booking_details h6,
+//#booking_details input,
+//#booking_details select,
+//#booking_details textarea {
+//    margin: 3px;
+//    padding: 3px;
+//    width: 90%;
+//}
+//
+//#booking_details ul {
+//    margin: 0;
+//}
+//
+//#booking_details_section label {
+//    display: block;
+//    padding: 5px 0;
+//}
+//
+//#booking_details_section .section {
+//    width: 32%;
+//    float: left;
+//    margin: 0 5px;
+//}
+//
+//#booking_details_section .section h4 a {
+//    font-size: 14px;
+//    color: #9E9393;
+//    padding: 0 5px;
+//    float: right;
+//}
+//
+//#booking_details_section .section .edit_details {
+//    display: none
+//}
+//
+//#booking_details_section .section .edit_details.active {
+//    display: block;
+//}
+//
+//#booking_details_section .section .edit_col {
+//    width: 50%;
+//    float: left;
+//}
 
 #booking_items .hb_overlay.active {
     position: absolute;

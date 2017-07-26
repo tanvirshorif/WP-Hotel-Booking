@@ -44,7 +44,7 @@ if ( ! class_exists( 'WPHB_WC_Checkout' ) ) {
 			// tax for woocommerce in WP Hotel Booking
 			add_filter( 'hotel_booking_tax_metabox', array( $this, 'tax_order' ), 10, 1 );
 			add_filter( 'hotel_booking_label_details', array( $this, 'booking_tax_price' ), 10, 1 );
-			add_filter( 'hotel_booking_admin_book_details', array( $this, 'booking_details_tax_price' ), 10, 2 );
+			add_filter( 'hotel_booking_admin_booking_details', array( $this, 'booking_details_tax_price' ), 10, 2 );
 		}
 
 		/**

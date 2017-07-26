@@ -69,7 +69,7 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
         <label><?php _e( 'Quantity Available', 'wp-hotel-booking-room' ); ?></label>
         <div class="hb-booking-room-form-field hb-form-field-input">
             <select name="hb-num-of-rooms" id="hotel_booking_room_qty" class="number_room_select">
-                <option value=""><?php _e( '--- Quantity ---', 'wp-hotel-booking-room' ); ?></option>
+                <option value=""><?php _e( 'Quantity', 'wp-hotel-booking-room' ); ?></option>
                 <# for( var i = 1; i
                 <
                 = data.qty; i++ ) { #>

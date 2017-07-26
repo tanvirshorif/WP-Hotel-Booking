@@ -323,6 +323,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 
 				// Update the order
 				wp_update_post( array( 'ID' => $this->id, 'post_status' => 'hb-' . $new_status ) );
+
 				$this->post_status = 'hb-' . $new_status;
 
 				// Status was changed

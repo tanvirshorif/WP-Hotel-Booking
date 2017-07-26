@@ -35,13 +35,115 @@
 /**
  * Admin booking page.
  */
+.post-type-hb_booking .search-box {
+  display: none; }
+
 .post-type-hb_booking #post-body #normal-sortables {
   min-height: 0; }
 
-.post-type-hb_booking #hb-booking-actions label {
+.post-type-hb_booking #booking-actions label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 8px; }
+  font-weight: 600; }
+
+.post-type-hb_booking #booking-actions ul li {
+  margin-bottom: 15px; }
+  .post-type-hb_booking #booking-actions ul li label {
+    margin-bottom: 5px; }
+
+.post-type-hb_booking #booking-actions .major-publishing-actions {
+  padding: 10px;
+  clear: both;
+  border-top: 1px solid #ddd;
+  background: #f5f5f5; }
+  .post-type-hb_booking #booking-actions .major-publishing-actions #delete-action {
+    float: left;
+    line-height: 28px; }
+    .post-type-hb_booking #booking-actions .major-publishing-actions #delete-action a {
+      color: #a00; }
+  .post-type-hb_booking #booking-actions .major-publishing-actions #publishing-action {
+    text-align: right;
+    float: right;
+    line-height: 23px; }
+  .post-type-hb_booking #booking-actions .major-publishing-actions .clear {
+    clear: both; }
+
+.post-type-hb_booking #booking-details {
+  margin: 20px 0; }
+
+.post-type-hb_booking #booking-items {
+  margin-bottom: 20px; }
+  .post-type-hb_booking #booking-items table {
+    border: 1px solid #DDD;
+    width: 100%;
+    margin-bottom: 25px; }
+    .post-type-hb_booking #booking-items table thead th {
+      height: 30px;
+      text-align: left;
+      font-size: 16px;
+      padding: 15px 10px;
+      border: 1px solid #DDD; }
+    .post-type-hb_booking #booking-items table tbody td {
+      padding: 15px 10px;
+      font-size: 16px;
+      border: 1px solid #DDD; }
+  .post-type-hb_booking #booking-items .booking-actions {
+    clear: both; }
+    .post-type-hb_booking #booking-items .booking-actions .delete-items, .post-type-hb_booking #booking-items .booking-actions .actions {
+      display: inline-block; }
+    .post-type-hb_booking #booking-items .booking-actions .actions {
+      float: right;
+      margin-right: 10px; }
+
+.post-type-hb_booking #booking-customer .hb-form-field {
+  margin: 0 0 25px 0;
+  display: inline-block;
+  width: 49%; }
+  .post-type-hb_booking #booking-customer .hb-form-field label {
+    display: inline-block;
+    width: 80px; }
+
+.post-type-hb_booking #booking-customer .booking-notes label {
+  display: block;
+  margin-bottom: 10px; }
+
+.post-type-hb_booking #booking-customer .booking-notes textarea {
+  width: calc(100% - 85px);
+  margin-left: 85px; }
+
+/**
+ * Admin booking detail
+ */
+#hb-booking-details .hb-booking-details {
+  display: inline-block; }
+
+#hb-booking-details .booking-user-data {
+  display: inline-block;
+  width: calc(100% - 200px);
+  position: relative; }
+  #hb-booking-details .booking-user-data .user-avatar {
+    display: inline-block; }
+  #hb-booking-details .booking-user-data .order-user-meta {
+    display: inline-block;
+    position: absolute;
+    margin-left: 20px; }
+    #hb-booking-details .booking-user-data .order-user-meta .user-display-name {
+      margin-bottom: 10px; }
+      #hb-booking-details .booking-user-data .order-user-meta .user-display-name a {
+        text-decoration: none;
+        margin-bottom: 10px; }
+
+#hb-booking-details .booking-data {
+  display: inline-block;
+  width: 200px;
+  float: right; }
+  #hb-booking-details .booking-data .booking-data-number {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px; }
+  #hb-booking-details .booking-data .booking-date {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 5px; }
 
 .clearfix:after {
   content: '';
@@ -547,52 +649,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   font-weight: 600;
   font-size: 18px !important;
   color: #776C6C; }
-
-#booking_details {
-  padding: 8px 12px;
-  color: #776C6C;
-  overflow: hidden; }
-
-#booking_details h1,
-#booking_details h2,
-#booking_details h3,
-#booking_details h4,
-#booking_details h5,
-#booking_details h6,
-#booking_details input,
-#booking_details select,
-#booking_details textarea {
-  margin: 3px;
-  padding: 3px;
-  width: 90%; }
-
-#booking_details ul {
-  margin: 0; }
-
-#booking_details_section label {
-  display: block;
-  padding: 5px 0; }
-
-#booking_details_section .section {
-  width: 32%;
-  float: left;
-  margin: 0 5px; }
-
-#booking_details_section .section h4 a {
-  font-size: 14px;
-  color: #9E9393;
-  padding: 0 5px;
-  float: right; }
-
-#booking_details_section .section .edit_details {
-  display: none; }
-
-#booking_details_section .section .edit_details.active {
-  display: block; }
-
-#booking_details_section .section .edit_col {
-  width: 50%;
-  float: left; }
 
 #booking_items .hb_overlay.active {
   position: absolute;

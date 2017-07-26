@@ -1,27 +1,39 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
 
 /**
- * Common function for admin side
- */
-/**
- * Define default tabs for settings
+ * WP Hotel Booking admin core functions.
  *
- * @return mixed
+ * @version     2.0
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
  */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+
 if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
+	/**
+	 * Get admin setting tabs.
+	 *
+	 * @return mixed
+	 */
 	function hb_admin_settings_tabs() {
 		return apply_filters( 'hb_admin_settings_tabs', array() );
 	}
 }
 
-/**
- * Admin translation text
- * @return mixed
- */
+
 if ( ! function_exists( 'hb_admin_i18n' ) ) {
+	/**
+	 * Print admin scripts.
+	 *
+	 * @return mixed
+	 */
 	function hb_admin_i18n() {
 		$i18n = array(
 			'choose_images'                 => __( 'Choose images', 'wp-hotel-booking' ),
@@ -130,122 +142,14 @@ if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 	function hb_admin_init_metaboxes() {
 		$metaboxes = array(
 			new WPHB_Admin_Metabox_Booking_Details(), // booking details
-			new WPHB_Admin_Metabox_Booking_Items(), // booking items
 			new WPHB_Admin_Metabox_Booking_Actions(), // booking actions
+			new WPHB_Admin_Metabox_Booking_Customer(), // booking customer
 			new WPHB_Admin_Metabox_Room_Price(), // room price
-//			new WPHB_Admin_Metabox_Room_Settings() // room setting
 		);
 
 		return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );
 	}
 }
-
-/**
- * Custom booking list in admin
- *
- *
- * @param  [type] $default
- *
- * @return [type]
- */
-if ( ! function_exists( 'hb_booking_table_head' ) ) {
-	function hb_booking_table_head( $default ) {
-		unset( $default['author'] );
-		unset( $default['date'] );
-		$default['customer']       = __( 'Customer', 'wp-hotel-booking' );
-		$default['booking_date']   = __( 'Date', 'wp-hotel-booking' );
-		$default['check_in_date']  = __( 'Check in', 'wp-hotel-booking' );
-		$default['check_out_date'] = __( 'Check out', 'wp-hotel-booking' );
-		$default['total']          = __( 'Total', 'wp-hotel-booking' );
-		$default['title']          = __( 'Booking Order', 'wp-hotel-booking' );
-		$default['status']         = __( 'Status', 'wp-hotel-booking' );
-
-		return $default;
-	}
-}
-
-add_filter( 'manage_hb_booking_posts_columns', 'hb_booking_table_head' );
-
-/**
- * Retrieve information for listing in booking list
- *
- * @param  string
- * @param  int
- *
- * @return mixed
- */
-if ( ! function_exists( 'hb_manage_booking_column' ) ) {
-	function hb_manage_booking_column( $column_name, $post_id ) {
-		$booking = WPHB_Booking::instance( $post_id );
-		$echo    = array();
-		$status  = get_post_status( $post_id );
-		switch ( $column_name ) {
-			case 'booking_id':
-				$echo[] = hb_format_order_number( $post_id );
-				break;
-			case 'customer':
-				$echo[] = hb_get_customer_fullname( $post_id, true ) .'<br />';
-				$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( wp_kses( '<strong>[<a href="%s">%s</a>]</strong>', array(
-					'strong' => array(),
-					'a'      => array( 'href' => array() )
-				) ), get_edit_user_link( $booking->user_id ), $user->user_login ) : __( '[Guest]', 'wp-hotel-booking' );
-				break;
-			case 'total':
-				global $hb_settings;
-				$total    = $booking->total();
-				$currency = $booking->payment_currency;
-				if ( ! $currency ) {
-					$currency = $booking->currency;
-				}
-				$total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
-
-				$echo[] = $total_with_currency;
-				if ( $method = hb_get_user_payment_method( $booking->method ) ) {
-					$echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
-				}
-				// display paid
-				if ( $status === 'hb-processing' ) {
-					$advance_payment  = $booking->advance_payment;
-					$advance_settings = $booking->advance_payment_setting;
-					if ( ! $advance_settings ) {
-						$advance_settings = $hb_settings->get( 'advance_payment', 50 );
-					}
-
-					if ( floatval( $total ) !== floatval( $advance_payment ) ) {
-						$echo[] = sprintf(
-							__( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'wp-hotel-booking' ),
-							$advance_settings . '%',
-							hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
-						);
-					}
-				}
-				// end display paid
-				do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
-				break;
-			case 'booking_date':
-				echo date( hb_get_date_format(), strtotime( get_post_field( 'post_date', $post_id ) ) );
-				break;
-			case 'check_in_date':
-				$check_in_date = hb_booking_get_check_in_date( $post_id );
-				if ( $check_in_date ) {
-					echo date( hb_get_date_format(), $check_in_date );
-				}
-				break;
-			case 'check_out_date':
-				$check_out_date = hb_booking_get_check_out_date( $post_id );
-				if ( $check_out_date ) {
-					echo date( hb_get_date_format(), $check_out_date );
-				}
-				break;
-			case 'status':
-				$link   = '<a href="' . esc_attr( get_edit_post_link( $post_id ) ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
-				$echo[] = '<span class="hb-booking-status ' . $status . '">' . $link . '</span>';
-		}
-		echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode( '', $echo ) ), $column_name, $post_id );
-	}
-}
-
-add_action( 'manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2 );
 
 if ( ! function_exists( 'hb_request_query' ) ) {
 
@@ -272,58 +176,6 @@ if ( ! function_exists( 'hb_request_query' ) ) {
 }
 
 add_filter( 'request', 'hb_request_query' );
-
-add_action( 'restrict_manage_posts', 'hb_booking_restrict_manage_posts' );
-/**
- * First create the dropdown
- *
- * @return void
- */
-if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
-
-	function hb_booking_restrict_manage_posts() {
-		$type = 'post';
-		if ( isset( $_GET['post_type'] ) ) {
-			$type = $_GET['post_type'];
-		}
-
-		//only add filter to post type you want
-		if ( 'hb_booking' == $type ) {
-			//change this to the list of values you want to show
-			//in 'label' => 'value' format
-			$from           = hb_get_request( 'date-from' );
-			$from_timestamp = hb_get_request( 'date-from-timestamp' );
-			$to             = hb_get_request( 'date-to' );
-			$to_timestamp   = hb_get_request( 'date-to-timestamp' );
-			$filter_type    = hb_get_request( 'filter-type' );
-
-			$filter_types = apply_filters(
-				'hb_booking_filter_types',
-				array(
-					'booking-date'   => __( 'Booking date', 'wp-hotel-booking' ),
-					'check-in-date'  => __( 'Check-in date', 'wp-hotel-booking' ),
-					'check-out-date' => __( 'Check-out date', 'wp-hotel-booking' )
-				)
-			);
-
-			?>
-            <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
-            <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
-                   name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
-            <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
-            <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
-                   name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
-            <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
-            <select name="filter-type">
-                <option value=""><?php _e( '---Filter By---', 'wp-hotel-booking' ); ?></option>
-				<?php foreach ( $filter_types as $slug => $text ) { ?>
-                    <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
-				<?php } ?>
-            </select>
-			<?php
-		}
-	}
-}
 
 if ( ! function_exists( 'hb_edit_post_change_title_in_list' ) ) {
 	function hb_edit_post_change_title_in_list() {
@@ -422,23 +274,19 @@ if ( ! function_exists( 'hb_get_rooms' ) ) {
 add_action( 'hb_booking_detail_update_meta_box', 'hb_booking_detail_update_meta_box', 10, 3 );
 if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 
-	function hb_booking_detail_update_meta_box( $k, $vl, $post_id ) {
-		if ( get_post_type( $post_id ) !== 'hb_booking' ) {
+	function hb_booking_detail_update_meta_box( $key, $value, $post_id ) {
+		if ( ! ( get_post_type( $post_id ) == 'hb_booking' && $key == '_hb_booking_status' ) ) {
 			return;
 		}
 
-		if ( $k !== '_hb_booking_status' ) {
-			return;
-		}
+		$status = sanitize_text_field( $value );
+		remove_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Actions', 'update' ) );
 
-		$status = sanitize_text_field( $vl );
+		$booking = WPHB_Booking::instance( $post_id );
+		$booking->update_status( $status );
 
-		remove_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Details', 'update' ) );
 
-		$book = WPHB_Booking::instance( $post_id );
-		$book->update_status( $status );
-
-		add_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Details', 'update' ) );
+		add_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Actions', 'update' ) );
 	}
 
 	add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );

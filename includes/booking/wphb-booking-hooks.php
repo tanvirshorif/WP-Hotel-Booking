@@ -14,6 +14,56 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+add_action( 'restrict_manage_posts', 'hb_booking_restrict_manage_posts' );
+
+
+if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
+	/**
+	 * Create booking date drop down filter.
+	 */
+	function hb_booking_restrict_manage_posts() {
+		$type = 'post';
+		if ( isset( $_GET['post_type'] ) ) {
+			$type = $_GET['post_type'];
+		}
+
+		// only add filter to hb_booking post type
+		if ( 'hb_booking' == $type ) {
+			//change this to the list of values you want to show
+			$from           = hb_get_request( 'date-from' );
+			$from_timestamp = hb_get_request( 'date-from-timestamp' );
+			$to             = hb_get_request( 'date-to' );
+			$to_timestamp   = hb_get_request( 'date-to-timestamp' );
+			$filter_type    = hb_get_request( 'filter-type' );
+
+			$filter_types = apply_filters(
+				'hb_booking_filter_types',
+				array(
+					'booking-date'   => __( 'Booking date', 'wp-hotel-booking' ),
+					'check-in-date'  => __( 'Check-in date', 'wp-hotel-booking' ),
+					'check-out-date' => __( 'Check-out date', 'wp-hotel-booking' )
+				)
+			);
+
+			?>
+			<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+			<input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
+			       name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
+			<input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
+			<input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
+			       name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
+			<input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
+			<select name="filter-type">
+				<option value=""><?php _e( 'Filter By', 'wp-hotel-booking' ); ?></option>
+				<?php foreach ( $filter_types as $slug => $text ) { ?>
+					<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
+				<?php } ?>
+			</select>
+			<?php
+		}
+	}
+}
+
 
 add_action( 'hotel_booking_create_booking', 'hb_schedule_cancel_booking', 10, 1 );
 add_action( 'hb_booking_status_changed', 'hb_schedule_cancel_booking', 10, 1 );

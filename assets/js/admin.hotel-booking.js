@@ -359,8 +359,6 @@
 
         $('form[name="hb-admin-settings-form"] select').select2();
 
-        $('#hb-booking-details select').select2();
-
         // $('#hb-booking-actions select').select2();
 
         $('.hb-form-field .hb-form-field-input select').select2();
@@ -423,12 +421,10 @@
 
             _self.select2();
 
-            _doc.on('click', '.section h4 .edit', _self.edit_customer)
-
             // update booking status description
-                .on('change', 'select[name="_hb_booking_status"]', _self.update_booking_status_description)
+            _doc.on('change', 'select[name="_hb_booking_status"]', _self.update_booking_status_description)
 
-                .on('change', '#booking-item-checkall', _self.toggle_checkbox)
+                .on('change', '#booking-item-check-all', _self.toggle_checkbox)
                 // add room
                 .on('click', '#add_room_item', _self.add_room_item)
                 // sync
@@ -446,19 +442,6 @@
 
                 // on save action
                 .on('hb_before_update_action', this.save_action);
-        },
-        edit_customer: function (e) {
-            e.preventDefault();
-            var _self = $(this),
-                _section = _self.parents('.section:first'),
-                _details = _section.find('.details'),
-                _edit_input = _section.find('.edit_details');
-
-            if (!_edit_input.hasClass('active')) {
-                _self.hide();
-                _details.hide();
-                _edit_input.addClass('active');
-            }
         },
         update_booking_status_description: function (e) {
             var $sel = $(e.target),

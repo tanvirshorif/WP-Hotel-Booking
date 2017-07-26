@@ -38,7 +38,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Details' ) ) {
 		/**
 		 * @var null
 		 */
-		protected $view = 'booking-details';
+		protected $view = array( 'booking-details', 'booking-items-template-js' );
 
 		/**
 		 * WPHB_Admin_Metabox_Booking_Details constructor.
@@ -48,31 +48,6 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Details' ) ) {
 		public function __construct() {
 			$this->title = __( 'Booking Details', 'wp-hotel-booking' );
 			parent::__construct();
-		}
-
-		/**
-		 * Update booking details.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $post_id
-		 */
-		public function update( $post_id ) {
-			parent::update( $post_id );
-
-			if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
-				return;
-			}
-
-			foreach ( $_POST as $k => $vl ) {
-				if ( strpos( $k, '_hb_' ) !== 0 ) {
-					continue;
-				}
-
-				update_post_meta( $post_id, $k, sanitize_text_field( $vl ) );
-				do_action( 'hb_booking_detail_update_meta_box_' . $k, $vl, $post_id );
-				do_action( 'hb_booking_detail_update_meta_box', $k, $vl, $post_id );
-			}
 		}
 	}
 

@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php
 			hb_dropdown_pages(
 				array(
-					'show_option_none'  => __( '---Select page---', 'wp-hotel-booking' ),
+					'show_option_none'  => __( 'Select page', 'wp-hotel-booking' ),
 					'option_none_value' => 0,
 					'name'              => $field['id'],
 					'selected'          => $selected

@@ -45,20 +45,29 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_action( 'admin_menu', array( $this, 'remove_meta_boxes' ) );
 			add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
 
+			// update admin room capacity columns
 			add_filter( 'manage_edit-hb_room_capacity_columns', array( $this, 'taxonomy_columns' ) );
 			add_filter( 'manage_hb_room_capacity_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
 
+			// update create room capacity fields
 			add_action( 'create_hb_room_capacity', array( $this, 'save_capacity_fields' ) );
 			add_action( 'hb_room_capacity_add_form_fields', array( $this, 'add_capacity_fields' ) );
 			add_action( 'hb_room_capacity_edit_form_fields', array( $this, 'edit_capacity_fields' ) );
 			add_action( 'edited_hb_room_capacity', array( $this, 'save_capacity_fields' ) );
 
-			add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
-
+			// update admin room columns
 			add_filter( 'manage_hb_room_posts_columns', array( $this, 'custom_room_columns' ) );
 			add_action( 'manage_hb_room_posts_custom_column', array( $this, 'custom_room_columns_filter' ) );
 
+			// update admin booking columns
+			add_filter( 'manage_hb_booking_posts_columns', array( $this, 'custom_booking_columns' ) );
+			add_action( 'manage_hb_booking_posts_custom_column', array( $this, 'custom_booking_columns_filter' ) );
+			add_filter( 'manage_edit-hb_booking_sortable_columns', array( $this, 'custom_booking_sortable_columns' ) );
+			add_action( 'pre_get_posts', array( $this, 'custom_booking_sortable_column_handle' ) );
+
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+			add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
 
 			add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
 			add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
@@ -107,8 +116,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		}
 
 		/**
-         * Active save room capacity;
-         *
+		 * Active save room capacity;
+		 *
 		 * @param $term_id
 		 */
 		public function save_capacity_fields( $term_id ) {
@@ -276,13 +285,15 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		}
 
 		/**
-		 * Add more column to taxonomy manage
+		 * Add more columns to admin room list table.
 		 *
-		 * @param $a
+		 * @since 2.0
+		 *
+		 * @param $columns
 		 *
 		 * @return mixed
 		 */
-		function custom_room_columns( $columns ) {
+		public function custom_room_columns( $columns ) {
 			unset( $columns['title'] );
 			unset( $columns['author'] );
 			unset( $columns['comments'] );
@@ -298,11 +309,13 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		}
 
 		/**
-		 * Display content for taxonomy custom field
+		 * Display column contents for admin room list table.
+		 *
+		 * @since 2.0
 		 *
 		 * @param $column
 		 */
-		function custom_room_columns_filter( $column ) {
+		public function custom_room_columns_filter( $column ) {
 			global $post;
 			switch ( $column ) {
 				case 'thumb':
@@ -353,6 +366,149 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					endif;
 					$html[] = '</div>';
 					echo implode( '', $html );
+					break;
+			}
+		}
+
+		/**
+		 * Add more columns to admin booking list table.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $columns
+		 *
+		 * @return mixed
+		 */
+		public function custom_booking_columns( $columns ) {
+			unset( $columns['author'] );
+			unset( $columns['date'] );
+			$columns['customer']       = __( 'Customer', 'wp-hotel-booking' );
+			$columns['booking_date']   = __( 'Date', 'wp-hotel-booking' );
+			$columns['check_in_date']  = __( 'Check in', 'wp-hotel-booking' );
+			$columns['check_out_date'] = __( 'Check out', 'wp-hotel-booking' );
+			$columns['total']          = __( 'Total', 'wp-hotel-booking' );
+			$columns['title']          = __( 'Booking Order', 'wp-hotel-booking' );
+			$columns['status']         = __( 'Status', 'wp-hotel-booking' );
+
+			return $columns;
+		}
+
+		/**
+		 * Display column contents for admin booking list table.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $column
+		 */
+		public function custom_booking_columns_filter( $column ) {
+			global $post;
+			$post_id = $post->ID;
+			$booking = WPHB_Booking::instance( $post_id );
+			$echo    = array();
+			$status  = get_post_status( $post_id );
+			switch ( $column ) {
+				case 'booking_id':
+					$echo[] = hb_format_order_number( $post_id );
+					break;
+				case 'customer':
+					$echo[] = hb_get_customer_fullname( $post_id, true ) . '<br />';
+					$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( wp_kses( '<strong>[<a href="%s">%s</a>]</strong>', array(
+						'strong' => array(),
+						'a'      => array( 'href' => array() )
+					) ), get_edit_user_link( $booking->user_id ), $user->user_login ) : __( '[Guest]', 'wp-hotel-booking' );
+					break;
+				case 'total':
+					global $hb_settings;
+					$total    = $booking->total();
+					$currency = $booking->payment_currency;
+					if ( ! $currency ) {
+						$currency = $booking->currency;
+					}
+					$total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
+
+					$echo[] = $total_with_currency;
+					if ( $method = hb_get_user_payment_method( $booking->method ) ) {
+						$echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
+					}
+					if ( $status === 'hb-processing' ) {
+						$advance_payment  = $booking->advance_payment;
+						$advance_settings = $booking->advance_payment_setting;
+						if ( ! $advance_settings ) {
+							$advance_settings = $hb_settings->get( 'advance_payment', 50 );
+						}
+
+						if ( floatval( $total ) !== floatval( $advance_payment ) ) {
+							$echo[] = sprintf(
+								__( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'wp-hotel-booking' ),
+								$advance_settings . '%',
+								hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
+							);
+						}
+					}
+					do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
+					break;
+				case 'booking_date':
+					echo date( hb_get_date_format(), strtotime( get_post_field( 'post_date', $post_id ) ) );
+					break;
+				case 'check_in_date':
+					$check_in_date = hb_booking_get_check_in_date( $post_id );
+					if ( $check_in_date ) {
+						echo date( hb_get_date_format(), $check_in_date );
+					}
+					break;
+				case 'check_out_date':
+					$check_out_date = hb_booking_get_check_out_date( $post_id );
+					if ( $check_out_date ) {
+						echo date( hb_get_date_format(), $check_out_date );
+					}
+					break;
+				case 'status':
+					$link   = '<a href="' . esc_attr( get_edit_post_link( $post_id ) ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
+					$echo[] = '<span class="hb-booking-status ' . $status . '">' . $link . '</span>';
+			}
+			echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode( '', $echo ) ), $column, $post_id );
+		}
+
+		/**
+		 * Add booking sortable columns.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $columns
+		 *
+		 * @return mixed
+		 */
+		public function custom_booking_sortable_columns( $columns ) {
+			$columns['booking_date'] = 'booking_date';
+//			$columns['check_in_date']  = 'check_in_date';
+//			$columns['check_out_date'] = 'check_out_date';
+
+			return $columns;
+		}
+
+		/**
+		 * Handle custom booking sortable columns.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $query
+		 */
+		public function custom_booking_sortable_column_handle( $query ) {
+			if ( ! is_admin() ) {
+				return;
+			}
+
+			$orderby = $query->get( 'orderby' );
+
+			switch ( $orderby ) {
+				case 'booking_date':
+					$query->set( 'orderby', 'date' );
+					break;
+				case 'check_in_date':
+					break;
+				case 'check_out_date':
+					break;
+				default:
 					break;
 			}
 		}

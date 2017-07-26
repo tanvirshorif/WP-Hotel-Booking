@@ -193,7 +193,7 @@ if ( ! function_exists( 'hb_dropdown_rooms' ) ) {
 		$output                    = '<select name="hb-room" id="hb-room-select">';
 		$emptySelected             = new stdClass;
 		$emptySelected->ID         = '';
-		$emptySelected->post_title = __( '---Select Room---', 'wp-hotel-booking' );
+		$emptySelected->post_title = __( 'Select Room', 'wp-hotel-booking' );
 		/* filter rooms dropdown list */
 		$posts = apply_filters( 'hotel_booking_rooms_dropdown', $posts );
 		$posts = array_merge( array( $emptySelected ), $posts );
@@ -1938,7 +1938,7 @@ if ( ! function_exists( 'hb_dropdown_pages' ) ) {
 
 	function hb_dropdown_pages( $args = array() ) {
 		$args = wp_parse_args( $args, array(
-			'show_option_none'  => __( '---Select page---', 'wp-hotel-booking' ),
+			'show_option_none'  => __( 'Select page', 'wp-hotel-booking' ),
 			'option_none_value' => 0,
 			'name'              => '',
 			'selected'          => ''
