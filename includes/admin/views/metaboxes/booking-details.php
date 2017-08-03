@@ -52,7 +52,6 @@ $rooms   = hb_get_order_items( $post->ID );
     <table cellpadding="0" cellspacing="0" class="booking_item_table">
         <thead>
         <tr>
-            <th><input type="checkbox" id="booking-item-check-all"/></th>
             <th><?php _e( 'Item', 'wp-hotel-booking' ); ?></th>
             <th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ) ?></th>
             <th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
@@ -66,9 +65,6 @@ $rooms   = hb_get_order_items( $post->ID );
 		<?php foreach ( $rooms as $k => $room ) { ?>
 
             <tr>
-                <td>
-                    <input type="checkbox" name="book_item[]" value="<?php echo esc_attr( $room->order_item_id ) ?>"/>
-                </td>
                 <td>
 					<?php printf( '<a href="%s">%s</a>', get_edit_post_link( hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
                 </td>
@@ -84,15 +80,15 @@ $rooms   = hb_get_order_items( $post->ID );
                 <td>
 					<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
                 </td>
-                <td>
-                    <a href="#" class="edit" data-order-id="<?php echo esc_attr( $booking->id ); ?>"
-                       data-order-item-id="<?php echo esc_attr( $room->order_item_id ) ?>"
-                       data-order-item-type="line_item">
+                <td class="actions">
+                    <a href="#" class="edit" data-booking-id="<?php echo esc_attr( $booking->id ); ?>"
+                       data-booking-item-id="<?php echo esc_attr( $room->order_item_id ) ?>"
+                       data-booking-item-type="line_item">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a href="#" class="remove" data-order-id="<?php echo esc_attr( $booking->id ); ?>"
-                       data-order-item-id="<?php echo esc_attr( $room->order_item_id ) ?>"
-                       data-order-item-type="line_item">
+                    <a href="#" class="remove" data-booking-id="<?php echo esc_attr( $booking->id ); ?>"
+                       data-booking-item-id="<?php echo esc_attr( $room->order_item_id ) ?>"
+                       data-booking-item-type="line_item">
                         <i class="fa fa-times-circle"></i>
                     </a>
                 </td>
@@ -116,17 +112,17 @@ $rooms   = hb_get_order_items( $post->ID );
                         </td>
                         <td class="actions">
 							<?php if ( $extra->respondent === 'number' ) { ?>
-                                <a href="#" class="edit" data-order-id="<?php echo esc_attr( $booking->id ); ?>"
-                                   data-order-item-id="<?php echo esc_attr( $package->order_item_id ); ?>"
-                                   data-order-item-type="sub_item"
-                                   data-order-item-parent="<?php echo esc_attr( $package->order_item_parent ); ?>">
+                                <a href="#" class="edit" data-booking-id="<?php echo esc_attr( $booking->id ); ?>"
+                                   data-booking-item-id="<?php echo esc_attr( $package->order_item_id ); ?>"
+                                   data-booking-item-type="sub_item"
+                                   data-booking-item-parent="<?php echo esc_attr( $package->order_item_parent ); ?>">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 							<?php } ?>
-                            <a href="#" class="remove" data-order-id="<?php echo esc_attr( $booking->id ); ?>"
-                               data-order-item-id="<?php echo esc_attr( $package->order_item_id ); ?>"
-                               data-order-item-type="sub_item"
-                               data-order-item-parent="<?php echo $package->order_item_parent; ?>">
+                            <a href="#" class="remove" data-booking-id="<?php echo esc_attr( $booking->id ); ?>"
+                               data-booking-item-id="<?php echo esc_attr( $package->order_item_id ); ?>"
+                               data-booking-item-type="sub_item"
+                               data-booking-item-parent="<?php echo $package->order_item_parent; ?>">
                                 <i class="fa fa-times-circle"></i>
                             </a>
                         </td>
@@ -136,19 +132,19 @@ $rooms   = hb_get_order_items( $post->ID );
 		<?php } ?>
 
         <tr>
-            <td colspan="6"><?php _e( 'Sub Total', 'wp-hotel-booking' ) ?></td>
+            <td colspan="5"><?php _e( 'Sub Total', 'wp-hotel-booking' ) ?></td>
             <td>
 				<?php printf( '%s', hb_format_price( hb_booking_subtotal( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
             </td>
         </tr>
         <tr>
-            <td colspan="6"><?php _e( 'Tax', 'wp-hotel-booking' ) ?></td>
+            <td colspan="5"><?php _e( 'Tax', 'wp-hotel-booking' ) ?></td>
             <td>
 				<?php printf( '%s', apply_filters( 'hotel_booking_admin_booking_details', hb_format_price( hb_booking_tax_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ), $booking ) ); ?>
             </td>
         </tr>
         <tr>
-            <td colspan="6"><?php _e( 'Grand Total', 'wp-hotel-booking' ) ?></td>
+            <td colspan="5"><?php _e( 'Grand Total', 'wp-hotel-booking' ) ?></td>
             <td>
 				<?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ) ?>
             </td>
@@ -156,17 +152,10 @@ $rooms   = hb_get_order_items( $post->ID );
         </tbody>
     </table>
     <div class="booking-actions">
-        <div class="delete-items">
-            <select id="actions">
-                <option><?php _e( 'Delete select item(s)', 'wp-hotel-booking' ); ?></option>
-            </select>
-            <a href="#" class="button button-primary" id="action_sync"
-               data-order-id="<?php echo esc_attr( $booking->id ) ?>"><?php _e( 'Apply', 'wp-hotel-booking' ); ?></a>
-        </div>
         <div class="actions">
 			<?php do_action( 'hb_booking_items_actions', $booking ); ?>
             <a href="#" class="button" id="add_room_item"
-               data-order-id="<?php echo esc_attr( $booking->id ) ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
+               data-booking-id="<?php echo esc_attr( $booking->id ) ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
         </div>
     </div>
 

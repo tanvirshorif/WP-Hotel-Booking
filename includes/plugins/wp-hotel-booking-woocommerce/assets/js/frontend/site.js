@@ -19,7 +19,7 @@
         $('body').on('hb_added_item_to_cart', function () {
             $('body').trigger('wc_fragment_refresh');
         })
-            .on('hb_removed_item_to_cart', function () {
+            .on('click', '.hb_mini_cart_remove', function () {
                 $('body').trigger('wc_fragment_refresh');
             });
     }

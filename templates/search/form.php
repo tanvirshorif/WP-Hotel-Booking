@@ -88,7 +88,7 @@ $uniqid         = uniqid();
         </ul>
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
         <input type="hidden" name="hotel-booking" value="results"/>
-        <input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
+        <input type="hidden" name="action" value="wphb_parse_search_params"/>
         <p class="hb-submit">
             <button type="submit"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
         </p>

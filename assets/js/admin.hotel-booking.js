@@ -430,9 +430,9 @@
                 // sync
                 .on('click', '#action_sync', _self.action_sync)
                 // edit
-                .on('click', '#booking_items .actions .edit', _self.edit_room)
+                .on('click', '#booking-items .actions .edit', _self.edit_room)
                 // remove room item
-                .on('click', '#booking_items .actions .remove', _self.remove_room)
+                .on('click', '#booking-items .actions .remove', _self.remove_room)
 
                 // on open trigger
                 .on('hb_modal_open', this.openCallback)
@@ -462,36 +462,6 @@
             } else {
                 _checkox.attr('checked', false);
             }
-        },
-        select2: function () {
-            $('#_hb_user_id').select2({
-                placeholder: hotel_booking_i18n.select_user,
-                minimumInputLength: 3,
-                ajax: {
-                    url: ajaxurl,
-                    dataType: 'json',
-                    type: 'POST',
-                    quietMillis: 50,
-                    data: function (user_name) {
-                        return {
-                            user_name: user_name.term,
-                            action: 'hotel_booking_load_order_user',
-                            nonce: hotel_settings.nonce
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.user_login + '(#' + item.ID + ' ' + item.user_email + ')',
-                                    id: item.ID
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
         },
         add_room_item: function (e) {
             e.preventDefault();
@@ -588,77 +558,7 @@
         },
         openCallback: function (e, target, form) {
             e.preventDefault();
-            if (target === 'hb-add-room') {
-                var _check_in = form.find('.check_in_date'),
-                    _check_out = form.find('.check_out_date'),
-                    _select = form.find('.booking_search_room_items');
 
-                // select2
-                _select.select2({
-                    placeholder: hotel_booking_i18n.select_room,
-                    minimumInputLength: 3,
-                    // z-index: 10000,
-                    ajax: {
-                        url: ajaxurl,
-                        dataType: 'json',
-                        type: 'POST',
-                        quietMillis: 50,
-                        data: function (room) {
-                            return {
-                                room: room.term,
-                                action: 'hotel_booking_load_room_ajax',
-                                nonce: hotel_settings.nonce
-                            };
-                        },
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.post_title,
-                                        id: item.ID
-                                    }
-                                })
-                            };
-                        },
-                        cache: true
-                    }
-                });
-
-                // date picker
-                _check_in.datepicker({
-                    dateFormat: hotel_booking_i18n.date_time_format,
-                    monthNames: hotel_booking_i18n.monthNames,
-                    monthNamesShort: hotel_booking_i18n.monthNamesShort,
-                    dayNames: hotel_booking_i18n.dayNames,
-                    dayNamesShort: hotel_booking_i18n.dayNamesShort,
-                    dayNamesMin: hotel_booking_i18n.dayNamesMin,
-                    onSelect: function () {
-                        var _self = $(this),
-                            date = _self.datepicker('getDate'),
-                            timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
-                        _self.parent().find('input[name="check_in_date_timestamp"]').val(timestamp);
-
-                        _check_out.datepicker('option', 'minDate', date);
-                    }
-                });
-                _check_out.datepicker({
-                    dateFormat: hotel_booking_i18n.date_time_format,
-                    monthNames: hotel_booking_i18n.monthNames,
-                    monthNamesShort: hotel_booking_i18n.monthNamesShort,
-                    dayNames: hotel_booking_i18n.dayNames,
-                    dayNamesShort: hotel_booking_i18n.dayNamesShort,
-                    dayNamesMin: hotel_booking_i18n.dayNamesMin,
-                    onSelect: function () {
-                        var _self = $(this),
-                            date = _self.datepicker('getDate'),
-                            timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
-                        _self.parent().find('input[name="check_out_date_timestamp"]').val(timestamp);
-
-                        _check_in.datepicker('option', 'maxDate', date);
-                    }
-                });
-
-            }
         },
         check_available: function (e, target, form) {
             e.preventDefault();

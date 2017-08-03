@@ -198,7 +198,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 * @since 2.0
 		 */
 		public function enqueue_scripts() {
-			wp_enqueue_script( 'wphb_wc_checkout', WPHB_WOO_PAYMENT_URI . '/assets/js/frontend/site.min.js', array( 'jquery' ) );
+			wp_enqueue_script( 'wphb_wc_checkout', WPHB_WOO_PAYMENT_URI . '/assets/js/frontend/site.js', array( 'jquery' ) );
 			wp_enqueue_style( 'wphb_wc_site', WPHB_WOO_PAYMENT_URI . '/assets/css/frontend/site.css' );
 		}
 

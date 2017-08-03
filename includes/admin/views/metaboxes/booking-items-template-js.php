@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
                         <?php _e( 'Add new item', 'wp-hotel-booking' ) ?>
                     <# } #>
                 </h1>
-                <button class="hb_modal_close dashicons dashicons-no-alt"></button>
+                <button class="modal_close dashicons dashicons-no-alt"></button>
             </div>
 
             <div class="section_line">
@@ -111,19 +111,19 @@ defined( 'ABSPATH' ) || exit;
                 <input type="hidden" name="order_id" value="{{ data.order_id }}"/>
                 <input type="hidden" name="order_item_id" value="{{ data.order_item_id }}"/>
                 <# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
-                    <a href="#" class="button check_available{{ data.class }}"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></a>
+                    <a href="#" class="button check_room_available{{ data.class }}"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></a>
                 <# } #>
                     <input type="hidden" name="order_item_type" value="{{ data.order_item_type }}"/>
-                    <input type="hidden" name="action" value="hotel_booking_admin_add_order_item"/>
-                    <button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
-                    <button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
+<!--                    <input type="hidden" name="action" value="wphb_admin_add_order_item"/>-->
+                    <button type="reset" class="button modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
+                    <button type="submit" class="button button-primary form_submit"><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
             </div>
 
         </form>
 
     </div>
 
-    <div class="hb_modal_overlay"></div>
+    <div class="modal_overlay"></div>
 
 </script>
 <!--Add new or edit oder item-->
@@ -140,7 +140,7 @@ defined( 'ABSPATH' ) || exit;
 							<?php _e( 'Do you want to do this?', 'wp-hotel-booking' ); ?>
                             <# } #>
                 </h1>
-                <button class="hb_modal_close dashicons dashicons-no-alt"></button>
+                <button class="modal_close dashicons dashicons-no-alt"></button>
             </div>
             <div class="form_footer center">
                 <input type="hidden" name="order_id" value="{{ data.order_id }}"/>
@@ -157,15 +157,15 @@ defined( 'ABSPATH' ) || exit;
                             <# } #>
                                 <input type="hidden" name="action" value="{{ data.action }}">
                                 <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}"/>
-								<?php wp_nonce_field( 'hotel-booking-confirm', 'hotel_booking_confirm' ); ?>
+								<?php wp_nonce_field( 'wphb-remove-booking-item', 'wphb_remove_booking_item' ); ?>
                                 <button type="reset"
-                                        class="button hb_modal_close"><?php _e( 'No', 'wp-hotel-booking' ) ?></button>
+                                        class="button modal_close"><?php _e( 'No', 'wp-hotel-booking' ) ?></button>
                                 <button type="submit"
-                                        class="button button-primary hb_form_submit"><?php _e( 'Yes', 'wp-hotel-booking' ); ?></button>
+                                        class="button button-primary form_submit"><?php _e( 'Yes', 'wp-hotel-booking' ); ?></button>
             </div>
         </form>
     </div>
-    <div class="hb_modal_overlay"></div>
+    <div class="modal_overlay"></div>
 </script>
 <!--Confirm-->
 

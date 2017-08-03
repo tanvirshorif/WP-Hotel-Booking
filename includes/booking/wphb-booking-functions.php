@@ -79,8 +79,8 @@ if ( ! function_exists( 'hb_get_booking_statuses' ) ) {
 
 	function hb_get_booking_statuses() {
 		$booking_statuses = array(
-			'hb-cancelled'  => _x( 'Cancelled', 'Booking status', 'wp-hotel-booking' ),
 			'hb-pending'    => _x( 'Pending', 'Booking status', 'wp-hotel-booking' ),
+			'hb-cancelled'  => _x( 'Cancelled', 'Booking status', 'wp-hotel-booking' ),
 			'hb-processing' => _x( 'Processing', 'Booking status', 'wp-hotel-booking' ),
 			'hb-completed'  => _x( 'Completed', 'Booking status', 'wp-hotel-booking' ),
 		);
@@ -247,10 +247,18 @@ if ( ! function_exists( 'hb_update_order_item_meta' ) ) {
 	}
 }
 
-// get order item meta
 if ( ! function_exists( 'hb_get_order_item_meta' ) ) {
 
-	function hb_get_order_item_meta( $item_id = null, $key = nul, $single = true ) {
+	/**
+	 * Get booking item meta.
+	 *
+	 * @param null $item_id
+	 * @param null $key
+	 * @param bool $single
+	 *
+	 * @return mixed
+	 */
+	function hb_get_order_item_meta( $item_id = null, $key = null, $single = true ) {
 		return get_metadata( 'hotel_booking_order_item', $item_id, $key, $single );
 	}
 }

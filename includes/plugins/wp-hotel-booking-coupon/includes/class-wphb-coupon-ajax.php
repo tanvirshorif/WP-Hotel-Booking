@@ -169,34 +169,33 @@ if ( ! class_exists( 'WPHB_Coupon_Ajax' ) ) {
 		}
 
 		/**
-		 * Remove coupon in admin booking.
+		 * Admin ajax remove booking coupon.
 		 *
 		 * @since 2.0
 		 */
 		public static function remove_booking_coupon() {
-			if ( ! check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
+			if ( ! check_ajax_referer( 'wphb-remove-booking-item', 'wphb_remove_booking_item' ) ) {
 				return;
 			}
 
-			if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
+			if ( ! isset( $_POST['booking_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
 				return;
 			}
 
-			$order_id = absint( $_POST['order_id'] );
+			$booking_id = absint( $_POST['booking_id'] );
 
-			delete_post_meta( $order_id, '_hb_coupon_id' );
-			delete_post_meta( $order_id, '_hb_coupon_code' );
-			delete_post_meta( $order_id, '_hb_coupon_value' );
+			delete_post_meta( $booking_id, '_hb_coupon_id' );
+			delete_post_meta( $booking_id, '_hb_coupon_code' );
+			delete_post_meta( $booking_id, '_hb_coupon_value' );
 
-			$post = get_post( $order_id );
+			$post = get_post( $booking_id );
+
 			ob_start();
 			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items.php';
 			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items-template-js.php';
 			$html = ob_get_clean();
-			wp_send_json( array(
-				'status' => true,
-				'html'   => $html
-			) );
+
+			wp_send_json( array( 'status' => true, 'html' => $html ) );
 		}
 	}
 

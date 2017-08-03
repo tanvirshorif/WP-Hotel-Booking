@@ -31,7 +31,7 @@ defined( 'ABSPATH' ) || exit;
 
                             <# } #>
                 </h1>
-                <button class="hb_modal_close dashicons dashicons-no-alt"></button>
+                <button class="modal_close dashicons dashicons-no-alt"></button>
             </div>
 
             <div class="section_line">
@@ -64,12 +64,12 @@ defined( 'ABSPATH' ) || exit;
                         <!-- <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" /> -->
                         <input type="hidden" name="action" value="wphb_coupon_add_booking_coupon"/>
                         <button type="reset"
-                                class="button hb_modal_close"><?php _e( 'Close', 'wphb-coupon' ) ?></button>
+                                class="button modal_close"><?php _e( 'Close', 'wphb-coupon' ) ?></button>
                         <button type="submit"
-                                class="button button-primary hb_form_submit"><?php _e( 'Add', 'wphb-coupon' ); ?></button>
+                                class="button button-primary form_submit"><?php _e( 'Add', 'wphb-coupon' ); ?></button>
                     </div>
         </form>
     </div>
-    <div class="hb_modal_overlay"></div>
+    <div class="modal_overlay"></div>
 </script>
 <!--Coupons-->

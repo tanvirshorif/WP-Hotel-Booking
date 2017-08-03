@@ -1,6 +1,4 @@
-/**
- * Admin room page
- */
+/********************************** Admin room page *************************************************/
 .post-type-hb_room {
     #gallery_settings {
         .hb-form-field-input {
@@ -32,9 +30,7 @@
     }
 }
 
-/**
- * Room regular price and pricing plans.
- */
+/********************************** Room regular price and pricing plans *************************************************/
 .hb-pricing-list {
     th, td {
         padding: 5px 5px 5px 0;
@@ -48,9 +44,7 @@
     }
 }
 
-/**
- * Admin booking page.
- */
+/****************************************** Admin booking page ***************************************************/
 .post-type-hb_booking {
     // archive booking page
     .search-box {
@@ -74,6 +68,11 @@
                 label {
                     margin-bottom: 5px;
                 }
+            }
+        }
+        .customer_details {
+            > span {
+                width: auto !important;
             }
         }
         .major-publishing-actions {
@@ -106,34 +105,33 @@
     #booking-items {
         margin-bottom: 20px;
         table {
-            border: 1px solid #DDD;
             width: 100%;
             margin-bottom: 25px;
+            text-align: center;
             thead {
                 th {
                     height: 30px;
-                    text-align: left;
                     font-size: 16px;
-                    padding: 15px 10px;
+                    padding: 10px;
+                    font-weight: 500;
                     border: 1px solid #DDD;
                 }
             }
             tbody {
                 td {
-                    padding: 15px 10px;
-                    font-size: 16px;
+                    padding: 20px 10px;
+                    font-size: 14px;
                     border: 1px solid #DDD;
                 }
             }
         }
         .booking-actions {
             clear: both;
-            .delete-items, .actions {
-                display: inline-block;
-            }
+            overflow: auto;
             .actions {
                 float: right;
-                margin-right: 10px;
+                height: 30px;
+                display: inline-block;
             }
         }
     }
@@ -161,9 +159,7 @@
     }
 }
 
-/**
- * Admin booking detail
- */
+/****************************************** Admin booking detail ***************************************************/
 #hb-booking-details {
     .hb-booking-details {
         display: inline-block;
@@ -202,6 +198,98 @@
             font-style: italic;
             margin-bottom: 5px;
         }
+    }
+}
+
+/****************************************** Admin modal ***************************************************/
+#hb_modal_dialog {
+    .hb_modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        min-width: 500px;
+        background: #fff;
+        z-index: 100000;
+        .form_head {
+            height: 50px;
+            background: #fcfcfc;
+            padding: 0 50px 0 16px;
+            border-bottom: 1px solid #ddd;
+            h1 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 50px;
+            }
+            .modal_close {
+                cursor: pointer;
+                color: #777;
+                height: 50px;
+                width: 50px;
+                padding: 0;
+                position: absolute;
+                top: 0;
+                right: 0;
+                text-align: center;
+                border: 0;
+                border-left: 1px solid #ddd;
+                background-color: transparent;
+                -webkit-transition: color .1s ease-in-out, background .1s ease-in-out;
+                transition: color .1s ease-in-out, background .1s ease-in-out;
+            }
+        }
+        .form_footer {
+            background: #fcfcfc;
+            border-top: 1px solid #ddd;
+            padding: 16px;
+            overflow: hidden;
+            button {
+                float: right;
+                margin: 0 5px;
+            }
+            & > .center {
+                text-align: center;
+                button {
+                    float: initial;
+                }
+            }
+        }
+        .section_line {
+            padding: 10px;
+            margin: 5px;
+            overflow: hidden;
+            h4 {
+                margin: 0;
+            }
+            .section {
+                float: left;
+                width: auto;
+                max-width: 100%;
+                min-width: 200px;
+                margin: 8px 0;
+                overflow: hidden;
+            }
+            li {
+                display: inline-block;
+                float: left;
+                clear: both;
+            }
+        }
+        select {
+            width: 100%
+        }
+    }
+    .modal_overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-height: 360px;
+        background: #000;
+        opacity: .7;
+        z-index: 99900;
     }
 }
 
@@ -967,110 +1055,6 @@ form[name="hb-admin-settings-form"] {
 /*Submit metabox*/
 #hb-booking-actions .submitbox {
     overflow: hidden;
-}
-
-/******META BOX******/
-/***DIALOG***/
-#hb_modal_dialog .hb_modal_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    min-height: 360px;
-    background: #000;
-    opacity: .7;
-    z-index: 99900;
-}
-
-#hb_modal_dialog .hb_modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    min-width: 500px;
-    background: #fff;
-    z-index: 100000;
-}
-
-#hb_modal_dialog .hb_modal .form_head {
-    height: 50px;
-    background: #fcfcfc;
-    padding: 0 50px 0 16px;
-    border-bottom: 1px solid #ddd;
-}
-
-#hb_modal_dialog .hb_modal .form_footer {
-    background: #fcfcfc;
-    border-top: 1px solid #ddd;
-    padding: 16px;
-    overflow: hidden;
-}
-
-#hb_modal_dialog .hb_modal .form_footer button {
-    float: right;
-    margin: 0px 5px;
-}
-
-#hb_modal_dialog .hb_modal .form_footer.center {
-    text-align: center;
-}
-
-#hb_modal_dialog .hb_modal .form_footer.center button {
-    float: initial;
-}
-
-#hb_modal_dialog .hb_modal .form_head h1 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 50px;
-}
-
-#hb_modal_dialog .hb_modal .section_line {
-    padding: 10px;
-    margin: 5px;
-    overflow: hidden;
-}
-
-#hb_modal_dialog .hb_modal .section_line h4 {
-    margin: 0;
-}
-
-#hb_modal_dialog .hb_modal .section_line .section {
-    float: left;
-    width: auto;
-    max-width: 100%;
-    min-width: 200px;
-    margin: 8px 0;
-    overflow: hidden;
-}
-
-#hb_modal_dialog .hb_modal select {
-    width: 100%
-}
-
-#hb_modal_dialog .hb_modal .section_line li {
-    display: inline-block;
-    float: left;
-    clear: both;
-}
-
-#hb_modal_dialog .hb_modal .form_head .hb_modal_close {
-    cursor: pointer;
-    color: #777;
-    height: 50px;
-    width: 50px;
-    padding: 0;
-    position: absolute;
-    top: 0;
-    right: 0;
-    text-align: center;
-    border: 0;
-    border-left: 1px solid #ddd;
-    background-color: transparent;
-    -webkit-transition: color .1s ease-in-out, background .1s ease-in-out;
-    transition: color .1s ease-in-out, background .1s ease-in-out;
 }
 
 .select2-dropdown {

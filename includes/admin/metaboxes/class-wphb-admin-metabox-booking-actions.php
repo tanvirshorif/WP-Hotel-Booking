@@ -65,7 +65,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 		public function update( $post_id ) {
 			parent::update( $post_id );
 
-			if ( ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_actions_nonce'], 'hotel-booking-metabox-booking-actions' ) ) {
+			if ( ! ( isset( $_POST['hotel_booking_metabox_booking_actions_nonce'] ) && wp_verify_nonce( $_POST['hotel_booking_metabox_booking_actions_nonce'], 'hotel-booking-metabox-booking-actions' ) ) ) {
 				return;
 			}
 

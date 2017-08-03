@@ -44,9 +44,11 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'date_time_format'              => hb_date_time_format_js(),
 			'monthNames'                    => hb_month_name_js(),
 			'monthNamesShort'               => hb_month_name_short_js(),
-			'select_user'                   => __( 'Enter user login.', 'wp-hotel-booking' ),
-			'select_room'                   => __( 'Enter room name.', 'wp-hotel-booking' ),
-			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' )
+			'select_room'                   => __( 'Enter room name', 'wp-hotel-booking' ),
+			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' ),
+
+
+            'select_booking_customer'                   => __( 'Enter user login', 'wp-hotel-booking' ),
 		);
 
 		return apply_filters( 'hb_admin_i18n', $i18n );

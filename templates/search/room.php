@@ -99,7 +99,7 @@ global $hb_settings;
                    value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_out_date' ) ); ?>">
             <input type="hidden" name="room-id" value="<?php echo esc_attr( $room->ID ); ?>">
             <input type="hidden" name="hotel-booking" value="cart">
-            <input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
+            <input type="hidden" name="action" value="wphb_add_to_cart"/>
 
 			<?php if ( $room_extra ) { ?>
 
