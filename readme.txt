@@ -67,6 +67,10 @@ Yes.
 
 == Changelog ==
 
+= 2.0 =
+* Restructure core
+* Add booking thank you page
+
 = 1.7.8 =
 * Add Hotel Manager role to manage hotel booking
 * Add Booking Editor role to manage rooms and bookings

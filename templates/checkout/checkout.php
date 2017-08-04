@@ -147,7 +147,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 				<?php hb_get_template( 'checkout/addition-information.php' ); ?>
 
                 <input type="hidden" name="hotel-booking" value="place_order"/>
-                <input type="hidden" name="action" value="hotel_booking_place_order"/>
+                <input type="hidden" name="action" value="wphb_place_booking"/>
                 <input type="hidden" name="total_advance"
                        value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>"/>
                 <input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>"/>

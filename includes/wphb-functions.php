@@ -1359,9 +1359,14 @@ if ( ! function_exists( 'hb_get_endpoint_url' ) ) {
 }
 
 if ( ! function_exists( 'hb_get_advance_payment' ) ) {
+	/**
+     * Get advance payment.
+     *
+	 * @return mixed
+	 */
 	function hb_get_advance_payment() {
-		$advance_payment = WPHB_Settings::instance()->get( 'advance_payment' );
-
+		$settings = hb_settings();
+		$advance_payment = $settings->get( 'advance_payment' );
 		return apply_filters( 'hb_advance_payment', $advance_payment );
 	}
 }

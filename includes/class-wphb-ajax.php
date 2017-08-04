@@ -34,7 +34,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 			$actions = array(
 				'fetch_customer_info'        => true,
-				'place_order'                => true,
+				'place_booking'              => true,
 				'parse_search_params'        => true,
 				'add_to_cart'                => true,
 				'ajax_remove_item_cart'      => true,
@@ -91,11 +91,11 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		}
 
 		/**
-		 * Process the order with customer information posted via form.
+		 * Process the booking with customer information posted via form.
 		 *
 		 * @since 2.0
 		 */
-		public static function place_order() {
+		public static function place_booking() {
 			WPHB_Checkout::instance()->process_checkout();
 			exit();
 		}

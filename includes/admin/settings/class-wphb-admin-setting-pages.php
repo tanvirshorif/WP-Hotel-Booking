@@ -47,6 +47,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Pages' ) ) {
 		 * @return mixed
 		 */
 		public function get_settings() {
+
+			$prefix = 'tp_hotel_booking_';
+
 			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 				array(
 					'type'  => 'section_start',
@@ -55,27 +58,27 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Pages' ) ) {
 				),
 				array(
 					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_search_page_id',
+					'id'    => $prefix . 'search_page_id',
 					'title' => __( 'Search Page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_checkout_page_id',
+					'id'    => $prefix . 'checkout_page_id',
 					'title' => __( 'Checkout Page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_cart_page_id',
+					'id'    => $prefix . 'cart_page_id',
 					'title' => __( 'Cart Page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_account_page_id',
+					'id'    => $prefix . 'account_page_id',
 					'title' => __( 'Account Page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
-					'id'    => 'tp_hotel_booking_terms_page_id',
+					'id'    => $prefix . 'terms_page_id',
 					'title' => __( 'Terms And Conditions Page', 'wp-hotel-booking' )
 				),
 				array(

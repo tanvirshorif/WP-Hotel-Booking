@@ -172,6 +172,9 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 			}
 
 			if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
+
+				set_transient( 'wphb_booking_transient', $booking_id, 3 * MINUTE_IN_SECONDS );
+
 				$cart->empty_cart();
 
 				$result = apply_filters( 'hb_payment_successful_result', $result, $booking_id );

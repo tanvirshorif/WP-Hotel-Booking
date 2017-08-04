@@ -55,6 +55,9 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			} else {
 				self::do_install();
 			}
+
+			// set booking received endpoint transient
+			set_transient('wphb_booking_received_endpoint', 1, 60);
 		}
 
 		/**
@@ -71,14 +74,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 		}
 
 		static function do_install() {
-
 			// create pages
 			self::create_pages();
-
 			// create update options
 			self::create_options();
-
-			// create term default. Eg: Room Capacities
 			// create tables
 			self::create_tables();
 		}

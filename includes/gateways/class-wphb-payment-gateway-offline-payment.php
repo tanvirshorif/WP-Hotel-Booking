@@ -111,7 +111,8 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 		 * @return array
 		 */
 		public function process_checkout( $booking_id = null ) {
-			$booking = WPHB_Booking::instance( $booking_id );
+			$booking  = WPHB_Booking::instance( $booking_id );
+			$settings = hb_settings();
 			if ( $booking ) {
 				$booking->update_status( 'processing' );
 			}
@@ -120,7 +121,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 
 			return array(
 				'result'   => 'success',
-				'redirect' => add_query_arg( 'hotel-booking-offline-payment', 1, hb_get_checkout_url() )
+				'redirect' => add_query_arg( 'hotel-booking-offline-payment', 1, hb_get_cart_url() . '/booking-received/' )
 			);
 
 		}

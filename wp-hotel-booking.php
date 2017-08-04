@@ -47,6 +47,11 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		public $user = null;
 
 		/**
+		 * @var array
+		 */
+		public $query_vars = array();
+
+		/**
 		 * WP_Hotel_Booking constructor.
 		 *
 		 * @since 2.0
@@ -215,5 +220,17 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 
 }
 
-$GLOBALS['wp_hotel_booking'] = WP_Hotel_Booking::instance();
+if ( ! function_exists( 'WPHB' ) ) {
+	/**
+	 * Main instance of WP Hotel Booking.
+	 *
+	 * @since 2.0
+	 *
+	 * @return object|WP_Hotel_Booking
+	 */
+	function WPHB() {
+		return WP_Hotel_Booking::instance();
+	}
+}
 
+$GLOBALS['wp_hotel_booking'] = WP_Hotel_Booking::instance();

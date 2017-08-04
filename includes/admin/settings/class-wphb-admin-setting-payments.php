@@ -47,24 +47,26 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 		 * @return mixed
 		 */
 		public function get_settings() {
-			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 
+			$prefix = 'tp_hotel_booking_';
+
+			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 				array(
 					'type'  => 'section_start',
 					'id'    => 'payment_general_setting',
-					'title' => __( 'Payment General Options', 'wp-hotel-booking' ),
+					'title' => __( 'General Options', 'wp-hotel-booking' ),
 					'desc'  => __( 'Payment General options for system.', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => 'tp_hotel_booking_guest_checkout',
+					'id'      => $prefix. 'guest_checkout',
 					'title'   => __( 'Guest Checkout', 'wp-hotel-booking' ),
 					'desc'    => __( 'Allows customers to checkout without creating an account.', 'wp-hotel-booking' ),
 					'default' => 1
 				),
 				array(
 					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_cancel_payment',
+					'id'      => $prefix. 'cancel_payment',
 					'title'   => __( 'Cancel Payment', 'wp-hotel-booking' ),
 					'desc'    => __( 'Cancel Payment after hour(s)', 'wp-hotel-booking' ),
 					'default' => 12,
@@ -73,7 +75,23 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 				array(
 					'type' => 'section_end',
 					'id'   => 'payment_general_setting'
-				)
+				),
+				array(
+					'type'  => 'section_start',
+					'id'    => 'checkout_endpoints',
+					'title' => __( 'Checkout Endpoints', 'wp-hotel-booking' ),
+					'desc'  => __( 'Endpoints are appended to your page URLs to handle specific actions during the checkout process. They should be unique.', 'wp-hotel-booking' )
+				),
+				array(
+					'type'    => 'text',
+					'id'      => $prefix. 'booking_received',
+					'title'   => __( 'Booking Received', 'wp-hotel-booking' ),
+					'default' => 'thank-you'
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'checkout_endpoints'
+				),
 
 			) );
 		}

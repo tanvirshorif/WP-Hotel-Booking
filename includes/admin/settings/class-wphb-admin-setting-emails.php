@@ -43,6 +43,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 		 * @return mixed
 		 */
 		public function get_settings() {
+
+			$prefix = 'tp_hotel_booking_';
+
 			$section  = 'email-options';
 			$sections = $this->get_sections();
 			if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
@@ -59,7 +62,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 				array(
 					'type'        => 'text',
-					'id'          => 'tp_hotel_booking_email_general_from_name',
+					'id'          => $prefix . 'email_general_from_name',
 					'title'       => __( 'From name', 'wp-hotel-booking' ),
 					'default'     => get_option( 'blogname' ),
 					'placeholder' => get_option( 'blogname' )
@@ -67,7 +70,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 				array(
 					'type'        => 'text',
-					'id'          => 'tp_hotel_booking_email_general_from_email',
+					'id'          => $prefix . 'email_general_from_email',
 					'title'       => __( 'From Email', 'wp-hotel-booking' ),
 					'default'     => get_option( 'admin_email' ),
 					'placeholder' => get_option( 'admin_email' )
@@ -75,7 +78,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 				array(
 					'type'        => 'text',
-					'id'          => 'tp_hotel_booking_email_general_subject',
+					'id'          => $prefix . 'email_general_subject',
 					'title'       => __( 'Email subject', 'wp-hotel-booking' ),
 					'default'     => __( 'Reservation', 'wp-hotel-booking' ),
 					'placeholder' => __( 'Reservation', 'wp-hotel-booking' )
@@ -98,14 +101,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 					array(
 						'type'    => 'checkbox',
-						'id'      => 'tp_hotel_booking_email_new_booking_enable',
+						'id'      => $prefix . 'email_new_booking_enable',
 						'title'   => __( 'Enable', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
 
 					array(
 						'type'        => 'text',
-						'id'          => 'tp_hotel_booking_email_new_booking_recipients',
+						'id'          => $prefix . 'email_new_booking_recipients',
 						'title'       => __( 'Recipient(s)', 'wp-hotel-booking' ),
 						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 						'default'     => get_option( 'admin_email' ),
@@ -114,7 +117,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 					array(
 						'type'        => 'text',
-						'id'          => 'tp_hotel_booking_email_new_booking_subject',
+						'id'          => $prefix . 'email_new_booking_subject',
 						'title'       => __( 'Subject', 'wp-hotel-booking' ),
 						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 						'default'     => '[{site_title}] Reservation completed ({booking_number}) - {booking_date}',
@@ -123,7 +126,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 					array(
 						'type'        => 'text',
-						'id'          => 'tp_hotel_booking_email_new_booking_heading',
+						'id'          => $prefix . 'email_new_booking_heading',
 						'title'       => __( 'Email Heading', 'wp-hotel-booking' ),
 						'desc'        => __( 'The main heading displays in the top of email. Default heading: New customer booking', 'wp-hotel-booking' ),
 						'default'     => 'New Booking Payment',
@@ -132,7 +135,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 					array(
 						'type'        => 'text',
-						'id'          => 'tp_hotel_booking_email_new_booking_heading_desc',
+						'id'          => $prefix . 'email_new_booking_heading_desc',
 						'title'       => __( 'Email Heading Description', 'wp-hotel-booking' ),
 						'default'     => __( 'The customer has completed the transaction', 'wp-hotel-booking' ),
 						'placeholder' => __( 'The customer has completed the transaction', 'wp-hotel-booking' )
@@ -140,7 +143,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 					array(
 						'type'    => 'select',
-						'id'      => 'tp_hotel_booking_email_new_booking_format',
+						'id'      => $prefix . 'email_new_booking_format',
 						'title'   => __( 'Email Format', 'wp-hotel-booking' ),
 						'desc'    => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 						'default' => 'html',

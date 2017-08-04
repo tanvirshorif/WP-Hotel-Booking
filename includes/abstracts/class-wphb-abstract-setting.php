@@ -118,37 +118,39 @@ if ( ! class_exists( 'WPHB_Abstract_Setting' ) ) {
 						$custom_attr .= $key . '="' . $val . '"';
 					}
 				}
+				$view_path = apply_filters( 'wphb_admin_setting_fields_path', 'includes/admin/views/settings/fields/' );
+
 				switch ( $field['type'] ) {
 					case 'section_start':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/section-start.php' );
+						include( WPHB_ABSPATH . $view_path . 'section-start.php' );
 						break;
 					case 'section_end':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/section-end.php' );
+						include( WPHB_ABSPATH . $view_path . 'section-end.php' );
 						break;
 					case 'select':
 					case 'multiselect':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/select.php' );
+						include( WPHB_ABSPATH . $view_path . 'select.php' );
 						break;
 					case 'text':
 					case 'number':
 					case 'email':
 					case 'password':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/text.php' );
+						include( WPHB_ABSPATH . $view_path . 'text.php' );
 						break;
 					case 'checkbox':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/checkbox.php' );
+						include( WPHB_ABSPATH . $view_path . 'checkbox.php' );
 						break;
 					case 'radio':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/radio.php' );
+						include( WPHB_ABSPATH . $view_path . 'radio.php' );
 						break;
 					case 'image_size':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/image-size.php' );
+						include( WPHB_ABSPATH . $view_path . 'image-size.php' );
 						break;
 					case 'textarea':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/textarea.php' );
+						include( WPHB_ABSPATH . $view_path . 'textarea.php' );
 						break;
 					case 'select_page':
-						include( WPHB_ABSPATH . 'includes/admin/views/settings/fields/select-page.php' );
+						include( WPHB_ABSPATH . $view_path . 'select-page.php' );
 						break;
 					default:
 						do_action( 'hotel_booking_setting_field_' . $field['id'], $field );

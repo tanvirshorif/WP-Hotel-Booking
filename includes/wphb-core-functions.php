@@ -38,6 +38,36 @@ if ( ! function_exists( 'wphb_booking_status_description' ) ) {
 
 }
 
+add_action( 'init', 'wphb_add_booking_received_endpoint' );
+
+if ( ! function_exists( 'wphb_add_booking_received_endpoint' ) ) {
+
+	function wphb_add_booking_received_endpoint() {
+
+		add_rewrite_endpoint( 'booking-received', EP_PERMALINK | EP_PAGES );
+		add_rewrite_tag( 'booking-received', '([^&]+)' );
+
+		if ( get_transient( 'wphb_booking_received_endpoint' ) ) {
+			delete_transient( 'wphb_booking_received_endpoint' );
+			flush_rewrite_rules();
+		}
+	}
+}
+
+add_action( 'template_include', 'wphb_booking_received_template' );
+
+if ( ! function_exists( 'wphb_booking_received_template' ) ) {
+
+	function wphb_booking_received_template( $template ) {
+
+		if ( false !== get_query_var( 'booking-received', false ) ) {
+			return hb_template_path() . '/templates/checkout/thank-you.php';
+		}
+
+		return $template;
+	}
+}
+
 /**
  * set table name.
  */

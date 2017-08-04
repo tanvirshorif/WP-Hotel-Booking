@@ -47,6 +47,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 		 * @return mixed
 		 */
 		public function get_settings() {
+
+			$prefix = 'tp_hotel_booking_';
+
 			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 				array(
 					'type'  => 'section_start',
@@ -56,7 +59,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_minimum_booking_day',
+					'id'      => $prefix . 'minimum_booking_day',
 					'title'   => __( 'Minimum booking day', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
@@ -64,7 +67,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_tax',
+					'id'      => $prefix . 'tax',
 					'title'   => __( 'Tax', 'wp-hotel-booking' ),
 					'default' => 10,
 					'min'     => 0,
@@ -72,7 +75,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_advance_payment',
+					'id'      => $prefix . 'advance_payment',
 					'title'   => __( 'Advance Payment', 'wp-hotel-booking' ),
 					'desc'    => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
 					'default' => 50,
@@ -91,14 +94,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'select',
-					'id'      => 'tp_hotel_booking_currency',
+					'id'      => $prefix . 'currency',
 					'title'   => __( 'Currency', 'wp-hotel-booking' ),
 					'options' => hb_payment_currencies(),
 					'default' => 'USD'
 				),
 				array(
 					'type'    => 'select',
-					'id'      => 'tp_hotel_booking_price_currency_position',
+					'id'      => $prefix . 'price_currency_position',
 					'title'   => __( 'Currency Position', 'wp-hotel-booking' ),
 					'options' => array(
 						'left'             => __( 'Left ( $69.99 )', 'wp-hotel-booking' ),
@@ -110,19 +113,19 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'text',
-					'id'      => 'tp_hotel_booking_price_thousands_separator',
+					'id'      => $prefix . 'price_thousands_separator',
 					'title'   => __( 'Thousands Separator', 'wp-hotel-booking' ),
 					'default' => ','
 				),
 				array(
 					'type'    => 'text',
-					'id'      => 'tp_hotel_booking_price_decimals_separator',
+					'id'      => $prefix . 'price_decimals_separator',
 					'title'   => __( 'Decimals Separator', 'wp-hotel-booking' ),
 					'default' => '.'
 				),
 				array(
 					'type'    => 'number',
-					'id'      => 'tp_hotel_booking_price_number_of_decimal',
+					'id'      => $prefix . 'price_number_of_decimal',
 					'title'   => __( 'Number of decimal', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
@@ -130,21 +133,21 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => 'tp_hotel_booking_currencies_enable',
+					'id'      => $prefix . 'currencies_enable',
 					'title'   => __( 'Enable Switch Currency', 'wp-hotel-booking' ),
 					'default' => 1,
 					'desc'    => __( 'Enable switch currency', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => 'tp_hotel_booking_currencies_multiple_allowed',
+					'id'      => $prefix . 'currencies_multiple_allowed',
 					'title'   => __( 'Switch Multiple Currencies', 'wp-hotel-booking' ),
 					'default' => 1,
 					'desc'    => __( 'Allow switch multiple currencies', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'select',
-					'id'      => 'tp_hotel_booking_currencies_aggregator',
+					'id'      => $prefix . 'currencies_aggregator',
 					'title'   => __( 'Currency aggregator', 'wp-hotel-booking' ),
 					'options' => array(
 						'yahoo'  => 'http://finance.yahoo.com',
@@ -154,7 +157,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'select',
-					'id'      => 'tp_hotel_booking_currencies_storage',
+					'id'      => $prefix . 'currencies_storage',
 					'title'   => __( 'Currency storage', 'wp-hotel-booking' ),
 					'options' => array(
 						'session'   => __( 'Session', 'wp-hotel-booking' ),

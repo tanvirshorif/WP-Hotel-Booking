@@ -15,9 +15,15 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+
 if ( ! function_exists( 'hb_template_path' ) ) {
+	/**
+	 * Get plugin template path.
+	 *
+	 * @return mixed
+	 */
 	function hb_template_path() {
-		return apply_filters( 'hb_template_path', 'wp-hotel-booking' );
+		return apply_filters( 'hb_template_path', WPHB_PLUGIN_PATH );
 	}
 }
 
@@ -397,7 +403,11 @@ if ( ! function_exists( 'hb_room_review_item' ) ) {
 	 */
 	function hb_room_review_item( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
-		hb_get_template( 'single-room/review-item.php', array( 'comment' => $comment, 'args' => $args, 'depth' => $depth ) );
+		hb_get_template( 'single-room/review-item.php', array(
+			'comment' => $comment,
+			'args'    => $args,
+			'depth'   => $depth
+		) );
 	}
 
 }
