@@ -37,7 +37,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'place_booking'              => true,
 				'parse_search_params'        => true,
 				'add_to_cart'                => true,
-				'ajax_remove_item_cart'      => true,
+				'remove_cart_item'           => true,
 				// load booking user in admin booking page
 				'load_booking_user'          => false,
 				'load_room_ajax'             => false,
@@ -209,7 +209,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function ajax_remove_item_cart() {
+		public static function remove_cart_item() {
 			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
 				return;
 			}

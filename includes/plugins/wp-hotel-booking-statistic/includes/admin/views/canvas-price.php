@@ -29,14 +29,14 @@ global $hb_report;
             });
         }
 
-        // $.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
+        // $.datepicker.setDefaults({ dateFormat: wphb_js.date_time_format });
         $('#tp-hotel-report-checkin').datepicker({
-            dateFormat: hotel_booking_i18n.date_time_format,
-            monthNames: hotel_booking_i18n.monthNames,
-            monthNamesShort: hotel_booking_i18n.monthNamesShort,
-            dayNames: hotel_booking_i18n.dayNames,
-            dayNamesShort: hotel_booking_i18n.dayNamesShort,
-            dayNamesMin: hotel_booking_i18n.dayNamesMin,
+            dateFormat: wphb_js.date_time_format,
+            monthNames: wphb_js.monthNames,
+            monthNamesShort: wphb_js.monthNamesShort,
+            dayNames: wphb_js.dayNames,
+            dayNamesShort: wphb_js.dayNamesShort,
+            dayNamesMin: wphb_js.dayNamesMin,
             onSelect: function () {
                 var _self = $(this),
                     date = $(this).datepicker('getDate'),
@@ -47,12 +47,12 @@ global $hb_report;
             }
         });
         $('#tp-hotel-report-checkout').datepicker({
-            dateFormat: hotel_booking_i18n.date_time_format,
-            monthNames: hotel_booking_i18n.monthNames,
-            monthNamesShort: hotel_booking_i18n.monthNamesShort,
-            dayNames: hotel_booking_i18n.dayNames,
-            dayNamesShort: hotel_booking_i18n.dayNamesShort,
-            dayNamesMin: hotel_booking_i18n.dayNamesMin,
+            dateFormat: wphb_js.date_time_format,
+            monthNames: wphb_js.monthNames,
+            monthNamesShort: wphb_js.monthNamesShort,
+            dayNames: wphb_js.dayNames,
+            dayNamesShort: wphb_js.dayNamesShort,
+            dayNamesMin: wphb_js.dayNamesMin,
             onSelect: function () {
                 var _self = $(this),
                     date = $(this).datepicker('getDate'),

@@ -86,7 +86,7 @@ global $hb_settings;
                             </div>
                         </li>
                         <li class="hb_search_add_to_cart">
-                            <button class="hb_add_to_cart"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
+                            <button class="hb_add_to_cart" disabled="disabled"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
                         </li>
                     </ul>
                 </div>
