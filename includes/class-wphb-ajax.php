@@ -114,7 +114,8 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'hb_check_in_date'  => hb_get_request( 'hb_check_in_date' ),
 				'hb_check_out_date' => hb_get_request( 'hb_check_out_date' ),
 				'adults'            => hb_get_request( 'adults_capacity' ),
-				'max_child'         => hb_get_request( 'max_child' )
+				'max_child'         => hb_get_request( 'max_child' ),
+				'room_location'     => hb_get_request( 'room_location' )
 			);
 
 			$return = apply_filters( 'hotel_booking_parse_search_param', array(

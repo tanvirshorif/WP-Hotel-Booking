@@ -102,7 +102,7 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 			}
 		}
 
-        ksort( $return );
+		ksort( $return );
 
 		return $return;
 	}
@@ -1144,22 +1144,10 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 if ( ! function_exists( 'hb_search_rooms' ) ) {
 	function hb_search_rooms( $args = array() ) {
 		global $wpdb;
-		$adults_term = hb_get_request( 'adults', 0 );
-		$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
-		if ( ! $adults ) {
-			$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
-		}
-		$max_child = hb_get_request( 'max_child', 0 );
 
-		$args = wp_parse_args(
-			$args, array(
-				'check_in_date'  => date( 'm/d/Y' ),
-				'check_out_date' => date( 'm/d/Y' ),
-				'adults'         => $adults,
-				'max_child'      => 0
-			)
-		);
-
+		$adults                 = $args['adults'];
+		$max_child              = $args['max_child'];
+		$location               = $args['location'];
 		$check_in_time          = strtotime( $args['check_in_date'] );
 		$check_out_time         = strtotime( $args['check_out_date'] );
 		$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
@@ -1188,7 +1176,26 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		", 'qty', 'product_id', 'check_in_date', 'check_out_date', $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
 		);
 
-		$query = $wpdb->prepare( "
+		if ( $location ) {
+			$query = $wpdb->prepare( "
+			SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
+                                LEFT JOIN {$wpdb->postmeta} AS number ON rooms.ID = number.post_id AND number.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} AS pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
+				LEFT JOIN {$wpdb->termmeta} AS term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} AS pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+				LEFT JOIN {$wpdb->term_relationships} AS term_relationships ON rooms.ID = term_relationships.object_id
+			WHERE
+				rooms.post_type = %s
+				AND rooms.post_status = %s
+				AND term_cap.meta_value >= %d
+				AND pm2.meta_value >= %d
+				AND term_relationships.term_taxonomy_id = %s  
+			GROUP BY rooms.post_name
+			HAVING available_rooms > 0
+			ORDER BY term_cap.meta_value ASC
+		", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $adults, $max_child, $location );
+		} else {
+			$query = $wpdb->prepare( "
 			SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
                                 LEFT JOIN {$wpdb->postmeta} AS number ON rooms.ID = number.post_id AND number.meta_key = %s
 				LEFT JOIN {$wpdb->postmeta} AS pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
@@ -1201,14 +1208,16 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				AND pm2.meta_value >= %d
 			GROUP BY rooms.post_name
 			HAVING available_rooms > 0
-			ORDER BY term_cap.meta_value DESC
+			ORDER BY term_cap.meta_value ASC
 		", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $adults, $max_child );
+		}
 
 		$query = apply_filters( 'hb_search_query', $query, array(
 			'check_in'  => $check_in_date_to_time,
 			'check_out' => $check_out_date_to_time,
 			'adults'    => $adults,
-			'child'     => $max_child
+			'child'     => $max_child,
+			'location'  => $location
 		) );
 
 		if ( $search = $wpdb->get_results( $query ) ) {
@@ -1360,13 +1369,14 @@ if ( ! function_exists( 'hb_get_endpoint_url' ) ) {
 
 if ( ! function_exists( 'hb_get_advance_payment' ) ) {
 	/**
-     * Get advance payment.
-     *
+	 * Get advance payment.
+	 *
 	 * @return mixed
 	 */
 	function hb_get_advance_payment() {
-		$settings = hb_settings();
+		$settings        = hb_settings();
 		$advance_payment = $settings->get( 'advance_payment' );
+
 		return apply_filters( 'hb_advance_payment', $advance_payment );
 	}
 }
@@ -1430,7 +1440,56 @@ if ( ! function_exists( 'hb_format_order_number' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wphb_get_locations' ) ) {
+	/**
+	 * Get all room locations.
+	 *
+	 * @return array
+	 */
+	function wphb_get_locations() {
+		$locations = array();
+		$terms     = get_terms( 'hb_room_location' );
+		foreach ( $terms as $term ) {
+			$locations[ $term->term_id ] = $term->name;
+		}
+
+		return $locations;
+	}
+}
+
+if ( ! function_exists( 'hb_dropdown_locations' ) ) {
+	/**
+	 * Drop down to select location.
+	 *
+	 * @param array $args
+	 */
+	function hb_dropdown_locations( $args = array() ) {
+		$locations = wphb_get_locations();
+		$args      = wp_parse_args( $args, array(
+				'name'              => 'countries',
+				'selected'          => '',
+				'show_option_none'  => __( 'Location', 'wp-hotel-booking' ),
+				'option_none_value' => '',
+				'required'          => false
+			)
+		);
+		echo '<select name="' . $args['name'] . '"' . ( ( $args['required'] ) ? 'required' : '' ) . '>';
+		if ( $args['show_option_none'] ) {
+			echo '<option value="' . $args['option_none_value'] . '">' . $args['show_option_none'] . '</option>';
+		}
+		foreach ( $locations as $id => $name ) {
+			echo '<option value="' . $id . '" ' . selected( $id == $args['selected'] ) . '>' . $name . '</option>';
+		}
+		echo '</select>';
+	}
+}
+
 if ( ! function_exists( 'hb_get_countries' ) ) {
+	/**
+	 * Get countries.
+	 *
+	 * @return array
+	 */
 	function hb_get_countries() {
 		$countries = array(
 			'AF' => __( 'Afghanistan', 'wp-hotel-booking' ),
@@ -1684,6 +1743,11 @@ if ( ! function_exists( 'hb_get_countries' ) ) {
 }
 
 if ( ! function_exists( 'hb_dropdown_countries' ) ) {
+	/**
+	 * Drop down to select country.
+	 *
+	 * @param array $args
+	 */
 	function hb_dropdown_countries( $args = array() ) {
 		$countries = hb_get_countries();
 		$args      = wp_parse_args( $args, array(

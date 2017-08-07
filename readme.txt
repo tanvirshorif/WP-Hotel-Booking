@@ -70,6 +70,7 @@ Yes.
 = 2.0 =
 * Restructure core
 * Add booking thank you page
+* Support multiple location
 
 = 1.7.8 =
 * Add Hotel Manager role to manage hotel booking

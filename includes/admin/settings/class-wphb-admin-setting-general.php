@@ -83,6 +83,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'max'     => 100
 				),
 				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'multiple_location',
+					'title'   => __( 'Multiple Location', 'wp-hotel-booking' ),
+					'desc'    => __( 'Enable multiple location', 'wp-hotel-booking' ),
+					'default' => 0
+				),
+				array(
 					'type' => 'section_end',
 					'id'   => 'general_settings'
 				),
@@ -134,7 +141,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				array(
 					'type'    => 'checkbox',
 					'id'      => $prefix . 'currencies_enable',
-					'title'   => __( 'Enable Switch Currency', 'wp-hotel-booking' ),
+					'title'   => __( 'Switch Currency', 'wp-hotel-booking' ),
 					'default' => 1,
 					'desc'    => __( 'Enable switch currency', 'wp-hotel-booking' )
 				),

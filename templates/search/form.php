@@ -21,6 +21,7 @@ $check_in_date  = hb_get_request( 'check_in_date' );
 $check_out_date = hb_get_request( 'check_out_date' );
 $adults         = hb_get_request( 'adults', 0 );
 $max_child      = hb_get_request( 'max_child', 0 );
+$location       = hb_get_request( 'room_location', 0 );
 $uniqid         = uniqid();
 
 ?>
@@ -84,6 +85,18 @@ $uniqid         = uniqid();
 					?>
                 </div>
             </li>
+
+			<?php $settings = hb_settings(); ?>
+			<?php if ( $settings->get( 'multiple_location' ) ) { ?>
+                <li class="hb-form-field">
+					<?php echo $show_label ? __( 'Location', 'wp-hotel-booking' ) : ''; ?>
+					<?php hb_dropdown_locations( array(
+						'name'             => 'room_location',
+						'show_option_none' => __( 'Location', 'wp-hotel-booking' ),
+						'selected'         => $location
+					) ); ?>
+                </li>
+			<?php } ?>
 
         </ul>
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>

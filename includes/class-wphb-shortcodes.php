@@ -93,8 +93,15 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			if ( $end_date ) {
 				$end_date = date( 'm/d/Y', $end_date );
 			}
-			$adults    = hb_get_request( 'adults', 1 );
+
+			$adults_term = hb_get_request( 'adults', 0 );
+			$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
+			if ( ! $adults ) {
+				$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
+			}
+
 			$max_child = hb_get_request( 'max_child', 0 );
+			$location  = hb_get_request( 'room_location', 0 );
 
 			$atts = wp_parse_args(
 				$atts, array(
@@ -102,6 +109,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 					'check_out_date' => $end_date,
 					'adults'         => $adults,
 					'max_child'      => $max_child,
+					'location'       => $location,
 					'search_page'    => null
 				)
 			);
@@ -132,21 +140,19 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			 */
 			switch ( $page ) {
 				case 'results':
-
 					if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
 						break;
 					}
-
 					$template                 = 'search/results.php';
 					$template_args['results'] = hb_search_rooms(
 						array(
 							'check_in_date'  => $start_date,
 							'check_out_date' => $end_date,
 							'adults'         => $adults,
-							'max_child'      => $max_child
+							'max_child'      => $max_child,
+							'location'       => $location
 						)
 					);
-
 					break;
 				default:
 					break;

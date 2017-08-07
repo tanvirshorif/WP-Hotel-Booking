@@ -820,7 +820,43 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			register_taxonomy( 'hb_room_type', array( 'hb_room' ), $args );
 
+			/**
+			 * Register room location.
+			 */
+			$args = array(
+				'hierarchical' => true,
+				'label'        => __( 'Locations', 'wp-hotel-booking' ),
+				'labels'       => array(
+					'name'              => _x( 'Locations', 'taxonomy general name', 'wp-hotel-booking' ),
+					'singular_name'     => _x( 'Location', 'taxonomy singular name', 'wp-hotel-booking' ),
+					'menu_name'         => _x( 'Locations', 'Room Types', 'wp-hotel-booking' ),
+					'search_items'      => __( 'Search Locations', 'wp-hotel-booking' ),
+					'all_items'         => __( 'All Locations', 'wp-hotel-booking' ),
+					'parent_item'       => __( 'Parent Location', 'wp-hotel-booking' ),
+					'parent_item_colon' => __( 'Parent Location:', 'wp-hotel-booking' ),
+					'edit_item'         => __( 'Edit Location', 'wp-hotel-booking' ),
+					'update_item'       => __( 'Update Location', 'wp-hotel-booking' ),
+					'add_new_item'      => __( 'Add New Location', 'wp-hotel-booking' ),
+					'new_item_name'     => __( 'New Location Name', 'wp-hotel-booking' )
+				),
+				'public'       => true,
+				'show_ui'      => true,
+				'query_var'    => true,
+				'rewrite'      => array( 'slug' => _x( 'room-locations', 'URL slug', 'wp-hotel-booking' ) ),
+				'capabilities' => array(
+					'manage_terms' => 'manage_hb_booking',
+					'edit_terms'   => 'manage_hb_booking',
+					'delete_terms' => 'manage_hb_booking',
+					'assign_terms' => 'manage_hb_booking'
+				)
+			);
+			$args = apply_filters( 'hotel_booking_register_tax_room_location_arg', $args );
+
+			register_taxonomy( 'hb_room_location', array( 'hb_room' ), $args );
+
 		}
+
+
 
 		/**
 		 * Registers booking statues.
