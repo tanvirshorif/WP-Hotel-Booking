@@ -568,20 +568,16 @@
         init: function () {
 
             var _doc = $(document),
+                _self = this,
                 _today = new Date(),
-                _tomorrow = new Date(),
-                _trigger = _doc.triggerHandler('hotel_booking_min_check_in_date', [1, _today, _tomorrow]),
-                _start_plus = parseInt(_trigger);
-
-            if (!isInteger(_start_plus)) {
-                _start_plus = 1;
-            }
-            _tomorrow.setDate(_today.getDate() + _start_plus);
+                _tomorrow = new Date();
 
             var _min = hotel_settings.min_booking_date;
             if (!isInteger(_min)) {
                 _min = 1;
             }
+
+            _tomorrow.setDate(_today.getDate() + _min);
 
             $.datepicker.setDefaults({
                 dateFormat: wphb_js.date_time_format,
@@ -594,8 +590,8 @@
                 numberOfMonths: 1
             });
 
-            this.check_in_date(_today, _min);
-            this.check_out_date(_tomorrow, _min);
+            _self.check_in_date(_today, _min);
+            _self.check_out_date(_tomorrow, _min);
         },
         check_in_date: function (_today, _min) {
             $('input[id^="check_in_date"]').datepicker({

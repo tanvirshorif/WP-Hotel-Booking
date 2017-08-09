@@ -41,7 +41,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'wp-hotel-booking' ),
 			'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'wp-hotel-booking' ),
 			'filter_error'                  => __( 'Please select date range and filter type', 'wp-hotel-booking' ),
-			'date_time_format'              => hb_date_time_format_js(),
+			'date_time_format'              => hb_date_format_js(),
 			'monthNames'                    => hb_month_name_js(),
 			'monthNamesShort'               => hb_month_name_short_js(),
 			'select_room'                   => __( 'Enter room name', 'wp-hotel-booking' ),

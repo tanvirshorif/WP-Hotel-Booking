@@ -698,7 +698,7 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 				'room_select' => __( 'Please select room number.', 'wp-hotel-booking' ),
 				'try_again'   => __( 'Please try again!', 'wp-hotel-booking' )
 			),
-			'date_time_format'               => hb_date_time_format_js(),
+			'date_time_format'               => hb_date_format_js(),
 			'monthNames'                     => hb_month_name_js(),
 			'monthNamesShort'                => hb_month_name_short_js(),
 			'dayNames'                       => hb_day_name_js(),
@@ -711,48 +711,41 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 	}
 }
 
-// date time format
-if ( ! function_exists( 'hb_date_time_format_js' ) ) {
-	function hb_date_time_format_js() {
-		// set detault datetime format datepicker
+if ( ! function_exists( 'hb_date_format_js' ) ) {
+	/**
+	 * Set date format js.
+	 *
+	 * @return string
+	 */
+	function hb_date_format_js() {
+
 		$dateFormat = hb_get_date_format();
 
 		switch ( $dateFormat ) {
 			case 'Y-m-d':
 				$return = 'yy-mm-dd';
 				break;
-
-			//
 			case 'Y/m/d':
 				$return = 'yy/mm/dd';
 				break;
-
 			case 'd/m/Y':
 				$return = 'dd/mm/yy';
 				break;
-
-			//
 			case 'd-m-Y':
 				$return = 'dd-mm-yy';
 				break;
-
 			case 'm/d/Y':
 				$return = 'mm/dd/yy';
 				break;
-
-			//
 			case 'm-d-Y':
 				$return = 'mm-dd-yy';
 				break;
-
 			case 'F j, Y':
 				$return = 'MM dd, yy';
 				break;
-
 			case 'd.m.Y':
 				$return = 'dd.mm.yy';
 				break;
-
 			default:
 				$return = 'mm/dd/yy';
 				break;
@@ -1973,7 +1966,11 @@ if ( ! function_exists( 'hb_get_post_id_meta' ) ) {
 }
 
 if ( ! function_exists( 'hb_get_date_format' ) ) {
-
+	/**
+	 * Get system date format.
+	 *
+	 * @return mixed
+	 */
 	function hb_get_date_format() {
 		$dateFormat = get_option( 'date_format' );
 

@@ -99,8 +99,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
 		 */
 		private function init_hooks() {
 			add_action( 'init', array( $this, 'load_text_domain' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 			add_filter( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
 		}
@@ -164,22 +162,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
             </table>
 			<?php
 		}
-
-		/**
-		 * Enqueue scripts.
-		 *
-		 * @since 2.0
-		 */
-		public function enqueue_scripts() {
-			if ( is_admin() ) {
-				wp_enqueue_script( 'wphb-flex-admin', WPHB_FLEX_URI . '/assets/js/admin.js', array( 'jquery' ), WPHB_FLEX_VER, true );
-			} else {
-				wp_enqueue_script( 'wphb-flex-site', WPHB_FLEX_URI . '/assets/js/site.js', array( 'jquery' ), WPHB_FLEX_VER, true );
-				wp_enqueue_script( 'wphb-flex-date-time-picker', WPHB_FLEX_URI . '/assets/js/jquery.datetimepicker.min.js', array( 'jquery' ), WPHB_FLEX_VER, true );
-				wp_enqueue_script( 'wphb-flex-date-time-picker-full', WPHB_FLEX_URI . '/assets/js/jquery.datetimepicker.full.min.js', array( 'jquery' ), WPHB_FLEX_VER, true );
-			}
-		}
-
 	}
 
 }

@@ -53,18 +53,12 @@
                 today = new Date(),
                 tomorrow = new Date();
 
-            var date_range = $(document).triggerHandler('hotel_booking_min_check_in_date');
-
-            var checkin_range_checkout = hotel_settings.min_booking_date;
-            if (!isInteger(checkin_range_checkout)) {
-                checkin_range_checkout = 1;
+            var _min = hotel_settings.min_booking_date;
+            if (!isInteger(_min)) {
+                _min = 1;
             }
 
-            if (!Hotel_Booking_Room_Addon.is_int(date_range)) {
-                date_range = 1;
-            }
-
-            tomorrow.setDate(today.getDate() + date_range);
+            tomorrow.setDate(today.getDate() + _min);
             checkin.datepicker({
                 dateFormat: hotel_booking_i18n.date_time_format,
                 monthNames: hotel_booking_i18n.monthNames,
@@ -78,7 +72,7 @@
                     var checkout_date = checkin.datepicker('getDate'),
                         time = new Date(checkout_date);
 
-                    checkout_date.setDate(checkout_date.getDate() + checkin_range_checkout);
+                    checkout_date.setDate(checkout_date.getDate() + _min);
                     checkout.datepicker('option', 'minDate', checkout_date);
                 }
             });
@@ -95,7 +89,7 @@
                 onSelect: function (selected) {
                     var checkin_date = checkout.datepicker('getDate'),
                         time = new Date(checkin_date);
-                    checkin_date.setDate(checkin_date.getDate() - checkin_range_checkout);
+                    checkin_date.setDate(checkin_date.getDate() - _min);
                     checkin.datepicker('option', 'maxDate', checkin_date);
                 }
             });
