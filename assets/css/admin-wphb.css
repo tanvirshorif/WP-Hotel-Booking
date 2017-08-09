@@ -217,6 +217,10 @@
   opacity: .7;
   z-index: 99900; }
 
+form[name="hb-admin-settings-form"] .subsubsub {
+  float: none;
+  margin: 10px 0 0; }
+
 .clearfix:after {
   content: '';
   display: block;

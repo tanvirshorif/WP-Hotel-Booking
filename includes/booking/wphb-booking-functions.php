@@ -408,7 +408,7 @@ if ( ! function_exists( 'hb_send_booking_mail' ) ) {
 
 		$settings = hb_settings();
 
-		$format  = $settings->get( 'email_new_booking_format', 'html' );
+		$format  = $settings->get( 'email_general_format', 'html' );
 		$headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
 
 		add_filter( 'wp_mail_from', 'hb_set_mail_from' );
@@ -416,8 +416,8 @@ if ( ! function_exists( 'hb_send_booking_mail' ) ) {
 		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
 
 		$email = hb_get_template_content( 'emails/booking/booking-email.php', array(
-			'booking'            => $booking,
-			'heading'      => $heading,
+			'booking'     => $booking,
+			'heading'     => $heading,
 			'description' => $desc
 		) );
 
@@ -440,37 +440,41 @@ if ( ! function_exists( 'hb_send_admin_booking_email' ) ) {
 	 * Send email for admin when booking completed.
 	 *
 	 * @param null $booking
-	 * @param $settings
 	 * @param $status
 	 *
 	 * @return bool
 	 */
-	function hb_send_admin_booking_email( $booking = null, $settings, $status ) {
+	function hb_send_admin_booking_email( $booking = null, $status ) {
 
-		$to = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
+		$settings = hb_settings();
 
-		$subject = $settings->get( 'email_new_booking_subject', '[{site_title}] Reservation completed ({order_number}) - {order_date}' );
-		$find    = array(
-			'order-date'   => '{order_date}',
-			'order-number' => '{order_number}',
-			'site-title'   => '{site_title}'
+		if ( 'booking_completed' == $status ) {
+			$to      = $settings->get( 'email_booking_completed_recipients', get_option( 'admin_email' ) );
+			$subject = $settings->get( 'email_booking_completed_subject', '[{site_title}] Reservation completed ({booking_number}) - {booking_date}' );
+
+			$heading = $settings->get( 'email_booking_completed_heading', __( 'Booking completed', 'wp-hotel-booking' ) );
+			$desc    = $settings->get( 'email_booking_completed_heading_desc', __( 'The customer had completed the transaction', 'wp-hotel-booking' ) );
+		} else {
+			$to      = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
+			$subject = $settings->get( 'email_new_booking_subject', '[{site_title}] Reservation completed ({booking_number}) - {booking_date}' );
+
+			$heading = $settings->get( 'email_new_booking_heading', __( 'New Booking Payment', 'wp-hotel-booking' ) );
+			$desc    = $settings->get( 'email_new_booking_heading_desc', __( 'The customer had placed booking', 'wp-hotel-booking' ) );
+		}
+
+		$find = array(
+			'booking-date'   => '{booking_date}',
+			'booking-number' => '{booking_number}',
+			'site-title'     => '{site_title}'
 		);
 
 		$replace = array(
-			'order-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
-			'order-number' => hb_format_order_number( $booking->id ),
-			'site-title'   => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
+			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+			'booking-number' => hb_format_order_number( $booking->id ),
+			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
 		);
 
 		$subject = str_replace( $find, $replace, $subject );
-
-		if ( 'booking_completed' == $status ) {
-			$heading = $settings->get( 'email_new_booking_heading', __( 'New Booking Payment', 'wp-hotel-booking' ) );
-			$desc    = $settings->get( 'email_new_booking_heading_desc', __( 'The customer has completed the transaction', 'wp-hotel-booking' ) );
-		} else {
-			$heading = __( 'New customer booking', 'wp-hotel-booking' );
-			$desc    = __( 'You have a new booking room', 'wp-hotel-booking' );
-		}
 
 		return hb_send_booking_mail( $booking, $to, $subject, $heading, $desc );
 	}
@@ -481,12 +485,13 @@ if ( ! function_exists( 'hb_send_customer_booking_email' ) ) {
 	 * Send email for customer when booking completed.
 	 *
 	 * @param null $booking
-	 * @param $settings
 	 * @param $status
 	 *
 	 * @return bool
 	 */
-	function hb_send_customer_booking_email( $booking = null, $settings, $status ) {
+	function hb_send_customer_booking_email( $booking = null, $status ) {
+
+		$settings = hb_settings();
 
 		if ( 'booking_completed' == $status ) {
 			$subject = $settings->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
@@ -548,7 +553,7 @@ if ( ! function_exists( 'hb_set_html_content_type' ) ) {
 	 */
 	function hb_set_html_content_type() {
 		$settings = hb_settings();
-		$format   = $settings->get( 'email_new_booking_format', 'html' );
+		$format   = $settings->get( 'email_general_format', 'html' );
 		if ( 'html' == $format ) {
 			return 'text/html';
 		} else {

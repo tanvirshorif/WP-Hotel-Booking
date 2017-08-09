@@ -175,6 +175,8 @@ if ( ! class_exists( 'WPHB_Abstract_Setting' ) ) {
 
 			if ( isset( $_REQUEST['section'] ) ) {
 				$current_section = sanitize_text_field( $_REQUEST['section'] );
+			} else if ( $sections ) {
+				$current_section = sanitize_text_field( array_keys( $sections )[0] );
 			}
 
 			$html = array();
@@ -187,7 +189,7 @@ if ( ! class_exists( 'WPHB_Abstract_Setting' ) ) {
 					</li>';
 			}
 			$html[] = implode( '&nbsp;|&nbsp;', $sub );
-			$html[] = '</ul><br />';
+			$html[] = '</ul>';
 
 			echo implode( '', $html );
 		}

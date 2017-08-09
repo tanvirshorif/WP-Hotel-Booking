@@ -46,19 +46,19 @@ if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
 			);
 
 			?>
-			<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
-			<input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
-			       name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
-			<input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
-			<input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
-			       name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
-			<input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
-			<select name="filter-type">
-				<option value=""><?php _e( 'Filter By', 'wp-hotel-booking' ); ?></option>
+            <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+            <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
+                   name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
+            <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
+            <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
+                   name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
+            <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
+            <select name="filter-type">
+                <option value=""><?php _e( 'Filter By', 'wp-hotel-booking' ); ?></option>
 				<?php foreach ( $filter_types as $slug => $text ) { ?>
-					<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
+                    <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
 				<?php } ?>
-			</select>
+            </select>
 			<?php
 		}
 	}
@@ -124,11 +124,11 @@ if ( ! function_exists( 'hb_send_place_booking_email' ) ) {
 		$settings = hb_settings();
 
 		// send customer email
-		hb_send_customer_booking_email( $booking, $settings );
+		hb_send_customer_booking_email( $booking );
 
 		// send admin email
 		if ( $settings->get( 'email_new_booking_enable' ) ) {
-			hb_send_admin_booking_email( $booking, $settings );
+			hb_send_admin_booking_email( $booking );
 		}
 
 		return true;
@@ -156,11 +156,11 @@ if ( ! function_exists( 'hb_send_booking_completed_email' ) ) {
 		$settings = hb_settings();
 
 		// send customer email
-		hb_send_customer_booking_email( $booking, $settings, 'booking_completed' );
+		hb_send_customer_booking_email( $booking, 'booking_completed' );
 
 		// send admin email
-		if ( $settings->get( 'email_new_booking_enable' ) ) {
-			hb_send_admin_booking_email( $booking, $settings, 'booking_completed' );
+		if ( $settings->get( 'email_booking_completed_enable' ) ) {
+			hb_send_admin_booking_email( $booking, 'booking_completed' );
 		}
 
 		return true;
