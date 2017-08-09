@@ -172,7 +172,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		public function add_wphb_notices() { ?>
             <div class="error">
                 <p>
-					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-woocommerce' ); ?>
+	                <?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', 'wphb-woocommerce' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php
@@ -186,7 +186,14 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		public function add_woo_notices() { ?>
             <div class="error">
                 <p>
-					<?php _e( wp_kses( 'The <strong>Woocommerce</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-woocommerce' ); ?>
+					<?php printf( wp_kses( __( 'The <strong><a href="%s" target="_blank">Woocommerce</a></strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', 'wphb-woocommerce' ),
+						array(
+							'a'      => array( 'href' => array(), 'target' => array() ),
+							'strong' => array()
+						)
+					), admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term'
+					);
+					?>
                 </p>
             </div>
 			<?php

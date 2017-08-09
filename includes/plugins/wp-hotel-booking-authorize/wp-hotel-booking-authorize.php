@@ -152,7 +152,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Authorize_Payment' ) ) {
 		public function add_notices() { ?>
             <div class="error">
                 <p>
-					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Authorize Payment</strong> add-on.', array( 'strong' => array() ) ), 'wphb-authorize-payment' ); ?>
+					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Authorize Payment</strong> add-on.', 'wphb-authorize-payment' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php

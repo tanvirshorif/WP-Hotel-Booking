@@ -28,7 +28,19 @@ $settings = hb_settings();
                        name="<?php echo esc_attr( $settings->get_field_name( 'wc_enable' ) ); ?>" <?php checked( $settings->get( 'wc_enable' ) == 'yes' ); ?>
                        value="yes"/>
             </label>
-            <p class="description"><?php _e( 'Check this option to enable make booking payments via WooCommerce', 'wphb-woocommerce' ); ?></p>
+            <p class="description"><?php _e( 'Enable make booking payments via WooCommerce', 'wphb-woocommerce' ); ?></p>
+        </td>
+    </tr>
+    <tr>
+        <th><?php _e( 'Booking Email', 'wphb-woocommerce' ); ?></th>
+        <td>
+            <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name( 'wc_disable_hotel_mail' ) ); ?>" value="no"/>
+            <label>
+                <input type="checkbox"
+                       name="<?php echo esc_attr( $settings->get_field_name( 'wc_disable_hotel_mail' ) ); ?>" <?php checked( $settings->get( 'wc_disable_hotel_mail' ) == 'yes' ); ?>
+                       value="yes"/>
+            </label>
+            <p class="description"><?php _e( 'Disable WP Hotel Booking email and use Woocommerce settings for booking processes', 'wphb-woocommerce' ); ?></p>
         </td>
     </tr>
 </table>

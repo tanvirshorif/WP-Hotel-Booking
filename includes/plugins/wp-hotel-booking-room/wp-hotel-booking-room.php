@@ -170,7 +170,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		public function add_notices() { ?>
             <div class="error">
                 <p>
-					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on.', array( 'strong' => array() ) ), 'wphb-booking-room' ); ?>
+					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on.', 'wphb-booking-room' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php

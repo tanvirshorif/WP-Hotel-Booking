@@ -119,21 +119,21 @@ if ( ! class_exists( 'WP_Hotel_Booking_WPML_Support' ) ) {
 		public function add_wphb_notices() { ?>
             <div class="error">
                 <p>
-					<?php _e( wp_kses( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-wpml' ); ?>
+					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WPML Support</strong> add-on.', 'wphb-wpml' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php
 		}
 
 		/**
-		 * Admin notice when Woocommerce not active.
+		 * Admin notice when WPML CSM not active.
 		 *
 		 * @since 2.0
 		 */
 		public function add_wpml_notices() { ?>
             <div class="error">
                 <p>
-					<?php _e( wp_kses( 'The <strong>WPML Multilingual CMS</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', array( 'strong' => array() ) ), 'wphb-wpml' ); ?>
+					<?php _e( wp_kses( 'The <strong>WPML Multilingual CMS</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WPML Support</strong> add-on.', array( 'strong' => array() ) ), 'wphb-wpml' ); ?>
                 </p>
             </div>
 			<?php
