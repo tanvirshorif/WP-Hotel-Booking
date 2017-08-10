@@ -387,7 +387,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			$columns['check_in_date']  = __( 'Check in', 'wp-hotel-booking' );
 			$columns['check_out_date'] = __( 'Check out', 'wp-hotel-booking' );
 			$columns['total']          = __( 'Total', 'wp-hotel-booking' );
-			$columns['title']          = __( 'Booking Order', 'wp-hotel-booking' );
+			$columns['title']          = __( 'Booking', 'wp-hotel-booking' );
 			$columns['status']         = __( 'Status', 'wp-hotel-booking' );
 
 			return $columns;
@@ -428,7 +428,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 					$echo[] = $total_with_currency;
 					if ( $method = hb_get_user_payment_method( $booking->method ) ) {
-						$echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
+						$echo[] = ' ( ' . esc_html( $method->description ) . ' )';
 					}
 					if ( $status === 'hb-processing' ) {
 						$advance_payment  = $booking->advance_payment;
@@ -486,7 +486,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			return $columns;
 		}
 
-		/**
+		/*
 		 * Handle custom booking sortable columns.
 		 *
 		 * @since 2.0
@@ -495,7 +495,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 */
 		public function custom_booking_sortable_column_handle( $query ) {
 			if ( ! is_admin() ) {
-				return;
+				return '';
 			}
 
 			$orderby = $query->get( 'orderby' );
@@ -511,6 +511,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				default:
 					break;
 			}
+
+			return $query;
 		}
 
 		/**
@@ -855,7 +857,6 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			register_taxonomy( 'hb_room_location', array( 'hb_room' ), $args );
 
 		}
-
 
 
 		/**

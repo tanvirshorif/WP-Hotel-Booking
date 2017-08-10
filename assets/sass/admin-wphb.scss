@@ -157,6 +157,14 @@
             }
         }
     }
+
+    .column-customer, .column-total {
+        width: 15%;
+    }
+
+    .column-title, .column-check_in_date, .column-check_out_date, .column-booking_date, .column-status {
+        width: 14%;
+    }
 }
 
 /****************************************** Admin booking detail ***************************************************/
@@ -413,35 +421,6 @@ form[name="hb-admin-settings-form"] {
 
 .post-type-hb_room .column-author {
     width: 150px;
-}
-
-.post-type-hb_booking .column-title {
-    width: 200px;
-}
-
-.post-type-hb_booking .column-total {
-    width: 160px;
-}
-
-.post-type-hb_booking .column-details {
-    width: 100px;
-}
-
-.post-type-hb_booking .column-check_in_date,
-.post-type-hb_booking .column-check_out_date,
-.post-type-hb_booking .column-from_to {
-    width: 130px;
-}
-
-.post-type-hb_booking .column-booking_date {
-    width: 100px;
-}
-
-.post-type-hb_booking .column-check_in_date,
-.post-type-hb_booking .column-check_out_date,
-.post-type-hb_booking .column-booking_date,
-.post-type-hb_booking .column-total {
-    text-align: right;
 }
 
 #adminmenu .toplevel_page_hb_booking_details {

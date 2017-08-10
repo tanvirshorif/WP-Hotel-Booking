@@ -52,10 +52,6 @@ $count_plants = count( $plans );
                        size="10" readonly="readonly"/>
                 <input type="hidden"
                        name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
-                <div class="hb-pricing-controls">
-                    <a href="" class="dashicons dashicons-admin-page" data-action="clone"
-                       title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
-                </div>
                 <div class="hb-pricing-list">
                     <table>
                         <thead>
@@ -153,7 +149,8 @@ $count_plants = count( $plans );
             </div>
             <p>
                 <input type="hidden" name="room_id" value="<?php echo esc_attr( $room_id ) ?>"/>
-                <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
+                <button class="button add_new_plan"><?php _e( 'Add New Plan', 'wp-hotel-booking' ); ?></button>
+                <button class="button button-primary update_plan"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
             </p>
 			<?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>
 		<?php endif; ?>
@@ -170,13 +167,8 @@ $count_plants = count( $plans );
             <input type="hidden" name="date-end-timestamp[__INDEX__]"/>
         </h3>
         <div class="hb-pricing-controls">
-            <# if( typeof data.clone !== 'undefined' && data.clone === true ) { #>
-                <a href="" class="dashicons dashicons-admin-page" data-action="clone"
-                   title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
-                <# } #>
-
-                    <a href="" class="dashicons dashicons-trash" data-action="remove"
-                       title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+            <a href="" class="dashicons dashicons-trash" data-action="remove"
+               title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
         </div>
 
         <div class="hb-pricing-list">

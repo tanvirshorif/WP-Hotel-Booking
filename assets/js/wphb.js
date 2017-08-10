@@ -223,6 +223,18 @@
         });
     }
 
+    // set default option for datepicker
+    $.datepicker.setDefaults({
+        dateFormat: wphb_js.date_time_format,
+        monthNames: wphb_js.monthNames,
+        monthNamesShort: wphb_js.monthNamesShort,
+        dayNames: wphb_js.dayNames,
+        dayNamesShort: wphb_js.dayNamesShort,
+        dayNamesMin: wphb_js.dayNamesMin,
+        maxDate: '+365D',
+        numberOfMonths: 1
+    });
+
     var $doc = $(document);
 
     var WPHB_Site = {
@@ -578,17 +590,6 @@
             }
 
             _tomorrow.setDate(_today.getDate() + _min);
-
-            $.datepicker.setDefaults({
-                dateFormat: wphb_js.date_time_format,
-                monthNames: wphb_js.monthNames,
-                monthNamesShort: wphb_js.monthNamesShort,
-                dayNames: wphb_js.dayNames,
-                dayNamesShort: wphb_js.dayNamesShort,
-                dayNamesMin: wphb_js.dayNamesMin,
-                maxDate: '+365D',
-                numberOfMonths: 1
-            });
 
             _self.check_in_date(_today, _min);
             _self.check_out_date(_tomorrow, _min);

@@ -2,6 +2,16 @@
 
     var $doc = $(document);
 
+    // set default option for datepicker
+    $.datepicker.setDefaults({
+        dateFormat: wphb_admin_js.date_time_format,
+        monthNames: wphb_admin_js.monthNames,
+        monthNamesShort: wphb_admin_js.monthNamesShort,
+        dayNames: wphb_admin_js.dayNames,
+        dayNamesShort: wphb_admin_js.dayNamesShort,
+        dayNamesMin: wphb_admin_js.dayNamesMin
+    });
+
     var WPHB_Admin_Booking = {
         init: function () {
             var _doc = $(document),
@@ -20,7 +30,11 @@
                 // save add booking room item
                 .on('wphb_submit_modal', _self.save_item);
 
+            // select customer in admin booking
             _self.select_booking_customer();
+
+            // datepicker for filter booking by date
+            _self.booking_date_filter();
 
         },
         add_room_item: function (e) {
@@ -151,12 +165,6 @@
 
                 // date picker
                 _check_in.datepicker({
-                    dateFormat: wphb_admin_js.date_time_format,
-                    monthNames: wphb_admin_js.monthNames,
-                    monthNamesShort: wphb_admin_js.monthNamesShort,
-                    dayNames: wphb_admin_js.dayNames,
-                    dayNamesShort: wphb_admin_js.dayNamesShort,
-                    dayNamesMin: wphb_admin_js.dayNamesMin,
                     onSelect: function () {
                         var _self = $(this),
                             date = _self.datepicker('getDate'),
@@ -167,12 +175,6 @@
                     }
                 });
                 _check_out.datepicker({
-                    dateFormat: wphb_admin_js.date_time_format,
-                    monthNames: wphb_admin_js.monthNames,
-                    monthNamesShort: wphb_admin_js.monthNamesShort,
-                    dayNames: wphb_admin_js.dayNames,
-                    dayNamesShort: wphb_admin_js.dayNamesShort,
-                    dayNamesMin: wphb_admin_js.dayNamesMin,
                     onSelect: function () {
                         var _self = $(this),
                             date = _self.datepicker('getDate'),
@@ -241,11 +243,120 @@
                     cache: true
                 }
             });
+        },
+        booking_date_filter: function () {
+            $('#hb-booking-date-from').datepicker({
+                onSelect: function () {
+                    var _self = $(this),
+                        date = _self.datepicker('getDate'),
+                        timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                    _self.parent().find('input[name="date-from-timestamp"]').val(timestamp);
+                    $('#hb-booking-date-to').datepicker('option', 'minDate', date)
+                }
+            });
+            $('#hb-booking-date-to').datepicker({
+                onSelect: function () {
+                    var _self = $(this),
+                        date = _self.datepicker('getDate'),
+                        timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                    _self.parent().find('input[name="date-to-timestamp"]').val(timestamp);
+                    $('#hb-booking-date-from').datepicker('option', 'maxDate', date)
+                }
+            });
+            $('form#posts-filter').submit(function () {
+                var counter = 0;
+                $('#hb-booking-date-from, #hb-booking-date-to, select[name="filter-type"]').each(function () {
+                    if ($(this).val()) counter++;
+                });
+                if (counter > 0 && counter < 3) {
+                    alert(wphb_admin_js.filter_error);
+                    return false;
+                }
+            });
+        }
+    };
+
+    var WPHB_Admin_Pricing_Plan = {
+        init: function () {
+            var _self = this,
+                _doc = $(document);
+
+            // show room pricing plan
+            _doc.on('change', '#hb-room-select', _self.show_room_pricing)
+            // add new plan
+                .on('click', '.add_new_plan', _self.add_new_plan)
+                // remove plan
+                .on('click', '.hb-pricing-controls a', _self.remove_plan);
+
+        },
+        show_room_pricing: function (e) {
+            e.preventDefault();
+            var _self = this,
+                _location = window.location.href;
+            _location = _location.replace(/[&]?hb-room=[0-9]+/, '');
+            if (_self.value !== 0) {
+                _location += '&hb-room=' + _self.value;
+            }
+            window.location.href = _location;
+        },
+        add_new_plan: function (e) {
+            e.preventDefault();
+            var _self = this,
+                _button = $('.add_new_plan'),
+                _table = _button.parent().siblings('.hb-pricing-table'),
+                _cloned = $(wp.template('hb-pricing-table')()),
+                _inputs = _cloned.find('.hb-pricing-price');
+
+            WPHB_Admin_Pricing_Plan.init_pricing_plan(_cloned);
+            _table.find('.hb-pricing-price').each(function (i) {
+                _inputs.eq(i).val(_self.value);
+            });
+            if (_table.hasClass('regular-price')) {
+                _cloned.removeClass('regular-price');
+                $('.hb-pricing-table-title > span', _cloned).html(wphb_admin_js.date_range);
+                $('#hb-pricing-plan-list').append(_cloned);
+            } else {
+                _cloned.insertAfter(_table);
+            }
+            $('#hb-no-plan-message').hide();
+        },
+        remove_plan: function (e) {
+            e.preventDefault();
+            var _self = this,
+                _table = _self.closest('.hb-pricing-table');
+
+            if (confirm(wphb_admin_js.confirm_remove_pricing_table)) {
+                if (_table.siblings('.hb-pricing-table').length === 0) {
+                    $('#hb-no-plan-message').show();
+                }
+            }
+        },
+        init_pricing_plan: function (_plan) {
+            _plan.find('.datepicker').datepicker({
+                onSelect: function () {
+                    var _self = $(this),
+                        _date = _self.datepicker('getDate'),
+                        _timestamp = new Date(_date).getTime() / 1000 - ( new Date(_date).getTimezoneOffset() * 60 ),
+                        _name = _self.attr('name');
+                    var _hidden_name = false;
+                    if (_name.indexOf('date-start') === 0) {
+                        _hidden_name = name.replace('date-start', 'date-start-timestamp');
+                    } else if (_name.indexOf('date-end') === 0) {
+                        _hidden_name = _name.replace('date-end', 'date-end-timestamp');
+                    }
+                    if (_hidden_name) {
+                        _plan.find('input[name="' + _hidden_name + '"]').val(_timestamp);
+                    }
+                }
+            });
+            // $(plan).find('.datepicker').datepicker('disable');
         }
     };
 
     function _ready() {
         WPHB_Admin_Booking.init();
+
+        WPHB_Admin_Pricing_Plan.init();
     }
 
     $doc.ready(_ready);
