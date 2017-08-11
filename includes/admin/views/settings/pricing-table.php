@@ -39,7 +39,7 @@ $count_plants = count( $plans );
             <strong><?php _e( 'Select name of room', 'wp-hotel-booking' ); ?></strong>
             &nbsp;&nbsp;<?php echo hb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
         </p>
-		<?php if ( $room_id ) : ?>
+		<?php if ( $room_id ) { ?>
             <div class="hb-pricing-table regular-price">
                 <input type="hidden" class="datepicker"
                        name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
@@ -72,7 +72,7 @@ $count_plants = count( $plans );
 									<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                     <input class="hb-pricing-price" type="number" min="0" step="any"
                                            name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]"
-                                           value="<?php echo esc_attr( $price ); ?>" size="10"/>
+                                           value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
                                 </td>
 							<?php } ?>
                         </tr>
@@ -87,8 +87,8 @@ $count_plants = count( $plans );
             </h3>
 
             <div id="hb-pricing-plan-list">
-				<?php if ( $plans ): ?>
-					<?php foreach ( $plans as $plan ) : ?>
+				<?php if ( $plans ) { ?>
+					<?php foreach ( $plans as $plan ) { ?>
 						<?php
 						$start = strtotime( $plan->start );
 						$end   = strtotime( $plan->end );
@@ -111,7 +111,7 @@ $count_plants = count( $plans );
                                        value="<?php echo esc_attr( $end ); ?>"/>
                             </h3>
                             <div class="hb-pricing-controls">
-                                <a href="" class="dashicons dashicons-trash" data-action="remove"
+                                <a href="" class="dashicons dashicons-trash"
                                    title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
                             </div>
 
@@ -140,11 +140,11 @@ $count_plants = count( $plans );
                                 </table>
                             </div>
                         </div>
-					<?php endforeach; ?>
+					<?php } ?>
 
-				<?php else: ?>
+				<?php } else { ?>
                     <p id="hb-no-plan-message"> <?php _e( 'No addition plans', 'wp-hotel-booking' ); ?></p>
-				<?php endif; ?>
+				<?php } ?>
 
             </div>
             <p>
@@ -153,7 +153,7 @@ $count_plants = count( $plans );
                 <button class="button button-primary update_plan"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
             </p>
 			<?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>
-		<?php endif; ?>
+		<?php } ?>
     </form>
 </div>
 
@@ -167,8 +167,7 @@ $count_plants = count( $plans );
             <input type="hidden" name="date-end-timestamp[__INDEX__]"/>
         </h3>
         <div class="hb-pricing-controls">
-            <a href="" class="dashicons dashicons-trash" data-action="remove"
-               title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+            <a href="" class="dashicons dashicons-trash" title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
         </div>
 
         <div class="hb-pricing-list">
@@ -185,8 +184,7 @@ $count_plants = count( $plans );
 					<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
                         <td>
                             <input class="hb-pricing-price" type="number" min="0" step="any"
-                                   name="price[__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"
-                                   readonly="readonly"/>
+                                   name="price[__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"/>
                         </td>
 					<?php } ?>
                 </tr>
@@ -196,7 +194,7 @@ $count_plants = count( $plans );
     </div>
 </script>
 
-<?php if ( $room_id ) : ?>
+<?php if ( $room_id ) { ?>
     <h2 class="hotel-booking-fullcalendar-month"><?php printf( '%s', date_i18n( 'F, Y', time() ) ) ?></h2>
     <div class="hotel-booking-fullcalendar-toolbar">
         <div class="fc-right">
@@ -216,4 +214,4 @@ $count_plants = count( $plans );
     </div>
     <div class="hotel-booking-fullcalendar"
          data-events="<?php echo esc_attr( hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y' ) ) ) ?>"></div>
-<?php endif; ?>
+<?php } ?>

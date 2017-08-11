@@ -9,8 +9,82 @@
         monthNamesShort: wphb_admin_js.monthNamesShort,
         dayNames: wphb_admin_js.dayNames,
         dayNamesShort: wphb_admin_js.dayNamesShort,
-        dayNamesMin: wphb_admin_js.dayNamesMin
+        dayNamesMin: wphb_admin_js.dayNamesMin,
+        maxDate: '+365D'
     });
+
+    var WPHB_Admin_Extra = {
+        init: function () {
+            var _self = this,
+                _doc = $(document);
+
+            // add new extra
+            _doc.on('click', '.tp_extra_add_item', _self.add_new_extra)
+            // delete extra
+                .on('click', '.tp_extra_form_fields .remove_button', _self.remove_extra)
+                // toggle extra
+                .on('change', 'number_room_select', _self.toggle_extra);
+        },
+        add_new_extra: function (e) {
+            e.preventDefault();
+            var _current = $('.tp_extra_form_fields:last'),
+                _new_extra = new Date().getTime(),
+                _tmp = wp.template('tp-hb-extra-room');
+            _tmp = _tmp({id: _new_extra});
+
+            if (_current.length === 0) {
+                $('.tp_extra_form_head').after(_tmp);
+            } else {
+                _current.after(_tmp);
+            }
+        },
+        remove_extra: function (e) {
+            e.preventDefault();
+
+            if (!confirm(wphb_admin_js.confirm_remove_extra)) {
+                return;
+            }
+
+            var _self = this,
+                _package_id = _self.data('id'),
+                _extra = _self.parents('.tp_extra_form_fields');
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    package_id: _package_id,
+                    action: 'wphb_admin_delete_extra_package'
+                }
+            }).done(function (res) {
+                if (typeof res.status !== 'undefined' && res.status === 'success') {
+                    _extra.remove();
+                }
+            });
+        },
+        toggle_extra: function (e) {
+            e.preventDefault();
+
+            var _self = $(this),
+                _form = _self.parents('.hb-search-room-results'),
+                _extra_area = _form.find('.hb_addition_package_extra'),
+                _toggle = _extra_area.find('.hb_addition_packages'),
+                _val = _self.val();
+
+            if (_val !== '') {
+                _form.parent().siblings().find('.hb_addition_packages').removeClass('active').slideUp();
+                _toggle.removeAttr('style').addClass('active');
+                _extra_area.removeAttr('style').slideDown();
+            }
+            else {
+                _extra_area.slideUp();
+                _val = 1;
+            }
+
+            _form.find('.hb_optional_quantity').val(_val);
+
+        }
+    };
 
     var WPHB_Admin_Booking = {
         init: function () {
@@ -286,7 +360,18 @@
             // add new plan
                 .on('click', '.add_new_plan', _self.add_new_plan)
                 // remove plan
-                .on('click', '.hb-pricing-controls a', _self.remove_plan);
+                .on('click', '.hb-pricing-controls a', _self.remove_plan)
+                // update pricing
+                .on('submit', 'form[name="pricing-table-form"]', _self.update_pricing);
+
+            // init pricing tables
+            _self.init_pricing_tables();
+
+            // pricing calendar
+            _self.init_pricing_calendar();
+
+            // view next/previous pricing calendar
+            _doc.on('click', '.hotel-booking-fullcalendar-toolbar .fc-button', _self.calendar_actions);
 
         },
         show_room_pricing: function (e) {
@@ -308,8 +393,10 @@
                 _inputs = _cloned.find('.hb-pricing-price');
 
             WPHB_Admin_Pricing_Plan.init_pricing_plan(_cloned);
+
             _table.find('.hb-pricing-price').each(function (i) {
-                _inputs.eq(i).val(_self.value);
+                var _price = this;
+                _inputs.eq(i).val(_price.value);
             });
             if (_table.hasClass('regular-price')) {
                 _cloned.removeClass('regular-price');
@@ -326,10 +413,129 @@
                 _table = _self.closest('.hb-pricing-table');
 
             if (confirm(wphb_admin_js.confirm_remove_pricing_table)) {
-                if (_table.siblings('.hb-pricing-table').length === 0) {
+                if (_table.length === 0) {
                     $('#hb-no-plan-message').show();
                 }
+                _table.remove();
             }
+        },
+        update_pricing: function () {
+            var _table = $('.hb-pricing-table');
+
+            _table.each(function (i) {
+                var _start = _table.find('input[name^="date-start"]'),
+                    _end = _table.find('input[name^="date-end"]');
+                if (!_table.hasClass('regular-price')) {
+
+                    if (!isDate(_start.datepicker('getDate'))) {
+                        alert(wphb_admin_js.empty_pricing_plan_start_date);
+                        _start.focus();
+                        return;
+                    } else if (!isDate(_end.datepicker('getDate'))) {
+                        alert(wphb_admin_js.empty_pricing_plan_end_date);
+                        _end.focus();
+                        return;
+                    }
+                }
+                _table.find('input[type="text"], input[type="number"], input[type="hidden"]').each(function () {
+                    var _input = $(this),
+                        _name = _input.attr('name');
+                    _name = _name.replace(/__INDEX__/, i - 1000);
+                    _input.attr('name', _name);
+                });
+            });
+        },
+        init_pricing_tables: function () {
+            var _table = $('.hb-pricing-table');
+
+            _table.each(function () {
+                WPHB_Admin_Pricing_Plan.init_pricing_plan(_table);
+            })
+        },
+        init_pricing_calendar: function () {
+            var _full_calendar = $('.hotel-booking-fullcalendar');
+
+            for (var i = 0; i < _full_calendar.length; i++) {
+                var _calendar = $(_full_calendar[i]),
+                    _events = _calendar.data('events');
+
+                if (typeof _events === 'undefined') {
+                    _events = [];
+                }
+
+                _calendar.fullCalendar({
+                    // header: {
+                    //     left: '',
+                    //     right: ''
+                    // },
+                    // ignoreTimezone: false,
+                    // handleWindowResize: true,
+                    // editable: false,
+                    // defaultView: 'singleRowMonth',
+                    // events: function (start, end, timezone, callback) {
+                    //     callback(JSON.parse(_events));
+                    // }
+                });
+            }
+        },
+        calendar_actions: function (e) {
+            e.preventDefault();
+            var _self = this,
+                _calendar = $('.hotel-booking-fullcalendar'),
+                _calendar_month = $('.hotel-booking-fullcalendar-month'),
+                _calendar_next = $('.hotel-booking-fullcalendar-toolbar .fc-next-button'),
+                _calendar_pre = $('.hotel-booking-fullcalendar-toolbar .fc-prev-button'),
+                _room_id = _self.data('room'),
+                _month = _self.data('month'),
+                _date = new Date(),
+                _init_date = [];
+
+            _init_date.push(_date.getYear() + '-' + _date.getMonth());
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'wphb_admin_load_pricing_calendar',
+                    nonce: hotel_settings.nonce,
+                    room_id: _room_id,
+                    month: _month
+                },
+                beforeSend: function () {
+                    _self.append('<i class="fa fa-spinner fa-spin"></i>');
+                }
+            }).done(function (res) {
+                _self.find('.fa').remove();
+                if (res.status === true) {
+
+                    var _events = JSON.parse(res.events),
+                        _date = new Date(_events[0].start),
+                        _month = _date.getYear() + '-' + _date.getMonth();
+
+                    if (_init_date.indexOf(_month) === -1) {
+                        _init_date.push(_month);
+                        for (var i = 0; i < _events.length; i++) {
+                            var _event = _events[i];
+                            _calendar.fullCalendar('renderEvent', _event, true);
+                        }
+                    }
+
+                    _calendar.fullCalendar('refetchEvents');
+
+                    if (_self.hasClass('fc-next-button')) {
+                        _calendar.fullCalendar('next');
+                    } else {
+                        _calendar.fullCalendar('prev');
+                    }
+
+                    _calendar_month.text(res.month_name);
+                    _calendar_next.attr('data-month', res.next);
+                    _calendar_pre.attr('data-month', res.prev);
+                }
+
+            }).fail(function () {
+                _self.find('.fa').remove();
+            });
         },
         init_pricing_plan: function (_plan) {
             _plan.find('.datepicker').datepicker({
@@ -340,7 +546,7 @@
                         _name = _self.attr('name');
                     var _hidden_name = false;
                     if (_name.indexOf('date-start') === 0) {
-                        _hidden_name = name.replace('date-start', 'date-start-timestamp');
+                        _hidden_name = _name.replace('date-start', 'date-start-timestamp');
                     } else if (_name.indexOf('date-end') === 0) {
                         _hidden_name = _name.replace('date-end', 'date-end-timestamp');
                     }
@@ -349,7 +555,104 @@
                     }
                 }
             });
-            // $(plan).find('.datepicker').datepicker('disable');
+        }
+    };
+
+    var WPHB_Admin_Settings = {
+        init: function () {
+            var _doc = $(document),
+                _self = this;
+
+            // select images
+            _doc.on('click', '#gallery_settings .attachment.add-new', _self.add_image_selector)
+            // remove images
+                .on('click', '#gallery_settings .attachment .dashicons-trash', _self.remove_image_selector)
+                // dismiss notice
+                .on('click', '.hb-dismiss-notice button', _self.dismiss_notice);
+
+            // datetime picker field
+            _self.datetime_metabox_field();
+            // set select2 for fields
+            _self.admin_select2();
+            // sort images
+            _self.images_sortable();
+
+
+        },
+        add_image_selector: function (e) {
+            e.preventDefault();
+            var _self = this,
+                _file_frame = wp.media.frames.file_frame = wp.media({multiple: true});
+
+            _file_frame.on('select', function () {
+                var _attachments = _file_frame.state().get('selection').toJSON();
+                var _html = '';
+
+                for (var i = 0; i < _attachments.length; i++) {
+                    var _attachment = _attachments[i];
+                    _html += '<li class="attachment">';
+                    _html += '<div class="attachment-preview">';
+                    _html += '<div class="thumbnail">';
+                    _html += '<div class="centered">';
+                    _html += '<img src="' + _attachment.url + '"/>';
+                    _html += '<input type="hidden" name="_hb_gallery[]" value="' + _attachment.id + '" />'
+                    _html += '</div>';
+                    _html += '</div>';
+                    _html += '</div>';
+                    _html += '<a class="dashicons dashicons-trash" title="' + wphb_admin_js.remove_image + '"></a>';
+                    _html += '</li>';
+                }
+                _self.before(_html);
+            });
+            _file_frame.open();
+        },
+        remove_image_selector: function (e) {
+            e.preventDefault();
+            var _self = this;
+
+            _self.parent().remove();
+        },
+        datetime_metabox_field: function () {
+            $(".datetime-picker-metabox").datepicker({
+                minDate: 0,
+                numberOfMonths: 2,
+                onSelect: function (selected) {
+                    var _self = $(this),
+                        _name = _self.attr('name'),
+                        _date = _self.datepicker('getDate'),
+                        _timestamp = new Date(_date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                    if (_date) {
+                        _date.setDate(_date.getDate() + 1);
+                    }
+                    $('input[name="' + _name + '_timestamp"]').val(_timestamp);
+                }
+            });
+        },
+        admin_select2: function () {
+            // select setting page
+            $('form[name="hb-admin-settings-form"] select').select2();
+            // select metabox
+            $('.hb-form-field .hb-form-field-input select').select2();
+        },
+        images_sortable: function () {
+            var _gallery = $('#gallery_settings'),
+                _images = _gallery.find('ul');
+
+            _images.sortable();
+        },
+        dismiss_notice: function (e) {
+            e.preventDefault();
+            var _self = this,
+                _parent = _self.closest('.hb-dismiss-notice');
+            if (_parent.length) {
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'wphb_admin_dismiss_notice'
+                    }
+                })
+            }
         }
     };
 
@@ -357,6 +660,8 @@
         WPHB_Admin_Booking.init();
 
         WPHB_Admin_Pricing_Plan.init();
+
+        WPHB_Admin_Settings.init();
     }
 
     $doc.ready(_ready);

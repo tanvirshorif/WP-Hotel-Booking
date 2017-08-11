@@ -39,7 +39,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'choose_images'                 => __( 'Choose images', 'wp-hotel-booking' ),
 			'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'wp-hotel-booking' ),
 			'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'wp-hotel-booking' ),
-			'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'wp-hotel-booking' ),
+			'empty_pricing_plan_end_date'   => __( 'Select end date for plan', 'wp-hotel-booking' ),
 			'filter_error'                  => __( 'Please select date range and filter type', 'wp-hotel-booking' ),
 			'date_time_format'              => hb_date_format_js(),
 			'monthNames'                    => hb_month_name_js(),
@@ -47,6 +47,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'select_room'                   => __( 'Enter room name', 'wp-hotel-booking' ),
 			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' ),
 
+			'remove_image'            => __( 'Remove this image', 'wp-hotel-booking' ),
 			'date_range'              => __( 'Date range', 'wp-hotel-booking' ),
 			'select_booking_customer' => __( 'Enter user login', 'wp-hotel-booking' ),
 		);

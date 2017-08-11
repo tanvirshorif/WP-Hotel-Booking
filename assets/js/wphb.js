@@ -665,7 +665,6 @@
                         name: 'hb_' + _data[i].name,
                         value: _time.getTime() / 1000 - (_time.getTimezoneOffset() * 60)
                     })
-
                 }
             }
 

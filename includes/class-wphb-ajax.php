@@ -33,23 +33,24 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		public function __construct() {
 
 			$actions = array(
-				'fetch_customer_info'        => true,
-				'place_booking'              => true,
-				'parse_search_params'        => true,
-				'add_to_cart'                => true,
-				'remove_cart_item'           => true,
+				'fetch_customer_info'         => true,
+				'place_booking'               => true,
+				'parse_search_params'         => true,
+				'add_to_cart'                 => true,
+				'remove_cart_item'            => true,
 				// load booking user in admin booking page
-				'load_booking_user'          => false,
-				'load_room_ajax'             => false,
-				'admin_check_room_available' => false,
-				'admin_load_booking_item'    => false,
-				'admin_add_booking_item'     => false,
-				'admin_remove_booking_item'  => false,
-				'admin_remove_order_items'   => false,
-				'delete_extra_package'       => false,
-				'remove_extra_cart'          => true,
-				'load_other_full_calendar'   => false,
-				'dismiss_notice'             => true
+				'load_booking_user'           => false,
+				'load_room_ajax'              => false,
+				'admin_check_room_available'  => false,
+				'admin_load_booking_item'     => false,
+				'admin_add_booking_item'      => false,
+				'admin_remove_booking_item'   => false,
+				'admin_remove_order_items'    => false,
+				'admin_delete_extra_package'        => false,
+				'remove_extra_cart'           => true,
+				'load_other_full_calendar'    => false,
+				'admin_load_pricing_calendar' => false,
+				'admin_dismiss_notice'        => false
 			);
 
 			foreach ( $actions as $action => $priv ) {
@@ -546,7 +547,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function delete_extra_package() {
+		public static function admin_delete_extra_package() {
 
 			if ( ! isset( $_POST ) || ! isset( $_POST['package_id'] ) ) {
 				return;
@@ -628,28 +629,28 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 
 		/**
-		 * Load other full calendar.
+		 * Admin load pricing calendar.
 		 *
 		 * @since 2.0
 		 */
-		public static function load_other_full_calendar() {
+		public static function admin_load_pricing_calendar() {
 			check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
 			if ( ! isset( $_POST['room_id'] ) ) {
 				wp_send_json( array(
-					'status'  => fasle,
+					'status'  => false,
 					'message' => __( 'Room is not exists.', 'wp-hotel-booking' )
 				) );
 			}
 
 			$room_id = absint( $_POST['room_id'] );
-			if ( ! isset( $_POST['date'] ) ) {
+			if ( ! isset( $_POST['month'] ) ) {
 				wp_send_json( array(
-					'status'  => fasle,
+					'status'  => false,
 					'message' => __( 'Date is not exists.', 'wp-hotel-booking' )
 				) );
 			}
-			$date = sanitize_text_field( $_POST['date'] );
+			$date = sanitize_text_field( $_POST['month'] );
 
 			wp_send_json( array(
 				'status'     => true,
