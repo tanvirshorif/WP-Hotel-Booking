@@ -19,11 +19,16 @@ defined( 'ABSPATH' ) || exit;
 
 <?php get_header(); ?>
 
-<?php
-$id      = get_transient( 'wphb_booking_transient' );
-$booking = WPHB_Booking::instance( $id );
-$rooms   = hb_get_order_items( $id );
+<?php $booking_id = get_query_var( 'booking-received' );
+
 ?>
+
+<?php if ( get_post_type( $booking_id ) !== 'hb_booking' ) { ?>
+    <p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ) ?></p>
+<?php } else {
+	$booking = WPHB_Booking::instance( $booking_id );
+	$rooms   = hb_get_order_items( $booking_id );
+	?>
 
     <div id="booking-details">
         <div class="booking-user-data">
@@ -44,9 +49,9 @@ $rooms   = hb_get_order_items( $id );
             </div>
         </div>
         <div class="booking-data">
-            <h3 class="booking-data-number"><?php echo sprintf( esc_attr__( 'Order %s', 'wp-hotel-booking' ), hb_format_order_number( $id ) ); ?></h3>
+            <h3 class="booking-data-number"><?php echo sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ); ?></h3>
             <div class="booking-date">
-				<?php echo sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $id ) ); ?>
+				<?php echo sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $booking_id ) ); ?>
             </div>
         </div>
     </div>
@@ -215,6 +220,6 @@ $rooms   = hb_get_order_items( $id );
         </div>
 
     </div>
-
+<?php } ?>
 
 <?php get_footer(); ?>

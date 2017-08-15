@@ -35,16 +35,20 @@ if ( ! class_exists( 'WPHB_WC_Checkout' ) ) {
 		public function __construct() {
 			parent::__construct();
 
-			// woo add new order hook
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'woo_add_order' ) );
-			// rooms transaction object
-			add_filter( 'hb_transaction_rooms', array( $this, 'woo_transaction_rooms' ), 50, 1 );
-			// transaction object
-			add_filter( 'hb_generate_transaction_object', array( $this, 'woo_transaction_object' ), 50, 2 );
-			// tax for woocommerce in WP Hotel Booking
-			add_filter( 'hotel_booking_tax_metabox', array( $this, 'tax_order' ), 10, 1 );
-			add_filter( 'hotel_booking_label_details', array( $this, 'booking_tax_price' ), 10, 1 );
-			add_filter( 'hotel_booking_admin_booking_details', array( $this, 'booking_details_tax_price' ), 10, 2 );
+			$settings = hb_settings();
+
+			if ( 'yes' === $settings->get( 'wc_enable' ) ) {
+				// woo add new order hook
+				add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'woo_add_order' ) );
+				// rooms transaction object
+				add_filter( 'hb_transaction_rooms', array( $this, 'woo_transaction_rooms' ), 50, 1 );
+				// transaction object
+				add_filter( 'hb_generate_transaction_object', array( $this, 'woo_transaction_object' ), 50, 2 );
+				// tax for woocommerce in WP Hotel Booking
+				add_filter( 'hotel_booking_tax_metabox', array( $this, 'tax_order' ), 10, 1 );
+				add_filter( 'hotel_booking_label_details', array( $this, 'booking_tax_price' ), 10, 1 );
+				add_filter( 'hotel_booking_admin_booking_details', array( $this, 'booking_details_tax_price' ), 10, 2 );
+			}
 		}
 
 		/**

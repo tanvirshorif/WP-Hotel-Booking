@@ -807,7 +807,8 @@
         },
         fetch_customer_info: function () {
             var _button = $(this),
-                _email = $('input[name="existing-customer-email"]');
+                _email = $('input[name="existing-customer-email"]'),
+                _error_pos = $('.hb-order-existing-customer .hb-form-table');
             if (!isEmail(_email.val())) {
                 _email.addClass('error').focus();
                 return false;
@@ -841,7 +842,7 @@
                         $container.find('input[name="existing-customer-id"]').val(response.ID);
                         $('.hb-order-existing-customer').fadeOut();
                     } else {
-                        WPHB_Checkout.fetch_info_error([wphb_js.invalid_email]);
+                        WPHB_Checkout.fetch_info_error([wphb_js.no_customer_exist], _error_pos);
                     }
                     _button.removeAttr('disabled');
                     _email.removeAttr('disabled');
@@ -849,7 +850,7 @@
                 },
                 error: function () {
                     _table_info.hb_overlay_ajax_stop();
-                    WPHB_Checkout.fetch_info_error([wphb_js.ajax_error]);
+                    WPHB_Checkout.fetch_info_error([wphb_js.ajax_error], _error_pos);
                     _button.removeAttr('disabled');
                     _email.removeAttr('disabled');
                 }
@@ -947,7 +948,7 @@
 
             return false;
         },
-        fetch_info_error: function (msgs) {
+        fetch_info_error: function (msgs, pos) {
             if (msgs.length === 0) {
                 return;
             }
@@ -959,7 +960,8 @@
                 html.push('<p>' + msgs[i] + '</p>');
             }
             html.push('</div>');
-            $('#hb-payment-form h3:first-child').after(html.join(''));
+
+            pos.after(html.join(''));
         }
 
     };

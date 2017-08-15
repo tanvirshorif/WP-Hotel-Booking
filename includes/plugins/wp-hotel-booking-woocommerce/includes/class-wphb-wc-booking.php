@@ -31,10 +31,14 @@ if ( ! class_exists( 'WPHB_WC_Booking' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
-			// booking change status
-			add_action( 'woocommerce_order_status_changed', array( $this, 'woo_change_oder_status' ), 10, 3 );
-			// booking status filter
-			add_filter( 'hotel_booking_booking_total', array( $this, 'booking_status' ), 10, 3 );
+			$settings = hb_settings();
+
+			if ( 'yes' === $settings->get( 'wc_enable' ) ) {
+				// booking change status
+				add_action( 'woocommerce_order_status_changed', array( $this, 'woo_change_oder_status' ), 10, 3 );
+				// booking status filter
+				add_filter( 'hotel_booking_booking_total', array( $this, 'booking_status' ), 10, 3 );
+			}
 		}
 
 		/**

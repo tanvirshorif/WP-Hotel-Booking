@@ -832,8 +832,8 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 
 		/**
 		 * Generate transaction and transfer cart content to booking info.
-         *
-         * @since 2.0
+		 *
+		 * @since 2.0
 		 *
 		 * @param null $payment_method
 		 *
@@ -870,7 +870,8 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				'_hb_customer_country'        => hb_get_request( 'country' ),
 				'_hb_customer_phone'          => hb_get_request( 'phone' ),
 				'_hb_customer_email'          => hb_get_request( 'email' ),
-				'_hb_customer_fax'            => hb_get_request( 'fax' )
+				'_hb_customer_fax'            => hb_get_request( 'fax' ),
+				'_hb_booking_key'             => uniqid()
 			) );
 
 			// set booking info
@@ -967,10 +968,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		}
 
 		/**
-         * Add extra items in mini cart.
-         *
-         * @since 2.0
-         *
+		 * Add extra items in mini cart.
+		 *
+		 * @since 2.0
+		 *
 		 * @param $room
 		 * @param $cart_id
 		 */
@@ -1043,10 +1044,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		}
 
 		/**
-         * Add extra package items in cart and checkout frontend page.
-         *
-         * @since 2.0
-         *
+		 * Add extra package items in cart and checkout frontend page.
+		 *
+		 * @since 2.0
+		 *
 		 * @param $room
 		 * @param $cart_id
 		 */
@@ -1058,7 +1059,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				foreach ( $extra_packages as $package_cart_id => $cart_item ) {
 					hb_get_template( 'cart/cart-extra-item.php', array(
 						'cart_id' => $package_cart_id,
-						'extra' => $cart_item
+						'extra'   => $cart_item
 					) );
 				}
 			}

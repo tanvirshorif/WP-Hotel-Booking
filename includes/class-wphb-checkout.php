@@ -101,13 +101,13 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 
 			// load booking id from sessions
 			$booking_id = $cart->booking_id;
+			$booking    = WPHB_Booking::instance( $booking_id );
 
 			// Resume the unpaid order if its pending
-			if ( $booking_id && ( $booking = WPHB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array(
+			if ( $booking_id && $booking && $booking->post->ID && $booking->has_status( array(
 					'pending',
 					'cancelled'
-				) )
-			) {
+				) ) ) {
 				$booking_info['ID']           = $booking_id;
 				$booking_info['post_content'] = hb_get_request( 'addition_information' );
 				$booking->set_booking_info( $booking_info );
@@ -172,9 +172,6 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 			}
 
 			if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
-
-				set_transient( 'wphb_booking_transient', $booking_id, 3 * MINUTE_IN_SECONDS );
-
 				$cart->empty_cart();
 
 				$result = apply_filters( 'hb_payment_successful_result', $result, $booking_id );

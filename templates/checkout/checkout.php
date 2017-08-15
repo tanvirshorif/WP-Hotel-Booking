@@ -41,7 +41,7 @@ do_action( 'hotel_booking_before_checkout_form' );
                 <th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
                 </thead>
 
-                <!--                get rooms from cart-->
+                <!-- get rooms from cart-->
 				<?php if ( $rooms = $cart->get_rooms() ) { ?>
 					<?php foreach ( $rooms as $cart_id => $room ) { ?>
 						<?php
@@ -139,14 +139,14 @@ do_action( 'hotel_booking_before_checkout_form' );
 
 			<?php } else { ?>
 
-                <!--                customer checkout form info-->
+                <!-- customer checkout form info-->
 				<?php hb_get_template( 'checkout/customer.php', array( 'customer' => $customer ) ); ?>
-                <!--                payment methods checkout form-->
+                <!-- payment methods checkout form-->
 				<?php hb_get_template( 'checkout/payment-method.php' ); ?>
-                <!--                booking addition information-->
+                <!-- booking addition information-->
 				<?php hb_get_template( 'checkout/addition-information.php' ); ?>
 
-                <input type="hidden" name="hotel-booking" value="place_order"/>
+<!--                <input type="hidden" name="hotel-booking" value="place_order"/>-->
                 <input type="hidden" name="action" value="wphb_place_booking"/>
                 <input type="hidden" name="total_advance"
                        value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>"/>

@@ -673,7 +673,7 @@ if ( ! function_exists( 'hb_create_empty_post' ) ) {
 if ( ! function_exists( 'hb_i18n' ) ) {
 	function hb_i18n() {
 		$translation = array(
-			'invalid_email'                  => __( 'Your email address is invalid.', 'wp-hotel-booking' ),
+			'no_customer_exist'              => __( 'No customer exist.', 'wp-hotel-booking' ),
 			'no_payment_method_selected'     => __( 'Please select your payment method.', 'wp-hotel-booking' ),
 			'confirm_tos'                    => __( 'Please accept our Terms and Conditions.', 'wp-hotel-booking' ),
 			'no_rooms_selected'              => __( 'Please select at least one the room.', 'wp-hotel-booking' ),
