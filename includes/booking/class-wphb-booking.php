@@ -320,10 +320,8 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 			$old_status = $this->get_status();
 
 			if ( $new_status !== $old_status || ! in_array( $this->post_status, array_keys( hb_get_booking_statuses() ) ) ) {
-
-				// Update the order
+				// Update the booking
 				wp_update_post( array( 'ID' => $this->id, 'post_status' => 'hb-' . $new_status ) );
-
 				$this->post_status = 'hb-' . $new_status;
 
 				// Status was changed

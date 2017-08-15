@@ -39,14 +39,14 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'add_to_cart'                 => true,
 				'remove_cart_item'            => true,
 				// load booking user in admin booking page
-				'load_booking_user'           => false,
+				'admin_load_booking_user'           => false,
 				'load_room_ajax'              => false,
 				'admin_check_room_available'  => false,
 				'admin_load_booking_item'     => false,
 				'admin_add_booking_item'      => false,
 				'admin_remove_booking_item'   => false,
 				'admin_remove_order_items'    => false,
-				'admin_delete_extra_package'        => false,
+				'admin_delete_extra_package'  => false,
 				'remove_extra_cart'           => true,
 				'load_other_full_calendar'    => false,
 				'admin_load_pricing_calendar' => false,
@@ -242,7 +242,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function load_order_user() {
+		public static function admin_load_booking_user() {
 			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
 				return;
 			}

@@ -52,6 +52,8 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 		 */
 		public function __construct() {
 			$this->title = __( 'Booking Actions', 'wp-hotel-booking' );
+			add_action( 'save_post', array( __CLASS__, 'update' ) );
+
 			parent::__construct();
 		}
 
@@ -63,7 +65,10 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 		 * @param $post_id
 		 */
 		public function update( $post_id ) {
-			parent::update( $post_id );
+
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
 
 			if ( ! ( isset( $_POST['hotel_booking_metabox_booking_actions_nonce'] ) && wp_verify_nonce( $_POST['hotel_booking_metabox_booking_actions_nonce'], 'hotel-booking-metabox-booking-actions' ) ) ) {
 				return;
@@ -76,7 +81,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 
 				update_post_meta( $post_id, $key, sanitize_text_field( $value ) );
 				do_action( 'hb_booking_detail_update_meta_box_' . $key, $value, $post_id );
-//				do_action( 'hb_booking_detail_update_meta_box', $key, $value, $post_id );
+				do_action( 'hb_booking_detail_update_meta_box', $key, $value, $post_id );
 			}
 		}
 	}

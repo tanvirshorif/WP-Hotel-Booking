@@ -67,7 +67,6 @@ if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-			add_action( 'save_post', array( $this, 'update' ) );
 		}
 
 		/**
@@ -97,19 +96,6 @@ if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
 				}
 			} else {
 				require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/' . $this->view . '.php';
-			}
-		}
-
-		/**
-		 * Update meta box.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $post_id
-		 */
-		public function update( $post_id ) {
-			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-				return;
 			}
 		}
 

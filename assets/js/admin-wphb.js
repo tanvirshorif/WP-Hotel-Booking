@@ -300,7 +300,7 @@
                     data: function (user_name) {
                         return {
                             user_name: user_name.term,
-                            action: 'wphb_load_booking_user',
+                            action: 'wphb_admin_load_booking_user',
                             nonce: hotel_settings.nonce
                         };
                     },

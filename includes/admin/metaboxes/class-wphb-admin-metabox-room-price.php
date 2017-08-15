@@ -51,6 +51,8 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Room_Price' ) ) {
 		 */
 		public function __construct() {
 			$this->title = __( 'Regular Price', 'wp-hotel-booking' );
+			add_action( 'save_post', array( __CLASS__, 'update' ) );
+
 			parent::__construct();
 		}
 
@@ -62,7 +64,9 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Room_Price' ) ) {
 		 * @param $post_id
 		 */
 		public function update( $post_id ) {
-			parent::update( $post_id );
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
 
 			if ( ! isset( $_POST['hotel-booking-room-pricing-nonce'] ) || ! wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nonce' ) ) {
 				return;

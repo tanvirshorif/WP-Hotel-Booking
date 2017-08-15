@@ -288,7 +288,6 @@ if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 		$booking = WPHB_Booking::instance( $post_id );
 		$booking->update_status( $status );
 
-
 		add_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Actions', 'update' ) );
 	}
 
