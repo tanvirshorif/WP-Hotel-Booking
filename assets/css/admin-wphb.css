@@ -79,6 +79,8 @@
       padding: 10px;
       font-weight: 500;
       border: 1px solid #DDD; }
+      .post-type-hb_booking #booking-items table thead th.night, .post-type-hb_booking #booking-items table thead th.qty, .post-type-hb_booking #booking-items table thead th.actions, .post-type-hb_booking #booking-items table thead th.total {
+        padding: 2px; }
     .post-type-hb_booking #booking-items table tbody td {
       padding: 20px 10px;
       font-size: 14px;

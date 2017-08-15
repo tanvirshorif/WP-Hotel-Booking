@@ -100,7 +100,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
 		private function init_hooks() {
 			add_action( 'init', array( $this, 'load_text_domain' ) );
 
-//			add_filter( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
+			add_filter( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
 		}
 
 		/**
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
 		 * @param $tabs
 		 */
 		public function admin_settings( $tabs ) {
-			if ( $tabs !== 'payments' ) {
+			if ( $tabs !== 'pages' ) {
 				return;
 			}
 			$settings   = hb_settings();

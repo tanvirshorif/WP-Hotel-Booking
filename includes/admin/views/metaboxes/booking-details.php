@@ -38,7 +38,7 @@ $rooms   = hb_get_order_items( $post->ID );
         </div>
     </div>
     <div class="booking-data">
-        <h3 class="booking-data-number"><?php echo sprintf( esc_attr__( 'Order %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ); ?></h3>
+        <h3 class="booking-data-number"><?php echo sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ); ?></h3>
         <div class="booking-date">
 			<?php echo sprintf( __( 'Date %s', 'wp-hotel-booking' ), $post->post_date ); ?>
         </div>
@@ -53,11 +53,12 @@ $rooms   = hb_get_order_items( $post->ID );
         <thead>
         <tr>
             <th><?php _e( 'Item', 'wp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ) ?></th>
-            <th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Actions', 'wp-hotel-booking' ) ?></th>
+            <th><?php _e( 'Check in', 'wp-hotel-booking' ) ?></th>
+            <th><?php _e( 'Checkout', 'wp-hotel-booking' ) ?></th>
+            <th class="night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
+            <th class="qty"><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
+            <th class="total"><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
+            <th class="actions"><?php _e( 'Actions', 'wp-hotel-booking' ) ?></th>
         </tr>
         </thead>
         <tbody>
@@ -69,7 +70,10 @@ $rooms   = hb_get_order_items( $post->ID );
 					<?php printf( '<a href="%s">%s</a>', get_edit_post_link( hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
                 </td>
                 <td>
-					<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
+					<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
+                </td>
+                <td>
+					<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
                 </td>
                 <td>
 					<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
@@ -132,19 +136,19 @@ $rooms   = hb_get_order_items( $post->ID );
 		<?php } ?>
 
         <tr>
-            <td colspan="5"><?php _e( 'Sub Total', 'wp-hotel-booking' ) ?></td>
+            <td colspan="6"><?php _e( 'Sub Total', 'wp-hotel-booking' ) ?></td>
             <td>
 				<?php printf( '%s', hb_format_price( hb_booking_subtotal( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
             </td>
         </tr>
         <tr>
-            <td colspan="5"><?php _e( 'Tax', 'wp-hotel-booking' ) ?></td>
+            <td colspan="6"><?php _e( 'Tax', 'wp-hotel-booking' ) ?></td>
             <td>
 				<?php printf( '%s', apply_filters( 'hotel_booking_admin_booking_details', hb_format_price( hb_booking_tax_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ), $booking ) ); ?>
             </td>
         </tr>
         <tr>
-            <td colspan="5"><?php _e( 'Grand Total', 'wp-hotel-booking' ) ?></td>
+            <td colspan="6"><?php _e( 'Grand Total', 'wp-hotel-booking' ) ?></td>
             <td>
 				<?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ) ?>
             </td>

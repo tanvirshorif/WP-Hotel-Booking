@@ -735,12 +735,12 @@
         validate_date: function (_check_in, _check_out) {
 
             if ('' === _check_in.val() || !isDate(_check_in.datepicker('getDate')) || null === _check_in.datepicker('getDate')) {
-                _self.addClass('error');
+                _check_in.addClass('error');
                 return false;
             }
 
             if ('' === _check_out.val() || !isDate(_check_out.datepicker('getDate')) || null === _check_out.datepicker('getDate')) {
-                _self.addClass('error');
+                _check_out.addClass('error');
                 return false;
             }
 
@@ -828,7 +828,6 @@
         checkout_booking: function (e) {
             e.preventDefault();
             var _self = $(this),
-                _method = _self.find('input[name="hb-payment-method"]:checked').val(),
                 _action = window.location.href.replace(/\?.*/, '');
 
             _self.find('.hotel_checkout_errors').slideUp().remove();
@@ -877,37 +876,36 @@
 
             _form.attr('action', _action);
 
-            if (_form.triggerHandler('hotel_booking_place_order') !== false) {
-                $.ajax({
-                    type: 'POST',
-                    url: hotel_settings.ajax,
-                    data: _form.serialize(),
-                    dataType: 'text',
-                    beforeSend: function () {
-                        _button.addClass('hb_loading');
-                    },
-                    success: function (code) {
-                        _button.removeClass('hb_loading');
-                        try {
-                            var response = parseJSON(code);
-                            if (response.result === 'success') {
-                                if (response.redirect !== undefined) {
-                                    window.location.href = response.redirect;
-                                }
-                            } else if (typeof response.message !== 'undefined') {
-                                alert(response.message);
+            $.ajax({
+                type: 'POST',
+                url: hotel_settings.ajax,
+                data: _form.serialize(),
+                dataType: 'text',
+                beforeSend: function () {
+                    _button.addClass('hb_loading');
+                },
+                success: function (code) {
+                    _button.removeClass('hb_loading');
+                    try {
+                        var response = parseJSON(code);
+                        if (response.result === 'success') {
+                            if (response.redirect !== undefined) {
+                                window.location.href = response.redirect;
                             }
-                        } catch (e) {
-                            alert(e)
+                        } else if (typeof response.message !== 'undefined') {
+                            alert(response.message);
                         }
-                    },
-                    error: function () {
-                        _button.removeClass('hb_loading');
-                        WPHB_Checkout.fetch_info_error([wphb_js.warning.try_again]);
+                    } catch (e) {
+                        alert(e)
                     }
+                },
+                error: function () {
+                    _button.removeClass('hb_loading');
+                    WPHB_Checkout.fetch_info_error([wphb_js.warning.try_again]);
+                }
 
-                });
-            }
+            });
+
             return false;
         },
         fetch_info_error: function (msgs) {
