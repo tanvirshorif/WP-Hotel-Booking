@@ -275,6 +275,8 @@
                 .on('click', '.hb_remove_cart_item', _self.remove_room_cart)
                 // remove cart extra item in cart
                 .on('click', '.hb_package_remove', _self.remove_extra_cart)
+                // remove item form mini cart
+                .on('click', '.hb_mini_cart_remove', _self.remove_mini_cart_item)
             ;
         },
         enable_add_cart: function (e) {
@@ -373,27 +375,32 @@
                 beforeSend: function () {
                     _row.hb_overlay_ajax_start();
                 }
-            })
-                .done(function (res) {
-                    res = parseJSON(res);
-                    if (typeof res.status === 'undefined' || res.status !== 'success')
+            }).done(function (res) {
+                res = parseJSON(res);
+                if (typeof res.status === 'undefined' || res.status !== 'success') {
+                    console.log(res.message);
+                    if (res.message) {
+                        alert(res.message);
+                    } else {
                         alert(wphb_js.warning.try_again);
+                    }
+                }
 
-                    // update woo cart when remove room from cart
-                    $('body').trigger('hb_removed_item_to_cart');
+                // update woo cart when remove room from cart
+                $('body').trigger('hb_removed_item_to_cart');
 
-                    if (typeof res.sub_total !== 'undefined')
-                        $('span.hb_sub_total_value').html(res.sub_total);
+                if (typeof res.sub_total !== 'undefined')
+                    $('span.hb_sub_total_value').html(res.sub_total);
 
-                    if (typeof res.grand_total !== 'undefined')
-                        $('span.hb_grand_total_value').html(res.grand_total);
+                if (typeof res.grand_total !== 'undefined')
+                    $('span.hb_grand_total_value').html(res.grand_total);
 
-                    if (typeof res.advance_payment !== 'undefined')
-                        $('span.hb_advance_payment_value').html(res.advance_payment);
-                    _row.hb_overlay_ajax_stop();
-                    _row.remove();
-                    WPHB_Cart.update_remove_item_mini_cart(cart_item, res);
-                });
+                if (typeof res.advance_payment !== 'undefined')
+                    $('span.hb_advance_payment_value').html(res.advance_payment);
+                _row.hb_overlay_ajax_stop();
+                _row.remove();
+                WPHB_Cart.update_remove_item_mini_cart(_cart_id, res);
+            });
         },
         remove_extra_cart: function (e) {
             e.preventDefault();
@@ -573,7 +580,39 @@
                     _table.find('span.hb_advance_payment_value').html(res.advance_payment);
 
             }
+        },
+        remove_mini_cart_item: function (e) {
+            e.preventDefault();
+
+            var _self = $(this),
+                _item = _self.parents('.hb_mini_cart_item'),
+                _cart_id = _item.attr('data-cart-id');
+
+            $.ajax({
+                url: hotel_settings.ajax,
+                type: 'POST',
+                data: {
+                    cart_id: _cart_id,
+                    nonce: hotel_settings.nonce,
+                    action: 'wphb_remove_cart_item'
+                },
+                dataType: 'html',
+                beforeSend: function () {
+                    _item.addClass('before_remove');
+                    _item.hb_overlay_ajax_start();
+                }
+            }).done(function (res) {
+                res = parseJSON(res);
+                if (typeof res.status === 'undefined' || res.status !== 'success') {
+                    alert(wphb_js.waring.try_again);
+                    return;
+                }
+
+                WPHB_Cart.update_remove_item_mini_cart(_cart_id, res);
+                _item.hb_overlay_ajax_stop();
+            });
         }
+
     };
 
     var WPHB_Datepicker = {

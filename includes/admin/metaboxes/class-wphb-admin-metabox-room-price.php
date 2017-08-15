@@ -63,7 +63,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Room_Price' ) ) {
 		 *
 		 * @param $post_id
 		 */
-		public function update( $post_id ) {
+		public static function update( $post_id ) {
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return;
 			}

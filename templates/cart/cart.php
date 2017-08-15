@@ -59,7 +59,7 @@ global $hb_settings;
                             </td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?> </td>
                             <td class="hb_quantity">
-                                <input type="number" min="0" class="hb_room_number_edit"
+                                <input type="number" min="1" class="hb_room_number_edit"
                                        name="hotel_booking_cart[<?php echo esc_attr( $cart_id ) ?>]"
                                        value="<?php echo esc_attr( $num_of_rooms ); ?>"/>
                             </td>

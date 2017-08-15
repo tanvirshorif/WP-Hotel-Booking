@@ -39,7 +39,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'add_to_cart'                 => true,
 				'remove_cart_item'            => true,
 				// load booking user in admin booking page
-				'admin_load_booking_user'           => false,
+				'admin_load_booking_user'     => false,
 				'load_room_ajax'              => false,
 				'admin_check_room_available'  => false,
 				'admin_load_booking_item'     => false,
@@ -215,10 +215,9 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
 				return;
 			}
+			$cart = WPHB_Cart::instance();
 
-			$cart = WP_Hotel_Booking::instance()->cart;
-
-			if ( empty( $cart->cart_contents ) || ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
+			if ( ! ( $cart->cart_contents ) || ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
 				hb_send_json( array(
 					'status'  => 'warning',
 					'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' )
