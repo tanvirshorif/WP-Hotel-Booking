@@ -870,8 +870,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				'_hb_customer_country'        => hb_get_request( 'country' ),
 				'_hb_customer_phone'          => hb_get_request( 'phone' ),
 				'_hb_customer_email'          => hb_get_request( 'email' ),
-				'_hb_customer_fax'            => hb_get_request( 'fax' ),
-				'_hb_booking_key'             => uniqid()
+				'_hb_customer_fax'            => hb_get_request( 'fax' )
 			) );
 
 			// set booking info

@@ -53,7 +53,7 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 			$booking->post->post_status = 'hb-' . $args['status'];
 		}
 
-		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
+		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid() );
 
 		// update booking info
 		$booking->set_booking_info( $booking_info );

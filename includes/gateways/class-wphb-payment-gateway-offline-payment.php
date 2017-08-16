@@ -112,6 +112,10 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 		 */
 		public function process_checkout( $booking_id = null ) {
 			$booking = WPHB_Booking::instance( $booking_id );
+			$key     = $booking->booking_key;
+
+			$settings = hb_settings();
+			$endpoint = $settings->get( 'booking_received', 'thank-you' );
 
 			if ( $booking ) {
 				$booking->update_status( 'processing' );
@@ -119,7 +123,10 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 
 			return array(
 				'result'   => 'success',
-				'redirect' => add_query_arg( 'booking-received', $booking_id, hb_get_cart_url() . '/booking-received/' )
+				'redirect' => add_query_arg( array(
+					'booking' => $booking_id,
+					'key'     => $key
+				), hb_get_cart_url() . '/' . $endpoint . '/' )
 			);
 
 		}

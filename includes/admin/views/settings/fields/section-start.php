@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php if ( isset( $field['desc'] ) ) { ?>
 
-        <p class="description"><?php echo esc_html( $field['desc'] ) ?></p>
+        <p class="description"><?php echo $field['desc']; ?></p>
 
 	<?php } ?>
 

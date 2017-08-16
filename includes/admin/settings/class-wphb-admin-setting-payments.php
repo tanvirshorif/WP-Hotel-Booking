@@ -59,14 +59,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => $prefix. 'guest_checkout',
+					'id'      => $prefix . 'guest_checkout',
 					'title'   => __( 'Guest Checkout', 'wp-hotel-booking' ),
 					'desc'    => __( 'Allows customers to checkout without creating an account.', 'wp-hotel-booking' ),
 					'default' => 1
 				),
 				array(
 					'type'    => 'number',
-					'id'      => $prefix. 'cancel_payment',
+					'id'      => $prefix . 'cancel_payment',
 					'title'   => __( 'Cancel Payment', 'wp-hotel-booking' ),
 					'desc'    => __( 'Cancel Payment after hour(s)', 'wp-hotel-booking' ),
 					'default' => 12,
@@ -80,13 +80,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'checkout_endpoints',
 					'title' => __( 'Checkout Endpoints', 'wp-hotel-booking' ),
-					'desc'  => __( 'Endpoints are appended to your page URLs to handle specific actions during the checkout process. They should be unique.', 'wp-hotel-booking' )
+					'desc'  => wp_kses( __( 'Endpoints are appended to your page URLs to handle specific actions during the checkout process. <strong>They should be unique.</strong>', 'wp-hotel-booking' ), array( 'strong' => array() ) )
 				),
 				array(
 					'type'    => 'text',
-					'id'      => $prefix. 'booking_received',
+					'id'      => $prefix . 'booking_received',
 					'title'   => __( 'Booking Received', 'wp-hotel-booking' ),
-					'default' => 'thank-you'
+					'default' => 'thank-you',
+					'desc'    => __( 'Please update permalink after change booking received endpoint url.', 'wp-hotel-booking' )
 				),
 				array(
 					'type' => 'section_end',
