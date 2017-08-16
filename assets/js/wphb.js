@@ -618,8 +618,7 @@
     var WPHB_Datepicker = {
         init: function () {
 
-            var _doc = $(document),
-                _self = this,
+            var _self = this,
                 _today = new Date(),
                 _tomorrow = new Date();
 

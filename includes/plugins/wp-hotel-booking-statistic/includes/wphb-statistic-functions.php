@@ -14,7 +14,11 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+?>
 
+<?php
+
+add_action( 'hotel_booking_chart_sidebar', 'wphb_statistic_sidebar', 10, 2 );
 
 if ( ! function_exists( 'wphb_statistic_sidebar' ) ) {
 
@@ -40,8 +44,8 @@ if ( ! function_exists( 'wphb_statistic_sidebar' ) ) {
 		}
 	}
 }
-add_action( 'hotel_booking_chart_sidebar', 'wphb_statistic_sidebar', 10, 2 );
 
+add_action( 'hotel_booking_chart_canvas', 'wphb_statistic_canvas', 10, 2 );
 
 if ( ! function_exists( 'wphb_statistic_canvas' ) ) {
 
@@ -68,46 +72,49 @@ if ( ! function_exists( 'wphb_statistic_canvas' ) ) {
 	}
 
 }
-add_action( 'hotel_booking_chart_canvas', 'wphb_statistic_canvas', 10, 2 );
 
+add_filter( 'hotel_booking_chart_sidebar_layout', 'wphb_statistic_sidebar_layout', 10, 3 );
 
 if ( ! function_exists( 'wphb_statistic_sidebar_layout' ) ) {
 
 	/**
 	 * Get statistic sidebar layout.
 	 *
+	 * @param $file
 	 * @param $tab
 	 * @param $range
 	 *
 	 * @return string
 	 */
-	function wphb_statistic_sidebar_layout( $tab, $range ) {
-		$tab_range = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar-' . $tab . '-' . $range . '.php';
-		$tab       = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar-' . $tab . '.php';
+	function wphb_statistic_sidebar_layout( $file, $tab, $range ) {
+		$tab_range = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar/sidebar-' . $tab . '-' . $range . '.php';
+		$tab       = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar/sidebar-' . $tab . '.php';
 		if ( file_exists( $tab_range ) ) {
 			return $tab_range;
 		} else if ( file_exists( $tab ) ) {
 			return $tab;
 		}
 
-		return WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar.php';
+		return false;
 	}
 
 }
-add_filter( 'hotel_booking_chart_sidebar_layout', 'wphb_statistic_sidebar_layout', 10, 2 );
 
+add_filter( 'hotel_booking_chart_layout_canvas', 'wphb_statistic_canvas_layout', 10, 3 );
 
 if ( ! function_exists( 'wphb_statistic_canvas_layout' ) ) {
 
 	/**
 	 * Get statistic canvas layout.
 	 *
+	 * @param $file
 	 * @param $tab
+	 * @param $range
 	 *
 	 * @return mixed
 	 */
-	function wphb_statistic_canvas_layout( $tab ) {
-		$file = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/canvas-' . strtolower( $tab ) . '.php';
+	function wphb_statistic_canvas_layout( $file, $tab, $range ) {
+		$file = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/canvas/canvas-' . strtolower( $tab ) . '.php';
 		if ( file_exists( $file ) ) {
 			return $file;
 		}
@@ -115,4 +122,3 @@ if ( ! function_exists( 'wphb_statistic_canvas_layout' ) ) {
 		return false;
 	}
 }
-add_filter( 'hotel_booking_chart_layout_canvas', 'wphb_statistic_canvas_layout' );
