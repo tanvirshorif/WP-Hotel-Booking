@@ -827,7 +827,7 @@
                     email: _email.val()
                 },
                 beforeSend: function () {
-                    _table_info.hb_overlay_ajax_start();
+                    _button.addClass('hb_loading');
                 },
                 success: function (response) {
                     _table_info.hb_overlay_ajax_stop();
