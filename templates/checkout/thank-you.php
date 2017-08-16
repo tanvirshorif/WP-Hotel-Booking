@@ -104,8 +104,6 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 						<?php foreach ( $packages as $package ) { ?>
 							<?php $extra = hotel_booking_get_product_class( hb_get_order_item_meta( $package->order_item_id, 'product_id', true ) ); ?>
                             <tr data-order-parent="<?php echo esc_attr( $room->order_item_id ); ?>">
-                                <td><input type="checkbox" name="book_item[]"
-                                           value="<?php echo esc_attr( $package->order_item_id ); ?>"/></td>
                                 <td colspan="3">
 									<?php echo esc_html( $package->order_item_name ); ?>
                                 </td>
@@ -114,23 +112,6 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
                                 </td>
                                 <td>
 									<?php echo esc_html( hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
-                                </td>
-                                <td class="actions">
-									<?php if ( $extra->respondent === 'number' ) { ?>
-                                        <a href="#" class="edit"
-                                           data-booking-id="<?php echo esc_attr( $booking->id ); ?>"
-                                           data-booking-item-id="<?php echo esc_attr( $package->order_item_id ); ?>"
-                                           data-booking-item-type="sub_item"
-                                           data-booking-item-parent="<?php echo esc_attr( $package->order_item_parent ); ?>">
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-									<?php } ?>
-                                    <a href="#" class="remove" data-booking-id="<?php echo esc_attr( $booking->id ); ?>"
-                                       data-booking-item-id="<?php echo esc_attr( $package->order_item_id ); ?>"
-                                       data-booking-item-type="sub_item"
-                                       data-booking-item-parent="<?php echo $package->order_item_parent; ?>">
-                                        <i class="fa fa-times-circle"></i>
-                                    </a>
                                 </td>
                             </tr>
 						<?php } ?>
