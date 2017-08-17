@@ -108,6 +108,9 @@ if ( ! class_exists( 'WPHB_Statistic_Room' ) ) {
 
 			$this->_title = sprintf( __( 'Chart in %s to %s', 'wphb-statistic' ), $this->_start_in, $this->_end_in );
 			$this->calculate_current_range( $this->_range );
+
+			// print scripts statistic data
+			add_action( 'wp_print_scripts', array( $this, 'print_scripts' ) );
 		}
 
 		/**
@@ -533,6 +536,20 @@ if ( ! class_exists( 'WPHB_Statistic_Room' ) ) {
 			fpassthru( $output );
 			die();
 		}
+
+		/**
+		 * Print scripts.
+		 *
+		 * @since 2.0
+		 */
+		public function print_scripts() {
+			?>
+			<script type="text/javascript">
+                var wphb_statistic_room = {
+                    series: '<?php echo json_encode( $this->series() ); ?>'
+                }
+			</script>
+		<?php }
 
 		/**
 		 * Instance.

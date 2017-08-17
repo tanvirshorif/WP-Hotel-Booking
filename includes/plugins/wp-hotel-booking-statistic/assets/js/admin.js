@@ -56,14 +56,26 @@
             _self.booking_price_statistic();
             // show canvas statistic by room
             _self.booking_room_statistic();
+            // tokenize for select room
+            _self.room_id_tokenize();
         },
         booking_price_statistic: function () {
-            var _doc = $(document),
-                _ctx = _doc.getElementById('hotel_canvas_report_price').getContext('2d');
+            var ctx = document.getElementById('statistic_booking_price').getContext('2d');
 
-            // window.myLine = new Chart(ctx).Line( <?php echo json_encode( $hb_report->series() ) ?>, {
-            //     responsive: true
-            // });
+            window.myLine = new Chart(ctx).Line($.parseJSON(wphb_statistic_price.series), {
+                responsive: true
+            });
+        },
+        booking_room_statistic: function () {
+            var ctx = document.getElementById('hotel_canvas_report_room').getContext('2d');
+
+            window.myBar = new Chart(ctx).Bar($.parseJSON(wphb_statistic_room.series), {
+                responsive: true,
+                scaleGridLineColor: "rgba(0,0,0,.05)"
+            });
+        },
+        room_id_tokenize: function () {
+            $('#tp-hotel-booking-room_id').tokenize();
         }
     };
 

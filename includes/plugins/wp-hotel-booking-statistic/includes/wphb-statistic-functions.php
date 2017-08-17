@@ -17,108 +17,141 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <?php
-
-add_action( 'hotel_booking_chart_sidebar', 'wphb_statistic_sidebar', 10, 2 );
-
-if ( ! function_exists( 'wphb_statistic_sidebar' ) ) {
-
+if ( ! function_exists( 'wphb_statistic_get_template' ) ) {
 	/**
-	 * Get admin view file for statistic sidebar.
+	 * Get templates passing attributes and including the file.
 	 *
-	 * @param string $tab
-	 * @param string $range
+	 * @param $template_name
+	 * @param array $args
+	 * @param string $template_path
+	 * @param string $default_path
 	 */
-	function wphb_statistic_sidebar( $tab = '', $range = '' ) {
-		if ( ! $tab || ! $range ) {
+	function wphb_statistic_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+		if ( $args && is_array( $args ) ) {
+			extract( $args );
+		}
+
+		$located = wphb_statistic_locate_template( $template_name, $template_path, $default_path );
+
+		if ( ! file_exists( $located ) ) {
+			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+
 			return;
 		}
+		// Allow 3rd party plugin filter template file from their plugin
+		$located = apply_filters( 'wphb_statistic_get_template', $located, $template_name, $args, $template_path, $default_path );
 
-		$file = apply_filters( "tp_hotel_booking_chart_sidebar_{$tab}_{$range}", '', $tab, $range );
+		do_action( 'wphb_statistic_before_template_part', $template_name, $template_path, $located, $args );
 
-		if ( ! $file || ! file_exists( $file ) ) {
-			$file = apply_filters( "hotel_booking_chart_sidebar_layout", '', $tab, $range );
+		if ( $located && file_exists( $located ) ) {
+			include( $located );
 		}
 
-		if ( file_exists( $file ) ) {
-			require $file;
-		}
+		do_action( 'wphb_statistic_after_template_part', $template_name, $template_path, $located, $args );
 	}
 }
 
-add_action( 'hotel_booking_chart_canvas', 'wphb_statistic_canvas', 10, 2 );
-
-if ( ! function_exists( 'wphb_statistic_canvas' ) ) {
-
+if ( ! function_exists( 'wphb_statistic_locate_template' ) ) {
 	/**
-	 * Get statistic canvas.
+	 * Locate a template and return the path for inclusion.
 	 *
-	 * @param string $tab
-	 * @param string $range
-	 */
-	function wphb_statistic_canvas( $tab = '', $range = '' ) {
-		if ( ! $tab || ! $range ) {
-			return;
-		}
-
-		$file = apply_filters( "tp_hotel_booking_chart_{$tab}_{$range}_canvas", '', $tab, $range );
-
-		if ( ! $file || ! file_exists( $file ) ) {
-			$file = apply_filters( "hotel_booking_chart_layout_canvas", '', $tab, $range );
-		}
-
-		if ( file_exists( $file ) ) {
-			require $file;
-		}
-	}
-
-}
-
-add_filter( 'hotel_booking_chart_sidebar_layout', 'wphb_statistic_sidebar_layout', 10, 3 );
-
-if ( ! function_exists( 'wphb_statistic_sidebar_layout' ) ) {
-
-	/**
-	 * Get statistic sidebar layout.
-	 *
-	 * @param $file
-	 * @param $tab
-	 * @param $range
-	 *
-	 * @return string
-	 */
-	function wphb_statistic_sidebar_layout( $file, $tab, $range ) {
-		$tab_range = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar/sidebar-' . $tab . '-' . $range . '.php';
-		$tab       = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/sidebar/sidebar-' . $tab . '.php';
-		if ( file_exists( $tab_range ) ) {
-			return $tab_range;
-		} else if ( file_exists( $tab ) ) {
-			return $tab;
-		}
-
-		return false;
-	}
-
-}
-
-add_filter( 'hotel_booking_chart_layout_canvas', 'wphb_statistic_canvas_layout', 10, 3 );
-
-if ( ! function_exists( 'wphb_statistic_canvas_layout' ) ) {
-
-	/**
-	 * Get statistic canvas layout.
-	 *
-	 * @param $file
-	 * @param $tab
-	 * @param $range
+	 * @param $template_name
+	 * @param string $template_path
+	 * @param string $default_path
 	 *
 	 * @return mixed
 	 */
-	function wphb_statistic_canvas_layout( $file, $tab, $range ) {
-		$file = WPHB_STATISTIC_ABSPATH . 'includes/admin/views/canvas/canvas-' . strtolower( $tab ) . '.php';
-		if ( file_exists( $file ) ) {
-			return $file;
+	function wphb_statistic_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+
+		if ( ! $template_path ) {
+			$template_path = hb_template_path();
 		}
 
-		return false;
+		if ( ! $default_path ) {
+			$default_path = WPHB_STATISTIC_ABSPATH . '/templates/';
+		}
+
+		$template = null;
+		// Look within passed path within the theme - this is priority
+		$template = locate_template(
+			array(
+				trailingslashit( $template_path ) . $template_name,
+				$template_name
+			)
+		);
+		// Get default template
+		if ( ! $template ) {
+			$template = $default_path . $template_name;
+		}
+
+		// Return what we found
+		return apply_filters( 'wphb_statistic_locate_template', $template, $template_name, $template_path );
 	}
+}
+
+add_action( 'wphb_statistic_date_filter', 'wphb_statistic_date_filter', 20, 4 );
+
+if ( ! function_exists( 'wphb_statistic_date_filter' ) ) {
+	/**
+	 * Show date filter.
+	 *
+	 * @param $tab
+	 * @param $date_start
+	 * @param $date_end
+	 * @param $room_ids
+	 */
+	function wphb_statistic_date_filter( $tab, $date_start, $date_end, $room_ids ) { ?>
+        <form method="GET">
+            <input type="hidden" name="page" value="wphb-statistic"/>
+            <input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>"/>
+            <input type="hidden" name="range" value="custom"/>
+            <input type="text" class="wphb_statistic_check_in_date" name="report_in"
+                   value="<?php echo esc_attr( $date_start ); ?>"/>
+            <input type="hidden" name="check_in_timestamp"
+                   value="<?php echo isset( $_REQUEST['check_in_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_in_timestamp'] ) ) : ''; ?>"/>
+            <input type="text" class="wphb_statistic_check_out_date" name="report_out"
+                   value="<?php echo esc_attr( $date_end ); ?>"/>
+            <input type="hidden" name="check_out_timestamp"
+                   value="<?php echo isset( $_REQUEST['check_out_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_out_timestamp'] ) ) : ''; ?>"/>
+			<?php if ( isset( $room_ids ) && $room_ids ) { ?>
+				<?php foreach ( (array) $room_ids as $key => $room ) { ?>
+                    <input type="hidden" name="room_id[]" value="<?php echo esc_attr( $room ) ?>">
+				<?php } ?>
+			<?php } ?>
+			<?php wp_nonce_field( 'wphb-statistic', 'wphb-statistic' ); ?>
+            <button type="submit" class="button"><?php _e( 'Go', 'wphb-statistic' ) ?></button>
+        </form>
+	<?php }
+}
+
+add_action( 'wphb_statistic_actions', 'wphb_statistic_export_form', 10, 4 );
+
+if ( ! function_exists( 'wphb_statistic_export_form' ) ) {
+	/**
+	 * Show export form.
+	 *
+	 * @param $tab
+	 * @param $range
+	 * @param $date_start
+	 * @param $date_end
+	 */
+	function wphb_statistic_export_form( $tab, $range, $date_start, $date_end ) { ?>
+        <form id="tp-hotel-booking-export" method="POST">
+            <input type="hidden" name="page" value="page=wphb-statistic">
+            <input type="hidden" name="range" value="<?php echo esc_attr( $range ); ?>">
+            <input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>">
+			<?php if ( isset( $date_start ) ) { ?>
+                <input type="hidden" name="report_in" value="<?php echo esc_attr( $date_start ); ?>">
+			<?php } ?>
+            <input type="hidden" name="check_in_timestamp"
+                   value="<?php echo isset( $_REQUEST['check_in_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_in_timestamp'] ) ) : '' ?>">
+			<?php if ( isset( $date_end ) ) { ?>
+                <input type="hidden" name="report_out" value="<?php echo esc_attr( $date_end ); ?>">
+			<?php } ?>
+            <input type="hidden" name="check_out_timestamp"
+                   value="<?php echo isset( $_REQUEST['check_out_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_out_timestamp'] ) ) : '' ?>">
+			<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
+            <button type="submit"><?php _e( 'Export', 'wphb-statistic' ) ?></button>
+        </form>
+	<?php }
 }

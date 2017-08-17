@@ -90,6 +90,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Statistic' ) ) {
 		 */
 		public function includes() {
 			require_once WPHB_STATISTIC_ABSPATH . '/includes/abstracts/class-wphb-abstract-statistic.php';
+			require_once WPHB_STATISTIC_ABSPATH . '/includes/class-wphb-statistic.php';
 			require_once WPHB_STATISTIC_ABSPATH . '/includes/class-wphb-statistic-price.php';
 			require_once WPHB_STATISTIC_ABSPATH . '/includes/class-wphb-statistic-room.php';
 			require_once WPHB_STATISTIC_ABSPATH . '/includes/wphb-statistic-functions.php';
@@ -167,7 +168,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Statistic' ) ) {
 			wp_enqueue_script( 'wphb-statistic-tokenize-js', WPHB_STATISTIC_URI . 'assets/js/jquery.tokenize.min.js' );
 			wp_enqueue_style( 'wphb-statistic-tokenize-css', WPHB_STATISTIC_URI . 'assets/css/jquery.tokenize.min.css' );
 
-			// admin js
+			// admin scripts
+			wp_enqueue_style( 'wphb-statistic-js', WPHB_STATISTIC_URI . 'assets/css/admin.css' );
 			wp_enqueue_script( 'wphb-statistic-js', WPHB_STATISTIC_URI . 'assets/js/admin.js', array(
 				'jquery',
 				'jquery-ui-datepicker'

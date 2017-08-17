@@ -94,7 +94,10 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 			$this->_title = sprintf( __( 'Chart in %s to %s', 'wphb-statistic' ), $this->_start_in, $this->_end_in );
 			$this->calculate_current_range( $this->_range );
 
-			add_filter( 'hotel_booking_sidebar_price_info', array( $this, 'total_ear' ) );
+			add_filter( 'hotel_booking_sidebar_price_info', array( $this, 'total_earn' ) );
+
+			// print scripts statistic data
+			add_action( 'wp_print_scripts', array( $this, 'print_scripts' ) );
 		}
 
 		/**
@@ -389,7 +392,7 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 		 *
 		 * @return array
 		 */
-		public function total_ear( $sidebars ) {
+		public function total_earn( $sidebars ) {
 			$price                = 0;
 			$this->_query_results = $this->getOrdersItems();
 			if ( $this->_query_results ) {
@@ -398,12 +401,26 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 				}
 				$sidebars[] = array(
 					'title' => sprintf( __( 'Total %s to %s', 'wphb-statistic' ), $this->_start_in, $this->_end_in ),
-					'descr' => hb_format_price( $price )
+					'amount' => hb_format_price( $price )
 				);
 			}
 
 			return $sidebars;
 		}
+
+		/**
+		 * Print scripts.
+		 *
+		 * @since 2.0
+		 */
+		public function print_scripts() {
+			?>
+            <script type="text/javascript">
+                var wphb_statistic_price = {
+                    series: '<?php echo json_encode( $this->series() ); ?>'
+                }
+            </script>
+		<?php }
 
 		/**
 		 * Instance.
