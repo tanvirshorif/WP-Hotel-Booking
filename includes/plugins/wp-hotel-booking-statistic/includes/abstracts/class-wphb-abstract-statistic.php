@@ -92,9 +92,6 @@ if ( ! class_exists( 'WPHB_Abstract_Statistic' ) ) {
 				$this->_chart_type = sanitize_text_field( $_GET['tab'] );
 			}
 
-			// show chart
-			add_action( 'wphb_statistic_charts', array( $this, 'statistic_chart' ) );
-
 			// export action
 			add_action( 'admin_init', array( $this, 'export_csv' ) );
 		}
@@ -183,21 +180,6 @@ if ( ! class_exists( 'WPHB_Abstract_Statistic' ) ) {
 				$this->_range_start        = date( 'm', strtotime( $this->_start_in ) );
 				$this->_range_end          = date( 'm', strtotime( $this->_end_in ) );
 				$this->chart_groupby_title = __( 'Month', 'wphb-statistic' );
-			}
-		}
-
-		/**
-		 * Show charts.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $tab
-		 */
-		public function statistic_chart( $tab ) {
-			if ( $tab === 'price' ) {
-				require_once WPHB_STATISTIC_ABSPATH . 'includes/admin/views/booking-price.php';
-			} else if ( $tab === 'room' ) {
-				require_once WPHB_STATISTIC_ABSPATH . 'includes/admin/views/room-availability.php';
 			}
 		}
 

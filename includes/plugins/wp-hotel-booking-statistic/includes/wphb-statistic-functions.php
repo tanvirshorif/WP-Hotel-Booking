@@ -96,21 +96,21 @@ if ( ! function_exists( 'wphb_statistic_date_filter' ) ) {
 	 * Show date filter.
 	 *
 	 * @param $tab
-	 * @param $date_start
-	 * @param $date_end
+	 * @param $start
+	 * @param $end
 	 * @param $room_ids
 	 */
-	function wphb_statistic_date_filter( $tab, $date_start, $date_end, $room_ids ) { ?>
+	function wphb_statistic_date_filter( $tab, $start, $end, $room_ids ) { ?>
         <form method="GET">
             <input type="hidden" name="page" value="wphb-statistic"/>
             <input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>"/>
             <input type="hidden" name="range" value="custom"/>
             <input type="text" class="wphb_statistic_check_in_date" name="report_in"
-                   value="<?php echo esc_attr( $date_start ); ?>"/>
+                   value="<?php echo esc_attr( $start ); ?>"/>
             <input type="hidden" name="check_in_timestamp"
                    value="<?php echo isset( $_REQUEST['check_in_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_in_timestamp'] ) ) : ''; ?>"/>
             <input type="text" class="wphb_statistic_check_out_date" name="report_out"
-                   value="<?php echo esc_attr( $date_end ); ?>"/>
+                   value="<?php echo esc_attr( $end ); ?>"/>
             <input type="hidden" name="check_out_timestamp"
                    value="<?php echo isset( $_REQUEST['check_out_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_out_timestamp'] ) ) : ''; ?>"/>
 			<?php if ( isset( $room_ids ) && $room_ids ) { ?>
@@ -132,26 +132,75 @@ if ( ! function_exists( 'wphb_statistic_export_form' ) ) {
 	 *
 	 * @param $tab
 	 * @param $range
-	 * @param $date_start
-	 * @param $date_end
+	 * @param $start
+	 * @param $end
 	 */
-	function wphb_statistic_export_form( $tab, $range, $date_start, $date_end ) { ?>
+	function wphb_statistic_export_form( $tab, $range, $start, $end ) { ?>
         <form id="tp-hotel-booking-export" method="POST">
             <input type="hidden" name="page" value="page=wphb-statistic">
             <input type="hidden" name="range" value="<?php echo esc_attr( $range ); ?>">
             <input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>">
-			<?php if ( isset( $date_start ) ) { ?>
-                <input type="hidden" name="report_in" value="<?php echo esc_attr( $date_start ); ?>">
+			<?php if ( isset( $start ) ) { ?>
+                <input type="hidden" name="report_in" value="<?php echo esc_attr( $start ); ?>">
 			<?php } ?>
             <input type="hidden" name="check_in_timestamp"
                    value="<?php echo isset( $_REQUEST['check_in_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_in_timestamp'] ) ) : '' ?>">
-			<?php if ( isset( $date_end ) ) { ?>
-                <input type="hidden" name="report_out" value="<?php echo esc_attr( $date_end ); ?>">
+			<?php if ( isset( $end ) ) { ?>
+                <input type="hidden" name="report_out" value="<?php echo esc_attr( $end ); ?>">
 			<?php } ?>
             <input type="hidden" name="check_out_timestamp"
                    value="<?php echo isset( $_REQUEST['check_out_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_out_timestamp'] ) ) : '' ?>">
 			<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
             <button type="submit"><?php _e( 'Export', 'wphb-statistic' ) ?></button>
+        </form>
+	<?php }
+}
+
+add_action( 'wphb_statistic_room_availability', 'wphb_statistic_select_room', 10, 4 );
+
+if ( ! function_exists( 'wphb_statistic_select_room' ) ) {
+	/**
+	 * Select room form for statistic by room availability.
+	 *
+	 * @param $range
+	 * @param $start
+	 * @param $end
+	 * @param $id
+	 */
+	function wphb_statistic_select_room( $range, $start, $end, $id ) {
+		$room_statistic = WPHB_Statistic_Room::instance();
+		?>
+        <form method="GET">
+            <h4><?php _e( 'Rooms Search', 'wphb-statistic' ) ?></h4>
+			<?php wp_nonce_field( 'wphb-statistic', 'wphb-statistic' ); ?>
+            <input type="hidden" name="page" value="wphb-statistic"/>
+            <input type="hidden" name="tab" value="room"/>
+            <input type="hidden" name="range" value="<?php echo esc_attr( $range ); ?>"/>
+			<?php if ( isset( $start ) && $start ) { ?>
+                <input type="hidden" name="report_in" value="<?php echo esc_attr( $start ); ?>">
+			<?php } ?>
+			<?php if ( isset( $_GET['report_in_timestamp'] ) ) { ?>
+                <input type="hidden" name="report_in_timestamp"
+                       value="<?php echo isset( $_GET['report_in_timestamp'] ) ? esc_attr( sanitize_text_field( $_GET['report_in_timestamp'] ) ) : '' ?>">
+			<?php } ?>
+			<?php if ( isset( $end ) && $end ) { ?>
+                <input type="hidden" name="report_out" value="<?php echo esc_attr( $end ); ?>"/>
+			<?php } ?>
+			<?php if ( isset( $_GET['report_out_timestamp'] ) ) { ?>
+                <input type="hidden" name="report_out_timestamp"
+                       value="<?php echo isset( $_GET['report_out_timestamp'] ) ? esc_attr( sanitize_text_field( $_GET['report_out_timestamp'] ) ) : '' ?>">
+			<?php } ?>
+
+			<?php $rooms = $room_statistic->get_rooms(); ?>
+            <select name="room_id[]" id="tp-hotel-booking-room_id" multiple="multiple" class="tokenize-sample">
+				<?php foreach ( (array) $rooms as $key => $room ) { ?>
+                    <option value="<?php echo esc_attr( $room->ID ) ?>"<?php echo ( in_array( $room->ID, $id ) ) ? ' selected' : '' ?>><?php printf( '%s', $room->post_title ) ?></option>
+				<?php } ?>
+            </select>
+            <p>
+                <button type="submit" class="button"><?php _e( 'Show', 'wphb-statistic' ) ?></button>
+            </p>
+
         </form>
 	<?php }
 }

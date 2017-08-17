@@ -34,6 +34,8 @@ if ( ! class_exists( 'WPHB_Statistic' ) ) {
 			add_action( 'wphb_statistic_admin_settings_sections', array( $this, 'admin_sections' ) );
 			// admin date filter
 			add_action( 'wphb_statistic_admin_range_filter', array( $this, 'range_filters' ) );
+			// show chart
+			add_action( 'wphb_statistic_charts', array( $this, 'statistic_chart' ) );
 		}
 
 		/**
@@ -136,6 +138,21 @@ if ( ! class_exists( 'WPHB_Statistic' ) ) {
             </ul>
 
 		<?php }
+
+		/**
+		 * Show charts.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $tab
+		 */
+		public function statistic_chart( $tab ) {
+			if ( $tab === 'price' ) {
+				require_once WPHB_STATISTIC_ABSPATH . 'includes/admin/views/booking-price.php';
+			} else if ( $tab === 'room' ) {
+				require_once WPHB_STATISTIC_ABSPATH . 'includes/admin/views/room-availability.php';
+			}
+		}
 	}
 }
 
