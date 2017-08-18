@@ -1224,7 +1224,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				$room->post->available_rooms = (int) $p->available_rooms;
 
 				$room = apply_filters( 'hotel_booking_query_search_parser', $room );
-				if ( $room ) {
+				if ( $room && $room->post->available_rooms > 0 ) {
 					$results[ $k ] = $room;
 				}
 			}

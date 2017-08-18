@@ -90,6 +90,8 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 			), 10, 2 );
 
 			add_filter( 'get_max_capacity_of_rooms', array( $this, 'max_capacity_of_rooms' ) );
+
+			add_filter( 'hotel_booking_query_search_parser', array( $this, 'parse_available_rooms' ) );
 		}
 
 		/**
@@ -367,6 +369,53 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 			", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $args['adults'], $args['child'], $this->current_language_code );
 
 			return $query;
+		}
+
+		/**
+		 * Parse number rooms available.
+		 *
+		 * @param $room
+		 *
+		 * @return mixed
+		 */
+		public function parse_available_rooms( $room ) {
+			global $wpdb;
+			$id = $room->ID;
+
+			$check_in_date  = strtotime( $room->get_data( 'check_in_date' ) );
+			$check_out_date = strtotime( $room->get_data( 'check_out_date' ) );
+
+			$trid = $wpdb->get_results(
+				$wpdb->prepare( "
+				SELECT room_lang.element_id FROM {$wpdb->prefix}icl_translations room_lang
+			    INNER JOIN {$wpdb->prefix}icl_translations room_sourse ON room_sourse.trid = room_lang.trid
+			    WHERE 
+			    room_sourse.element_id = %d AND room_lang.element_id != %d
+			    ", $id, $id ),
+				ARRAY_N );
+
+			$except_ids = '';
+			if ( $trid ) {
+				foreach ( $trid as $id ) {
+					$except_ids .= implode( ", ", $id );
+				}
+			}
+
+			$booked = $wpdb->get_var( $wpdb->prepare( "
+			SELECT COUNT( DISTINCT x.hotel_booking_order_item_id ) FROM $wpdb->hotel_booking_order_itemmeta AS x
+			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS y ON x.hotel_booking_order_item_id = y.hotel_booking_order_item_id
+			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS z ON x.hotel_booking_order_item_id = z.hotel_booking_order_item_id
+			WHERE 
+			(x.meta_key = 'product_id' AND x.meta_value IN ('%d'))
+			AND (
+							( y.meta_key = 'check_in_date' AND z.meta_key = 'check_out_date' AND z.meta_value >= %d AND y.meta_value <= %d )
+  							OR ( y.meta_key = 'check_in_date' AND y.meta_key >= %d AND y.meta_key <= %d  )
+					)
+		", $except_ids, $check_in_date, $check_in_date, $check_in_date, $check_out_date ) );
+
+			$room->post->available_rooms = $room->post->available_rooms - $booked;
+
+			return $room;
 		}
 
 		/**
