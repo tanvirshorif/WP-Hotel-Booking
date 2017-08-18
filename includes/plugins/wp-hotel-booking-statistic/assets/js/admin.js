@@ -62,9 +62,12 @@
         booking_price_statistic: function () {
             var ctx = document.getElementById('statistic_booking_price').getContext('2d');
 
-            window.myLine = new Chart(ctx).Line($.parseJSON(wphb_statistic_price.series), {
-                responsive: true
+            var price_statisctic = new Chart(ctx, {
+                type: 'bar',
+                data: $.parseJSON(wphb_statistic_price.series)
             });
+
+
         },
         booking_room_statistic: function () {
             var ctx = document.getElementById('hotel_canvas_report_room').getContext('2d');

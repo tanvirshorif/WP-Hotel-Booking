@@ -53,10 +53,14 @@ if ( ! class_exists( 'WP_Hotel_Booking_Stripe_Payment' ) ) {
 		 * @since 2.0
 		 */
 		public function init() {
-			if ( self::wphb_is_active() ) {
-				$this->define_constants();
-				$this->includes();
-				$this->init_hooks();
+			if ( WPHB_VERSION && version_compare( WPHB_VERSION, '2.0' ) >= 0 ) {
+				if ( self::wphb_is_active() ) {
+					$this->define_constants();
+					$this->includes();
+					$this->init_hooks();
+				} else {
+					add_action( 'admin_notices', array( $this, 'required_update' ) );
+				}
 			} else {
 				add_action( 'admin_notices', array( $this, 'add_notices' ) );
 			}
@@ -173,6 +177,20 @@ if ( ! class_exists( 'WP_Hotel_Booking_Stripe_Payment' ) ) {
             <div class="error">
                 <p>
 					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Stripe Payment</strong> add-on.', 'wphb-stripe-payment' ), array( 'strong' => array() ) ); ?>
+                </p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Admin notice required update WP Hotel Booking 2.0.
+		 *
+		 * @since 2.0
+		 */
+		public function required_update() { ?>
+            <div class="error">
+                <p>
+					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking Stripe Payment</strong> add-on requires <strong>WP Hotel Booking</strong> version 2.0 or higher.', 'wphb-stripe-payment' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php

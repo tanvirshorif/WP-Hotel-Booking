@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 $settings = WPHB_Settings::instance();
 $payment  = $settings->get( 'offline-payment' );
-$payment  = wp_parse_args( $payment, array( 'enable' => 'off' ) );
+$payment  = wp_parse_args( $payment, array( 'enable' => 'on' ) );
 
 $field_name = $settings->get_field_name( 'offline-payment' );
 ?>
@@ -27,6 +27,7 @@ $field_name = $settings->get_field_name( 'offline-payment' );
             <input type="checkbox"
                    name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?>
                    value="on"/>
+            <p class="description"><?php echo __( 'Enable Offline payment gateway', 'wp-hotel-booking' ); ?></p>
         </td>
     </tr>
 </table>

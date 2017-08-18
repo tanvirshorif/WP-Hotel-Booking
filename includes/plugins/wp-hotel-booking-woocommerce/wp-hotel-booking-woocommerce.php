@@ -61,9 +61,13 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 */
 		public function init() {
 			if ( self::required_plugins_is_active() ) {
-				$this->define_constants();
-				$this->includes();
-				$this->init_hooks();
+				if ( WPHB_VERSION && version_compare( WPHB_VERSION, '2.0' ) >= 0 ) {
+					$this->define_constants();
+					$this->includes();
+					$this->init_hooks();
+				} else {
+					add_action( 'admin_notices', array( $this, 'required_update' ) );
+				}
 			} else if ( ! self::required_plugins_is_active( 'wp-hotel-booking' ) ) {
 				add_action( 'admin_notices', array( $this, 'add_wphb_notices' ) );
 			} else if ( ! self::required_plugins_is_active( 'woocommerce' ) ) {
@@ -172,7 +176,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		public function add_wphb_notices() { ?>
             <div class="error">
                 <p>
-	                <?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', 'wphb-woocommerce' ), array( 'strong' => array() ) ); ?>
+					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking WooCommerce</strong> add-on.', 'wphb-woocommerce' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php
@@ -194,6 +198,20 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 					), admin_url() . 'plugin-install.php?s=woocommerce&tab=search&type=term'
 					);
 					?>
+                </p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Admin notice required update WP Hotel Booking 2.0.
+		 *
+		 * @since 2.0
+		 */
+		public function required_update() { ?>
+            <div class="error">
+                <p>
+					<?php echo wp_kses( __( 'The <strong>WP Hotel Booking WooCommerce</strong> add-on requires <strong>WP Hotel Booking</strong> version 2.0 or higher.', 'wphb-woocommerce' ), array( 'strong' => array() ) ); ?>
                 </p>
             </div>
 			<?php

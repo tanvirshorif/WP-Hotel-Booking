@@ -35,6 +35,7 @@ $field_name = $settings->get_field_name( 'paypal' );
             <input type="checkbox"
                    name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $paypal['enable'] == 'on' ? 1 : 0, 1 ); ?>
                    value="on"/>
+            <p class="description"><?php echo __( 'Enable Paypal gateway', 'wp-hotel-booking' ); ?></p>
         </td>
     </tr>
     <tr>
@@ -51,6 +52,7 @@ $field_name = $settings->get_field_name( 'paypal' );
             <input type="checkbox"
                    name="<?php echo esc_attr( $field_name ); ?>[sandbox]" <?php checked( $paypal['sandbox'] == 'on' ? 1 : 0, 1 ); ?>
                    value="on"/>
+            <p class="description"><?php echo __( 'Enable Paypal Sandbox gateway', 'wp-hotel-booking' ); ?></p>
         </td>
     </tr>
     <tr>

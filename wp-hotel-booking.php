@@ -37,7 +37,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		 *
 		 * @var string
 		 */
-		public $_version = '2.0';
+		public $_version = '1.0';
 
 		/**
 		 * User.
