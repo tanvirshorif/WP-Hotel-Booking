@@ -204,3 +204,21 @@ if ( ! function_exists( 'wphb_statistic_select_room' ) ) {
         </form>
 	<?php }
 }
+
+if ( ! function_exists( 'wphb_statistic_is_statistic_page' ) ) {
+	/**
+	 * Check is admin statistic page.
+	 *
+	 * @return bool
+	 */
+	function wphb_statistic_is_statistic_page() {
+		if ( is_admin() ) {
+			// get current screen
+			$screen = get_current_screen();
+
+			return $screen->id == 'wp-hotel-booking_page_wphb-statistic';
+		} else {
+			return false;
+		}
+	}
+}

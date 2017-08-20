@@ -166,19 +166,22 @@ if ( ! class_exists( 'WP_Hotel_Booking_Statistic' ) ) {
 		 * @since 2.0
 		 */
 		public function enqueue_scripts() {
-			// chart js
-			wp_enqueue_script( 'wphb-statistic-chart-js', WPHB_STATISTIC_URI . 'assets/js/Chart.min.js' );
-			// tokenize js
-			wp_enqueue_script( 'wphb-statistic-tokenize-js', WPHB_STATISTIC_URI . 'assets/js/jquery.tokenize.min.js' );
-			wp_enqueue_style( 'wphb-statistic-tokenize-css', WPHB_STATISTIC_URI . 'assets/css/jquery.tokenize.min.css' );
 
-			// admin scripts
-			wp_enqueue_style( 'wphb-statistic-js', WPHB_STATISTIC_URI . 'assets/css/admin.css' );
-			wp_enqueue_script( 'wphb-statistic-js', WPHB_STATISTIC_URI . 'assets/js/admin.js', array(
-				'jquery',
-				'jquery-ui-datepicker'
-			) );
-			wp_localize_script( 'wphb-statistic-js', 'wphb_statistic_js', hb_admin_i18n() );
+			if ( wphb_statistic_is_statistic_page() ) {
+				// chart js
+				wp_enqueue_script( 'wphb-statistic-chart-js', WPHB_STATISTIC_URI . 'assets/js/Chart.min.js' );
+				// tokenize js
+				wp_enqueue_script( 'wphb-statistic-tokenize-js', WPHB_STATISTIC_URI . 'assets/js/jquery.tokenize.min.js' );
+				wp_enqueue_style( 'wphb-statistic-tokenize-css', WPHB_STATISTIC_URI . 'assets/css/jquery.tokenize.min.css' );
+
+				// admin scripts
+				wp_enqueue_style( 'wphb-statistic-js', WPHB_STATISTIC_URI . 'assets/css/admin.css' );
+				wp_enqueue_script( 'wphb-statistic-js', WPHB_STATISTIC_URI . 'assets/js/admin.js', array(
+					'jquery',
+					'jquery-ui-datepicker'
+				) );
+				wp_localize_script( 'wphb-statistic-js', 'wphb_statistic_js', hb_admin_i18n() );
+			}
 		}
 
 		/**

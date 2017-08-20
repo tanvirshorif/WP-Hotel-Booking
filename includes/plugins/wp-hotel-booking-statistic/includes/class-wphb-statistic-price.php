@@ -400,7 +400,7 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 					$price = $price + $item->total;
 				}
 				$sidebars[] = array(
-					'title' => sprintf( __( 'Total %s to %s', 'wphb-statistic' ), $this->_start_in, $this->_end_in ),
+					'title'  => sprintf( __( 'Total %s to %s', 'wphb-statistic' ), $this->_start_in, $this->_end_in ),
 					'amount' => hb_format_price( $price )
 				);
 			}
@@ -414,13 +414,15 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 		 * @since 2.0
 		 */
 		public function print_scripts() {
-			?>
-            <script type="text/javascript">
-                var wphb_statistic_price = {
-                    series: '<?php echo json_encode( $this->series() ); ?>'
-                }
-            </script>
-		<?php }
+			if ( wphb_statistic_is_statistic_page() ) {
+				?>
+                <script type="text/javascript">
+                    var wphb_statistic_price = {
+                        series: '<?php echo json_encode( $this->series() ); ?>'
+                    }
+                </script>
+			<?php }
+		}
 
 		/**
 		 * Instance.

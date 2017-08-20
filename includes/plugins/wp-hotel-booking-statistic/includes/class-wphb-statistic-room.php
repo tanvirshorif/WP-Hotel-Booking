@@ -543,13 +543,15 @@ if ( ! class_exists( 'WPHB_Statistic_Room' ) ) {
 		 * @since 2.0
 		 */
 		public function print_scripts() {
-			?>
-			<script type="text/javascript">
-                var wphb_statistic_room = {
-                    series: '<?php echo json_encode( $this->series() ); ?>'
-                }
-			</script>
-		<?php }
+			if ( wphb_statistic_is_statistic_page() ) {
+				?>
+                <script type="text/javascript">
+                    var wphb_statistic_room = {
+                        series: '<?php echo json_encode( $this->series() ); ?>'
+                    }
+                </script>
+			<?php }
+		}
 
 		/**
 		 * Instance.
