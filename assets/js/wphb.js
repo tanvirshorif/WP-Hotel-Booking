@@ -330,9 +330,7 @@
                             _room_title.find('.hb_success_message').remove();
                         }, 3000);
                     }
-
                     if (typeof code.status !== 'undefined' && code.status === 'success') {
-
                         // update woo cart when add room to cart
                         $('body').trigger('hb_added_item_to_cart');
                         // add message successfully
@@ -342,7 +340,6 @@
                     } else {
                         alert(code.message);
                     }
-
                     if (typeof code.id !== 'undefined') {
                         WPHB_Cart.update_add_item_mini_cart(code);
                     }

@@ -106,13 +106,46 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 				add_filter( 'woocommerce_add_cart_item', array( $this, 'add_cart_item' ), 10, 2 );
 				// // tax enable
 				add_filter( 'hotel_booking_extra_tax_enable', array( $this, 'tax_enable' ) );
-
-				// disable hotel email base on option
-				if ( 'yes' === $settings->get( 'wc_disable_hotel_mail' ) ) {
-					remove_action( 'hb_place_order', 'hb_send_place_booking_email', 10 );
-					remove_action( 'hb_booking_status_changed', 'hb_send_booking_completed_email', 10 );
-				}
+				// override woo mail templates
+				add_filter( 'woocommerce_locate_template', array( $this, 'woo_booking_mail_template' ), 10, 3 );
 			}
+		}
+
+		/**
+		 * Override woo mail templates.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $template
+		 * @param $template_name
+		 * @param $template_path
+		 *
+		 * @return string
+		 */
+		public function woo_booking_mail_template( $template, $template_name, $template_path ) {
+			global $woocommerce;
+
+			$_template = $template;
+			if ( ! $template_path ) {
+				$template_path = $woocommerce->template_url;
+			}
+
+			$plugin_path = WPHB_WOO_PAYMENT_ABSPATH . '/templates/woocommerce/';
+			// Look within passed path within the theme - this is priority
+			$template = locate_template( array( $template_path . $template_name, $template_name ) );
+
+			// Modification: Get the template from this plugin, if it exists
+			if ( ! $template && file_exists( $plugin_path . $template_name ) ) {
+				$template = $plugin_path . $template_name;
+			}
+
+			// Use default template
+			if ( ! $template ) {
+				$template = $_template;
+			}
+
+			// Return what we found
+			return $template;
 		}
 
 		/**
@@ -133,7 +166,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
-		 * WP Hotel Booking add to cart action.
+		 * Trigger add room to cart hotel to update Woocommerce cart.
 		 *
 		 * @since 2.0
 		 *
@@ -143,7 +176,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		 * @return string
 		 */
 		public function hotel_add_to_cart( $cart_item_id, $params ) {
-			// remove_action( 'hotel_booking_added_cart', array( $this, 'hotel_add_to_cart' ), 10, 2 );
+
 			global $woocommerce;
 
 			if ( ! $woocommerce || ! $woocommerce->cart ) {
@@ -167,6 +200,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			$woo_cart_id = $woocommerce->cart->generate_cart_id( $woo_cart_param['product_id'], null, array(), $woo_cart_param );
 			if ( array_key_exists( $woo_cart_id, $cart_items ) ) {
 				$woocommerce->cart->set_quantity( $woo_cart_id, $params['quantity'] );
+			} else {
+				$woocommerce->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'], null, array(), $woo_cart_param );
 			}
 
 			do_action( 'hb_wc_after_add_to_cart', $cart_item_id, $params );

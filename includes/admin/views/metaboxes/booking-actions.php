@@ -57,9 +57,9 @@ $booking = WPHB_Booking::instance( $post->ID );
                     <option value="<?php echo esc_attr( $booking->method ) ?>"
                             selected><?php printf( __( '%s is not available', 'wp-hotel-booking' ), $booking->method_title ) ?></option>
 				<?php endif; ?>
-				<?php foreach ( $methods as $id => $method ) : ?>
+				<?php foreach ( $methods as $id => $method ) { ?>
                     <option value="<?php echo esc_attr( $id ) ?>" <?php selected( $booking->method, $id ); ?>><?php printf( '%s(%s)', $method->title, $method->description ) ?></option>
-				<?php endforeach; ?>
+				<?php } ?>
             </select>
         </li>
     </ul>
