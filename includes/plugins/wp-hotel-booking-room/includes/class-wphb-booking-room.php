@@ -43,8 +43,8 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 			add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-			add_action( 'wp_ajax_hotel_booking_check_single_room_available', array( $this, 'check_room_available' ) );
-			add_action( 'wp_ajax_nopriv_hotel_booking_check_single_room_available', array(
+			add_action( 'wp_ajax_wphb_room_check_single_room_available', array( $this, 'check_room_available' ) );
+			add_action( 'wp_ajax_nopriv_wphb_room_check_single_room_available', array(
 				$this,
 				'check_room_available'
 			) );

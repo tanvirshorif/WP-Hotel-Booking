@@ -25,7 +25,7 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
 }
 ?>
 
-<div id="hotel_booking_room_hidden"></div>
+<div id="single_booking_room_lightbox"></div>
 <!--Single search form-->
 <script type="text/html" id="tmpl-hb-room-load-form">
 
@@ -53,7 +53,7 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
             <div class="hb-booking-room-form-group">
                 <input type="hidden" name="room-name" value="<?php printf( '%s', $post->post_title ) ?>"/>
                 <input type="hidden" name="room-id" value="<?php printf( '%s', $post->ID ) ?>"/>
-                <input type="hidden" name="action" value="hotel_booking_check_single_room_available"/>
+                <input type="hidden" name="action" value="wphb_room_check_single_room_available"/>
 				<?php wp_nonce_field( 'hb_booking_single_room_check_nonce_action', 'hb-booking-single-room-check-nonce-action' ); ?>
                 <button type="submit"
                         class="hb_button"><?php _e( 'Check Available', 'wp-hotel-booking-room' ); ?></button>
