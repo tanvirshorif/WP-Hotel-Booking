@@ -39,9 +39,7 @@ defined( 'ABSPATH' ) || exit;
 
                         <select name="hb-num-of-rooms" class="number_room_select">
                             <option value="0"><?php _e( 'Select Number Of Room' ); ?></option>
-                            <# for( var i = 1; i
-                            <
-                            = data.qty; i++ ) { #>
+                            <# for( var i = 1; i <= data.qty; i++ ) { #>
                             <option value="{{ i }}">{{ i }}</option>
                             <# } #>
                         </select>

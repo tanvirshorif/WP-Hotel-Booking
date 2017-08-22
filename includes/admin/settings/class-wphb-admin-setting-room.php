@@ -165,9 +165,10 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 				),
 				array(
 					'id'      => $prefix . 'enable_gallery_lightbox',
-					'title'   => __( 'Enable gallery lightbox', 'wp-hotel-booking' ),
+					'title'   => __( 'Gallery lightbox', 'wp-hotel-booking' ),
 					'type'    => 'checkbox',
-					'default' => 1
+					'default' => 1,
+					'desc'    => __( 'Enable room gallery lightbox', 'wp-hotel-booking' )
 				),
 				array(
 					'type' => 'section_end',

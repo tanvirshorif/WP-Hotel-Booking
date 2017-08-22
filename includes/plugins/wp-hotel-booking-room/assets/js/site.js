@@ -22,7 +22,7 @@
             _doc.on('hotel_room_load_add_to_cart_form_open', _self.lightbox_init);
 
             // form submit
-            _doc.on('submit', '.hotel-booking-single-room-action', _self.form_submit)
+            _doc.on('submit', '.hotel-booking-single-room-action', _self.form_submit);
 
             // previous step
             _doc.on('click', '.hb_previous_step', _self.preStep);
@@ -44,7 +44,7 @@
                 _data = Hotel_Booking_Room_Addon.form_data();
 
             if (_form_name === 'hb-search-single-room') {
-                Hotel_Booking_Room_Addon.check_avibility(_self, _data, _self.find('button[type="submit"]'));
+                Hotel_Booking_Room_Addon.check_availability(_self, _data, _self.find('button[type="submit"]'));
             }
         },
         datepicker_init: function () {
@@ -60,12 +60,12 @@
 
             tomorrow.setDate(today.getDate() + _min);
             checkin.datepicker({
-                dateFormat: hotel_booking_i18n.date_time_format,
-                monthNames: hotel_booking_i18n.monthNames,
-                monthNamesShort: hotel_booking_i18n.monthNamesShort,
-                dayNames: hotel_booking_i18n.dayNames,
-                dayNamesShort: hotel_booking_i18n.dayNamesShort,
-                dayNamesMin: hotel_booking_i18n.dayNamesMin,
+                dateFormat: wphb_room_js.date_time_format,
+                monthNames: wphb_room_js.monthNames,
+                monthNamesShort: wphb_room_js.monthNamesShort,
+                dayNames: wphb_room_js.dayNames,
+                dayNamesShort: wphb_room_js.dayNamesShort,
+                dayNamesMin: wphb_room_js.dayNamesMin,
                 minDate: today,
                 maxDate: '+365D',
                 onSelect: function (selected) {
@@ -78,12 +78,12 @@
             });
 
             checkout.datepicker({
-                dateFormat: hotel_booking_i18n.date_time_format,
-                monthNames: hotel_booking_i18n.monthNames,
-                monthNamesShort: hotel_booking_i18n.monthNamesShort,
-                dayNames: hotel_booking_i18n.dayNames,
-                dayNamesShort: hotel_booking_i18n.dayNamesShort,
-                dayNamesMin: hotel_booking_i18n.dayNamesMin,
+                dateFormat: wphb_room_js.date_time_format,
+                monthNames: wphb_room_js.monthNames,
+                monthNamesShort: wphb_room_js.monthNamesShort,
+                dayNames: wphb_room_js.dayNames,
+                dayNamesShort: wphb_room_js.dayNamesShort,
+                dayNamesMin: wphb_room_js.dayNamesMin,
                 minDate: tomorrow,
                 maxDate: '+365D',
                 onSelect: function (selected) {
@@ -107,13 +107,13 @@
         load_room_add_to_cart_form: function (e) {
             e.preventDefault();
             var _self = $(this),
+                _doc = $(document),
                 _room_id = _self.attr('data-id'),
                 _room_name = _self.attr('data-name'),
-                _doc = $(document),
-                _taget = 'hb-room-load-form',
+                _target = 'hb-room-load-form',
                 _lightbox = '#hotel_booking_room_hidden';
 
-            $(_lightbox).html(wp.template(_taget)({_room_id: _room_id, _room_name: _room_name}));
+            $(_lightbox).html(wp.template(_target)({_room_id: _room_id, _room_name: _room_name}));
             $.magnificPopup.open({
                 type: 'inline',
                 items: {
@@ -121,13 +121,13 @@
                 },
                 callbacks: {
                     open: function () {
-                        _doc.triggerHandler('hotel_room_load_add_to_cart_form_open', [_self, _lightbox, _taget]);
+                        _doc.triggerHandler('hotel_room_load_add_to_cart_form_open', [_self, _lightbox, _target]);
                     }
                 }
             });
             return false;
         },
-        check_avibility: function (form, _data, _taget) {
+        check_availability: function (form, _data, _taget) {
             var sanitize = Hotel_Booking_Room_Addon.sanitize();
 
             if (sanitize === false) {
@@ -179,12 +179,12 @@
 
             if (checkin.datepicker('getDate') === null) {
                 checkin.addClass('error');
-                errors.push('<p>' + hotel_booking_i18n.empty_check_in_date + '</p>');
+                errors.push('<p>' + wphb_room_js.empty_check_in_date + '</p>');
             }
 
             if (check_out.datepicker('getDate') === null) {
                 check_out.addClass('error');
-                errors.push('<p>' + hotel_booking_i18n.empty_check_out_date + '</p>');
+                errors.push('<p>' + wphb_room_js.empty_check_out_date + '</p>');
             }
 
             if (errors.length > 0) {

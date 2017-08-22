@@ -119,6 +119,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		 */
 		public function includes() {
 			require_once WPHB_ROOM_ABSPATH . 'includes/class-wphb-booking-room.php';
+			require_once WPHB_ROOM_ABSPATH . 'includes/wphb-booking-room-functions.php';
 		}
 
 		/**
@@ -137,11 +138,12 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 			?>
             <table class="form-table">
                 <tr>
-                    <th><?php _e( 'Enable book in single room', 'wphb-booking-room' ); ?></th>
+                    <th><?php _e( 'Book in single room', 'wphb-booking-room' ); ?></th>
                     <td>
                         <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0"/>
                         <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>"
 						       <?php checked( $settings->get( 'enable_single_book' ) ? 1 : 0, 1 ); ?>value="1"/>
+                        <p class="description"><?php echo __( 'Allow booking in single room page', 'wphb-booking-room' ); ?></p>
                     </td>
                 </tr>
             </table>

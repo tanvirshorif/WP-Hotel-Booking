@@ -581,7 +581,7 @@
         },
         add_image_selector: function (e) {
             e.preventDefault();
-            var _self = this,
+            var _self = $(this),
                 _file_frame = wp.media.frames.file_frame = wp.media({multiple: true});
 
             _file_frame.on('select', function () {
@@ -608,7 +608,7 @@
         },
         remove_image_selector: function (e) {
             e.preventDefault();
-            var _self = this;
+            var _self = $(this);
 
             _self.parent().remove();
         },

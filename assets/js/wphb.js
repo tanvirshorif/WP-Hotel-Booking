@@ -826,7 +826,7 @@
                     _button.addClass('hb_loading');
                 },
                 success: function (response) {
-                    _table_info.hb_overlay_ajax_stop();
+                    _button.removeClass('hb_loading');
                     response = parseJSON(response);
                     if (response && response.ID) {
                         var $container = $('#hb-order-new-customer');

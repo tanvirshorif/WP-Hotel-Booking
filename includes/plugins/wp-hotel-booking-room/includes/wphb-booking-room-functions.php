@@ -49,7 +49,7 @@ if ( ! function_exists( 'wphb_room_locate_template' ) ) {
 	function wphb_room_locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
 		if ( ! $template_path ) {
-			$template_path = $this->template_path();
+			$template_path = wphb_room_template_path();
 		}
 
 		if ( ! $default_path ) {
@@ -136,7 +136,7 @@ if ( ! function_exists( 'wphb_room_get_template' ) ) {
 			extract( $args );
 		}
 
-		$located = $this->locate_template( $template_name, $template_path, $default_path );
+		$located = wphb_room_locate_template( $template_name, $template_path, $default_path );
 
 		if ( ! file_exists( $located ) ) {
 			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
@@ -151,5 +151,44 @@ if ( ! function_exists( 'wphb_room_get_template' ) ) {
 		include( $located );
 
 		do_action( 'hb_room_after_template_part', $template_name, $template_path, $located, $args );
+	}
+}
+
+if ( ! function_exists( 'wphb_room_locate_template' ) ) {
+	/**
+	 * Locate template.
+	 *
+	 * @param $template_name
+	 * @param string $template_path
+	 * @param string $default_path
+	 *
+	 * @return mixed
+	 */
+	function wphb_room_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+
+		if ( ! $template_path ) {
+			$template_path = wphb_room_template_path();
+		}
+
+		if ( ! $default_path ) {
+			$default_path = WPHB_ROOM_ABSPATH . '/templates/';
+		}
+
+		$template = null;
+		// Look within passed path within the theme - this is priority
+		$template = locate_template(
+			array(
+				trailingslashit( $template_path ) . $template_name,
+				$template_name
+			)
+		);
+
+		// Get default template
+		if ( ! $template ) {
+			$template = $default_path . $template_name;
+		}
+
+		// Return what we found
+		return apply_filters( 'wphb_room_locate_template', $template, $template_name, $template_path );
 	}
 }
