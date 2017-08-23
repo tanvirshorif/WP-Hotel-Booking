@@ -4,10 +4,7 @@
     min-width: 500px;
     background: #fff;
     overflow: hidden;
-}
-
-#single_booking_room_lightbox.mfp-hide {
-    display: none !important;
+    margin: 0 auto;
 }
 
 #single_booking_room_lightbox * {
@@ -51,10 +48,6 @@
 
 .hb-booking-room-form-footer a {
     float: left;
-}
-
-.hb-booking-room-form-footer button {
-    float: right;
 }
 
 #single_booking_room_lightbox .hb_addition_package_extra {

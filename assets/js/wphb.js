@@ -285,7 +285,7 @@
             var _self = $(this),
                 _button = _self.parents('.hb-room-meta').find('.hb_add_to_cart');
 
-            if (_self.val()) {
+            if (_self.val() !== 0) {
                 _button.prop('disabled', false);
             } else {
                 _button.prop('disabled', true);

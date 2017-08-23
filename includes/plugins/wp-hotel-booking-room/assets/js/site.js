@@ -28,10 +28,7 @@
             // trigger lightbox open
                 .on('booking_room_lightbox_init', _self.lightbox_init)
                 // check room available
-                .on('submit', 'form[name="hb-search-single-room"]', _self.check_room_available)
-                // previous step
-                .on('click', '.hb_previous_step', _self.previous_step);
-
+                .on('click', '.hb_button.check_available', _self.check_room_available)
         },
         load_booking_form: function (e) {
             e.preventDefault();
@@ -67,15 +64,20 @@
         check_room_available: function (e) {
             e.preventDefault();
 
-            var _self = $(this),
-                _button = _self.find('button[type="submit"]'),
-                _data = WPHB_Booking_Room.form_data();
+            var _form = $('form[name="hb-search-single-room"]'),
+                _button = _form.find('.hb_button.check_available'),
+                _data = WPHB_Booking_Room.form_data(),
+                _container = _form.find('.hb-search-results-form-container'),
+                _check_in_text = _form.find('input[name="check_in_date_text"]'),
+                _check_out_text = _form.find('input[name="check_out_date_text"]');
 
             var sanitize = WPHB_Booking_Room.sanitize();
 
             if (sanitize === false) {
                 return false;
             }
+
+            _data['action'] = 'wphb_room_check_single_room_available';
 
             $.ajax({
                 url: hotel_settings.ajax,
@@ -92,27 +94,17 @@
                     return;
                 }
                 if (res.status === false && typeof res.messages !== 'undefined') {
-                    WPHB_Booking_Room.append_messages(_self, res.messages);
+                    WPHB_Booking_Room.append_messages(_form, res.messages);
                 } else if (typeof res.qty !== 'undefined') {
-                    _self.replaceWith(wp.template('hb-room-load-form-cart')(res));
+                    _check_in_text.val(res.check_in_date_text);
+                    _check_out_text.val(res.check_out_date_text);
+                    if (res.qty) {
+                        _container.append(wp.template('hb-room-load-form-cart')(res));
+                    }
                 }
             }).fail(function () {
                 _button.removeClass('hb_loading');
             });
-        },
-        previous_step: function (e) {
-            var _self = $(this),
-                _tmpl = _self.attr('data-template'),
-                _form = _self.parents('form:first-child'),
-                _data = WPHB_Booking_Room.form_data();
-
-            _self.addClass('hb_loading');
-            _form.replaceWith(wp.template(_tmpl)(_data));
-            _self.removeClass('hb_loading');
-
-            WPHB_Booking_Room.datepicker_init();
-
-            return false;
         },
         datepicker_init: function () {
             var _doc = $(document),
@@ -211,7 +203,8 @@
             for (var i = 0; i < Object.keys(_errors).length; i++) {
                 _mesg[i] = '<p>' + _errors[i] + '</p>';
             }
-            _form.find('.hb-booking-room-form-head').append('<div class="hotel_booking_room_errors">' + _errors.join('') + '</div>');
+
+            _form.find('.hb-booking-room-form-header').append('<div class="hotel_booking_room_errors">' + _errors.join('') + '</div>');
         }
 
     };

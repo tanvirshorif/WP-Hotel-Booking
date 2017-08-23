@@ -108,7 +108,9 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		 * @since 2.0
 		 */
 		private function init_hooks() {
-			add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
+			// add admin settings
+			add_filter( 'hotel_booking_admin_setting_fields_room', array( $this, 'booking_room_settings' ) );
+
 			add_action( 'init', array( $this, 'load_text_domain' ) );
 		}
 
@@ -123,31 +125,37 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		}
 
 		/**
-		 * Admin setting option.
+		 * Admin settings option.
 		 *
-		 * @since 2.0
+		 * @param $settings
 		 *
-		 * @param $tab
+		 * @return array
 		 */
-		public function admin_settings( $tab ) {
-			if ( $tab !== 'room' ) {
-				return;
-			}
-			$settings   = hb_settings();
-			$field_name = $settings->get_field_name( 'enable_single_book' );
-			?>
-            <table class="form-table">
-                <tr>
-                    <th><?php _e( 'Book in single room', 'wphb-booking-room' ); ?></th>
-                    <td>
-                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0"/>
-                        <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>"
-						       <?php checked( $settings->get( 'enable_single_book' ) ? 1 : 0, 1 ); ?>value="1"/>
-                        <p class="description"><?php echo __( 'Allow booking in single room page', 'wphb-booking-room' ); ?></p>
-                    </td>
-                </tr>
-            </table>
-			<?php
+		public function booking_room_settings( $settings ) {
+
+			$prefix = 'tp_hotel_booking_';
+
+			$booking_room_settings = apply_filters( 'wphb_room_admin_setting_fields', array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'booking_room_settings',
+					'title' => __( 'Booking Room Add-on', 'wphb-booking-room' ),
+					'desc'  => __( 'Settings for WP Hotel Booking Room add-on', 'wphb-booking-room' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'enable_single_book',
+					'title'   => __( 'Enable', 'wphb-booking-room' ),
+					'default' => 1,
+					'desc'    => __( 'Allow booking in single room page', 'wphb-booking-room' )
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'booking_room_settings'
+				),
+			) );
+
+			return array_merge( $settings, $booking_room_settings );
 		}
 
 		/**

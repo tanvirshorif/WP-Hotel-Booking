@@ -74,8 +74,6 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 			ob_start();
 			// search form.
 			wphb_room_get_template( 'search-available.php' );
-			// book form.
-			wphb_room_get_template( 'booking-form.php' );
 			$html[] = ob_get_clean();
 			echo implode( '', $html );
 		}
@@ -86,8 +84,8 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 		 * @since 2.0
 		 */
 		public function enqueue_scripts() {
-			wp_enqueue_script( 'magnific-popup', WPHB_ROOM_URI . '/assets/js/jquery.magnific-popup.min.js', array(), WPHB_ROOM_VER, true );
-			wp_enqueue_style( 'magnific-popup', WPHB_ROOM_URI . '/assets/css/magnific-popup.css', array(), WPHB_ROOM_VER, true );
+			wp_enqueue_script( 'magnific-popup', WPHB_ROOM_URI . '/assets/js/jquery.magnific-popup.min.js', array(), WPHB_ROOM_VER );
+			wp_enqueue_style( 'magnific-popup', WPHB_ROOM_URI . '/assets/css/magnific-popup.css', array(), WPHB_ROOM_VER );
 
 			wp_enqueue_style( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/css/site.css', array(), WPHB_ROOM_VER );
 			wp_enqueue_script( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/js/site.js',
@@ -137,7 +135,7 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 				return;
 			}
 
-			$room_id = $checkindate = $checkoutdate = $checkindate_text = $checkoutdate_text = $room_name = '';
+			$room_id = $check_in_date = $check_out_date = $check_in_date_text = $check_out_date_text = $room_name = '';
 			$errors  = array();
 
 			if ( ! isset( $_POST['room-id'] ) || ! is_numeric( $_POST['check_in_date_timestamp'] ) ) {
@@ -155,44 +153,42 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 			if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date_timestamp'] ) || ! is_numeric( $_POST['check_in_date_timestamp'] ) ) {
 				$errors[] = __( 'Check in date is required.', 'wphb-booking-room' );
 			} else {
-				$checkindate_text = sanitize_text_field( $_POST['check_in_date'] );
-				$checkindate      = absint( $_POST['check_in_date_timestamp'] );
+				$check_in_date_text = sanitize_text_field( $_POST['check_in_date'] );
+				$check_in_date      = absint( $_POST['check_in_date_timestamp'] );
 			}
 
 			if ( ! isset( $_POST['check_out_date_timestamp'] ) || ! is_numeric( $_POST['check_out_date_timestamp'] ) ) {
 				$errors[] = __( 'Check out date is required.', 'wphb-booking-room' );
 			} else {
-				$checkoutdate_text = sanitize_text_field( $_POST['check_out_date'] );
-				$checkoutdate      = absint( $_POST['check_out_date_timestamp'] );
+				$check_out_date_text = sanitize_text_field( $_POST['check_out_date'] );
+				$check_out_date      = absint( $_POST['check_out_date_timestamp'] );
 			}
 
 			// valid request and require field
 			if ( empty( $errors ) ) {
 				$qty = hotel_booking_get_room_available( $room_id, array(
-					'check_in_date'  => $checkindate,
-					'check_out_date' => $checkoutdate
+					'check_in_date'  => $check_in_date,
+					'check_out_date' => $check_out_date
 				) );
 
-				if ( absint( $qty ) > 0 ) {
-
+				if ( is_wp_error( $qty ) || ! $qty ) {
+					$errors[] = sprintf( __( 'No room found in %s to %s', 'wphb-booking-room' ), $check_in_date_text, $check_out_date_text );
+					// input is not pass validate, sanitize
+					wp_send_json( array( 'status' => false, 'messages' => $errors ) );
+				} else {
 					// room has been found
 					wp_send_json( array(
 						'status'              => true,
-						'check_in_date_text'  => $checkindate_text,
-						'check_out_date_text' => $checkoutdate_text,
-						'check_in_date'       => date( 'm/d/Y', $checkindate ),
-						'check_out_date'      => date( 'm/d/Y', $checkoutdate ),
+						'check_in_date_text'  => $check_in_date_text,
+						'check_out_date_text' => $check_out_date_text,
+						'check_in_date'       => date( 'm/d/Y', $check_in_date ),
+						'check_out_date'      => date( 'm/d/Y', $check_out_date ),
 						'room_id'             => $room_id,
 						'room_name'           => $room_name,
 						'qty'                 => $qty
 					) );
-				} else {
-					$errors[] = sprintf( __( 'No room found in %s and %s', 'wphb-booking-room' ), $checkindate_text, $checkoutdate_text );
 				}
 			}
-
-			// input is not pass validate, sanitize
-			wp_send_json( array( 'status' => false, 'messages' => $errors ) );
 		}
 
 		/**
