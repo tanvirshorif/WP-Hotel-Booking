@@ -148,6 +148,37 @@
     font-style: italic;
     margin-bottom: 5px; }
 
+.hb_addition_package_extra {
+  display: none;
+  clear: both;
+  padding-top: 30px; }
+  .hb_addition_package_extra .hb_addition_package_title_toggle {
+    margin: 0; }
+  .hb_addition_package_extra a.hb_package_toggle {
+    display: block;
+    color: #333333 !important;
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 700;
+    text-transform: none;
+    padding: 0;
+    text-decoration: none !important;
+    /* margin-bottom: 15px; */ }
+    .hb_addition_package_extra a.hb_package_toggle:after {
+      content: '\f342';
+      font: 400 18px/1 dashicons;
+      vertical-align: top;
+      line-height: 28px;
+      display: inline-block;
+      margin-left: 5px; }
+    .hb_addition_package_extra a.hb_package_toggle.active:after {
+      content: '\f346'; }
+  .hb_addition_package_extra .hb_package_toggle:hover, .hb_addition_package_extra .hb_package_toggle.active {
+    border-color: #46598b;
+    color: #46598b; }
+  .hb_addition_package_extra input.hb_optional_quantity {
+    width: 50px; }
+
 /****************************************** Admin modal ***************************************************/
 #hb_modal_dialog .hb_modal {
   position: fixed;
@@ -168,6 +199,8 @@
       font-weight: 700;
       line-height: 50px; }
     #hb_modal_dialog .hb_modal .form_head .modal_close {
+      float: right;
+      margin: 0 5px;
       cursor: pointer;
       color: #777;
       height: 50px;
@@ -187,7 +220,7 @@
     border-top: 1px solid #ddd;
     padding: 16px;
     overflow: hidden; }
-    #hb_modal_dialog .hb_modal .form_footer button {
+    #hb_modal_dialog .hb_modal .form_footer .modal_close {
       float: right;
       margin: 0 5px; }
     #hb_modal_dialog .hb_modal .form_footer > .center {

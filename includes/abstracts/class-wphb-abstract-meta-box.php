@@ -88,8 +88,10 @@ if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
 		 * Get meta box view.
 		 *
 		 * @since 2.0
+		 *
+		 * @param $post
 		 */
-		public function meta_box_view() {
+		public function meta_box_view($post) {
 			if ( is_array( $this->view ) ) {
 				foreach ( $this->view as $view ) {
 					require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/' . $view . '.php';

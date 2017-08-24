@@ -35,7 +35,7 @@ defined( 'ABSPATH' ) || exit;
                 <button class="modal_close dashicons dashicons-no-alt"></button>
             </div>
 
-            <div class="section_line">
+            <div class="section_line hb-search-room-results">
                 <# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
                     <div class="section">
                         <select name="product_id" class="booking_search_room_items">
@@ -113,10 +113,9 @@ defined( 'ABSPATH' ) || exit;
                 <# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
                     <a href="#" class="button check_room_available{{ data.class }}"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></a>
                 <# } #>
+                    <button type="submit" class="button button-primary form_submit" disabled="disabled"><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
                     <input type="hidden" name="order_item_type" value="{{ data.order_item_type }}"/>
-<!--                    <input type="hidden" name="action" value="wphb_admin_add_order_item"/>-->
                     <button type="reset" class="button modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
-                    <button type="submit" class="button button-primary form_submit"><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
             </div>
 
         </form>
@@ -136,32 +135,28 @@ defined( 'ABSPATH' ) || exit;
                 <h1>
                     <# if ( data.message ) { #>
                         {{{ data.message }}}
-                        <# } else { #>
-							<?php _e( 'Do you want to do this?', 'wp-hotel-booking' ); ?>
-                            <# } #>
+                    <# } else { #>
+                        <?php _e( 'Do you want to do this?', 'wp-hotel-booking' ); ?>
+                    <# } #>
                 </h1>
                 <button class="modal_close dashicons dashicons-no-alt"></button>
             </div>
             <div class="form_footer center">
                 <input type="hidden" name="order_id" value="{{ data.order_id }}"/>
                 <# if ( typeof data.order_item_id === 'object' ) { #>
-                    <# for( var i = 0; i
-                    <
-                    Object.keys( data.order_item_id ).length; i++ ) { #>
-
+                    <# for( var i = 0; <Object.keys( data.order_item_id ).length; i++ ) { #>
                     <input type="hidden" name="order_item_id[]" value="{{ data.order_item_id[i] }}"/>
-
                     <# } #>
-                        <# } else { #>
-                            <input type="hidden" name="order_item_id" value="{{ data.order_item_id }}"/>
-                            <# } #>
-                                <input type="hidden" name="action" value="{{ data.action }}">
-                                <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}"/>
-								<?php wp_nonce_field( 'wphb-remove-booking-item', 'wphb_remove_booking_item' ); ?>
-                                <button type="reset"
-                                        class="button modal_close"><?php _e( 'No', 'wp-hotel-booking' ) ?></button>
-                                <button type="submit"
-                                        class="button button-primary form_submit"><?php _e( 'Yes', 'wp-hotel-booking' ); ?></button>
+                <# } else { #>
+                    <input type="hidden" name="order_item_id" value="{{ data.order_item_id }}"/>
+                <# } #>
+                <input type="hidden" name="action" value="{{ data.action }}">
+                <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}"/>
+                <?php wp_nonce_field( 'wphb-remove-booking-item', 'wphb_remove_booking_item' ); ?>
+                <button type="reset"
+                        class="button modal_close"><?php _e( 'No', 'wp-hotel-booking' ) ?></button>
+                <button type="submit"
+                        class="button button-primary form_submit"><?php _e( 'Yes', 'wp-hotel-booking' ); ?></button>
             </div>
         </form>
     </div>
@@ -175,14 +170,12 @@ defined( 'ABSPATH' ) || exit;
         <select name="qty" class="number_room_select">
             <option value="0"><?php _e( 'Quantity' ) ?></option>
             <# for ( var i = 1; i <= data.qty; i++ ) { #>
-
-            <# if ( data.qty_selected == i ) { #>
-                <option value="{{ i }}" selected>{{ i }}</option>
+                <# if ( data.qty_selected == i ) { #>
+                    <option value="{{ i }}" selected>{{ i }}</option>
                 <# } else { #>
-                    <option value="{{ i }}">{{ i }}</option>
-                    <# } #>
-
-                        <# } #>
+                        <option value="{{ i }}">{{ i }}</option>
+                <# } #>
+            <# } #>
         </select>
         <# } #>
             <# if ( typeof data.extra !== 'undefined' ) { #>
@@ -197,8 +190,6 @@ defined( 'ABSPATH' ) || exit;
                     <div class="hb_addition_packages">
                         <ul class="hb_addition_packages_ul">
                             <# for ( var _extra in data.extra ) { #>
-                                <div class="{{data.extra[_extra].title}}"></div>
-
                                 <li data-price="{{data.extra[_extra].amount_singular}}">
                                     <div class="hb_extra_optional_right">
                                         <input type="checkbox"
@@ -216,25 +207,22 @@ defined( 'ABSPATH' ) || exit;
                                         </div>
                                         <div class="hb_extra_detail_price">
                                             <# if( data.extra[_extra].respondent === 'number') { #>
-                                                <input type="number" step="1" min="1"
-                                                       name="hb_optional_quantity[{{_extra}}]" value="1"
-                                                       class="hb_optional_quantity"/>
+                                                <input type="number" step="1" min="1" name="hb_optional_quantity[{{_extra}}]" value="1" class="hb_optional_quantity"/>
+                                            <# } else { #>
+                                                <input type="hidden" step="1" min="1" name="hb_optional_quantity[{{_extra}}]" value="1"/>
+                                            <# } #>
+                                             <label>
+                                                <strong>{{data.extra[_extra].price}} /</strong>
+                                                <# if( data.extra[_extra].respondent_name ) { #>
+                                                    <small>{{data.extra[_extra].respondent_name}}</small>
                                                 <# } else { #>
-                                                    <input type="hidden" step="1" min="1"
-                                                           name="hb_optional_quantity[{{_extra}}]" value="1"/>
-                                                    <# } #>
-                                                        <label>
-                                                            <strong>{{data.extra[_extra].price}} /</strong>
-                                                            <# if( data.extra[_extra].respondent_name ) { #>
-                                                                <small>{{data.extra[_extra].respondent_name}}</small>
-                                                                <# } else { #>
-                                                                    <small><?php _e( 'Package', 'wp-hotel-booking' ); ?></small>
-                                                                    <# } #>
-                                                        </label>
+                                                    <small><?php _e( 'Package', 'wp-hotel-booking' ); ?></small>
+                                                <# } #>
+                                            </label>
                                         </div>
                                     </div>
                                 </li>
-                                <# } #>
+                            <# } #>
                         </ul>
                     </div>
                 </div>

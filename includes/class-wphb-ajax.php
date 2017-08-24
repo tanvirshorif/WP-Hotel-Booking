@@ -416,9 +416,11 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		}
 
 		/**
-		 * Book manual add order item.
+		 * Admin manual add booking items.
 		 *
 		 * @since 2.0
+		 *
+		 * @return bool
 		 */
 		public static function admin_add_booking_item() {
 			if ( ! isset( $_POST['hotel-admin-check-room-available'] ) && ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
@@ -496,14 +498,13 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			hb_update_order_item_meta( $order_item_id, 'subtotal', $subtotal );
 			hb_update_order_item_meta( $order_item_id, 'total', $total );
 			hb_update_order_item_meta( $order_item_id, 'tax_total', $total - $subtotal );
-
 			// allow hook
 			do_action( 'hotel_booking_updated_order_item', $order_id, $order_item_id );
 
 			$post = get_post( $order_id );
 
 			ob_start();
-			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-items-template-js.php';
+			require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/booking-details.php';
 			$html = ob_get_clean();
 
 			wp_send_json( array( 'status' => true, 'html' => $html ) );

@@ -29,7 +29,7 @@ $room_extra    = $extra_product->get_extra();
         <div class="hb_addition_package_title">
             <h5 class="hb_addition_package_title_toggle">
                 <a href="javascript:void(0)" class="hb_package_toggle">
-					<?php esc_html_e( 'Optional Extras', 'wp-hb-extra' ); ?>
+					<?php esc_html_e( 'Optional Extras', 'wphb-booking-room' ); ?>
                 </a>
             </h5>
         </div>

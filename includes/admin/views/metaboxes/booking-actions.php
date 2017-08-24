@@ -58,7 +58,7 @@ $booking = WPHB_Booking::instance( $post->ID );
                             selected><?php printf( __( '%s is not available', 'wp-hotel-booking' ), $booking->method_title ) ?></option>
 				<?php endif; ?>
 				<?php foreach ( $methods as $id => $method ) { ?>
-                    <option value="<?php echo esc_attr( $id ) ?>" <?php selected( $booking->method, $id ); ?>><?php printf( '%s(%s)', $method->title, $method->description ) ?></option>
+                    <option value="<?php echo esc_attr( $id ) ?>" <?php selected( $booking->method, $id ); ?>><?php printf( '%s', $method->title ) ?></option>
 				<?php } ?>
             </select>
         </li>
@@ -72,7 +72,7 @@ $booking = WPHB_Booking::instance( $post->ID );
         </div>
         <div id="publishing-action">
             <button name="save" type="submit" class="button button-primary" id="publish">
-				<?php printf( '%s', $post->post_status !== 'auto-draft' ? __( 'Update', 'wp-hotel-booking' ) : __( 'Save Book', 'wp-hotel-booking' ) ) ?>
+				<?php printf( '%s', $post->post_status !== 'auto-draft' ? __( 'Update', 'wp-hotel-booking' ) : __( 'Save', 'wp-hotel-booking' ) ) ?>
             </button>
         </div>
         <div class="clear"></div>

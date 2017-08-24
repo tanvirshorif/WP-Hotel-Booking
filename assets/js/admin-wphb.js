@@ -92,17 +92,21 @@
                 _self = this;
 
             // add room item for booking
-            _doc.on('click', '#add_room_item', _self.add_room_item)
+            _doc.on('click', '#add_room_item', _self.init_add_room_modal)
             // edit booking room item
                 .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
                 // delete booking room item
                 .on('click', '#booking-items .actions .remove', _self.delete_booking_room)
                 // check room available
                 .on('wphb_check_room_available', _self.check_room_available)
+                // enable add cart
+                .on('wphb_enable_add_cart', _self.enable_add_cart)
+                // toggle extra when click toggle button
+                .on('click', '.hb_package_toggle', _self.toggle_extra)
                 // handle modal open
                 .on('wphb_modal_open', _self.modal_open_callback)
                 // save add booking room item
-                .on('wphb_submit_modal', _self.save_item);
+                .on('wphb_submit_modal', _self.add_room_items);
 
             // select customer in admin booking
             _self.select_booking_customer();
@@ -111,7 +115,7 @@
             _self.booking_date_filter();
 
         },
-        add_room_item: function (e) {
+        init_add_room_modal: function (e) {
             e.preventDefault();
             var _self = $(this),
                 _booking_id = _self.data('booking-id');
@@ -172,8 +176,11 @@
             e.preventDefault();
             e.stopPropagation();
 
-            var _self = $(this),
-                _button = $('.form_footer .check_available');
+            var _button = $('.form_footer .check_available'),
+                _last_section = $('#hb_modal_dialog .section:last-child');
+
+            _last_section.children().remove();
+
             form.push({
                 name: 'action',
                 value: 'wphb_admin_check_room_available'
@@ -196,8 +203,49 @@
                     alert(res.message);
                     return;
                 }
-                $('#hb_modal_dialog .section:last-child').append(wp.template('hb-qty')(res));
+                _last_section.append(wp.template('hb-qty')(res));
             });
+        },
+        enable_add_cart: function (e, target, form) {
+            e.preventDefault();
+
+            var _self = $('.number_room_select'),
+                _form = _self.parents('.hb-search-room-results'),
+                _extra_area = _form.find('.hb_addition_package_extra'),
+                _toggle = _extra_area.find('.hb_addition_packages'),
+                _val = _self.val(),
+                _add_cart_button = _form.siblings('.form_footer').find('.button.form_submit');
+
+            if (_val) {
+                // toggle extra
+                _form.parent().siblings().find('.hb_addition_packages').removeClass('active').slideUp();
+                _toggle.removeAttr('style').addClass('active');
+                _extra_area.removeAttr('style').slideDown();
+                // enable add cart button
+                _add_cart_button.prop('disabled', false);
+            } else {
+                alert('xxx');
+                // toggle extra
+                _extra_area.slideUp();
+                // disable add cart button
+                _add_cart_button.prop('disabled', true);
+            }
+        },
+        toggle_extra: function (e) {
+            e.preventDefault();
+
+            var _self = $(this),
+                _parent = _self.parents('.hb_addition_package_extra'),
+                _toggle = _parent.find('.hb_addition_packages');
+
+            _self.toggleClass('active');
+            _toggle.toggleClass('active');
+
+            if (_toggle.hasClass('active')) {
+                _toggle.slideDown();
+            } else {
+                _toggle.slideUp();
+            }
         },
         modal_open_callback: function (e, target, form) {
             e.preventDefault();
@@ -261,8 +309,9 @@
 
             }
         },
-        save_item: function (e, target, form) {
+        add_room_items: function (e, target, form) {
             var _form = $('#booking-details'),
+                _inside = _form.parents('.inside'),
                 _overlay = _form.find('.modal_overlay');
 
             form.push({
@@ -281,7 +330,7 @@
                 _overlay.removeClass('active');
                 if (typeof response.status !== 'undefined') {
                     if (true === response.status) {
-                        _form.html(response.html);
+                        _inside.html(response.html);
                     } else if (typeof  response.message !== 'undefined') {
                         alert(response.message);
                     }
@@ -696,6 +745,7 @@
                     'click .modal_close': 'close_modal',
                     'click .modal_overlay': 'close_modal',
                     'click .form_submit': 'submit_modal',
+                    'change .number_room_select': 'enable_add_item',
                     'click .check_room_available': 'check_room_available'
                 },
                 // construct function
@@ -733,6 +783,11 @@
                 },
                 check_room_available: function () {
                     _doc.trigger('wphb_check_room_available', [this.target, this.modal_data()]);
+
+                    return false;
+                },
+                enable_add_item: function () {
+                    _doc.trigger('wphb_enable_add_cart', [this.target, this.modal_data()]);
 
                     return false;
                 },

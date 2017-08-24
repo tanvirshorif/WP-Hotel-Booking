@@ -14,7 +14,6 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-global $post;
 $booking = WPHB_Booking::instance( $post->ID );
 $rooms   = hb_get_order_items( $post->ID );
 ?>
