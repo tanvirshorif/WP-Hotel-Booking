@@ -135,7 +135,9 @@ global $hb_settings;
     <!--Empty cart-->
     <div class="hb-message message">
         <div class="hb-message-content">
-			<?php _e( 'Your cart is empty!', 'wp-hotel-booking' ) ?>
+			<?php echo __( 'Your cart is empty!', 'wp-hotel-booking' ) ?>
         </div>
     </div>
+    <a href="<?php echo get_site_url( null, 'rooms' ); ?>"
+       class="hb_button "><?php echo __( 'Return to list rooms', 'wp-hotel-booking' ); ?></a>
 <?php } ?>

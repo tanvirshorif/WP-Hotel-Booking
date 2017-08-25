@@ -852,9 +852,8 @@
                 }
             });
         },
-        toggle_payment_description: function (e) {
-            e.preventDefault();
-            var _self = $(this);
+        toggle_payment_description: function () {
+            var _self = this;
 
             if (_self.checked) {
                 $('.hb-payment-method-form:not(.' + this.value + ')').slideUp();
