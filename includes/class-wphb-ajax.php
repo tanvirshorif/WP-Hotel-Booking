@@ -38,8 +38,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'parse_search_params'         => true,
 				'add_to_cart'                 => true,
 				'remove_cart_item'            => true,
-				// load booking user in admin booking page
-				'admin_load_booking_user'     => false,
 				'load_room_ajax'              => false,
 				'admin_check_room_available'  => false,
 				'admin_load_booking_item'     => false,
@@ -234,29 +232,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 				hb_send_json( $return );
 			}
-		}
-
-		/**
-		 * Ajax load user in booking details.
-		 *
-		 * @since 2.0
-		 */
-		public static function admin_load_booking_user() {
-			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
-				return;
-			}
-
-			$user_name = sanitize_text_field( $_POST['user_name'] );
-			global $wpdb;
-			$sql = $wpdb->prepare( "
-				SELECT user.ID, user.user_email, user.user_login FROM $wpdb->users AS user
-				WHERE
-					user.user_login LIKE %s
-			", '%' . $wpdb->esc_like( $user_name ) . '%' );
-
-			$users = $wpdb->get_results( $sql );
-			wp_send_json( $users );
-			die();
 		}
 
 		/**

@@ -244,6 +244,8 @@
 
             // currencies switcher
             _doc.on('change', '.hb_form_currencies_switcher_select', _self.currencies_switcher);
+
+            $('select[name="country"]').select2();
         },
         currencies_switcher: function (e) {
             e.preventDefault();

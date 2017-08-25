@@ -44,6 +44,9 @@
   .post-type-hb_booking #booking-actions ul li label {
     margin-bottom: 5px; }
 
+.post-type-hb_booking #booking-actions .customer_details .select2-container {
+  min-width: 200px !important; }
+
 .post-type-hb_booking #booking-actions .customer_details > span {
   width: auto !important; }
 
@@ -111,6 +114,8 @@
 
 .post-type-hb_booking .column-customer, .post-type-hb_booking .column-total {
   width: 15%; }
+  .post-type-hb_booking .column-customer strong, .post-type-hb_booking .column-total strong {
+    display: block; }
 
 .post-type-hb_booking .column-title, .post-type-hb_booking .column-check_in_date, .post-type-hb_booking .column-check_out_date, .post-type-hb_booking .column-booking_date, .post-type-hb_booking .column-status {
   width: 14%; }

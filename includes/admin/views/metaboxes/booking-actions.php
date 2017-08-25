@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 $booking = WPHB_Booking::instance( $post->ID );
+$users   = get_users( array( 'fields' => array( 'ID' ) ) );
 ?>
 
 <div id="booking-actions">
@@ -35,16 +36,12 @@ $booking = WPHB_Booking::instance( $post->ID );
             <div class="customer_details">
                 <label for="_hb_user_id"></label>
                 <select name="_hb_user_id" id="_hb_user_id">
-					<?php if ( $booking->user_id ) { ?>
-						<?php $user = get_userdata( $booking->user_id ); ?>
-                        <option value="<?php echo esc_attr( $booking->user_id ) ?>"
-                                selected><?php printf( '%s(#%s %s)', $user->user_login, $booking->user_id, $user->user_email ) ?></option>
-					<?php } else {
-						// default customer booking for current user id
-						$id   = get_current_user_id();
-						$user = get_userdata( $id ); ?>
-                        <option value="<?php echo esc_attr( $id ) ?>"
-                                selected><?php printf( '%s(#%s %s)', $user->user_login, $booking->user_id, $user->user_email ) ?></option>
+                    <option value="-1"><?php echo __( '[Guest]', 'wp-hotel-booking' ); ?></option>
+					<?php foreach ( $users as $_users ) {
+						$_id   = $_users->ID;
+						$_user = get_userdata( $_users->ID );
+						?>
+                        <option value="<?php echo esc_attr( $_id ) ?>" <?php echo ( $booking->user_id ) ? ( $booking->user_id == $_id ? 'selected' : '' ) : ''; ?>><?php printf( '%s(#%s %s)', $_user->user_login, $_id, $_user->user_email ) ?></option>
 					<?php } ?>
                 </select>
             </div>

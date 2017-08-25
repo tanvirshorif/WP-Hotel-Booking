@@ -411,7 +411,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					$echo[] = hb_format_order_number( $post_id );
 					break;
 				case 'customer':
-					$echo[] = hb_get_customer_fullname( $post_id, true ) . '<br />';
+					$echo[] = hb_get_customer_fullname( $post_id, true );
 					$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( wp_kses( '<strong>[<a href="%s">%s</a>]</strong>', array(
 						'strong' => array(),
 						'a'      => array( 'href' => array() )

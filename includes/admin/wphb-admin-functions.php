@@ -51,8 +51,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' ),
 
 			'remove_image'            => __( 'Remove this image', 'wp-hotel-booking' ),
-			'date_range'              => __( 'Date range', 'wp-hotel-booking' ),
-			'select_booking_customer' => __( 'Enter user login', 'wp-hotel-booking' ),
+			'date_range'              => __( 'Date range', 'wp-hotel-booking' )
 		);
 
 		return apply_filters( 'hb_admin_i18n', $i18n );

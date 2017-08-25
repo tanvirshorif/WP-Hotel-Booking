@@ -338,34 +338,7 @@
             });
         },
         select_booking_customer: function () {
-            $('#_hb_user_id').select2({
-                placeholder: wphb_admin_js.select_booking_customer,
-                minimumInputLength: 3,
-                ajax: {
-                    url: ajaxurl,
-                    dataType: 'json',
-                    type: 'POST',
-                    quietMillis: 50,
-                    data: function (user_name) {
-                        return {
-                            user_name: user_name.term,
-                            action: 'wphb_admin_load_booking_user',
-                            nonce: hotel_settings.nonce
-                        };
-                    },
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.user_login + '(#' + item.ID + ' ' + item.user_email + ')',
-                                    id: item.ID
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
+            $('#_hb_user_id').select2();
         },
         booking_date_filter: function () {
             $('#hb-booking-date-from').datepicker({
@@ -680,6 +653,8 @@
         admin_select2: function () {
             // select setting page
             $('form[name="hb-admin-settings-form"] select').select2();
+            // select country
+            $('select[name="_hb_customer_country"]').select2();
             // select metabox
             $('.hb-form-field .hb-form-field-input select').select2();
         },
