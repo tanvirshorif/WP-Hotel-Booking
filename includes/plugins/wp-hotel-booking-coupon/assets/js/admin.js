@@ -1,6 +1,6 @@
 ;(function ($) {
 
-    var $doc = $(document);
+    var _doc = $(document);
 
     WPHB_Coupon_Admin_Booking = {
 
@@ -13,7 +13,7 @@
             //remove coupon
                 .on('click', '#remove_coupon', _self.remove_coupon)
                 // on open trigger
-                .on('hb_modal_open', this.openCallback)
+                .on('wphb_modal_open', this.openCallback)
             ;
         },
 
@@ -21,7 +21,8 @@
             e.preventDefault();
             var _self = $(this),
                 _order_id = _self.attr('data-order-id');
-            $(this).hb_modal_box({
+
+            _self.wphb_modal({
                 tmpl: 'hb-coupons',
                 settings: {
                     order_id: _order_id
@@ -87,8 +88,10 @@
 
     };
 
-    $doc.ready(function () {
+    function _ready() {
         WPHB_Coupon_Admin_Booking.init();
-    });
+    }
+
+    _doc.ready(_ready);
 
 })(jQuery);

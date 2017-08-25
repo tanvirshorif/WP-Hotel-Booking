@@ -246,12 +246,6 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'type'  => 'number',
 						'desc'  => __( 'How many times this coupon can be used before it is void.', 'wphb-coupon' ),
 						'min'   => 0
-					),
-					array(
-						'name'   => 'used',
-						'label'  => __( 'Used', 'wphb-coupon' ),
-						'type'   => 'label',
-						'filter' => array( $this, 'get_coupon_usage_meta_box_field' )
 					)
 				);
 			}
@@ -270,19 +264,6 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 			}
 
 			return $value;
-		}
-
-		/**
-		 * Get coupon usage meta box field.
-		 *
-		 * @param $value
-		 *
-		 * @return int
-		 */
-		public function get_coupon_usage_meta_box_field( $value ) {
-			global $post;
-
-			return intval( get_post_meta( $post->ID, '_hb_usage_count', true ) );
 		}
 
 
