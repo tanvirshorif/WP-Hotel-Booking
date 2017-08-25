@@ -488,44 +488,6 @@ if ( ! function_exists( 'hb_room_extra_options' ) ) {
 	}
 }
 
-
-add_action( 'wp_dashboard_setup', 'hb_dashboard_setup' );
-
-if ( ! function_exists( 'hb_dashboard_setup' ) ) {
-	/**
-	 * Set up Hotel Booking statistic in dashboard.
-	 *
-	 * @return bool
-	 */
-	function hb_dashboard_setup() {
-		$current_user = wp_get_current_user();
-		if ( ! $current_user->has_cap( 'edit_hb_rooms' ) ) {
-			return false;
-		}
-
-		wp_add_dashboard_widget( 'dashboard_wphb_statistic', __( 'WP Hotel Booking Statistic', 'wp-hotel-booking' ), 'hb_dashboard_statistic' );
-
-		global $wp_meta_boxes;
-		// admin dashboard
-		$dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
-		// short wphb dashboard on top
-		$dashboard                                    = array_splice( $dashboard, array_search( 'dashboard_wphb_statistic', array_keys( $dashboard ) ), 1 ) + $dashboard;
-		$wp_meta_boxes['dashboard']['normal']['core'] = $dashboard;
-
-		return true;
-	}
-}
-
-if ( ! function_exists( 'hb_dashboard_statistic' ) ) {
-	function hb_dashboard_statistic() {
-		?>
-        <div class="wphb-dashboard-statistic">
-            <p style="color: red; font-size: 20px"><?php _e( 'Processing...', 'wp-hotel-booking' ); ?></p>
-        </div>
-		<?php
-	}
-}
-
 if ( ! function_exists( 'hb_get_return_url' ) ) {
 
 	/**
