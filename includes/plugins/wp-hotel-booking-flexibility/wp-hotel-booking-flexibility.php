@@ -104,7 +104,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
 		private function init_hooks() {
 			add_action( 'init', array( $this, 'load_text_domain' ) );
 
-			add_filter( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
+			add_filter( 'hotel_booking_admin_setting_fields_room', array( $this, 'admin_settings' ) );
 		}
 
 		/**
@@ -154,33 +154,38 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
 		}
 
 		/**
-		 * Admin setting option.
+         * Admin setting options.
+         *
+         * @since 2.0
+         *
+		 * @param $settings
 		 *
-		 * @since 2.0
-		 *
-		 * @param $tabs
+		 * @return array
 		 */
-		public function admin_settings(
-			$tabs
-		) {
-			if ( $tabs !== 'pages' ) {
-				return;
-			}
-			$settings   = hb_settings();
-			$field_name = $settings->get_field_name( 'flexible_booking' );
-			?>
-            <table class="form-table">
-                <tr>
-                    <th><?php _e( 'Flexible Booking', 'wphb-booking-room' ); ?></th>
-                    <td>
-                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="0"/>
-                        <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>"
-						       <?php checked( $settings->get( 'flexible_booking' ) ? 1 : 0, 1 ); ?>value="1"/>
-                        <p class="description"><?php _e( 'Enable flexible booking', 'wphb-flex' ); ?></p>
-                    </td>
-                </tr>
-            </table>
-			<?php
+		public function admin_settings( $settings ) {
+			$prefix = 'tp_hotel_booking_';
+
+			$booking_flexible_settings = apply_filters( 'wphb_flexible_admin_setting_fields', array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'booking_flexible_settings',
+					'title' => __( 'Booking Flexibility Add-on', 'wphb-booking-room' ),
+					'desc'  => __( 'Settings for WP Hotel Booking Flexibility add-on', 'wphb-flex' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'flexible_booking',
+					'title'   => __( 'Enable', 'wphb-booking-room' ),
+					'default' => 1,
+					'desc'    => __( 'Allow booking with time picker', 'wphb-flex' )
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'booking_flexible_settings'
+				),
+			) );
+
+			return array_merge( $settings, $booking_flexible_settings );
 		}
 	}
 

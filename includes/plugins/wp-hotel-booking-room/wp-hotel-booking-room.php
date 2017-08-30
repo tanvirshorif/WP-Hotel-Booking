@@ -109,7 +109,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 		 */
 		private function init_hooks() {
 			// add admin settings
-			add_filter( 'hotel_booking_admin_setting_fields_room', array( $this, 'booking_room_settings' ) );
+			add_filter( 'hotel_booking_admin_setting_fields_room', array( $this, 'admin_settings' ) );
 
 			add_action( 'init', array( $this, 'load_text_domain' ) );
 		}
@@ -126,12 +126,14 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 
 		/**
 		 * Admin settings option.
+         *
+         * @since 2.0
 		 *
 		 * @param $settings
 		 *
 		 * @return array
 		 */
-		public function booking_room_settings( $settings ) {
+		public function admin_settings( $settings ) {
 
 			$prefix = 'tp_hotel_booking_';
 
