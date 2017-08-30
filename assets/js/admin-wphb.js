@@ -45,7 +45,7 @@
                 return;
             }
 
-            var _self = this,
+            var _self = $(this),
                 _package_id = _self.data('id'),
                 _extra = _self.parents('.tp_extra_form_fields');
 
@@ -682,6 +682,8 @@
 
     function _ready() {
         WPHB_Admin_Booking.init();
+
+        WPHB_Admin_Extra.init();
 
         WPHB_Admin_Pricing_Plan.init();
 
