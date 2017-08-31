@@ -106,7 +106,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 */
 		public static function parse_search_params() {
 			check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
-			$params = array(
+			$params = apply_filters( 'hb_search_room_params', array(
 				'hotel-booking'     => hb_get_request( 'hotel-booking' ),
 				'check_in_date'     => hb_get_request( 'check_in_date' ),
 				'check_out_date'    => hb_get_request( 'check_out_date' ),
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'adults'            => hb_get_request( 'adults_capacity' ),
 				'max_child'         => hb_get_request( 'max_child' ),
 				'room_location'     => hb_get_request( 'room_location' )
-			);
+			) );
 
 			$return = apply_filters( 'hotel_booking_parse_search_param', array(
 				'success' => 1,

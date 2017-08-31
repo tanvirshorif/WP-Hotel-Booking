@@ -88,10 +88,10 @@
   font-size: 15px;
   color: #2a2a2a; }
 
-.hb_input_field {
+.hb_datepicker_input_field {
   position: relative;
   display: inline-block; }
-  .hb_input_field:after {
+  .hb_datepicker_input_field:after {
     position: absolute;
     content: '\f073';
     color: #aaa;

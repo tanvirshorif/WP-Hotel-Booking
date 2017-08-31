@@ -103,14 +103,15 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$max_child = hb_get_request( 'max_child', 0 );
 			$location  = hb_get_request( 'room_location', 0 );
 
-			$atts = wp_parse_args(
-				$atts, array(
-					'check_in_date'  => $start_date,
-					'check_out_date' => $end_date,
-					'adults'         => $adults,
-					'max_child'      => $max_child,
-					'location'       => $location,
-					'search_page'    => null
+			$atts = apply_filters( 'hb_search_room_args', wp_parse_args(
+					$atts, array(
+						'check_in_date'  => $start_date,
+						'check_out_date' => $end_date,
+						'adults'         => $adults,
+						'max_child'      => $max_child,
+						'location'       => $location,
+						'search_page'    => null
+					)
 				)
 			);
 
@@ -144,15 +145,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 						break;
 					}
 					$template                 = 'search/results.php';
-					$template_args['results'] = hb_search_rooms(
-						array(
-							'check_in_date'  => $start_date,
-							'check_out_date' => $end_date,
-							'adults'         => $adults,
-							'max_child'      => $max_child,
-							'location'       => $location
-						)
-					);
+					$template_args['results'] = hb_search_rooms( $atts );
 					break;
 				default:
 					break;

@@ -7,44 +7,46 @@
         return Number(a) || ( a % 1 === 0 );
     }
 
+    function timeToSecond(time) {
+        var hour = time.substring(0, 2),
+            session = time.slice(2),
+            seconds = hour * 60 * 60 - 1;
+
+        if (session === 'PM') {
+            seconds += 12 * 60 * 60;
+        }
+        return seconds;
+    }
+
     var WPHB_Flex = {
         init: function () {
 
             var _doc = $(document),
-                _self = this,
-                _today = new Date(),
-                _tomorrow = new Date();
+                _self = this;
 
-            var _min = hotel_settings.min_booking_date;
-            if (!isInteger(_min)) {
-                _min = 1;
-            }
-
-            _tomorrow.setDate(_today.getDate() + _min);
-
-            _self.datetime_picker_check_in(_today);
-            _self.datetime_picker_check_out(_tomorrow);
+            _self.check_in_time_picker();
+            _self.check_out_time_picker();
         },
-        datetime_picker_check_in: function (_today) {
-            var _check_in = $('input[id^="check_in_date"]');
+        check_in_time_picker: function () {
+            var _check_in = $('input[id^="check_in_time"]'),
+                _time = _check_in.siblings('input[name="hb_check_in_time"]');
 
-            _check_in.datepicker('destroy');
-
-            _check_in.datetimepicker({
-                minDate: _today,
-                dateFormat: wphb_js.date_time_format,
-                defaultTime: '00:00'
+            _check_in.timepicker({
+                'timeFormat': 'H:i A',
+                'step': '60'
+            }).on('changeTime', function () {
+                _time.val(timeToSecond(_check_in.val()));
             });
         },
-        datetime_picker_check_out: function (_tomorrow) {
-            var _check_out = $('input[id^="check_out_date"]');
+        check_out_time_picker: function () {
+            var _check_out = $('input[id^="check_out_time_"]'),
+                _time = _check_out.siblings('input[name="hb_check_out_time"]');
 
-            _check_out.datepicker('destroy');
-
-            _check_out.datetimepicker({
-                minDate: _tomorrow,
-                dateFormat: wphb_js.date_time_format,
-                defaultTime: '00:00'
+            _check_out.timepicker({
+                'timeFormat': 'H:i A',
+                'step': '60'
+            }).on('changeTime', function () {
+                _time.val(timeToSecond(_check_out.val()));
             });
         }
     };
