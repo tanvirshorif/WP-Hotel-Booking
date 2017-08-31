@@ -86,8 +86,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'    => 'checkbox',
 					'id'      => $prefix . 'multiple_location',
 					'title'   => __( 'Multiple Location', 'wp-hotel-booking' ),
-					'desc'    => __( 'Enable multiple location', 'wp-hotel-booking' ),
-					'default' => 0
+					'default' => 0,
+					'desc'    => __( 'Enable multiple location', 'wp-hotel-booking' )
 				),
 				array(
 					'type' => 'section_end',

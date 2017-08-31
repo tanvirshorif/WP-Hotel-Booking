@@ -96,7 +96,6 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 			$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
 			$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
 
-
 			$extend_join       = apply_filters( 'hb_search_room_extent_join', '' );
 			$extend_conditions = apply_filters( 'hb_search_room_extent_conditions', '', $location );
 
