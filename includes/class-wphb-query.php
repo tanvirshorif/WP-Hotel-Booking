@@ -41,9 +41,11 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 		 */
 		public function __construct( $params = null ) {
 			if ( $params['location'] ) {
-				add_filter( 'hb_search_room_extent_join', array( $this, 'location_join' ) );
-				add_filter( 'hb_search_room_extent_conditions', array( $this, 'location_conditions' ), 10, 2 );
+				add_filter( 'hb_search_room_extend_join', array( $this, 'location_join' ) );
+				add_filter( 'hb_search_room_extend_conditions', array( $this, 'location_conditions' ), 10, 2 );
 			}
+
+			add_filter( 'hb_search_booking_except_conditions', array( $this, 'booking_except_conditions' ), 10, 3 );
 		}
 
 		/**
@@ -77,6 +79,27 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 		}
 
 		/**
+		 * Where conditions when except booking search room.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $default
+		 * @param $check_in
+		 * @param $check_out
+		 *
+		 * @return string
+		 */
+		public function booking_except_conditions( $default, $check_in, $check_out ) {
+
+			$conditions = "( check_in.meta_value >= $check_in AND check_in.meta_value <= $check_out )
+						OR 	( check_out.meta_value >= $check_in AND check_out.meta_value <= $check_out )
+						OR 	( check_in.meta_value <= $check_in AND check_out.meta_value > $check_out )";
+
+			return $conditions;
+
+		}
+
+		/**
 		 * Search rooms query.
 		 *
 		 * @since 2.0
@@ -96,34 +119,33 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 			$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
 			$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
 
-			$extend_join       = apply_filters( 'hb_search_room_extent_join', '' );
-			$extend_conditions = apply_filters( 'hb_search_room_extent_conditions', '', $location );
+			$extend_join       = apply_filters( 'hb_search_room_extend_join', '' );
+			$extend_conditions = apply_filters( 'hb_search_room_extend_conditions', '', $location );
+
+			$booking_except_join       = apply_filters( 'hb_search_booking_except_join', '' );
+			$booking_except_conditions = apply_filters( 'hb_search_booking_except_conditions', '', $check_in_date_to_time, $check_out_date_to_time );
 
 			$results = array();
 
-			$not = $wpdb->prepare( "
-			(
-				SELECT COALESCE( SUM( meta.meta_value ), 0 ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
+			$except = $wpdb->prepare( "
+				( SELECT COALESCE( SUM( meta.meta_value ), 0 ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
 					LEFT JOIN {$wpdb->hotel_booking_order_items} AS order_item ON order_item.order_item_id = meta.hotel_booking_order_item_id AND meta.meta_key = %s
-					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS itemmeta ON order_item.order_item_id = itemmeta.hotel_booking_order_item_id AND itemmeta.meta_key = %s
-					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkin ON order_item.order_item_id = checkin.hotel_booking_order_item_id AND checkin.meta_key = %s
-					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkout ON order_item.order_item_id = checkout.hotel_booking_order_item_id AND checkout.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS item_meta ON order_item.order_item_id = item_meta.hotel_booking_order_item_id AND item_meta.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS check_in ON order_item.order_item_id = check_in.hotel_booking_order_item_id AND check_in.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS check_out ON order_item.order_item_id = check_out.hotel_booking_order_item_id AND check_out.meta_key = %s
 					LEFT JOIN {$wpdb->posts} AS booking ON booking.ID = order_item.order_id
+					{$booking_except_join}
 				WHERE
-						itemmeta.meta_value = rooms.ID
-					AND (
-							( checkin.meta_value >= %d AND checkin.meta_value <= %d )
-						OR 	( checkout.meta_value >= %d AND checkout.meta_value <= %d )
-						OR 	( checkin.meta_value <= %d AND checkout.meta_value > %d )
-					)
+					item_meta.meta_value = rooms.ID
+					AND ({$booking_except_conditions})
 					AND booking.post_type = %s
 					AND booking.post_status IN ( %s, %s, %s )
-			)
-		", 'qty', 'product_id', 'check_in_date', 'check_out_date', $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
+				)",
+				'qty', 'product_id', 'check_in_date', 'check_out_date', 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
 			);
 
 			$query = $wpdb->prepare( "
-				SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
+				SELECT rooms.*, ( number.meta_value - {$except} ) AS available_rooms FROM $wpdb->posts AS rooms
 				    LEFT JOIN {$wpdb->postmeta} AS number ON rooms.ID = number.post_id AND number.meta_key = %s
 					LEFT JOIN {$wpdb->postmeta} AS pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
 					LEFT JOIN {$wpdb->termmeta} AS term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s

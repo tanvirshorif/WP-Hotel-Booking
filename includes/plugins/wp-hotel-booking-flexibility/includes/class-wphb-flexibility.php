@@ -48,8 +48,9 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 			add_action( 'hotel_booking_after_check_out_field', array( $this, 'check_out_time' ), 10, 2 );
 
 			add_filter( 'hb_search_room_params', array( $this, 'time_picker_params' ) );
-
 			add_filter( 'hb_search_room_args', array( $this, 'search_room_args' ) );
+			add_filter( 'hb_search_booking_except_join', array( $this, 'booking_except_join' ), 20, 3 );
+			add_filter( 'hb_search_booking_except_conditions', array( $this, 'booking_except_conditions' ), 20, 3 );
 		}
 
 		/**
@@ -136,8 +137,8 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 		}
 
 		/**
-         * Add time to search room args.
-         *
+		 * Add time to search room args.
+		 *
 		 * @param $args
 		 *
 		 * @return array
@@ -149,6 +150,36 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 			);
 
 			return array_merge( $args, $time );
+		}
+
+
+		public function booking_except_join() {
+			global $wpdb;
+
+			$join = "LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS time_in ON order_item.order_item_id = time_in.hotel_booking_order_item_id AND time_in.meta_key = 'check_in_time'
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS time_out ON order_item.order_item_id = time_out.hotel_booking_order_item_id AND time_out.meta_key = 'check_out_time'";
+
+			return $join;
+		}
+
+		/**
+		 * Where conditions when except booking search room.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $default
+		 * @param $check_in
+		 * @param $check_out
+		 *
+		 * @return string
+		 */
+		public function booking_except_conditions( $default, $check_in, $check_out ) {
+
+			$conditions = "( check_in.meta_value > $check_in AND check_in.meta_value < $check_out )
+						OR 	( check_out.meta_value > $check_in AND check_out.meta_value < $check_out )
+						OR 	( check_in.meta_value < $check_in AND check_out.meta_value > $check_out )";
+
+			return $conditions;
 		}
 
 		/**

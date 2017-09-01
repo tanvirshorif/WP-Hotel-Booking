@@ -103,15 +103,14 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$max_child = hb_get_request( 'max_child', 0 );
 			$location  = hb_get_request( 'room_location', 0 );
 
-			$atts = apply_filters( 'hb_search_room_args', wp_parse_args(
-					$atts, array(
-						'check_in_date'  => $start_date,
-						'check_out_date' => $end_date,
-						'adults'         => $adults,
-						'max_child'      => $max_child,
-						'location'       => $location,
-						'search_page'    => null
-					)
+			$atts = wp_parse_args(
+				$atts, array(
+					'check_in_date'  => $start_date,
+					'check_out_date' => $end_date,
+					'adults'         => $adults,
+					'max_child'      => $max_child,
+					'location'       => $location,
+					'search_page'    => null
 				)
 			);
 
@@ -144,9 +143,15 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 					if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
 						break;
 					}
-					$query                    = WPHB_Query::instance($atts);
+					$query                    = WPHB_Query::instance( $atts );
 					$template                 = 'search/results.php';
-					$template_args['results'] = $query->search_rooms( $atts );
+					$template_args['results'] = $query->search_rooms( apply_filters( 'hb_search_room_args', array(
+						'check_in_date'  => $start_date,
+						'check_out_date' => $end_date,
+						'adults'         => $adults,
+						'max_child'      => $max_child,
+						'location'       => $location
+					) ) );
 					break;
 				default:
 					break;
@@ -176,9 +181,10 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			);
 			$query  = new WP_Query( $args );
 
-			if ( $query->have_posts() ):
+			if ( $query->have_posts() ) {
 				hb_get_template( 'shortcodes/latest-reviews.php', array( 'atts' => $atts, 'query' => $query ) );
-			endif;
+			}
+			wp_reset_postdata();
 		}
 
 		/**
@@ -197,9 +203,10 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			);
 			$query  = new WP_Query( $args );
 
-			if ( $query->have_posts() ):
+			if ( $query->have_posts() ) {
 				hb_get_template( 'shortcodes/best-reviews.php', array( 'atts' => $atts, 'query' => $query ) );
-			endif;
+			}
+			wp_reset_postdata();
 		}
 
 		/**
@@ -271,21 +278,16 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			remove_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 			$query = new WP_Query( $args );
 
-			if ( $query->have_posts() ):
+			if ( $query->have_posts() ) {
 				hotel_booking_room_loop_start();
-
-				while ( $query->have_posts() ) : $query->the_post();
-
+				while ( $query->have_posts() ) {
+					$query->the_post();
 					hb_get_template_part( 'content', 'room' );
-
-				endwhile; // end of the loop.
-
+				} // end of the loop.
 				hotel_booking_room_loop_end();
-			else:
-
+			} else {
 				_e( 'No room found', 'wp-hotel-booking' );
-
-			endif;
+			}
 			wp_reset_postdata();
 			/* add action again */
 			add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
@@ -309,9 +311,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			);
 			$query = new WP_Query( $args );
 
-			if ( $query->have_posts() ):
+			if ( $query->have_posts() ) {
 				hb_get_template( 'shortcodes/rooms-carousel.php', array( 'atts' => $atts, 'query' => $query ) );
-			endif;
+			}
 		}
 
 		/**

@@ -53,8 +53,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Stripe_Payment' ) ) {
 		 * @since 2.0
 		 */
 		public function init() {
-			if ( WPHB_VERSION && version_compare( WPHB_VERSION, '2.0' ) >= 0 ) {
-				if ( self::wphb_is_active() ) {
+			if ( self::wphb_is_active() ) {
+				if ( WPHB_VERSION && version_compare( WPHB_VERSION, '2.0' ) >= 0 ) {
 					$this->define_constants();
 					$this->includes();
 					$this->init_hooks();

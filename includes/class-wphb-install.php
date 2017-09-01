@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 
 			// set booking received endpoint transient
-			set_transient('wphb_booking_received_endpoint', 1, 60);
+			set_transient('wphb_booking_received_endpoint', 1, WEEK_IN_SECONDS);
 		}
 
 		/**
