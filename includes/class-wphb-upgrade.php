@@ -29,10 +29,46 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 		 * Upgrade function.
 		 */
 		public static function upgrade() {
-			if ( empty(WPHB_VERSION) || version_compare( WPHB_VERSION, '2.0', ' < ' ) ) {
+			if ( empty( WPHB_VERSION ) || version_compare( WPHB_VERSION, '1.6' ) < 0 ) {
 				self::update_metadata();
-				self::deactivate_plugins();
 			}
+
+			if ( ! get_option( 'wphb_upgrade_2.0' ) ) {
+				self::update_booking_time();
+			}
+
+			self::deactivate_plugins();
+		}
+
+		/**
+		 * Update booking time metadata.
+		 *
+		 * @since 2.0
+		 */
+		public static function update_booking_time() {
+
+			global $wpdb;
+
+			// select booking does not has time meta
+			$query = $wpdb->prepare( "
+				SELECT DISTINCT meta.hotel_booking_order_item_id FROM wp_hotel_booking_order_itemmeta AS meta
+				WHERE
+  					meta.hotel_booking_order_item_id NOT IN (SELECT meta.hotel_booking_order_item_id FROM wp_hotel_booking_order_itemmeta AS meta WHERE meta.meta_key = %s OR meta.meta_key = %s)",
+				'check_in_time', 'check_out_time' );
+
+			// add default booking time meta
+			if ( $booking = $wpdb->get_results( $query, ARRAY_N ) ) {
+				foreach ( $booking as $id ) {
+					$query = $wpdb->prepare( "INSERT INTO {$wpdb->prefix}hotel_booking_order_itemmeta (hotel_booking_order_item_id, meta_key, meta_value) 
+						VALUES (%d, 'check_in_time', 0),
+							   (%d, 'check_out_time', %d)",
+						$id[0], $id[0], DAY_IN_SECONDS - 1 );
+
+					$wpdb->query( $query );
+				}
+			}
+
+			update_option( 'wphb_upgrade_2.0', true );
 		}
 
 		/**
@@ -46,10 +82,8 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 			/**
 			 * Upgrade pricing plans
 			 */
-
 			$sql = $wpdb->prepare( "
-			        SELECT
-			            plan.ID AS plan_id, room.ID AS room_id, metaprice.meta_value AS prices
+			        SELECT plan.ID AS plan_id, room.ID AS room_id, metaprice.meta_value AS prices
 			        FROM $wpdb->posts AS plan
 			            INNER JOIN $wpdb->postmeta AS metaprice ON metaprice.post_id = plan.ID AND metaprice.meta_key = %s
 			            INNER JOIN $wpdb->postmeta AS metaroom ON metaroom.post_id = plan.ID AND metaroom.meta_key = %s
@@ -107,13 +141,7 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 			}
 
 			/**
-			 * END upgrade pricing plans
-			 */
-
-
-			/**
 			 * Upgrade booking item
-			 * @var
 			 */
 			$sql = $wpdb->prepare( "
         SELECT param.* FROM $wpdb->posts AS booking
@@ -169,8 +197,8 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 											hb_add_order_item_meta( $order_package_item_id, 'check_in_date', strtotime( $meta['check_in_date'] ) );
 											hb_add_order_item_meta( $order_package_item_id, 'check_out_date', strtotime( $meta['check_out_date'] ) );
 
-											if ( class_exists( 'HB_Extra_Package' ) ) {
-												$package = HB_Extra_Package::instance( $package_id, array(
+											if ( class_exists( 'WPHB_Extra_Package' ) ) {
+												$package = WPHB_Extra_Package::instance( $package_id, array(
 													'check_in_date'  => $meta['check_in_date'],
 													'check_out_date' => $meta['check_out_date'],
 													'room_quantity'  => $meta['quantity'],
@@ -188,8 +216,6 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 								}
 							}
 						}
-						// delete old meta data
-						// delete_post_meta( $booking_id, '_hb_booking_params' );
 					} else if ( $param->meta_key === '_hb_booking_cart_params' ) {
 						$parents = array();
 						foreach ( $params as $cart_id => $param ) {
@@ -210,33 +236,26 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 							hb_add_order_item_meta( $order_item_id, 'total', $param->amount_include_tax );
 							hb_add_order_item_meta( $order_item_id, 'tax_total', $param->amount_tax );
 						}
-						// delete old meta data
-						// delete_post_meta( $booking_id, '_hb_booking_cart_params' );
 					}
 				}
 			}
-			/**
-			 * End upgrade booking
-			 */
 
 			/**
 			 * Upgrade customer
 			 */
-			$sql       = $wpdb->prepare( "
-		        SELECT customer.ID AS cus_ID, bookmeta.post_id as book_ID FROM $wpdb->posts AS customer
-		            LEFT JOIN $wpdb->postmeta AS meta ON customer.ID = meta.post_id
-		            LEFT JOIN $wpdb->postmeta AS bookmeta ON bookmeta.meta_value = customer.ID
-		        WHERE
-		            customer.post_type = %s
-		            AND meta.meta_key = %s
-		            AND bookmeta.meta_key = %s
-		    ", 'hb_customer', '_hb_email', '_hb_customer_id' );
+			$sql = $wpdb->prepare( "
+			        SELECT customer.ID AS cus_ID, bookmeta.post_id as book_ID FROM $wpdb->posts AS customer
+			            LEFT JOIN $wpdb->postmeta AS meta ON customer.ID = meta.post_id
+			            LEFT JOIN $wpdb->postmeta AS bookmeta ON bookmeta.meta_value = customer.ID
+			        WHERE
+			            customer.post_type = %s
+			            AND meta.meta_key = %s
+			            AND bookmeta.meta_key = %s
+	                ", 'hb_customer', '_hb_email', '_hb_customer_id' );
+
 			$customers = $wpdb->get_results( $sql );
 
-			$query = "INSERT INTO $wpdb->postmeta
-				    ( post_id, meta_key, meta_value )
-				    VALUES
-";
+			$query = "INSERT INTO $wpdb->postmeta ( post_id, meta_key, meta_value ) VALUES";
 
 			if ( $customers ) {
 				$insert = array();
@@ -264,15 +283,11 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 				// execute query
 				$wpdb->query( $query );
 			}
-			/**
-			 * End upgrade customer
-			 */
 
 			/**
 			 * Upgrade room capacities
 			 * Move option capacity quantity adults => term meta
 			 */
-
 			$terms = get_terms( array( 'hb_room_capacity' ), array(
 				'taxonomy'   => 'hb_room_capacity',
 				'hide_empty' => 0,
@@ -291,10 +306,6 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 					}
 				}
 			}
-
-			/**
-			 * End upgrade room capacities
-			 */
 		}
 
 		/**

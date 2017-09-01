@@ -233,15 +233,34 @@ if ( ! function_exists( 'hb_empty_booking_order_items' ) ) {
 	}
 }
 
-// add order item meta
 if ( ! function_exists( 'hb_add_order_item_meta' ) ) {
+	/**
+	 * Add booking item meta.
+	 *
+	 * @param null $item_id
+	 * @param null $meta_key
+	 * @param null $meta_value
+	 * @param bool $unique
+	 *
+	 * @return false|int
+	 */
 	function hb_add_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $unique = false ) {
 		return add_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $unique );
 	}
 }
 
-// update order item meta
+
 if ( ! function_exists( 'hb_update_order_item_meta' ) ) {
+	/**
+	 * Update booking item meta.
+	 *
+	 * @param null $item_id
+	 * @param null $meta_key
+	 * @param null $meta_value
+	 * @param bool $prev_value
+	 *
+	 * @return bool|int
+	 */
 	function hb_update_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $prev_value = false ) {
 		return update_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $prev_value );
 	}
