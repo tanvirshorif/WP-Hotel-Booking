@@ -69,10 +69,12 @@ $rooms   = hb_get_order_items( $post->ID );
 					<?php printf( '<a href="%s">%s</a>', get_edit_post_link( hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
                 </td>
                 <td>
-					<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
+					<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ); ?>
+					<?php do_action( 'hb_booking_admin_booking_check_in', $room->order_item_id ); ?>
                 </td>
                 <td>
 					<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
+					<?php do_action( 'hb_booking_admin_booking_check_out', $room->order_item_id ); ?>
                 </td>
                 <td>
 					<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
@@ -111,7 +113,7 @@ $rooms   = hb_get_order_items( $post->ID );
 							<?php echo esc_html( hb_get_order_item_meta( $package->order_item_id, 'qty', true ) ); ?>
                         </td>
                         <td>
-	                        <?php echo hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ); ?>
+							<?php echo hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ); ?>
                         </td>
                         <td class="actions">
 							<?php if ( $extra->respondent === 'number' ) { ?>

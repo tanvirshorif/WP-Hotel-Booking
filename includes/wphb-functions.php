@@ -1837,16 +1837,34 @@ if ( ! function_exists( 'hb_get_date_format' ) ) {
 	 * @return mixed
 	 */
 	function hb_get_date_format() {
-		$dateFormat = get_option( 'date_format' );
+		$date_format = get_option( 'date_format' );
 
-		$dateCustomFormat = get_option( 'date_format_custom' );
-		if ( ! $dateFormat && $dateCustomFormat ) {
-			$dateFormat = $dateCustomFormat;
+		$custom = get_option( 'date_format_custom' );
+		if ( ! $date_format && $custom ) {
+			$date_format = $custom;
 		}
 
-		return $dateFormat;
+		return $date_format;
 	}
 
+}
+
+if ( ! function_exists( 'hb_get_time_format' ) ) {
+	/**
+     * Get system time format.
+     *
+	 * @return mixed
+	 */
+	function hb_get_time_format() {
+		$time_format = get_option( 'time_format' );
+
+		$custom = get_option( 'time_format_custom' );
+		if ( ! $time_format && $custom ) {
+			$time_format = $custom;
+		}
+
+		return $time_format;
+	}
 }
 
 if ( ! function_exists( 'hb_get_pages' ) ) {

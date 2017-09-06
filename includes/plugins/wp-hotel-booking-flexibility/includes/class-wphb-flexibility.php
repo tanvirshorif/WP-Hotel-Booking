@@ -51,6 +51,10 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 			add_filter( 'hb_search_room_args', array( $this, 'search_room_args' ) );
 			add_filter( 'hb_search_booking_except_join', array( $this, 'booking_except_join' ), 20, 3 );
 			add_filter( 'hb_search_booking_except_conditions', array( $this, 'booking_except_conditions' ), 20, 3 );
+
+			// add booking time in booking admin page
+			add_action( 'hb_booking_admin_booking_check_in', array( $this, 'admin_check_in_time' ) );
+			add_action( 'hb_booking_admin_booking_check_out', array( $this, 'admin_check_out_time' ) );
 		}
 
 		/**
@@ -180,6 +184,28 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 						OR 	( check_in.meta_value < $check_in AND check_out.meta_value > $check_out )";
 
 			return $conditions;
+		}
+
+		/**
+		 * Add check in time in booking admin page.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $order_item_id
+		 */
+		public function admin_check_in_time( $order_item_id ) {
+			printf( '%s', date_i18n( hb_get_time_format(), hb_get_order_item_meta( $order_item_id, 'check_in_time', true ) + 1 ) );
+		}
+
+		/**
+		 * Add check out time in booking admin page.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $order_item_id
+		 */
+		public function admin_check_out_time( $order_item_id ) {
+			printf( '%s', date_i18n( hb_get_time_format(), hb_get_order_item_meta( $order_item_id, 'check_out_time', true ) + 1 ) );
 		}
 
 		/**

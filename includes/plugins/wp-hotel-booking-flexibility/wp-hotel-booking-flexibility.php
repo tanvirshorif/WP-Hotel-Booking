@@ -94,6 +94,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Flexibility' ) ) {
 		 */
 		public function includes() {
 			require_once WPHB_FLEX_ABSPATH . '/includes/class-wphb-flexibility.php';
+			require_once WPHB_FLEX_ABSPATH . '/includes/wphb-flexibility-functions.php';
 		}
 
 		/**
