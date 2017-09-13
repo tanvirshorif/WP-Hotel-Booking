@@ -180,6 +180,7 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 					$fields[ $k ]['attr']['disabled'] = 'disabled';
 				}
 			}
+
 			return $fields;
 		}
 
@@ -401,17 +402,19 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 				}
 			}
 
-			$booked = $wpdb->get_var( $wpdb->prepare( "
-			SELECT COUNT( DISTINCT x.hotel_booking_order_item_id ) FROM $wpdb->hotel_booking_order_itemmeta AS x
-			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS y ON x.hotel_booking_order_item_id = y.hotel_booking_order_item_id
-			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS z ON x.hotel_booking_order_item_id = z.hotel_booking_order_item_id
+			$booked                      = $wpdb->get_var( $wpdb->prepare( "
+			SELECT COUNT( DISTINCT product.hotel_booking_order_item_id ) FROM $wpdb->hotel_booking_order_itemmeta AS product
+			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS check_in ON product.hotel_booking_order_item_id = check_in.hotel_booking_order_item_id
+			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS check_out ON product.hotel_booking_order_item_id = check_out.hotel_booking_order_item_id
+			LEFT JOIN $wpdb->hotel_booking_order_items AS items ON product.hotel_booking_order_item_id = items.order_item_id
+			LEFT JOIN {$wpdb->posts} AS booking ON booking.ID = items.order_id
 			WHERE 
-			(x.meta_key = 'product_id' AND x.meta_value IN ('%d'))
-			AND (
-							( y.meta_key = 'check_in_date' AND z.meta_key = 'check_out_date' AND z.meta_value >= %d AND y.meta_value <= %d )
-  							OR ( y.meta_key = 'check_in_date' AND y.meta_key >= %d AND y.meta_key <= %d  )
-					)
-		", $except_ids, $check_in_date, $check_in_date, $check_in_date, $check_out_date ) );
+			(product.meta_key = 'product_id' AND product.meta_value IN ('%d'))
+			AND ( ( check_in.meta_key = 'check_in_date' AND check_out.meta_key = 'check_out_date' AND check_out.meta_value >= %d AND check_in.meta_value <= %d ) 
+					OR ( check_in.meta_key = 'check_in_date' AND check_in.meta_key >= %d AND check_in.meta_key <= %d  )
+			)
+			AND booking.post_status IN ( %s, %s, %s )
+		", $except_ids, $check_in_date, $check_in_date, $check_in_date, $check_out_date, 'hb-completed', 'hb-processing', 'hb-pending' ) );
 
 			$room->post->available_rooms = $room->post->available_rooms - $booked;
 
@@ -429,7 +432,7 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 		 * @return mixed
 		 */
 		public function hotel_booking_pricing_plans( $plans, $id ) {
-			remove_filter( 'hb_room_get_pricing_plans', array( $this, 'hotel_booking_pricing_plans' ), 10);
+			remove_filter( 'hb_room_get_pricing_plans', array( $this, 'hotel_booking_pricing_plans' ), 10 );
 			if ( ( $primary_room_id = $this->get_object_default_language( $id, 'hb_room' ) ) && $primary_room_id != $id ) {
 				$plans = hb_room_get_pricing_plans( $primary_room_id );
 			}
