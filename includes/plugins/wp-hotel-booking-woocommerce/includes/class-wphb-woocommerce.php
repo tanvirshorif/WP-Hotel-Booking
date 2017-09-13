@@ -76,7 +76,6 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 				// display tax price
 				add_filter( 'hotel_booking_cart_tax_display', array( $this, 'cart_tax_display' ) );
 				add_filter( 'hotel_booking_get_cart_total', array( $this, 'cart_total_result_display' ) );
-				add_action( 'hb_booking_status_changed', array( $this, 'booking_status_changed' ), 10, 3 );
 				add_action( 'template_redirect', array( $this, 'template_redirect' ), 50 );
 				/**
 				 * Woocommerce hook
@@ -738,37 +737,6 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			global $woocommerce;
 
 			return wc_price( $woocommerce->cart->total );
-		}
-
-		/**
-		 * Trigger booking changed status.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $booking_id
-		 * @param $old_status
-		 * @param $new_status
-		 */
-		public function booking_status_changed( $booking_id, $old_status, $new_status ) {
-			if ( $old_status === $new_status ) {
-				return;
-			}
-
-			remove_action( 'hb_booking_status_changed', array( $this, 'booking_status_changed' ), 10 );
-
-			$booking      = WPHB_Booking::instance( $booking_id );
-			$woo_order_id = $booking->woo_order_id;
-
-			if ( $woo_order_id ) {
-				$order = new WC_Order( $woo_order_id );
-				if ( in_array( $new_status, array( 'completed', 'pending', 'processing' ) ) ) {
-					$order->update_status( $new_status );
-				} else {
-					$order->update_status( 'pending' );
-				}
-			}
-
-			add_action( 'hb_booking_status_changed', array( $this, 'booking_status_changed' ), 10, 3 );
 		}
 
 		/**

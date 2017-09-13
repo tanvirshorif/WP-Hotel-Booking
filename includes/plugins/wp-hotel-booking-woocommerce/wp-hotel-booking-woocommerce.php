@@ -125,6 +125,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 */
 		public function includes() {
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-woocommerce.php';
+			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-payment-gateway.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-room.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-package.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-checkout.php';

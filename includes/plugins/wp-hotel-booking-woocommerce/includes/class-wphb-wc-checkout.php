@@ -148,6 +148,8 @@ if ( ! class_exists( 'WPHB_WC_Checkout' ) ) {
 				return $transaction;
 			}
 
+			$transaction->booking_info['_hb_method']          = 'woo-payment';
+			$transaction->booking_info['_hb_method_title']    = 'Woocommerce';
 			$transaction->booking_info['_hb_total']           = round( $woocommerce->cart->total, 2 );
 			$transaction->booking_info['_hb_sub_total']       = $woocommerce->cart->subtotal_ex_tax;
 			$transaction->booking_info['_hb_advance_payment'] = $woocommerce->cart->total;
