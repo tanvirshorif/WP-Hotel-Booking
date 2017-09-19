@@ -344,6 +344,7 @@
                         WPHB_Cart.update_add_item_mini_cart(code);
                     }
                     _button.removeClass('hb_loading');
+                    _button.after('<a href="' + wphb_js.cart_url + '" class="hb_button hb_view_cart">' + wphb_js.view_cart + '</a>');
                 },
                 error: function () {
                     // searchResult.hb_overlay_ajax_stop();

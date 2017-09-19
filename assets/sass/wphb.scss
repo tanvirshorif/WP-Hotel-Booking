@@ -162,6 +162,9 @@
                 display: inline-block;
             }
         }
+        .hb_button.hb_view_cart {
+            display: none;
+        }
     }
 }
 
@@ -971,6 +974,10 @@
         li {
             max-width: 142px;
         }
+    }
+
+    .hb-search-results .hb_button.hb_view_cart {
+        display: inline-block;
     }
 }
 

@@ -129,6 +129,8 @@
     line-height: 1.5; }
     .hb-search-results .hb-room-meta > li > label, .hb-search-results .hb-room-meta > li > div {
       display: inline-block; }
+    .hb-search-results .hb-room-meta .hb_button.hb_view_cart {
+      display: none; }
 
 .hb-align-right {
   text-align: right; }
@@ -782,7 +784,9 @@
   .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul {
     max-height: 106px; }
     .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li {
-      max-width: 142px; } }
+      max-width: 142px; }
+  .hb-search-results .hb_button.hb_view_cart {
+    display: inline-block; } }
 
 @media (max-width: 667px) {
   .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul {

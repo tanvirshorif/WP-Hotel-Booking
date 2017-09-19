@@ -705,6 +705,8 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 			'dayNamesShort'                  => hb_day_name_short_js(),
 			'dayNamesMin'                    => hb_day_name_min_js(),
 			'date_start'                     => get_option( 'start_of_week' ),
+			'view_cart'                      => __( 'View Cart', 'wp-hotel-booking' ),
+			'cart_url'                       => hb_get_cart_url()
 		);
 
 		return apply_filters( 'hb_i18n', $translation );
@@ -1125,10 +1127,7 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 			}
 		}
 
-		$price_format = $before
-		                . number_format(
-			                $price, $price_number_of_decimal, $price_decimals_separator, $price_thousands_separator
-		                ) . $after;
+		$price_format = $before . number_format( $price, $price_number_of_decimal, $price_decimals_separator, $price_thousands_separator ) . $after;
 
 		return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 	}
@@ -1851,8 +1850,8 @@ if ( ! function_exists( 'hb_get_date_format' ) ) {
 
 if ( ! function_exists( 'hb_get_time_format' ) ) {
 	/**
-     * Get system time format.
-     *
+	 * Get system time format.
+	 *
 	 * @return mixed
 	 */
 	function hb_get_time_format() {
