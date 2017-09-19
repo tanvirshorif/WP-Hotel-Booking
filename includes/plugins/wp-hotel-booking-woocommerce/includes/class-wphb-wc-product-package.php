@@ -63,7 +63,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '>' ) ) {
 		}
 
 		/**
-		 * Get price.
+		 * Get extra room price.
 		 *
 		 * @param string $context
 		 *
