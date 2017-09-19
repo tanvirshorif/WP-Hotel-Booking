@@ -70,14 +70,24 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '>' ) ) {
 		 * @return mixed
 		 */
 		function get_price( $context = 'view' ) {
-			$qty = 1;
+
+			global $woocommerce;
+			$cart = $woocommerce->cart->get_cart();
+
+			$qty = $night = 1;
 
 			$this->package = WPHB_Extra_Package::instance( $this->get_id(), array(
 				'room_quantity' => $qty,
 				'quantity'      => 1
 			) );
 
-			return $this->package->amount_singular_exclude_tax();
+			foreach ( $cart as $key => $item ) {
+				if ( $item['product_id'] == $this->get_id() ) {
+					$night = hb_count_nights_two_dates( $item['check_out_date'], $item['check_in_date'] );
+				}
+			}
+
+			return $this->package->amount_singular_exclude_tax() * $night;
 		}
 
 		/**
