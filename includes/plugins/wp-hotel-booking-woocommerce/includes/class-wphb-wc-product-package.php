@@ -83,7 +83,9 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '>' ) ) {
 
 			foreach ( $cart as $key => $item ) {
 				if ( $item['product_id'] == $this->get_id() ) {
-					$night = hb_count_nights_two_dates( $item['check_out_date'], $item['check_in_date'] );
+					if ( get_post_meta( $this->get_id(), 'tp_hb_extra_room_respondent', true ) == 'number' ) {
+						$night = hb_count_nights_two_dates( $item['check_out_date'], $item['check_in_date'] );
+					}
 				}
 			}
 
