@@ -5,7 +5,7 @@
  *
  * @class       WPHB_Block
  * @version     2.0
- * @package     WP_Hotel_Booking_Block_Room/Classes
+ * @package     WP_Hotel_Booking_Block/Classes
  * @category    Class
  * @author      Thimpress, leehld
  */
@@ -149,8 +149,6 @@ if ( ! class_exists( 'WPHB_Block' ) ) {
 					)
 				)
 			);
-
-			wp_enqueue_script( 'wphb_block' );
 		}
 
 		/**
