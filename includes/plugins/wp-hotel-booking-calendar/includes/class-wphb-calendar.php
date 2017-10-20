@@ -98,11 +98,48 @@ if ( ! class_exists( 'WPHB_Calendar' ) ) {
 			if ( is_admin() ) {
 
 			} else {
-				wp_enqueue_script( 'wphb-library-moment' );
-				wp_enqueue_style( 'wphb-library-fullcalendar' );
-				wp_enqueue_script( 'wphb-library-fullcalendar' );
-				wp_enqueue_script('wphb-calendar-site',WPHB_CALENDAR_URL. 'assets/js/site.js', $dependencies);
+				if ( is_singular( 'hb_room' ) ) {
+					wp_enqueue_script( 'wphb-library-moment' );
+					wp_enqueue_style( 'wphb-library-fullcalendar' );
+					wp_enqueue_script( 'wphb-library-fullcalendar' );
+					wp_enqueue_script( 'wphb-calendar-site', WPHB_CALENDAR_URL . 'assets/js/site.js', $dependencies );
+					wp_localize_script( 'wphb-calendar-site', 'wphb_calendar_booking', array( 'booking' => $this->get_booking( get_the_ID() ) ) );
+				}
 			}
+		}
+
+
+		public function get_booking( $id ) {
+
+			global $wpdb;
+
+			$query = $wpdb->prepare( "
+			SELECT check_in.meta_value AS check_in, check_out.meta_value AS check_out FROM {$wpdb->hotel_booking_order_itemmeta} AS product_id
+				LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS check_in ON product_id.hotel_booking_order_item_id = check_in.hotel_booking_order_item_id AND check_in.meta_key = %s
+				LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS check_out ON product_id.hotel_booking_order_item_id = check_out.hotel_booking_order_item_id AND check_out.meta_key = %s
+				LEFT JOIN {$wpdb->hotel_booking_order_items} AS booking_items ON product_id.hotel_booking_order_item_id = booking_items.order_item_id
+				LEFT JOIN {$wpdb->posts} AS booking on booking_items.order_id = booking.ID
+			WHERE
+				booking.post_type = %s 
+		  		AND booking.post_status IN ( %s, %s, %s)
+		  		AND product_id.meta_key = %s
+		  		AND product_id.meta_value = %d
+			", 'check_in_date', 'check_out_date', 'hb_booking', 'hb-completed', 'hb-pending', 'hb-processing', 'product_id', $id );
+
+			$query = apply_filters( 'hb_calendar_booking_query', $query );
+
+			$data = array();
+
+			if ( $bookings = $wpdb->get_results( $query, ARRAY_A ) ) {
+				foreach ( $bookings as $key => $booking ) {
+					$data[] = array(
+						'start'     => date( hb_get_date_format(), $booking['check_in'] ),
+						'end'       => date( hb_get_date_format(), $booking['check_out'] )
+					);
+				}
+			}
+
+			return $data;
 		}
 
 		/**

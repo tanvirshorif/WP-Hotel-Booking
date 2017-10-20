@@ -51,6 +51,11 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			// select2
 			wp_register_script( 'wphb-select2', WPHB_PLUGIN_URL . 'assets/js/select2.min.js', array(), WPHB_VERSION, true );
 
+			wp_register_script( 'wphb-library-moment', WPHB_PLUGIN_URL . 'assets/js/moment.min.js', $dependencies, WPHB_VERSION, true );
+
+			wp_register_style( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/css/fullcalendar.min.css', array(), WPHB_VERSION );
+			wp_register_script( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/fullcalendar.min.js', $dependencies, WPHB_VERSION, true );
+
 			if ( is_admin() ) {
 				$dependencies = array_merge( $dependencies, array( 'backbone' ) );
 
@@ -60,12 +65,6 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 
 				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin-wphb.js', $dependencies, WPHB_VERSION, true );
 				wp_localize_script( 'wphb-admin', 'wphb_admin_js', hb_admin_i18n() );
-
-				wp_register_script( 'wphb-library-moment', WPHB_PLUGIN_URL . 'assets/js/moment.min.js', $dependencies, WPHB_VERSION, true );
-
-				wp_register_style( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/css/fullcalendar.min.css', array(), WPHB_VERSION );
-				wp_register_script( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/fullcalendar.min.js', $dependencies, WPHB_VERSION, true );
-
 			} else {
 
 				wp_register_style( 'wphb-site', WPHB_PLUGIN_URL . 'assets/css/wphb.css', array(), WPHB_VERSION );
