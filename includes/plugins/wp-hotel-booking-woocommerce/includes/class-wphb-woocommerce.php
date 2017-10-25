@@ -41,6 +41,8 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 			$settings = hb_settings();
 
+			add_filter( 'hb_payment_gateways', array( $this, 'add_payment_gateway' ) );
+
 			if ( 'yes' === $settings->get( 'wc_enable' ) ) {
 				// filter WPHB currency to WC currency
 				add_filter( 'hb_currency', array( $this, 'woocommerce_currency' ), 50 );
@@ -108,6 +110,26 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 				// override woo mail templates
 				add_filter( 'woocommerce_locate_template', array( $this, 'woo_booking_mail_template' ), 10, 3 );
 			}
+		}
+
+
+		/**
+		 * Add Authorize to WP Hotel Booking payment gateways.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $payments
+		 *
+		 * @return mixed
+		 */
+		public function add_payment_gateway( $payments ) {
+			if ( array_key_exists( $this->_slug, $payments ) ) {
+				return $payments;
+			}
+
+			$payments[ $this->_slug ] = new self();
+
+			return $payments;
 		}
 
 		/**
@@ -443,7 +465,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 				return $url;
 			}
 
-			$url = $woocommerce->cart->get_cart_url() ? $woocommerce->cart->get_cart_url() : $url;
+			$url = wc_get_cart_url() ? wc_get_cart_url() : $url;
 
 			return $url;
 		}
@@ -462,7 +484,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			if ( ! $woocommerce->cart ) {
 				return $url;
 			}
-			$url = $woocommerce->cart->get_checkout_url() ? $woocommerce->cart->get_checkout_url() : $url;
+			$url = wc_get_checkout_url() ? wc_get_checkout_url() : $url;
 
 			return $url;
 		}
@@ -750,10 +772,10 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 				return;
 			}
 			if ( $post->ID == hb_get_page_id( 'cart' ) ) {
-				wp_redirect( WC()->cart->get_cart_url() );
+				wp_redirect( wc_get_cart_url() );
 				exit();
 			} else if ( $post->ID == hb_get_page_id( 'checkout' ) ) {
-				wp_redirect( WC()->cart->get_checkout_url() );
+				wp_redirect( wc_get_checkout_url() );
 				exit();
 			}
 		}

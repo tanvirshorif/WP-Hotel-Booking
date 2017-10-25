@@ -34,11 +34,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		public $_version = '2.0';
 
 		/**
-		 * @var string
-		 */
-		public $_slug = 'woocommerce';
-
-		/**
 		 * Hold the instance of WP_Hotel_Booking_Woocommerce.
 		 *
 		 * @var null
@@ -114,7 +109,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 */
 		private function init_hooks() {
 			add_action( 'init', array( $this, 'load_text_domain' ) );
-			add_filter( 'hb_payment_gateways', array( $this, 'add_payment_gateway' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
 
@@ -125,30 +119,10 @@ if ( ! class_exists( 'WP_Hotel_Booking_Woocommerce' ) ) {
 		 */
 		public function includes() {
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-woocommerce.php';
-			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-payment-gateway.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-room.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-product-package.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-checkout.php';
 			require_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/class-wphb-wc-booking.php';
-		}
-
-		/**
-		 * Add Authorize to WP Hotel Booking payment gateways.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $payments
-		 *
-		 * @return mixed
-		 */
-		public function add_payment_gateway( $payments ) {
-			if ( array_key_exists( $this->_slug, $payments ) ) {
-				return $payments;
-			}
-
-			$payments[ $this->_slug ] = new WPHB_Woocommerce();
-
-			return $payments;
 		}
 
 		/**
