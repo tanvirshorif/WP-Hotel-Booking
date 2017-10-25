@@ -87,6 +87,10 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 			wp_enqueue_script( 'magnific-popup', WPHB_ROOM_URI . '/assets/js/jquery.magnific-popup.min.js', array(), WPHB_ROOM_VER );
 			wp_enqueue_style( 'magnific-popup', WPHB_ROOM_URI . '/assets/css/magnific-popup.css', array(), WPHB_ROOM_VER );
 
+			wp_enqueue_script( 'wphb-library-moment' );
+			wp_enqueue_style( 'wphb-library-fullcalendar' );
+			wp_enqueue_script( 'wphb-library-fullcalendar' );
+
 			wp_enqueue_style( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/css/site.css', array(), WPHB_ROOM_VER );
 			wp_enqueue_script( 'wphb-booking-room', WPHB_ROOM_URI . '/assets/js/site.js',
 				array( 'jquery', 'wp-util', 'magnific-popup', 'jquery-ui-datepicker' ), WPHB_ROOM_VER );
