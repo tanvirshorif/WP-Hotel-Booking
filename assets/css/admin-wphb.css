@@ -1,3 +1,6 @@
+/**
+* Mixins
+*/
 /********************************** Admin room page *************************************************/
 .post-type-hb_room #gallery_settings .hb-form-field-input {
   margin-left: 0; }
@@ -492,7 +495,7 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   text-decoration: none; }
 
 .hb-booking-status.hb-completed a {
-  background-color: #2eb0d1; }
+  background-color: #008cff; }
 
 .hb-booking-status.hb-pending a {
   background-color: #cccccc; }

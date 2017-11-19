@@ -1,3 +1,6 @@
+/**
+* Mixins
+*/
 .clearfix:after {
   content: '';
   display: block;
@@ -25,12 +28,14 @@
   width: auto;
   max-width: 100%;
   padding: 35px; }
-  .hotel-booking-search input, .hotel-booking-search select, .hotel-booking-search textarea {
+  .hotel-booking-search input, .hotel-booking-search select {
     position: relative;
     width: auto;
     height: 40px;
     min-width: 200px;
     border: 1px solid #cccccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
     border-radius: 3px;
     font-size: 15px;
     color: #7a7a7a;
@@ -47,6 +52,8 @@
     height: 40px;
     min-width: 200px;
     border: 1px solid #cccccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
     border-radius: 3px;
     padding: 7px 8px;
     line-height: 24px;
@@ -61,6 +68,12 @@
     color: #fff; }
   .hotel-booking-search input:hover, .hotel-booking-search select:hover, .hotel-booking-search textarea:hover, .hotel-booking-search button:hover, .hotel-booking-search input:focus, .hotel-booking-search select:focus, .hotel-booking-search textarea:focus, .hotel-booking-search button:focus {
     outline: 0; }
+  .hotel-booking-search.horizontal input, .hotel-booking-search.horizontal select {
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px; }
+  .hotel-booking-search.horizontal .hb-form-field {
+    display: inline-block; }
 
 .hb-form-table {
   list-style: none;
@@ -72,15 +85,6 @@
 
 .hb-form-field {
   margin: 0 0 20px 0; }
-
-.entry-content .hb-form-field {
-  max-width: 300px; }
-
-.entry-content .hotel-booking-search form button {
-  max-width: 300px; }
-
-.entry-content .hotel-booking-search input, .entry-content .hotel-booking-search select, .entry-content .hotel-booking-search textarea, .entry-content .hotel-booking-search button {
-  width: 100%; }
 
 .hb-form-field-label {
   display: block;
@@ -207,6 +211,8 @@
     padding: 10px 10px 0 10px;
     border: 1px solid #DDD;
     margin-bottom: 20px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
     border-radius: 0; }
   .tp-hotel-booking #reviews .commentlist p {
     margin-bottom: 20px; }

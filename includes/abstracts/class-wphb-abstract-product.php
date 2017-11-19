@@ -673,9 +673,9 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 				}
 			}
 
-			if ( ! $attachID ) {
-				$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
+			if ( ! $attachID ) {$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
 				echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ) );
+
 			}
 
 			return $image;

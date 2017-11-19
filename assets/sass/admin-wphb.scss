@@ -1,3 +1,5 @@
+@import 'mixins';
+
 /********************************** Admin room page *************************************************/
 .post-type-hb_room {
     #gallery_settings {
@@ -624,9 +626,7 @@ form[name="hb-admin-settings-form"] {
 .hb-booking-status {
     display: inline-block;
     background-color: #FFF;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    @include border-radius(3px);
     color: #F5F5F5;
 }
 
@@ -635,7 +635,7 @@ form[name="hb-admin-settings-form"] {
 }
 
 .hb-booking-status.hb-completed a {
-    background-color: #2eb0d1;
+    background-color: $primary-color;
 }
 
 .hb-booking-status.hb-pending a {
@@ -654,9 +654,7 @@ form[name="hb-admin-settings-form"] {
     font-size: 10px;
     display: inline-block;
     background-color: #FFF;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    @include border-radius(3px);
     padding: 3px 8px;
     color: #F5F5F5;
 }

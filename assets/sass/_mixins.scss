@@ -1,0 +1,18 @@
+
+/**
+* Mixins
+*/
+
+$primary-color: #008cff;
+
+@mixin clear-fix() {
+    clear: both;
+    display: block;
+    content: '';
+}
+
+@mixin border-radius($args...) {
+    -webkit-border-radius: $args;
+    -moz-border-radius: $args;
+    border-radius: $args;
+}
