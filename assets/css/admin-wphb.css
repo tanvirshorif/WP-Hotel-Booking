@@ -24,6 +24,28 @@
 .post-type-hb_room #gallery_settings .attachment-preview {
   cursor: move; }
 
+.post-type-hb_room .hb-form-field {
+  margin: 0 0 15px 0; }
+  .post-type-hb_room .hb-form-field label {
+    font-size: 14px;
+    font-weight: 600; }
+  .post-type-hb_room .hb-form-field .description {
+    margin-top: 5px;
+    clear: both; }
+  .post-type-hb_room .hb-form-field .room-gallery-input {
+    margin-left: 0; }
+    .post-type-hb_room .hb-form-field .room-gallery-input li.attachment {
+      width: 20%; }
+
+.post-type-hb_room .select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  margin: 7px 0 0 0; }
+
+.post-type-hb_room .select2-container--default .select2-search--inline .select2-search__field {
+  margin-top: 7px; }
+
 /********************************** Room regular price and pricing plans *************************************************/
 .hb-pricing-list th, .hb-pricing-list td {
   padding: 5px 5px 5px 0; }

@@ -40,7 +40,7 @@ $plan_id      = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
 					<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                     <input class="hb-pricing-price" type="number" min="0" step="any"
                            name="_hbpricing[prices][<?php echo sprintf( '%s', $plan_id ); ?>][<?php echo esc_attr( $i ); ?>]"
-                           value="<?php echo esc_attr( $price ); ?>" size="10"/>
+                           value="<?php echo $price ? esc_attr( $price ) : 0; ?>" size="10"/>
                 </td>
 			<?php } ?>
         </tr>

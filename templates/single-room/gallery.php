@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 <?php
 global $hb_room;
-$galleries = $hb_room->get_galleries( false );
+$galleries = $hb_room->get_galleries();
 ?>
 
 <?php if ( $galleries ) { ?>
@@ -29,4 +29,6 @@ $galleries = $hb_room->get_galleries( false );
                  data-src="<?php echo esc_url( $gallery['src'] ); ?>"></div>
 		<?php } ?>
     </div>
+<?php } else { ?>
+    <div class="thumbnail"><?php echo get_the_post_thumbnail( get_the_ID() ); ?></div>
 <?php } ?>

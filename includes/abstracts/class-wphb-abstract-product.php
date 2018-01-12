@@ -200,7 +200,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 					}
 					break;
 				case 'gallery':
-					$return = $this->get_galleries();
+					$return = $this->get_galleries( true );
 					break;
 				case 'max_child':
 					$return = get_post_meta( $this->ID, '_hb_max_child_per_room', true );
@@ -271,7 +271,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 		 *
 		 * @return array
 		 */
-		public function get_galleries( $with_featured = true ) {
+		public function get_galleries( $with_featured = false ) {
 			$gallery = array();
 			if ( $with_featured && $thumb_id = get_post_thumbnail_id( $this->post->ID ) ) {
 				$featured_thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
@@ -291,33 +291,38 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 			}
 
 			foreach ( $galleries as $thumb_id ) {
+				if ( $thumb_id ) {
 
-				$w = $this->_settings->get( 'room_thumbnail_width', 150 );
-				$h = $this->_settings->get( 'room_thumbnail_height', 150 );
+					$w = $this->_settings->get( 'room_thumbnail_width', 150 );
+					$h = $this->_settings->get( 'room_thumbnail_height', 150 );
 
-				$size  = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
-				$thumb = $this->renderImage( $thumb_id, $size, true, 'thumbnail' );
-				if ( ! $thumb ) {
-					$thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
-					$thumb     = $thumb_src[0];
+					$size  = apply_filters( 'hotel_booking_room_thumbnail_size', array(
+						'width'  => $w,
+						'height' => $h
+					) );
+					$thumb = $this->renderImage( $thumb_id, $size, true, 'thumbnail' );
+					if ( ! $thumb ) {
+						$thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
+						$thumb     = $thumb_src[0];
+					}
+
+					$w    = $this->_settings->get( 'room_image_gallery_width', 1000 );
+					$h    = $this->_settings->get( 'room_image_gallery_height', 667 );
+					$size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
+
+					$full = $this->renderImage( $thumb_id, $size, true, 'full' );
+					if ( ! $full ) {
+						$full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
+						$full     = $full_src[0];
+					}
+					$alt       = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+					$gallery[] = array(
+						'id'    => $thumb_id,
+						'src'   => $full,
+						'thumb' => $thumb,
+						'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+					);
 				}
-
-				$w    = $this->_settings->get( 'room_image_gallery_width', 1000 );
-				$h    = $this->_settings->get( 'room_image_gallery_height', 667 );
-				$size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
-
-				$full = $this->renderImage( $thumb_id, $size, true, 'full' );
-				if ( ! $full ) {
-					$full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
-					$full     = $full_src[0];
-				}
-				$alt       = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
-				$gallery[] = array(
-					'id'    => $thumb_id,
-					'src'   => $full,
-					'thumb' => $thumb,
-					'alt'   => $alt ? $alt : get_the_title( $thumb_id )
-				);
 			}
 
 			return $gallery;
@@ -673,7 +678,8 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 				}
 			}
 
-			if ( ! $attachID ) {$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
+			if ( ! $attachID ) {
+				$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
 				echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ) );
 
 			}

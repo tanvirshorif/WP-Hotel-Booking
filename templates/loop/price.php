@@ -29,9 +29,6 @@ $prices        = isset( $prices->prices ) ? $prices->prices : array();
 	$max = max( $prices );
 	?>
     <div class="price">
-
-        <span class="title-price"><?php _e( 'Price', 'wp-hotel-booking' ); ?></span>
-
 		<?php if ( $price_display === 'max' ) { ?>
             <span class="price_value price_max"><?php echo hb_format_price( $max ) ?></span>
 		<?php } elseif ( $price_display === 'min_to_max' && $min !== $max ) { ?>

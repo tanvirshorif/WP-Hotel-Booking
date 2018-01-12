@@ -30,6 +30,36 @@
             cursor: move;
         }
     }
+
+    .hb-form-field {
+        margin: 0 0 15px 0;
+        label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .description {
+            margin-top: 5px;
+            clear: both;
+        }
+        .room-gallery-input {
+            margin-left: 0;
+            li.attachment {
+                width: 20%;
+            }
+        }
+    }
+
+    .select2-container--default {
+        .select2-selection--multiple .select2-selection__choice {
+            background-color: transparent;
+            border: none;
+            font-size: 14px;
+            margin: 7px 0 0 0;
+        }
+        .select2-search--inline .select2-search__field {
+            margin-top: 7px;
+        }
+    }
 }
 
 /********************************** Room regular price and pricing plans *************************************************/

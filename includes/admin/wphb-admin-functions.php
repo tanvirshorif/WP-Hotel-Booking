@@ -49,9 +49,9 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'monthNamesShort'               => hb_month_name_short_js(),
 			'select_room'                   => __( 'Enter room name', 'wp-hotel-booking' ),
 			'confirm_remove_extra'          => __( 'Remove package. Are you sure?', 'wp-hotel-booking' ),
-
-			'remove_image'            => __( 'Remove this image', 'wp-hotel-booking' ),
-			'date_range'              => __( 'Date range', 'wp-hotel-booking' )
+			'remove_image'                  => __( 'Remove this image', 'wp-hotel-booking' ),
+			'date_range'                    => __( 'Date range', 'wp-hotel-booking' ),
+			'select_extra_placeholder'      => __( 'Select package', 'wp-hotel-booking' )
 		);
 
 		return apply_filters( 'hb_admin_i18n', $i18n );
@@ -75,13 +75,14 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'label' => __( 'Quantity', 'wp-hotel-booking' ),
 				'type'  => 'number',
 				'std'   => '10',
-				'desc'  => __( 'The number of rooms', 'wp-hotel-booking' ),
+				'desc'  => __( 'Number of the room', 'wp-hotel-booking' ),
 				'min'   => 0,
 				'max'   => 100
 			),
 			array(
 				'name'    => 'room_capacity',
-				'label'   => __( 'Number of adults', 'wp-hotel-booking' ),
+				'label'   => __( 'Adults', 'wp-hotel-booking' ),
+				'desc'    => __( 'Room capacity', 'wp-hotel-booking' ),
 				'type'    => 'select',
 				'options' => hb_get_room_capacities(
 					array(
@@ -99,7 +100,8 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 			),
 			array(
 				'name'  => 'max_child_per_room',
-				'label' => __( 'Max children per room', 'wp-hotel-booking' ),
+				'label' => __( 'Children', 'wp-hotel-booking' ),
+				'desc'  => __( 'Max children per room', 'wp-hotel-booking' ),
 				'type'  => 'number',
 				'std'   => 0,
 				'min'   => 0,
@@ -115,28 +117,35 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 			array(
 				'name'    => 'room_extra',
 				'label'   => __( 'Addition Package', 'wp-hotel-booking' ),
+				'desc'    => __( 'Room extra services', 'wp-hotel-booking' ),
 				'type'    => 'multiple',
 				'std'     => '',
 				'options' => hb_room_extra_options()
+			),
+			array(
+				'name'  => 'gallery',
+				'label' => __( 'Gallery images', 'wp-hotel-booking' ),
+				'desc'  => __( 'Room gallery images', 'wp-hotel-booking' ),
+				'type'  => 'gallery'
 			)
 		);
 
-		WPHB_Meta_Box::instance(
-			'gallery_settings',
-			array(
-				'title'           => __( 'Gallery Settings', 'wp-hotel-booking' ),
-				'post_type'       => 'hb_room',
-				'meta_key_prefix' => '_hb_', // meta key prefix,
-				'priority'        => 'high'
-				// 'callback'  => 'hb_add_meta_boxes_gallery_setings' // callback arg render meta form
-			),
-			array()
-		)->add_field(
-			array(
-				'name' => 'gallery',
-				'type' => 'gallery'
-			)
-		);
+//		WPHB_Meta_Box::instance(
+//			'gallery_settings',
+//			array(
+//				'title'           => __( 'Gallery Settings', 'wp-hotel-booking' ),
+//				'post_type'       => 'hb_room',
+//				'meta_key_prefix' => '_hb_', // meta key prefix,
+//				'priority'        => 'high'
+//				// 'callback'  => 'hb_add_meta_boxes_gallery_setings' // callback arg render meta form
+//			),
+//			array()
+//		)->add_field(
+//			array(
+//				'name' => 'gallery',
+//				'type' => 'gallery'
+//			)
+//		);
 	}
 }
 
@@ -212,28 +221,28 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
                     <div class="hb-room-gallery">
                         <ul>
                             <# jQuery.each(data.gallery, function(){ var attachment = this; #>
-                                <li class="attachment">
-                                    <div class="attachment-preview">
-                                        <div class="thumbnail">
-                                            <div class="centered">
-                                                <img src="{{attachment.src}}" alt="">
-                                                <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
-                                                       value="{{attachment.id}}"/>
-                                            </div>
+                            <li class="attachment">
+                                <div class="attachment-preview">
+                                    <div class="thumbnail">
+                                        <div class="centered">
+                                            <img src="{{attachment.src}}" alt="">
+                                            <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
+                                                   value="{{attachment.id}}"/>
                                         </div>
                                     </div>
-                                    <a class="dashicons dashicons-trash"
-                                       title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
-                                </li>
-                                <# }); #>
-                                    <li class="attachment add-new">
-                                        <div class="attachment-preview">
-                                            <div class="thumbnail">
-                                                <div class="dashicons-plus dashicons">
-                                                </div>
-                                            </div>
+                                </div>
+                                <a class="dashicons dashicons-trash"
+                                   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+                            </li>
+                            <# }); #>
+                            <li class="attachment add-new">
+                                <div class="attachment-preview">
+                                    <div class="thumbnail">
+                                        <div class="dashicons-plus dashicons">
                                         </div>
-                                    </li>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}"/>
@@ -300,7 +309,7 @@ if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 				return;
 			}
 
-			if ( empty( $_POST['_hb_gallery'] ) ) {
+			if ( ! $_POST['_hb_gallery'] || empty( $_POST['_hb_gallery'] ) ) {
 				update_post_meta( $post_id, '_hb_gallery', array() );
 			}
 		}

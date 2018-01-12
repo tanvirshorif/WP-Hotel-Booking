@@ -667,22 +667,26 @@
 /** Single rooms **/
 
 .hb_single_room {
-    .title h4 {
-        font-size: 40px;
-        line-height: 40px;
-        font-weight: 600;
-        margin: 0 0 29px;
-        a {
-            color: #2a2a2a;
+    .title {
+        display: inline-block;
+        h4 {
+            font-size: 40px;
+            line-height: 40px;
+            font-weight: 600;
+            margin-bottom: 40px !important;
+            a {
+                color: #2a2a2a;
+            }
         }
     }
     .price {
-        float: right;
-        margin-top: -65px;
+        display: inline-block;
+        margin-top: 25px;
         line-height: 30px;
         font-weight: 600;
         font-size: 30px;
         color: #ffb606;
+        float: right;
         span {
             &.title-price {
                 margin-right: 5px;
@@ -699,6 +703,9 @@
                 }
             }
         }
+    }
+    .thumbnail {
+        margin-bottom: 15px;
     }
     .hb_room_gallery {
         margin-bottom: 200px !important;
@@ -768,43 +775,44 @@
                 background: transparent;
                 width: auto;
                 margin: 0 -6px;
-                ul {
-                    padding: 0;
-                    overflow: hidden;
-                    max-height: 130px;
-                    li {
-                        display: inline-block;
-                        float: none;
+                > div {
+                    > ul {
+                        width: 100% !important;
                         padding: 0;
-                        margin-top: 10px;
-                        padding: 0 6px;
                         overflow: hidden;
-                        width: 20%;
-                        max-width: 176px;
-                        position: relative;
-                        &:before {
-                            content: '';
-                            position: absolute;
-                            top: 0;
-                            bottom: 0;
-                            right: 6px;
-                            left: 6px;
-                            border: 2px solid transparent;
-                            z-index: -1;
-                            -webkit-transition: all 0.3s;
-                            -moz-transition: all 0.3s;
-                            -o-transition: all 0.3s;
-                            -ms-transition: all 0.3s;
-                            transition: all 0.3s;
-                        }
-                        img {
-                            margin: 0;
-                            width: 100%;
-                            border: 0;
-                        }
-                        &.cameracurrent:before {
-                            border-color: #ffb606;
-                            z-index: 2;
+                        max-height: 130px;
+                        li {
+                            display: inline-block;
+                            float: none;
+                            margin-top: 10px;
+                            padding: 0 6px;
+                            overflow: hidden;
+                            width: 20%;
+                            max-width: 176px;
+                            position: relative;
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                right: 6px;
+                                left: 6px;
+                                border: 2px solid transparent;
+                                z-index: -1;
+                                -webkit-transition: all 0.3s;
+                                -moz-transition: all 0.3s;
+                                -o-transition: all 0.3s;
+                                transition: all 0.3s;
+                            }
+                            img {
+                                margin: 0;
+                                width: 100%;
+                                border: 0;
+                            }
+                            &.cameracurrent:before {
+                                border-color: #ffb606;
+                                z-index: 2;
+                            }
                         }
                     }
                 }

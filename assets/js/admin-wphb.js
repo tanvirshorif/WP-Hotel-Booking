@@ -290,7 +290,7 @@
                     onSelect: function () {
                         var _self = $(this),
                             date = _self.datepicker('getDate'),
-                            timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                            timestamp = new Date(date).getTime() / 1000 - (new Date().getTimezoneOffset() * 60);
                         _self.parent().find('input[name="check_in_date_timestamp"]').val(timestamp);
 
                         _check_out.datepicker('option', 'minDate', date);
@@ -300,7 +300,7 @@
                     onSelect: function () {
                         var _self = $(this),
                             date = _self.datepicker('getDate'),
-                            timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                            timestamp = new Date(date).getTime() / 1000 - (new Date().getTimezoneOffset() * 60);
                         _self.parent().find('input[name="check_out_date_timestamp"]').val(timestamp);
 
                         _check_in.datepicker('option', 'maxDate', date);
@@ -345,7 +345,7 @@
                 onSelect: function () {
                     var _self = $(this),
                         date = _self.datepicker('getDate'),
-                        timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                        timestamp = new Date(date).getTime() / 1000 - (new Date().getTimezoneOffset() * 60);
                     _self.parent().find('input[name="date-from-timestamp"]').val(timestamp);
                     $('#hb-booking-date-to').datepicker('option', 'minDate', date)
                 }
@@ -354,7 +354,7 @@
                 onSelect: function () {
                     var _self = $(this),
                         date = _self.datepicker('getDate'),
-                        timestamp = new Date(date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                        timestamp = new Date(date).getTime() / 1000 - (new Date().getTimezoneOffset() * 60);
                     _self.parent().find('input[name="date-to-timestamp"]').val(timestamp);
                     $('#hb-booking-date-from').datepicker('option', 'maxDate', date)
                 }
@@ -564,7 +564,7 @@
                 onSelect: function () {
                     var _self = $(this),
                         _date = _self.datepicker('getDate'),
-                        _timestamp = new Date(_date).getTime() / 1000 - ( new Date(_date).getTimezoneOffset() * 60 ),
+                        _timestamp = new Date(_date).getTime() / 1000 - (new Date(_date).getTimezoneOffset() * 60),
                         _name = _self.attr('name');
                     var _hidden_name = false;
                     if (_name.indexOf('date-start') === 0) {
@@ -586,9 +586,9 @@
                 _self = this;
 
             // select images
-            _doc.on('click', '#gallery_settings .attachment.add-new', _self.add_image_selector)
+            _doc.on('click', '.room-gallery-input .attachment.add-new', _self.add_image_selector)
             // remove images
-                .on('click', '#gallery_settings .attachment .dashicons-trash', _self.remove_image_selector)
+                .on('click', '.room-gallery-input .attachment .dashicons-trash', _self.remove_image_selector)
                 // dismiss notice
                 .on('click', '.hb-dismiss-notice button', _self.dismiss_notice);
 
@@ -642,7 +642,7 @@
                     var _self = $(this),
                         _name = _self.attr('name'),
                         _date = _self.datepicker('getDate'),
-                        _timestamp = new Date(_date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                        _timestamp = new Date(_date).getTime() / 1000 - (new Date().getTimezoneOffset() * 60);
                     if (_date) {
                         _date.setDate(_date.getDate() + 1);
                     }
@@ -656,10 +656,13 @@
             // select country
             $('select[name="_hb_customer_country"]').select2();
             // select metabox
-            $('.hb-form-field .hb-form-field-input select').select2();
+            $('.hb-form-field .hb-form-field-input select[name="_hb_room_extra[]"]').select2({
+                placeholder: wphb_admin_js.select_extra_placeholder,
+                width: '50%'
+            });
         },
         images_sortable: function () {
-            var _gallery = $('#gallery_settings'),
+            var _gallery = $('.room-gallery-input'),
                 _images = _gallery.find('ul');
 
             _images.sortable();
