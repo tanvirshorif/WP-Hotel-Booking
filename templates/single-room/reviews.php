@@ -1,4 +1,4 @@
-<?php
+?><?php
 
 /**
  * The template for displaying room reviews in single room page.
@@ -33,34 +33,30 @@ if ( ! comments_open() ) {
 				printf( _n( '%s review for %s', '%s reviews for %s', $count, 'wp-hotel-booking' ), $count, get_the_title() );
 			} else {
 				_e( 'Reviews', 'wp-hotel-booking' );
-			}
-			?>
+			} ?>
         </h2>
 
-		<?php if ( have_comments() ) : ?>
+		<?php if ( have_comments() ) { ?>
 
             <ol class="commentlist">
 				<?php wp_list_comments( apply_filters( 'hb_room_review_list_args', array( 'callback' => 'hb_room_review_item' ) ) ); ?>
             </ol>
 
-			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
-				echo '<nav class="hb-pagination">';
-				paginate_comments_links( apply_filters( 'hb_comment_pagination_args', array(
-					'prev_text' => '&larr;',
-					'next_text' => '&rarr;',
-					'type'      => 'list',
-				) ) );
-				echo '</nav>';
-			endif; ?>
-
-		<?php else : ?>
-
-            <p class="hb-noreviews"><?php _e( 'There are no reviews yet.', 'wp-hotel-booking' ); ?></p>
-
-		<?php endif; ?>
+			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { ?>
+                <nav class="hb-pagination">
+					<?php paginate_comments_links( apply_filters( 'hb_comment_pagination_args', array(
+						'prev_text' => '&larr;',
+						'next_text' => '&rarr;',
+						'type'      => 'list',
+					) ) ); ?>
+                </nav>
+			<?php } else { ?>
+                <p class="hb-noreviews"><?php _e( 'There are no reviews yet.', 'wp-hotel-booking' ); ?></p>
+			<?php }
+		} ?>
     </div>
 
-	<?php if ( hb_customer_booked_room( $hb_room->id ) ) : ?>
+	<?php if ( hb_customer_booked_room( $hb_room->id ) ) { ?>
 
         <div id="review_form_wrapper">
             <div id="review_form">
@@ -93,11 +89,9 @@ if ( ! comments_open() ) {
             </div>
         </div>
 
-	<?php else : ?>
-
+	<?php } else { ?>
         <p class="hb-verification-required"><?php _e( 'Only logged in customers who have purchased this product may leave a review.', 'wp-hotel-booking' ); ?></p>
-
-	<?php endif; ?>
+	<?php } ?>
 
     <div class="clear"></div>
 </div>

@@ -21,25 +21,25 @@ defined( 'ABSPATH' ) || exit;
     data-parent-id="<?php echo esc_attr( $extra->parent_id ) ?>">
 
     <td colspan="<?php echo is_hb_cart() ? 2 : 1 ?>">
-		<?php if ( is_hb_cart() ): ?>
+		<?php if ( is_hb_cart() ) { ?>
             <a href="#" class="hb_package_remove" data-cart-id="<?php echo esc_attr( $cart_id ) ?>"
                data-parent-id="<?php echo esc_attr( $extra->parent_id ) ?>"><i class="fa fa-times"></i></a>
-		<?php endif; ?>
+		<?php } ?>
     </td>
 
     <td>
-		<?php if ( is_hb_cart() ) : ?>
-			<?php if ( $input = apply_filters( 'hb_extra_cart_input', $extra->product_data->respondent ) ): ?>
+		<?php if ( is_hb_cart() ) { ?>
+			<?php if ( $input = apply_filters( 'hb_extra_cart_input', $extra->product_data->respondent ) ) { ?>
                 <input type="number" min="1" value="<?php echo esc_attr( $extra->quantity ); ?>"
                        name="hotel_booking_cart[<?php echo esc_attr( $cart_id ); ?>]"/>
-			<?php else: ?>
+			<?php } else { ?>
 				<?php printf( '%s', $extra->quantity ) ?>
                 <input type="hidden" value="<?php echo esc_attr( $extra->quantity ); ?>"
                        name="hotel_booking_cart[<?php echo esc_attr( $cart_id ); ?>]"/>
-			<?php endif; ?>
-		<?php else: ?>
+			<?php } ?>
+		<?php } else { ?>
 			<?php printf( '%s', $extra->quantity ) ?>
-		<?php endif; ?>
+		<?php } ?>
     </td>
 
     <td colspan="3">

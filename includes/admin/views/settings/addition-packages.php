@@ -12,10 +12,9 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-
-
-$settings = apply_filters( 'hotel_booking_addon_menus', array() );
 ?>
+
+<?php $settings = apply_filters( 'hotel_booking_addon_menus', array() ); ?>
 
 <div id="tp_hotel_booking_other_settings">
     <ul class="tp_hotel_booking_tabs_settings">
@@ -34,8 +33,7 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
 	$respondent  = array();
 	foreach ( $extra_types as $key => $value ) {
 		$respondent[] = array( 'text' => $value, 'value' => $key );
-	}
-	?>
+	} ?>
 
     <!-- Email Sender Options block -->
     <p class="description"><?php _e( 'Adding room\'s services packages with detail price for every service', 'wp-hotel-booking' ); ?></p>
@@ -44,8 +42,8 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
             <div class="tp_extra_form_head">
                 <h3><?php _e( 'Extra Options', 'wp-hotel-booking' ); ?></h3>
             </div>
-			<?php if ( $extras ): ?>
-				<?php foreach ( $extras as $k => $post ): ?>
+			<?php if ( $extras ) { ?>
+				<?php foreach ( $extras as $k => $post ) { ?>
 
                     <div class="tp_extra_form_fields">
                         <div class="name">
@@ -80,9 +78,9 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
                         </div>
                     </div>
 
-				<?php endforeach; ?>
+				<?php } ?>
 
-			<?php else: ?>
+			<?php } else { ?>
 
                 <div class="tp_extra_form_fields">
                     <div class="name">
@@ -106,13 +104,15 @@ $settings = apply_filters( 'hotel_booking_addon_menus', array() );
 						<?php hb_extra_select( $field_name . '[0][respondent]', array( 'options' => $respondent ), '' ); ?>
                     </div>
                     <div class="remove">
-                        <a data-id="" class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?></a>
+                        <a data-id=""
+                           class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?></a>
                     </div>
                 </div>
 
-			<?php endif; ?>
+			<?php } ?>
             <div class="tp_extra_form_foot">
-                <button type="submit" class="button button-primary"><?php _e( 'Save Extra', 'wp-hotel-booking' ); ?></button>
+                <button type="submit"
+                        class="button button-primary"><?php _e( 'Save Extra', 'wp-hotel-booking' ); ?></button>
                 <a class="button tp_extra_add_item"><?php _e( 'Add another item', 'wp-hotel-booking' ); ?></a>
             </div>
         </div>

@@ -91,13 +91,13 @@ if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
 		 *
 		 * @param $post
 		 */
-		public function meta_box_view($post) {
+		public function meta_box_view( $post ) {
 			if ( is_array( $this->view ) ) {
 				foreach ( $this->view as $view ) {
-					require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/' . $view . '.php';
+					hb_admin_view( "metaboxes/offline-payment", array(), true );
 				}
 			} else {
-				require_once WPHB_PLUGIN_PATH . '/includes/admin/views/metaboxes/' . $this->view . '.php';
+				hb_admin_view( "metaboxes/$this->view", array(), true );
 			}
 		}
 

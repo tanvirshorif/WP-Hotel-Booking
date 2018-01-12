@@ -23,7 +23,7 @@ $cart = WPHB_Cart::instance();
 ?>
 
 <div id="hotel-booking-results">
-	<?php if ( $results && ! empty( $hb_search_rooms['data'] ) ): ?>
+	<?php if ( $results && ! empty( $hb_search_rooms['data'] ) ) { ?>
         <h3><?php _e( 'Search results', 'wp-hotel-booking' ); ?></h3>
         <ul class="hb-search-results">
 			<?php hb_get_template( 'search/room.php', array(
@@ -46,12 +46,10 @@ $cart = WPHB_Cart::instance();
 			) ) );
 			?>
         </nav>
-	<?php else: ?>
+	<?php } else { ?>
         <p><?php _e( 'No room found.', 'wp-hotel-booking' ); ?></p>
-        <p>
-            <a href="<?php echo hb_get_url(); ?>"><?php _e( 'Search again!', 'wp-hotel-booking' ); ?></a>
-        </p>
-	<?php endif; ?>
+        <p><a href="<?php echo hb_get_url(); ?>"><?php _e( 'Search again!', 'wp-hotel-booking' ); ?></a></p>
+	<?php } ?>
 </div>
 
 <?php do_action( 'hb_after_search_result' ); ?>

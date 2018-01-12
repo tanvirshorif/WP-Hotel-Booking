@@ -17,7 +17,6 @@ defined( 'ABSPATH' ) || exit;
 
 <?php
 $room_id = intval( hb_get_request( 'hb-room' ) );
-
 $week_names   = hb_date_names();
 $plans        = hb_room_get_pricing_plans( $room_id );
 $regular_plan = null;
@@ -28,7 +27,6 @@ foreach ( $plans as $k => $plan ) {
 		unset( $plans[ $k ] );
 	}
 }
-
 $count_plants = count( $plans );
 ?>
 

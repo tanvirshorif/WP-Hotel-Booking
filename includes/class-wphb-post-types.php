@@ -359,11 +359,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					$rating = $room->average_rating();
 					$html   = array();
 					$html[] = '<div class="rating">';
-					if ( $rating ):
+					if ( $rating ) {
 						$html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ) . '">';
 						$html[] = '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%"></span>';
 						$html[] = '</div>';
-					endif;
+					}
 					$html[] = '</div>';
 					echo implode( '', $html );
 					break;

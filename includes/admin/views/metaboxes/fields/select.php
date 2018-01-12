@@ -49,7 +49,7 @@ if ( $field['attr'] ) {
 }
 ?>
 <?php if ( empty( $field['options'] ) && $field['except'] ) { ?>
-    <p><?php echo ( $field['except'] ); ?></p>
+    <p><?php echo( $field['except'] ); ?></p>
 <?php } else { ?>
     <select name="<?php echo esc_attr( $name ); ?>"<?php echo ( $multiple ) ? ' multiple' : '' ?> <?php printf( '%s', $field_attr ) ?>>
 		<?php if ( ! empty( $field['options'] ) ) {
@@ -64,11 +64,11 @@ if ( $field['attr'] ) {
 					$option = wp_parse_args( (array) $option, array( 'value' => '', 'text' => '' ) );
 				}
 				?>
-				<?php if ( $multiple == false ): ?>
+				<?php if ( $multiple == false ) { ?>
                     <option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( ! empty( $value ) && $value == $option['value'] ? 1 : 0, 1 ); ?>><?php echo esc_html( $option['text'] ); ?></option>
-				<?php else: ?>
+				<?php } else { ?>
                     <option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? ' selected' : '' ?>><?php echo esc_html( $option['text'] ); ?></option>
-				<?php endif; ?>
+				<?php } ?>
 			<?php }
 		} ?>
     </select>

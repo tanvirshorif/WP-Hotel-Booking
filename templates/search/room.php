@@ -86,7 +86,8 @@ global $hb_settings;
                             </div>
                         </li>
                         <li class="hb_search_add_to_cart">
-                            <button class="hb_add_to_cart" disabled="disabled"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
+                            <button class="hb_add_to_cart"
+                                    disabled="disabled"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
                         </li>
                     </ul>
                 </div>
@@ -130,17 +131,17 @@ global $hb_settings;
                                             <p><?php printf( '%s', $extra->description ) ?></p>
                                         </div>
                                         <div class="hb_extra_detail_price">
-											<?php if ( $extra->respondent === 'number' ): ?>
+											<?php if ( $extra->respondent === 'number' ) { ?>
                                                 <input type="number" step="1" min="1"
                                                        name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
                                                        value="1"
                                                        class="hb_optional_quantity"
                                                 />
-											<?php else: ?>
+											<?php } else { ?>
                                                 <input type="hidden" step="1" min="1"
                                                        name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
                                                        value="1"/>
-											<?php endif; ?>
+											<?php } ?>
                                             <label>
                                                 <strong><?php echo $extra->price; ?></strong>
                                                 <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ) ?></small>
@@ -155,9 +156,9 @@ global $hb_settings;
 
 			<?php } ?>
         </form>
-		<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || $hb_settings->get( 'enable_gallery_lightbox' ) ): ?>
+		<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || $hb_settings->get( 'enable_gallery_lightbox' ) ) { ?>
 			<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
-		<?php endif; ?>
+		<?php } ?>
     </li>
 
 

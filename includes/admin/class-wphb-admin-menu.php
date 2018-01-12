@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
-
 	/**
 	 * Class WPHB_Admin_Menu.
 	 *
 	 * @since 2.0
 	 */
 	class WPHB_Admin_Menu {
-
 		/**
 		 * WPHB_Admin_Menu constructor.
 		 *
@@ -40,7 +37,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function plugin_menu() {
-
 			// Register menu.
 			add_menu_page(
 				__( 'WP Hotel Booking', 'wp-hotel-booking' ),
@@ -51,7 +47,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 				'dashicons-calendar',
 				'3.99'
 			);
-
 
 			$menu_items = array(
 				'pricing_table' => array(
@@ -75,14 +70,27 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 			// Third-party can be add more items
 			$menu_items = apply_filters( 'hotel_booking_menu_items', $menu_items );
 
-			$menu_items['settings'] = array(
-				'tp_hotel_booking',
-				__( 'Settings', 'wp-hotel-booking' ),
-				__( 'Settings', 'wp-hotel-booking' ),
-				'manage_hb_booking',
-				'wphb-settings',
-				array( $this, 'settings_page' )
+			$more_items = array(
+				'addons'   => array(
+					'tp_hotel_booking',
+					__( 'Add-ons', 'wp-hotel-booking' ),
+					__( 'Add-ons', 'wp-hotel-booking' ),
+					'manage_hb_booking',
+					'wphb-addons',
+					array( $this, 'addons_page' )
+				),
+				'settings' => array(
+					'tp_hotel_booking',
+					__( 'Settings', 'wp-hotel-booking' ),
+					__( 'Settings', 'wp-hotel-booking' ),
+					'manage_hb_booking',
+					'wphb-settings',
+					array( $this, 'settings_page' )
+				)
 			);
+			foreach ( $more_items as $key => $item ) {
+				$menu_items[ $key ] = $item;
+			}
 
 			// Register submenu.
 			if ( $menu_items ) {
@@ -90,7 +98,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					call_user_func_array( 'add_submenu_page', $item );
 				}
 			}
-
 		}
 
 		/**
@@ -99,7 +106,25 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function addition_packages() {
-			include_once( WPHB_ABSPATH . 'includes/admin/views/settings/addition-packages.php' );
+			hb_admin_view( 'settings/addition-packages' );
+		}
+
+		/**
+		 * Pricing plan view.
+		 *
+		 * @since 2.0
+		 */
+		public function pricing_table() {
+			hb_admin_view( 'settings/pricing-table', array(), true );
+		}
+
+		/**
+		 * Addons view.
+		 *
+		 * @since 2.0
+		 */
+		public function addons_page() {
+			hb_admin_view( 'settings/add-ons', array(), true );
 		}
 
 		/**
@@ -110,16 +135,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		public function settings_page() {
 			WPHB_Admin_Settings::output();
 		}
-
-		/**
-		 * Pricing plan view.
-		 *
-		 * @since 2.0
-		 */
-		public function pricing_table() {
-			include_once( WPHB_ABSPATH . 'includes/admin/views/settings/pricing-table.php' );
-		}
 	}
-
 }
+
 new WPHB_Admin_Menu();

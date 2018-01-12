@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WPHB_Admin' ) ) {
-
 	/**
 	 * Class WPHB_Admin.
 	 *
 	 * @since 2.0
 	 */
 	class WPHB_Admin {
-
 		/**
 		 * WPHB_Admin constructor.
 		 *
@@ -54,7 +51,6 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 * @since 2.0
 		 */
 		public function update_pricing_plan() {
-
 			if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ), 'hb-update-pricing-plan' ) ) {
 				return;
 			}
@@ -88,9 +84,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 				}
 			}
 		}
-
 	}
-
 }
 
 new WPHB_Admin();

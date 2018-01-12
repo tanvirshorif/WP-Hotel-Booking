@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
-
 	/**
 	 * Class WPHB_Admin_Settings.
 	 *
 	 * @since 2.0
 	 */
 	class WPHB_Admin_Settings {
-
 		/**
 		 * Get admin setting page tabs.
 		 *
@@ -33,7 +30,6 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 		 * @return array
 		 */
 		public static function get_settings_pages() {
-
 			$tabs = array();
 
 			$tabs[] = include_once 'settings/class-wphb-admin-setting-general.php';
@@ -58,18 +54,18 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 			if ( ! array_key_exists( $selected_tab, $tabs ) ) {
 				$tab_keys     = array_keys( $tabs );
 				$selected_tab = reset( $tab_keys );
-			}
+			} ?>
 
-			?>
             <div class="wrap">
                 <h2 class="nav-tab-wrapper">
-					<?php if ( $tabs ) :
-						foreach ( $tabs as $slug => $title ) { ?>
+					<?php if ( $tabs ) { ?>
+						<?php foreach ( $tabs as $slug => $title ) { ?>
                             <a class="nav-tab<?php echo sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ); ?>"
                                href="?page=wphb-settings&tab=<?php echo esc_attr( $slug ); ?>">
 								<?php echo esc_html( $title ); ?>
                             </a>
-						<?php } endif; ?>
+						<?php } ?>
+					<?php } ?>
                 </h2>
                 <form method="post" action="" enctype="multipart/form-data" name="hb-admin-settings-form">
 					<?php do_action( 'hb_admin_settings_tab_before', $selected_tab ); ?>
@@ -78,12 +74,9 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 					<?php wp_nonce_field( 'hb_admin_settings_tab_' . $selected_tab, 'hb_admin_settings_tab_' . $selected_tab . '_field' ); ?>
 					<?php do_action( 'hb_admin_settings_tab_after', $selected_tab ); ?>
                     <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
-
                 </form>
             </div>
 			<?php
 		}
-
 	}
-
 }

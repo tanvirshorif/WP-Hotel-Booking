@@ -86,8 +86,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 		 * @since 2.0
 		 */
 		public function admin_settings() {
-			$template = WPHB_ABSPATH . 'includes/admin/views/gateways/offline-payment.php';
-			include_once $template;
+			hb_admin_view( 'gateways/offline-payment', array(), true );
 		}
 
 		/**

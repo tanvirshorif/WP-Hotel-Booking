@@ -22,10 +22,10 @@ defined( 'ABSPATH' ) || exit;
 <form method="POST" class="hb_form_currencies_switcher">
 	<?php wp_nonce_field( 'hb_sw_currencies', 'hb_sw_currencies' ); ?>
     <select name="hb_form_currencies_switcher_select" class="hb_form_currencies_switcher_select">
-		<?php foreach ( $currencies as $currency ): ?>
-			<?php if ( array_key_exists( $currency, $hb_currencies ) ): ?>
+		<?php foreach ( $currencies as $currency ) { ?>
+			<?php if ( array_key_exists( $currency, $hb_currencies ) ) { ?>
                 <option value="<?php echo esc_attr( $currency ) ?>" <?php selected( $storage->get( 'currency' ), $currency ) ?>><?php printf( '%s', $hb_currencies[ $currency ] ) ?></option>
-			<?php endif; ?>
-		<?php endforeach; ?>
+			<?php } ?>
+		<?php } ?>
     </select>
 </form>

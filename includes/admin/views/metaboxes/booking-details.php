@@ -165,7 +165,7 @@ $rooms   = hb_get_order_items( $post->ID );
     </div>
 
 
-	<?php if ( $booking->coupon_id ) : ?>
+	<?php if ( $booking->coupon_id ) { ?>
         <div class="coupon">
             <div>
 				<?php printf( __( 'Coupon(<a href="%s">%s</a>)', 'wp-hotel-booking' ), get_edit_post_link( $booking->coupon_id ), $booking->coupon_code ) ?>
@@ -174,6 +174,6 @@ $rooms   = hb_get_order_items( $post->ID );
 				<?php printf( '-%s', hb_format_price( $booking->coupon_value, hb_get_currency_symbol( $booking->currency ) ) ); ?>
             </div>
         </div>
-	<?php endif; ?>
+	<?php } ?>
 
 </div>

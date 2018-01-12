@@ -23,26 +23,26 @@ $items    = isset( $atts['number'] ) ? (int) $atts['number'] : 4;
 ?>
 
 <div id="<?php echo esc_attr( $sliderId ); ?>" class="hb_room_carousel_container tp-hotel-booking">
-	<?php if ( isset( $atts['title'] ) && $atts['title'] ): ?>
+	<?php if ( isset( $atts['title'] ) && $atts['title'] ) { ?>
         <h3><?php echo esc_html( $atts['title'] ); ?></h3>
-	<?php endif; ?>
+	<?php } ?>
     <!--navigation-->
-	<?php if ( ( ! isset( $atts['navigation'] ) || $atts['navigation'] ) && count( $query->posts ) > $items ): ?>
+	<?php if ( ( ! isset( $atts['navigation'] ) || $atts['navigation'] ) && count( $query->posts ) > $items ) { ?>
         <div class="navigation owl-buttons">
             <div class="prev"><span class="pe-7s-angle-left"></span></div>
             <div class="next"><span class="pe-7s-angle-right"></span></div>
         </div>
-	<?php endif; ?>
+	<?php } ?>
     <!--pagination-->
-	<?php if ( ! isset( $atts['pagination'] ) || $atts['pagination'] ): ?>
+	<?php if ( ! isset( $atts['pagination'] ) || $atts['pagination'] ) { ?>
         <div class="pagination"></div>
-	<?php endif; ?>
+	<?php } ?>
     <!--text_link-->
-	<?php if ( isset( $atts['text_link'] ) && $atts['text_link'] !== '' ): ?>
+	<?php if ( isset( $atts['text_link'] ) && $atts['text_link'] !== '' ) { ?>
         <div class="text_link">
             <a href="<?php echo get_post_type_archive_link( 'hb_room' ); ?>"><?php echo esc_html( $atts['text_link'] ); ?></a>
         </div>
-	<?php endif; ?>
+	<?php } ?>
     <div class="hb_room_carousel">
 		<?php hotel_booking_room_loop_start(); ?>
 

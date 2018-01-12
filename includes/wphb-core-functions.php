@@ -63,8 +63,8 @@ add_action( 'template_include', 'wphb_booking_received_template' );
 
 if ( ! function_exists( 'wphb_booking_received_template' ) ) {
 	/**
-     * Get booking thank you page template.
-     *
+	 * Get booking thank you page template.
+	 *
 	 * @param $template
 	 *
 	 * @return string
@@ -437,23 +437,23 @@ if ( ! function_exists( 'hb_extra_select' ) ) {
 	function hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) {
 		?>
         <select name="<?php echo esc_attr( $name ); ?>"<?php echo sprintf( '%s', $multitye ? ' multiple' : '' ) ?>>
-			<?php if ( $options['options'] ): ?>
-				<?php foreach ( $options['options'] as $key => $option ): ?>
-					<?php if ( is_array( $option['value'] ) ): ?>
+			<?php if ( $options['options'] ) { ?>
+				<?php foreach ( $options['options'] as $key => $option ) { ?>
+					<?php if ( is_array( $option['value'] ) ) { ?>
                         <optgroup label="">
-							<?php foreach ( $option['value'] as $key => $value ): ?>
+							<?php foreach ( $option['value'] as $key => $value ) { ?>
                                 <option value="<?php printf( '%s', $value['value'] ) ?>" <?php selected( $selected, $value['value'], 1 ); ?>>
 									<?php printf( '%s', $value['text'] ) ?>
                                 </option>
-							<?php endforeach; ?>
+							<?php } ?>
                         </optgroup>
-					<?php else: ?>
+					<?php } else { ?>
                         <option value="<?php printf( '%s', $option['value'] ) ?>" <?php selected( $selected, $option['value'], 1 ); ?>>
 							<?php printf( '%s', $option['text'] ) ?>
                         </option>
-					<?php endif ?>
-				<?php endforeach ?>
-			<?php endif; ?>
+					<?php } ?>
+				<?php } ?>
+			<?php } ?>
         </select>
 		<?php
 	}

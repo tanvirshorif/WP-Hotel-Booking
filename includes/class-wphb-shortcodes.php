@@ -218,9 +218,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			?>
             <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
 
-				<?php if ( isset( $atts['title'] ) && $atts['title'] ): ?>
+				<?php if ( isset( $atts['title'] ) && $atts['title'] ){ ?>
                     <h3><?php echo esc_html( $atts['title'] ); ?></h3>
-				<?php endif; ?>
+				<?php } ?>
 
 				<?php $cart = WPHB_Cart::instance(); ?>
 

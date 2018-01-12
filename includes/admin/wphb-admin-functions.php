@@ -16,6 +16,62 @@
 defined( 'ABSPATH' ) || exit;
 
 
+if ( ! function_exists( 'hb_get_admin_view' ) ) {
+	/**
+	 * @param $name
+	 * @param null $plugin_file
+	 *
+	 * @return mixed
+	 */
+	function hb_get_admin_view( $name, $plugin_file = null ) {
+		if ( ! preg_match( '/\.(.*)$/', $name ) ) {
+			$name .= '.php';
+		}
+		if ( $plugin_file ) {
+			$view = dirname( $plugin_file ) . '/includes/admin/views/' . $name;
+		} else {
+			$view = WPHB_PLUGIN_PATH . '/includes/admin/views/' . $name;
+		}
+
+		return apply_filters( 'hb_admin_view', $view, $name );
+	}
+}
+
+if ( ! function_exists( 'hb_admin_view' ) ) {
+	/**
+	 * @param $name
+	 * @param array $args
+	 * @param bool $include_once
+	 * @param bool $return
+	 *
+	 * @return bool|string
+	 */
+	function hb_admin_view( $name, $args = array(), $include_once = false, $return = false ) {
+		$view = hb_get_admin_view( $name, ! empty( $args['plugin_file'] ) ? $args['plugin_file'] : null );
+		if ( file_exists( $view ) ) {
+			ob_start();
+			// extract parameters as local variables if passed
+			is_array( $args ) && extract( $args );
+			do_action( 'hb_before_display_admin_view', $name, $args );
+			if ( $include_once ) {
+				include_once $view;
+			} else {
+				include $view;
+			}
+			do_action( 'hb_after_display_admin_view', $name, $args );
+			$output = ob_get_clean();
+			if ( ! $return ) {
+				echo $output;
+			}
+
+			return $return ? $output : true;
+		}
+
+		return false;
+	}
+}
+
+
 if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 	/**
 	 * Get admin setting tabs.
