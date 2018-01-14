@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
-
 	/**
 	 * Class WPHB_Shortcodes.
 	 *
 	 * @since 2.0
 	 */
 	class WPHB_Shortcodes {
-
 		/**
 		 * Init shortcodes.
 		 *
@@ -32,16 +29,15 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 */
 		public static function init() {
 			$shortcodes = array(
-				'hotel_booking'                  => __CLASS__ . '::hotel_booking',
-				'hotel_booking_account'          => __CLASS__ . '::hotel_booking_account',
-				'hotel_booking_best_reviews'     => __CLASS__ . '::hotel_booking_best_reviews',
-				'hotel_booking_cart'             => __CLASS__ . '::hotel_booking_cart',
-				'hotel_booking_checkout'         => __CLASS__ . '::hotel_booking_checkout',
-				'hotel_booking_lastest_reviews'  => __CLASS__ . '::hotel_booking_lastest_reviews',
-				'hotel_booking_mini_cart'        => __CLASS__ . '::hotel_booking_mini_cart',
-				'hotel_booking_rooms'            => __CLASS__ . '::hotel_booking_rooms',
-				'hotel_booking_slider'           => __CLASS__ . '::hotel_booking_slider',
-				'hotel_booking_curreny_switcher' => __CLASS__ . '::hotel_booking_currency_switcher'
+				'hotel_booking'                 => __CLASS__ . '::hotel_booking',
+				'hotel_booking_account'         => __CLASS__ . '::hotel_booking_account',
+				'hotel_booking_best_reviews'    => __CLASS__ . '::hotel_booking_best_reviews',
+				'hotel_booking_cart'            => __CLASS__ . '::hotel_booking_cart',
+				'hotel_booking_checkout'        => __CLASS__ . '::hotel_booking_checkout',
+				'hotel_booking_lastest_reviews' => __CLASS__ . '::hotel_booking_lastest_reviews',
+				'hotel_booking_mini_cart'       => __CLASS__ . '::hotel_booking_mini_cart',
+				'hotel_booking_rooms'           => __CLASS__ . '::hotel_booking_rooms',
+				'hotel_booking_slider'          => __CLASS__ . '::hotel_booking_slider'
 			);
 
 			foreach ( $shortcodes as $shortcode => $function ) {
@@ -218,7 +214,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			?>
             <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
 
-				<?php if ( isset( $atts['title'] ) && $atts['title'] ){ ?>
+				<?php if ( isset( $atts['title'] ) && $atts['title'] ) { ?>
                     <h3><?php echo esc_html( $atts['title'] ); ?></h3>
 				<?php } ?>
 
@@ -382,31 +378,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 
 			return ob_get_clean();
 		}
-
-		/**
-		 * Display currency switcher.
-		 *
-		 * @since 2.0
-		 */
-		public static function hotel_booking_currency_switcher( $atts ) {
-			$settings = hb_settings();
-
-			if ( ! $settings->get( 'currencies_enable' ) || ! $settings->get( 'currencies_multiple_allowed' ) ) {
-				return false;
-			}
-
-			$atts['currencies'] = explode( ',', $atts['currencies'] );
-
-			ob_start();
-			do_action( 'hotel_booking_wrapper_shortcode_start' );
-			hb_get_template( 'shortcodes/currency-switcher.php', $atts );
-			do_action( 'hotel_booking_wrapper_shortcode_end' );
-
-			return ob_get_clean();
-		}
-
 	}
-
 }
 
 WPHB_Shortcodes::init();

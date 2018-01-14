@@ -84,14 +84,14 @@ if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 }
 
 
-if ( ! function_exists( 'hb_admin_i18n' ) ) {
+if ( ! function_exists( 'hb_admin_js' ) ) {
 	/**
 	 * Print admin scripts.
 	 *
 	 * @return mixed
 	 */
-	function hb_admin_i18n() {
-		$i18n = array(
+	function hb_admin_js() {
+		$js = array(
 			'choose_images'                 => __( 'Choose images', 'wp-hotel-booking' ),
 			'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'wp-hotel-booking' ),
 			'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'wp-hotel-booking' ),
@@ -110,7 +110,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'select_extra_placeholder'      => __( 'Select package', 'wp-hotel-booking' )
 		);
 
-		return apply_filters( 'hb_admin_i18n', $i18n );
+		return apply_filters( 'hb_admin_js', $js );
 	}
 }
 

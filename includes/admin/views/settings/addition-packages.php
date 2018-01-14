@@ -12,140 +12,79 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
+
+hb_admin_view( 'settings/extra/item' );
+hb_admin_view( 'settings/extra/new' );
 ?>
 
-<?php $settings = apply_filters( 'hotel_booking_addon_menus', array() ); ?>
+<div id="wphb-admin-extra-panel"></div>
 
-<div id="tp_hotel_booking_other_settings">
-    <ul class="tp_hotel_booking_tabs_settings">
-        <li><a href="#"><?php _e( 'Extra Room Packages', 'wp-hotel-booking' ); ?></a></li>
-    </ul>
-	<?php
-	/**
-	 * use hb_settings function get field name
-	 * WPHB_Settings save auto
-	 * else customize save function
-	 */
-
-	$extras      = WPHB_Extra::instance()->get_extra();
-	$field_name  = 'tp_hb_extra_room';
-	$extra_types = hb_extra_types();
-	$respondent  = array();
-	foreach ( $extra_types as $key => $value ) {
-		$respondent[] = array( 'text' => $value, 'value' => $key );
-	} ?>
-
-    <!-- Email Sender Options block -->
-    <p class="description"><?php _e( 'Adding room\'s services packages with detail price for every service', 'wp-hotel-booking' ); ?></p>
-    <form action="" class="tp_extra_form_field_settings" method="POST">
-        <div id="tp_extra_form">
-            <div class="tp_extra_form_head">
-                <h3><?php _e( 'Extra Options', 'wp-hotel-booking' ); ?></h3>
-            </div>
-			<?php if ( $extras ) { ?>
-				<?php foreach ( $extras as $k => $post ) { ?>
-
-                    <div class="tp_extra_form_fields">
-                        <div class="name">
-                            <h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
-                            <input type="text"
-                                   name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][name]"
-                                   value="<?php echo esc_attr( $post->post_title ); ?>"/>
-                        </div>
-                        <div class="desc">
-                            <h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-                            <textarea
-                                    name="<?php echo esc_attr( $field_name ) ?>[<?php echo esc_attr( $post->ID ); ?>][desc]"><?php printf( '%s', $post->post_content ) ?></textarea>
-                        </div>
-                        <div class="price">
-                            <h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
-                            <input type="number" step="any"
-                                   name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][price]"
-                                   value="<?php echo esc_attr( get_post_meta( $post->ID, 'tp_hb_extra_room_price', true ) ); ?>"/>
-                            <span>/</span>
-                            <input type="text"
-                                   name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][respondent_name]"
-                                   value="<?php echo esc_attr( get_post_meta( $post->ID, 'tp_hb_extra_room_respondent_name', true ) ); ?>"
-                                   placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ) ?>"/>
-                        </div>
-                        <div class="type">
-                            <h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
-							<?php hb_extra_select( $field_name . '[' . $post->ID . '][respondent]', array( 'options' => $respondent ), get_post_meta( $post->ID, 'tp_hb_extra_room_respondent', true ) ); ?>
-                        </div>
-                        <div class="remove">
-                            <a data-id="<?php echo esc_attr( $post->ID ); ?>"
-                               class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?></a>
-                        </div>
-                    </div>
-
-				<?php } ?>
-
-			<?php } else { ?>
-
-                <div class="tp_extra_form_fields">
-                    <div class="name">
-                        <h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
-                        <input type="text" name="<?php echo esc_attr( $field_name ); ?>[0][name]" value=""/>
-                    </div>
-                    <div class="desc">
-                        <h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-                        <textarea name="<?php echo esc_attr( $field_name ) ?>[0][desc]"></textarea>
-                    </div>
-                    <div class="price">
-                        <h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
-                        <input type="number" step="any" name="<?php echo esc_attr( $field_name ); ?>[0][price]"
-                               value=""/>
-                        <span>/</span>
-                        <input type="text" name="<?php echo esc_attr( $field_name ); ?>[0][respondent_name]" value=""
-                               placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ) ?>"/>
-                    </div>
-                    <div class="type">
-                        <h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
-						<?php hb_extra_select( $field_name . '[0][respondent]', array( 'options' => $respondent ), '' ); ?>
-                    </div>
-                    <div class="remove">
-                        <a data-id=""
-                           class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?></a>
-                    </div>
-                </div>
-
-			<?php } ?>
-            <div class="tp_extra_form_foot">
-                <button type="submit"
-                        class="button button-primary"><?php _e( 'Save Extra', 'wp-hotel-booking' ); ?></button>
-                <a class="button tp_extra_add_item"><?php _e( 'Add another item', 'wp-hotel-booking' ); ?></a>
-            </div>
+<script type="text/x-template" id="tmpl-admin-extra-panel">
+    <div>
+        <div class="wrap">
+            <h1 class="wp-heading-inline"><?php _e( 'Addition Packages', 'wp-hotel-booking' ); ?></h1>
+            <a href="#" class="page-title-action"
+               @click="addExtra"><?php echo __( 'Add New', 'wp-hotel-booking' ); ?></a>
         </div>
-    </form>
-
-    <script type="text/html" id="tmpl-tp-hb-extra-room">
-        <div class="tp_extra_form_fields">
-            <div class="name">
-                <h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
-                <input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][name]" value=""
-                       placeholder="<?php echo esc_attr( 'Package name' ) ?>"/>
-            </div>
-            <div class="desc">
-                <h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-                <textarea name="<?php echo esc_attr( $field_name ) ?>[{{ data.id }}][desc]"
-                          placeholder="<?php esc_attr_e( 'Enter description here', 'wp-hotel-booking' ) ?>"></textarea>
-            </div>
-            <div class="price">
-                <h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
-                <input type="number" step="any" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][price]"
-                       value="" placeholder="<?php echo esc_attr( '10' ) ?>"/>
-                <span>/</span>
-                <input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][respondent_name]"
-                       value="" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ) ?>"/>
-            </div>
-            <div class="type">
-                <h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
-				<?php hb_extra_select( $field_name . '[{{ data.id }}][respondent]', array( 'options' => $respondent ), '' ); ?>
-            </div>
-            <div class="remove">
-                <a data-id="{{ data.id }}"
-                   class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?></a>
-            </div>
+        <div id="wphb-admin-extra-panel">
+            <template v-for="(item, index) in extra">
+                <wphb-admin-extra-item :extra="item" :index="index" :types="types"
+                                       @updateExtra="updateExtra" @deleteExtra="deleteExtra"></wphb-admin-extra-item>
+            </template>
+            <wphb-admin-extra-new v-if="add" :types="types" @newExtra="newExtra"
+                                  @deleteNew="deleteNew"></wphb-admin-extra-new>
         </div>
-    </script>
-</div>
+
+        <button class="button update-items button-primary"
+                @click="updateItems"><?php echo __( 'Update', 'wp-hotel-booking' ); ?></button>
+    </div>
+</script>
+
+<script type="text/javascript">
+    (function (Vue, $store) {
+
+        Vue.component('wphb-extra-panel', {
+            template: '#tmpl-admin-extra-panel',
+            data: function () {
+                return {
+                    add: false
+                }
+            },
+            computed: {
+                addable: function () {
+                    return $store.getters['addable'];
+                },
+                extra: function () {
+                    return $store.getters['extra'];
+                },
+                types: function () {
+                    return $store.getters['types'];
+                }
+            },
+            methods: {
+                addExtra: function () {
+                    if (this.addable) {
+                        this.add = true;
+                    }
+                },
+                updateExtra: function (extra) {
+                    $store.dispatch('updateExtra', extra);
+                },
+                newExtra: function (extra) {
+                    $store.dispatch('newExtra', extra);
+                    this.add = false;
+                },
+                deleteExtra: function (payload) {
+                    $store.dispatch('deleteExtra', payload);
+                },
+                deleteNew: function () {
+                    this.add = false;
+                },
+                updateItems: function () {
+                    // code
+                }
+            }
+        })
+
+    })(Vue, WPHB_Extra_Store);
+</script>

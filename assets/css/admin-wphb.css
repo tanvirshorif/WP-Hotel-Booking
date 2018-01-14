@@ -53,6 +53,52 @@
 .hb-pricing-list tbody td input {
   width: 100%; }
 
+#wphb-admin-extra-panel {
+  margin: 20px 0; }
+  #wphb-admin-extra-panel .extra-item {
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 10px;
+    overflow: hidden; }
+    #wphb-admin-extra-panel .extra-item:nth-child(2n+1) {
+      background-color: #fff; }
+    #wphb-admin-extra-panel .extra-item > div {
+      width: 20%;
+      float: left; }
+    #wphb-admin-extra-panel .extra-item .remove {
+      padding-top: 30px;
+      width: 10%; }
+    #wphb-admin-extra-panel .extra-item .desc {
+      width: 30%; }
+    #wphb-admin-extra-panel .extra-item > div > input {
+      width: 90%;
+      max-width: 90%;
+      padding: 7px; }
+      #wphb-admin-extra-panel .extra-item > div > input[type="checkbox"] {
+        width: auto; }
+    #wphb-admin-extra-panel .extra-item > div > textarea, #wphb-admin-extra-panel .extra-item > div > select {
+      width: 90%;
+      max-width: 90%;
+      padding: 7px; }
+    #wphb-admin-extra-panel .extra-item .rooms {
+      width: 10%;
+      text-align: center; }
+    #wphb-admin-extra-panel .extra-item > .type {
+      width: 10%;
+      text-align: center; }
+    #wphb-admin-extra-panel .extra-item > .price > * {
+      float: left; }
+    #wphb-admin-extra-panel .extra-item > .price input {
+      width: 45%; }
+    #wphb-admin-extra-panel .extra-item > .type select {
+      width: 100%; }
+    #wphb-admin-extra-panel .extra-item > .price span, #wphb-admin-extra-panel .extra-item > .type select {
+      height: 36px;
+      line-height: 36px; }
+    #wphb-admin-extra-panel .extra-item > div > textarea {
+      min-height: 100px; }
+  #wphb-admin-extra-panel .update-items {
+    margin-top: 20px; }
+
 /****************************************** Admin booking page ***************************************************/
 .post-type-hb_booking .search-box {
   display: none; }
@@ -570,11 +616,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   height: 18px; }
 
 /**end rating hb_room**/
-/*OTHER SETTINGS*/
-#tp_hotel_booking_other_settings {
-  margin-top: 5px;
-  padding-left: 15px; }
-
 .tp_hotel_booking_tabs_settings {
   /*width: 20%;
     max-width: 300px;
@@ -750,12 +791,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   -o-transition: background-position .1s linear;
   transition: background-position .1s linear; }
 
-.tp_extra_form_field_settings {
-  border: 1px solid #dedede; }
-
-.tp_extra_form_field_settings > div > div {
-  padding: 10px; }
-
 #tp_extra_form {
   overflow: hidden; }
 
@@ -774,57 +809,6 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   text-align: center;
   background-color: #77B1EA;
   color: #fff; }
-
-.tp_extra_form_fields {
-  border-bottom: 1px solid #dedede;
-  padding-bottom: 10px;
-  overflow: hidden; }
-
-.tp_extra_form_fields:nth-child(2n+1) {
-  background-color: #fff; }
-
-.tp_extra_form_fields > div {
-  width: 20%;
-  float: left; }
-
-.tp_extra_form_fields .remove {
-  padding-top: 30px;
-  width: 10%; }
-
-.tp_extra_form_fields .desc {
-  width: 30%; }
-
-.tp_extra_form_fields > div > input[type="checkbox"] {
-  width: auto; }
-
-.tp_extra_form_fields > div > input,
-.tp_extra_form_fields > div > textarea,
-.tp_extra_form_fields > div > select {
-  width: 90%;
-  max-width: 90%;
-  padding: 7px; }
-
-.tp_extra_form_fields .rooms,
-.tp_extra_form_fields > .type {
-  width: 10%;
-  text-align: center; }
-
-.tp_extra_form_fields > .price > * {
-  float: left; }
-
-.tp_extra_form_fields > .price input {
-  width: 45%; }
-
-.tp_extra_form_fields > .type select {
-  width: 100%; }
-
-.tp_extra_form_fields > .price span,
-.tp_extra_form_fields > .type select {
-  height: 36px;
-  line-height: 36px; }
-
-.tp_extra_form_fields > div > textarea {
-  min-height: 100px; }
 
 .tp_extra_add_item {
   float: right; }

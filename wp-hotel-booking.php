@@ -130,6 +130,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 					include_once( WPHB_ABSPATH . 'includes/aq_resizer.php' );
 				}
 			}
+
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-template-loader.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-ajax.php' );
 			include_once( WPHB_ABSPATH . 'includes/class-wphb-install.php' );
@@ -155,17 +156,19 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/wphb-webhooks.php' );
 
+			// interface
+			include_once( WPHB_ABSPATH . 'includes/interfaces/interface-curd.php' );
+
+			// curd
+			include_once( WPHB_ABSPATH . 'includes/curd/class-wphb-extra-curd.php' );
+			include_once( WPHB_ABSPATH . 'includes/curd/class-wphb-room-curd.php' );
+
 			// room
 			include_once( WPHB_ABSPATH . 'includes/room/class-wphb-room.php' );
 			include_once( WPHB_ABSPATH . 'includes/room/wphb-room-functions.php' );
 
-			// currency
-			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currencies.php' );
-			include_once( WPHB_ABSPATH . 'includes/currency/class-wphb-currency-storage.php' );
-
 			// extra package
 			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra.php' );
-			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-field.php' );
 			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-package.php' );
 			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-product.php' );
 
@@ -173,7 +176,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-functions.php' );
 			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-hooks.php' );
 			include_once( WPHB_ABSPATH . 'includes/booking/class-wphb-booking.php' );
-
 		}
 
 		/**

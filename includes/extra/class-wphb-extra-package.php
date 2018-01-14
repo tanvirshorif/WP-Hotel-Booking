@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WP Hotel Booking extra package class.
+ * WP Hotel Booking Room extra package class.
  *
  * @class       WPHB_Extra_Package
  * @version     2.0

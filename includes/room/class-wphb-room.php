@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WPHB_Room' ) ) {
-
 	/**
 	 * Class WPHB_Room.
 	 *
 	 * @since 2.0
 	 */
 	class WPHB_Room extends WPHB_Abstract_Product {
-
 		/**
 		 * @var array
 		 */
@@ -78,7 +75,5 @@ if ( ! class_exists( 'WPHB_Room' ) ) {
 
 			return self::$_instance[ $id ];
 		}
-
 	}
-
 }

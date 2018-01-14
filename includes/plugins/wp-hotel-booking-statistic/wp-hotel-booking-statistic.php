@@ -180,7 +180,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Statistic' ) ) {
 					'jquery',
 					'jquery-ui-datepicker'
 				) );
-				wp_localize_script( 'wphb-statistic-js', 'wphb_statistic_js', hb_admin_i18n() );
+				wp_localize_script( 'wphb-statistic-js', 'wphb_statistic_js', hb_admin_js() );
 			}
 		}
 

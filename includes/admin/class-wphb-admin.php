@@ -40,6 +40,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 * @since 2.0
 		 */
 		public function includes() {
+			include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin-ajax.php' );
 			include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin-settings.php' );
 			include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin-menu.php' );
 			include_once( WPHB_ABSPATH . 'includes/admin/wphb-admin-functions.php' );

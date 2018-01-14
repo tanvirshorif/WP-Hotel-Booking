@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WP Hotel Booking custom post type class.
+ * WP Hotel Booking custom post types class.
  *
  * @class       WPHB_Post_Types
  * @version     2.0
@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WPHB_Post_Types' ) ) {
-
 	/**
 	 * Class WPHB_Post_Types.
 	 *
 	 * @since 2.0
 	 */
 	class WPHB_Post_Types {
-
 		/**
 		 * @var array
 		 */
@@ -76,8 +73,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
 			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
-		}
 
+			define( 'WPHB_Room_CTP', 'hb_room' );
+			define( 'WPHB_Extra_CPT', 'hb_extra_room' );
+		}
 
 		/**
 		 * Add capacity field in create room capacity terms page.
@@ -130,7 +129,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			}
 		}
 
-		function terms_orderby( $orderby, $args, $taxonomies ) {
+		/**
+		 * @param $orderby
+		 * @param $args
+		 * @param $taxonomies
+		 *
+		 * @return string
+		 */
+		public function terms_orderby( $orderby, $args, $taxonomies ) {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
 				$orderby = 'term_group';
 			}
@@ -138,7 +144,13 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			return $orderby;
 		}
 
-		function terms_args( $args, $taxonomies ) {
+		/**
+		 * @param $args
+		 * @param $taxonomies
+		 *
+		 * @return mixed
+		 */
+		public function terms_args( $args, $taxonomies ) {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
 				$args['order'] = 'ASC';
 			}
@@ -146,7 +158,12 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			return $args;
 		}
 
-		function posts_fields( $fields ) {
+		/**
+		 * @param $fields
+		 *
+		 * @return string
+		 */
+		public function posts_fields( $fields ) {
 			if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
 				$from   = hb_get_request( 'date-from-timestamp' );
 				$to     = hb_get_request( 'date-to-timestamp' );
@@ -166,7 +183,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 *
 		 * @return string
 		 */
-		function posts_join_paged( $join ) {
+		public function posts_join_paged( $join ) {
 			global $wpdb;
 			$result = $wpdb->get_col( "SELECT order_item_id FROM {$wpdb->hotel_booking_order_items} WHERE `order_item_id` IS NOT NULL" );
 			if ( ! $this->is_search( 'booking' ) || ! $result ) {
@@ -210,8 +227,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 *
 		 * @return string
 		 */
-		function posts_where_paged( $where ) {
-
+		public function posts_where_paged( $where ) {
 			if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
 				$from   = hb_get_request( 'date-from-timestamp' );
 				$to     = hb_get_request( 'date-to-timestamp' );
@@ -239,8 +255,12 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			return $where;
 		}
 
-		// group by
-		function posts_groupby( $groupby ) {
+		/**
+		 * @param $groupby
+		 *
+		 * @return string
+		 */
+		public function posts_groupby( $groupby ) {
 			if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
 				global $wpdb;
 				$groupby .= " {$wpdb->posts}.ID ";
@@ -263,7 +283,12 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			return $groupby;
 		}
 
-		function is_search( $type ) {
+		/**
+		 * @param $type
+		 *
+		 * @return bool
+		 */
+		public function is_search( $type ) {
 			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
 			if ( is_admin() && $post_type === "hb_{$type}" ) {
 				return true;
@@ -275,7 +300,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		/**
 		 * Enqueue scripts
 		 */
-		function enqueue_scripts() {
+		public function enqueue_scripts() {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
 				wp_enqueue_script( 'hb-edit-tags', WPHB_PLUGIN_URL . 'assets/js/edit-tags.min.js', array(
 					'jquery',
@@ -499,7 +524,6 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			}
 
 			$orderby = $query->get( 'orderby' );
-
 			switch ( $orderby ) {
 				case 'booking_date':
 					$query->set( 'orderby', 'date' );
@@ -518,7 +542,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		/**
 		 * Update custom fields for taxonomy
 		 */
-		function update_taxonomy() {
+		public function update_taxonomy() {
 
 			if ( ! empty( $_REQUEST['action'] ) && in_array( hb_get_request( 'taxonomy' ), array(
 					'hb_room_type',
@@ -559,11 +583,19 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			}
 		}
 
-		function delete_term_data( $term_id ) {
+		/**
+		 * @param $term_id
+		 */
+		public function delete_term_data( $term_id ) {
 			delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
 		}
 
-		function taxonomy_columns( $columns ) {
+		/**
+		 * @param $columns
+		 *
+		 * @return mixed
+		 */
+		public function taxonomy_columns( $columns ) {
 			if ( 'hb_room_type' == sanitize_text_field( $_REQUEST['taxonomy'] ) ) {
 				$columns['thumbnail'] = __( 'Gallery', 'wp-hotel-booking' );
 			} else {
@@ -580,7 +612,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			return $columns;
 		}
 
-		function taxonomy_column_content( $content, $column_name, $term_id ) {
+		/**
+		 * @param $content
+		 * @param $column_name
+		 * @param $term_id
+		 *
+		 * @return string
+		 */
+		public function taxonomy_column_content( $content, $column_name, $term_id ) {
 			$taxonomy = sanitize_text_field( $_REQUEST['taxonomy'] );
 			$term     = get_term( $term_id, $taxonomy );
 			switch ( $column_name ) {
@@ -601,7 +640,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		/**
 		 * Fix menu parent for taxonomy menu item
 		 */
-		function fix_menu_parent_file() {
+		public function fix_menu_parent_file() {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
 				$GLOBALS['parent_file'] = 'tp_hotel_booking';
 			}
@@ -610,20 +649,16 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		/**
 		 * Remove default meta boxes
 		 */
-		function remove_meta_boxes() {
+		public function remove_meta_boxes() {
 			remove_meta_box( 'hb_room_capacitydiv', 'hb_room', 'side' );
-
 			remove_meta_box( 'tagsdiv-hb_room_capacity', 'hb_room', 'side' );
 		}
 
 		/**
-		 * Register custom post types for Hotel Booking.
+		 * Register custom post types for WP Hotel Booking.
 		 */
-		function register_post_types() {
-
-			/**
-			 * Register room custom post type.
-			 */
+		public function register_post_types() {
+			// register room
 			$args = array(
 				'labels'             => array(
 					'name'               => _x( 'Rooms', 'post type general name', 'wp-hotel-booking' ),
@@ -662,13 +697,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'menu_icon'          => 'dashicons-admin-home'
 			);
 			$args = apply_filters( 'hotel_booking_register_post_type_room_arg', $args );
-
 			register_post_type( 'hb_room', $args );
 
-
-			/**
-			 * Register room extra package custom post type.
-			 */
+			// register room extra package
 			$args = array(
 				'labels'              => array(
 					'name'               => __( 'Extra Room', 'wp-hotel-booking' ),
@@ -702,13 +733,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'capability_type'     => 'hb_room',
 				'supports'            => array( 'title', 'editor' )
 			);
-
+			$args = apply_filters( 'hotel_booking_register_post_type_extra_room_arg', $args );
 			register_post_type( 'hb_extra_room', $args );
 
-
-			/**
-			 * Register custom post type for booking.
-			 */
+			// register booking
 			$args = array(
 				'labels'             => array(
 					'name'               => _x( 'Bookings', 'post type general name', 'wp-hotel-booking' ),
@@ -739,20 +767,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'hierarchical'       => false,
 			);
 			$args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );
-
 			register_post_type( 'hb_booking', $args );
 		}
 
 		/**
 		 * Register room taxonomies.
-		 *
-		 *
 		 */
 		public static function register_taxonomies() {
-
-			/**
-			 * Register room capacity taxonomy.
-			 */
+			// register room capacity
 			$args = array(
 				'hierarchical' => false,
 				'label'        => __( 'Room Capacity', 'wp-hotel-booking' ),
@@ -784,13 +806,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				)
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_capacity_arg', $args );
+			register_taxonomy( 'hb_room_capacity', array( 'hb_room' ), $args );
 
-			register_taxonomy( 'hb_room_capacity', array( 'hb_room' ), $args
-			);
-
-			/**
-			 * Register room category.
-			 */
+			// register room category
 			$args = array(
 				'hierarchical' => true,
 				'label'        => __( 'Room Type', 'wp-hotel-booking' ),
@@ -819,12 +837,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				)
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
-
 			register_taxonomy( 'hb_room_type', array( 'hb_room' ), $args );
 
-			/**
-			 * Register room location.
-			 */
+			// register room location
 			$args = array(
 				'hierarchical' => true,
 				'label'        => __( 'Locations', 'wp-hotel-booking' ),
@@ -853,19 +868,13 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				)
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_room_location_arg', $args );
-
 			register_taxonomy( 'hb_room_location', array( 'hb_room' ), $args );
-
 		}
-
 
 		/**
 		 * Registers booking statues.
-		 *
-		 *
 		 */
 		public function register_post_statues() {
-
 			$statuses = array(
 				'cancelled'  => 'Cancelled',
 				'pending'    => 'Pending',
@@ -886,9 +895,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				);
 			}
 		}
-
 	}
-
 }
 
 new WPHB_Post_Types();

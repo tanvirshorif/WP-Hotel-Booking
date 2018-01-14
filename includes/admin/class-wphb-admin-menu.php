@@ -106,7 +106,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function addition_packages() {
-			hb_admin_view( 'settings/addition-packages' );
+			hb_admin_view( 'settings/addition-packages', array(), true );
 		}
 
 		/**

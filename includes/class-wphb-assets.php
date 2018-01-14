@@ -49,22 +49,30 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			// fontawesome
 			wp_register_style( 'wphb-libraries', WPHB_PLUGIN_URL . 'assets/css/libraries.css', array(), WPHB_VERSION );
 			// select2
-			wp_register_script( 'wphb-select2', WPHB_PLUGIN_URL . 'assets/js/select2.min.js', array(), WPHB_VERSION, true );
+			wp_register_script( 'wphb-select2', WPHB_PLUGIN_URL . 'assets/js/vendor/select2.min.js', array(), WPHB_VERSION, true );
 
-			wp_register_script( 'wphb-library-moment', WPHB_PLUGIN_URL . 'assets/js/moment.min.js', $dependencies, WPHB_VERSION, true );
+			wp_register_script( 'wphb-library-moment', WPHB_PLUGIN_URL . 'assets/js/vendor/moment.min.js', $dependencies, WPHB_VERSION, true );
 
 			wp_register_style( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/css/fullcalendar.min.css', array(), WPHB_VERSION );
-			wp_register_script( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/fullcalendar.min.js', $dependencies, WPHB_VERSION, true );
+			wp_register_script( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/vendor/fullcalendar.min.js', $dependencies, WPHB_VERSION, true );
 
 			if ( is_admin() ) {
 				$dependencies = array_merge( $dependencies, array( 'backbone' ) );
 
-				wp_enqueue_script( 'wphb-vue', WPHB_PLUGIN_URL . 'assets/js/vue.js', $dependencies, WPHB_VERSION, true );
+				wp_enqueue_script( 'wphb-vue', WPHB_PLUGIN_URL . 'assets/js/vendor/vue.js', $dependencies, '2.5.13' );
+				wp_enqueue_script( 'wphb-vuex', WPHB_PLUGIN_URL . 'assets/js/vendor/vuex.js', $dependencies, '3.0.1' );
+				wp_enqueue_script( 'wphb-vue-resource', WPHB_PLUGIN_URL . 'assets/js/vendor/vue-resource.min.js', $dependencies, '1.3.5' );
+				wp_enqueue_script( 'wphb-admin-vue', WPHB_PLUGIN_URL . 'assets/js/admin-vue-wphb.js', array(
+					'jquery',
+					'wphb-vue',
+					'wphb-vuex',
+					'wphb-vue-resource'
+				), WPHB_VERSION );
 
 				wp_register_style( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/css/admin-wphb.css' );
 
 				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin-wphb.js', $dependencies, WPHB_VERSION, true );
-				wp_localize_script( 'wphb-admin', 'wphb_admin_js', hb_admin_i18n() );
+				wp_localize_script( 'wphb-admin', 'wphb_admin_js', hb_admin_js() );
 			} else {
 
 				wp_register_style( 'wphb-site', WPHB_PLUGIN_URL . 'assets/css/wphb.css', array(), WPHB_VERSION );
@@ -72,12 +80,12 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 				wp_localize_script( 'wphb-site', 'wphb_js', hb_i18n() );
 
 				// room gallery
-				wp_register_script( 'wphb-library-gallery', WPHB_PLUGIN_URL . 'assets/js/gallery.min.js', $dependencies, WPHB_VERSION, true );
+				wp_register_script( 'wphb-library-gallery', WPHB_PLUGIN_URL . 'assets/js/vendor/gallery.min.js', $dependencies, WPHB_VERSION, true );
 				// rooms slider widget
-				wp_register_script( 'wphb-library-owl-carousel', WPHB_PLUGIN_URL . 'assets/js/owl.carousel.min.js', $dependencies, WPHB_VERSION, true );
+				wp_register_script( 'wphb-library-owl-carousel', WPHB_PLUGIN_URL . 'assets/js/vendor/owl.carousel.min.js', $dependencies, WPHB_VERSION, true );
 				// lightbox
-				wp_register_style( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/css/lightbox.min.css', array(), WPHB_VERSION );
-				wp_register_script( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/js/lightbox.min.js', $dependencies, WPHB_VERSION, true );
+				wp_register_style( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/css/vendor/lightbox.min.css', array(), WPHB_VERSION );
+				wp_register_script( 'wphb-lightbox2', WPHB_PLUGIN_URL . 'assets/js/vendor/lightbox.min.js', $dependencies, WPHB_VERSION, true );
 			}
 
 			/**

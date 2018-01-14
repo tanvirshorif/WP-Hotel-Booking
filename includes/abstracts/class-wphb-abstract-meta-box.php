@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstract WP Hotel Booking meata box class.
+ * Abstract WP Hotel Booking meta box class.
  *
  * @class       WPHB_Abstract_Meta_Box
  * @version     2.0
@@ -15,16 +15,13 @@
  */
 defined( 'ABSPATH' ) || exit();
 
-
 if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
-
 	/**
 	 * Class WPHB_Abstract_Meta_Box.
 	 *
 	 * @since 2.0
 	 */
 	abstract class WPHB_Abstract_Meta_Box {
-
 		/**
 		 * @var null
 		 */
@@ -94,13 +91,11 @@ if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
 		public function meta_box_view( $post ) {
 			if ( is_array( $this->view ) ) {
 				foreach ( $this->view as $view ) {
-					hb_admin_view( "metaboxes/offline-payment", array(), true );
+					hb_admin_view( "metaboxes/{$view}", array(), true );
 				}
 			} else {
 				hb_admin_view( "metaboxes/$this->view", array(), true );
 			}
 		}
-
 	}
-
 }

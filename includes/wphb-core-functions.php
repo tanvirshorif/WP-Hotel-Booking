@@ -414,7 +414,9 @@ if ( ! function_exists( 'is_hb_cart' ) ) {
 }
 
 if ( ! function_exists( 'hb_extra_types' ) ) {
-
+	/**
+	 * @return mixed
+	 */
 	function hb_extra_types() {
 		return apply_filters( 'hb_extra_type', array(
 				'trip'   => __( 'Trip', 'wp-hb-extra' ),
@@ -422,26 +424,24 @@ if ( ! function_exists( 'hb_extra_types' ) ) {
 			)
 		);
 	}
-
 }
 
 if ( ! function_exists( 'hb_extra_select' ) ) {
 	/**
-	 * generate select field html
+	 * Generate select field html.
 	 *
-	 * @param  array $options
-	 * @param  array $selected
-	 *
-	 * @return html
+	 * @param string $name
+	 * @param array $options
+	 * @param array $selected
+	 * @param bool $multitye
 	 */
-	function hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) {
-		?>
+	function hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) { ?>
         <select name="<?php echo esc_attr( $name ); ?>"<?php echo sprintf( '%s', $multitye ? ' multiple' : '' ) ?>>
 			<?php if ( $options['options'] ) { ?>
 				<?php foreach ( $options['options'] as $key => $option ) { ?>
 					<?php if ( is_array( $option['value'] ) ) { ?>
                         <optgroup label="">
-							<?php foreach ( $option['value'] as $key => $value ) { ?>
+							<?php foreach ( $option['value'] as $index => $value ) { ?>
                                 <option value="<?php printf( '%s', $value['value'] ) ?>" <?php selected( $selected, $value['value'], 1 ); ?>>
 									<?php printf( '%s', $value['text'] ) ?>
                                 </option>
@@ -457,7 +457,6 @@ if ( ! function_exists( 'hb_extra_select' ) ) {
         </select>
 		<?php
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_extra_options' ) ) {
