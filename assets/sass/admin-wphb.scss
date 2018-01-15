@@ -77,6 +77,12 @@
 }
 
 //================================== Admin extra page ==========================================//
+#wphb-admin-setting-wrapper {
+    .nav-tab-active {
+        box-shadow: none;
+    }
+}
+
 #wphb-admin-extra-panel {
     margin: 20px 0;
     .extra-item {

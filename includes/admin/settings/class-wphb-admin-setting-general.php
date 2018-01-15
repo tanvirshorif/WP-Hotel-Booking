@@ -55,7 +55,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'general_settings',
 					'title' => __( 'General Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'General options for system.', 'wp-hotel-booking' )
+					'desc'  => __( 'General options for system.', 'wp-hotel-booking' ),
+					'class' => 'general-section'
 				),
 				array(
 					'type'    => 'number',
@@ -97,7 +98,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'currency_settings',
 					'title' => __( 'Currency Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'The options for display rooms price on the frontend.', 'wp-hotel-booking' )
+					'desc'  => __( 'The options for display rooms price on the frontend.', 'wp-hotel-booking' ),
+					'class' => 'general-section'
 				),
 				array(
 					'type'    => 'select',

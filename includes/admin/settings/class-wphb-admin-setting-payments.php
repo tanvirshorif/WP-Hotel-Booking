@@ -50,12 +50,21 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
 			$prefix = 'tp_hotel_booking_';
 
+			$section  = '';
+			$sections = $this->get_sections();
+			if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
+				$section = sanitize_text_field( $_REQUEST['section'] );
+			}
+
+			$section = $section ? $section : reset( array_keys( $sections ) );
+
 			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 				array(
 					'type'  => 'section_start',
 					'id'    => 'payment_general_setting',
 					'title' => __( 'General Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'Payment General options for system.', 'wp-hotel-booking' )
+					'desc'  => __( 'Payment General options for system.', 'wp-hotel-booking' ),
+					'class' => 'general-section'
 				),
 				array(
 					'type'    => 'checkbox',
@@ -130,8 +139,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 		 * @return mixed
 		 */
 		public function get_sections() {
-			$sections            = array();
-			$sections['general'] = __( 'General', 'wp-hotel-booking' );
+			$sections                     = array();
+			$sections['general-checkout'] = __( 'General', 'wp-hotel-booking' );
 
 			$payments = hb_get_payment_gateways();
 			foreach ( $payments as $payment ) {

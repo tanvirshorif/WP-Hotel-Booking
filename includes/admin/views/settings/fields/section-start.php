@@ -15,6 +15,9 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
+<div class="<?php echo isset( $field['class'] ) ? $field['class'] : ''; ?> admin-setting-section-content"
+     style="<?php echo isset( $field['hidden'] ) ? 'display: none' : ''; ?> ">
+
 <?php if ( isset( $field['title'] ) ) { ?>
 
     <h3><?php echo esc_html( $field['title'] ); ?></h3>

@@ -53,6 +53,9 @@
 .hb-pricing-list tbody td input {
   width: 100%; }
 
+#wphb-admin-setting-wrapper .nav-tab-active {
+  box-shadow: none; }
+
 #wphb-admin-extra-panel {
   margin: 20px 0; }
   #wphb-admin-extra-panel .extra-item {
