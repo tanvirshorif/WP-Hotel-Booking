@@ -76,12 +76,7 @@
     }
 }
 
-//================================== Admin extra page ==========================================//
-#wphb-admin-setting-wrapper {
-    .nav-tab-active {
-        box-shadow: none;
-    }
-}
+/********************************** Admin extra page *************************************************/
 
 #wphb-admin-extra-panel {
     margin: 20px 0;
@@ -149,6 +144,22 @@
     }
     .update-items {
         margin-top: 20px;
+    }
+}
+
+/********************************** Admin setting page *************************************************/
+
+#wphb-admin-setting-wrapper {
+    .nav-tab-active {
+        box-shadow: none;
+    }
+}
+
+/********************************** Admin add-ons page *************************************************/
+
+#wphb-admin-addons-wrapper {
+    .nav-tab-active {
+        box-shadow: none;
     }
 }
 

@@ -32,11 +32,11 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 		public static function get_settings_pages() {
 			$tabs = array();
 
-			$tabs[] = include_once 'settings/class-wphb-admin-setting-general.php';
-			$tabs[] = include_once 'settings/class-wphb-admin-setting-pages.php';
-			$tabs[] = include_once 'settings/class-wphb-admin-setting-room.php';
-			$tabs[] = include_once 'settings/class-wphb-admin-setting-payments.php';
-			$tabs[] = include_once 'settings/class-wphb-admin-setting-emails.php';
+			$tabs[] = include_once 'settings/class-wphb-setting-general.php';
+			$tabs[] = include_once 'settings/class-wphb-setting-pages.php';
+			$tabs[] = include_once 'settings/class-wphb-setting-room.php';
+			$tabs[] = include_once 'settings/class-wphb-setting-payments.php';
+			$tabs[] = include_once 'settings/class-wphb-setting-emails.php';
 
 			return apply_filters( 'hotel_booking_admin_setting_pages', $tabs );
 		}

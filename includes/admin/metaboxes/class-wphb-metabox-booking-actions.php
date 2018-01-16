@@ -3,7 +3,7 @@
 /**
  * WP Hotel Booking booking actions meta box class.
  *
- * @class       WPHB_Admin_Metabox_Booking_Actions
+ * @class       WPHB_Metabox_Booking_Actions
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
  * @category    Class
@@ -16,14 +16,14 @@
 defined( 'ABSPATH' ) || exit();
 
 
-if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
+if ( ! class_exists( 'WPHB_Metabox_Booking_Actions' ) ) {
 
 	/**
-	 * Class WPHB_Admin_Metabox_Booking_Actions.
+	 * Class WPHB_Metabox_Booking_Actions.
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Admin_Metabox_Booking_Actions extends WPHB_Abstract_Meta_Box {
+	class WPHB_Metabox_Booking_Actions extends WPHB_Abstract_Meta_Box {
 
 		/**
 		 * @var string
@@ -46,7 +46,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Actions' ) ) {
 		protected $view = 'booking-actions';
 
 		/**
-		 * WPHB_Admin_Metabox_Booking_Actions constructor.
+		 * WPHB_Metabox_Booking_Actions constructor.
 		 *
 		 * @since 2.0
 		 */

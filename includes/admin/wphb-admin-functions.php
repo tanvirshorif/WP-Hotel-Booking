@@ -211,10 +211,10 @@ add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
 if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 	function hb_admin_init_metaboxes() {
 		$metaboxes = array(
-			new WPHB_Admin_Metabox_Booking_Details(), // booking details
-			new WPHB_Admin_Metabox_Booking_Actions(), // booking actions
-			new WPHB_Admin_Metabox_Booking_Customer(), // booking customer
-			new WPHB_Admin_Metabox_Room_Price(), // room price
+			new WPHB_Metabox_Booking_Details(), // booking details
+			new WPHB_Metabox_Booking_Actions(), // booking actions
+			new WPHB_Metabox_Booking_Customer(), // booking customer
+			new WPHB_Metabox_Room_Price(), // room price
 		);
 
 		return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );
@@ -350,12 +350,12 @@ if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 		}
 
 		$status = sanitize_text_field( $value );
-		remove_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Actions', 'update' ) );
+		remove_action( 'save_post', array( 'WPHB_Metabox_Booking_Actions', 'update' ) );
 
 		$booking = WPHB_Booking::instance( $post_id );
 		$booking->update_status( $status );
 
-		add_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Actions', 'update' ) );
+		add_action( 'save_post', array( 'WPHB_Metabox_Booking_Actions', 'update' ) );
 	}
 
 	add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );

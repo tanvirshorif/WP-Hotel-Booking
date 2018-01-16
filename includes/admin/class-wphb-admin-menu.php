@@ -106,7 +106,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function addition_packages() {
-			hb_admin_view( 'settings/addition-packages', array(), true );
+			hb_admin_view( 'addition-packages', array(), true );
 		}
 
 		/**
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function pricing_table() {
-			hb_admin_view( 'settings/pricing-table', array(), true );
+			hb_admin_view( 'pricing-table', array(), true );
 		}
 
 		/**
@@ -124,7 +124,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 * @since 2.0
 		 */
 		public function addons_page() {
-			hb_admin_view( 'settings/add-ons', array(), true );
+			WPHB_Addons::output();
 		}
 
 		/**

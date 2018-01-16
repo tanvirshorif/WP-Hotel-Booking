@@ -591,10 +591,12 @@
                 .on('click', '.room-gallery-input .attachment .dashicons-trash', _self.remove_image_selector)
                 // dismiss notice
                 .on('click', '.hb-dismiss-notice button', _self.dismiss_notice)
-
-                .on('click', '#wphb-admin-setting-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_tabs)
-
-                .on('click', '.hb-admin-sub-tab.subsubsub li a', _self.admin_sub_tabs);
+                // admin setting tabs
+                .on('click', '#wphb-admin-setting-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_setting_tabs)
+                // admin setting subtabs
+                .on('click', '.hb-admin-sub-tab.subsubsub li a', _self.admin_setting_sub_tabs)
+                // admin add-on tabs
+                .on('click', '#wphb-admin-addons-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_addon_tabs);
 
             // datetime picker field
             _self.datetime_metabox_field();
@@ -685,7 +687,7 @@
                 })
             }
         },
-        admin_tabs: function (e) {
+        admin_setting_tabs: function (e) {
             e.preventDefault();
             var _self = $(this),
                 _tabs = $('.nav-tab-wrapper a.nav-tab'),
@@ -703,9 +705,8 @@
             } else {
                 // _content.first().css('background', 'red');
             }
-
         },
-        admin_sub_tabs: function (e) {
+        admin_setting_sub_tabs: function (e) {
             e.preventDefault();
             var _self = $(this),
                 _sub_tabs = $('.hb-admin-sub-tab.subsubsub li a'),
@@ -715,6 +716,17 @@
             _self.addClass('current');
             $('.admin-setting-section-content').hide();
             $('.admin-setting-section-content.' + _sub_tab).fadeIn();
+        },
+        admin_addon_tabs: function (e) {
+            e.preventDefault();
+            var _self = $(this),
+                _tabs = $('.nav-tab-wrapper a.nav-tab'),
+                _tab = _self.data('tab');
+
+            _tabs.removeClass('nav-tab-active');
+            _self.addClass('nav-tab-active');
+            $('.admin-addons-tab-content').hide();
+            $('#addons-' + _tab).show();
         }
     };
 

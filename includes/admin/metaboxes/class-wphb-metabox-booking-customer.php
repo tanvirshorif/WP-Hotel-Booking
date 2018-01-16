@@ -3,7 +3,7 @@
 /**
  * WP Hotel Booking customer booking details meta box class.
  *
- * @class       WPHB_Admin_Metabox_Booking_Customer
+ * @class       WPHB_Metabox_Booking_Customer
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
  * @category    Class
@@ -16,14 +16,14 @@
 defined( 'ABSPATH' ) || exit();
 
 
-if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Customer' ) ) {
+if ( ! class_exists( 'WPHB_Metabox_Booking_Customer' ) ) {
 
 	/**
-	 * Class WPHB_Admin_Metabox_Booking_Customer.
+	 * Class WPHB_Metabox_Booking_Customer.
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Admin_Metabox_Booking_Customer extends WPHB_Abstract_Meta_Box {
+	class WPHB_Metabox_Booking_Customer extends WPHB_Abstract_Meta_Box {
 
 		/**
 		 * @var string
@@ -41,7 +41,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Booking_Customer' ) ) {
 		protected $view = 'booking-customer';
 
 		/**
-		 * WPHB_Admin_Metabox_Booking_Customer constructor.
+		 * WPHB_Metabox_Booking_Customer constructor.
 		 *
 		 * @since 2.0
 		 */

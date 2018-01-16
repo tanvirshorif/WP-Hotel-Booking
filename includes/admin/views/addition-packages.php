@@ -13,8 +13,8 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-hb_admin_view( 'settings/extra/item' );
-hb_admin_view( 'settings/extra/new' );
+hb_admin_view( 'extra/item' );
+hb_admin_view( 'extra/new' );
 ?>
 
 <div id="wphb-admin-extra-panel"></div>

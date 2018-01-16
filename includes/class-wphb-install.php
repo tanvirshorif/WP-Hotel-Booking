@@ -101,8 +101,8 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 		// create page. Eg: hotel-checkout, hotel-cart
 		static function create_pages() {
 			if ( ! function_exists( 'hb_create_page ' ) ) {
-				include_once( WPHB_ABSPATH . 'includes/admin/wphb-admin-functions.php' );
-				include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );
+				include_once( WPHB_INCLUDES . 'admin/wphb-admin-functions.php' );
+				include_once( WPHB_INCLUDES . 'wphb-functions.php' );
 			}
 
 			$pages = array();

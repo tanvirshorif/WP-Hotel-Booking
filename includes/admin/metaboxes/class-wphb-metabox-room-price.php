@@ -3,7 +3,7 @@
 /**
  * WP Hotel Booking room pricing meta box class.
  *
- * @class       WPHB_Admin_Metabox_Room_Price
+ * @class       WPHB_Metabox_Room_Price
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
  * @category    Class
@@ -15,14 +15,14 @@
  */
 defined( 'ABSPATH' ) || exit();
 
-if ( ! class_exists( 'WPHB_Admin_Metabox_Room_Price' ) ) {
+if ( ! class_exists( 'WPHB_Metabox_Room_Price' ) ) {
 
 	/**
-	 * Class WPHB_Admin_Metabox_Room_Price.
+	 * Class WPHB_Metabox_Room_Price.
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Admin_Metabox_Room_Price extends WPHB_Abstract_Meta_Box {
+	class WPHB_Metabox_Room_Price extends WPHB_Abstract_Meta_Box {
 
 		/**
 		 * @var string
@@ -45,7 +45,7 @@ if ( ! class_exists( 'WPHB_Admin_Metabox_Room_Price' ) ) {
 		protected $view = 'room-pricing';
 
 		/**
-		 * WPHB_Admin_Metabox_Room_Price constructor.
+		 * WPHB_Metabox_Room_Price constructor.
 		 *
 		 * @since 2.0
 		 */

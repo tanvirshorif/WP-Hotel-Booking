@@ -53,9 +53,7 @@
 .hb-pricing-list tbody td input {
   width: 100%; }
 
-#wphb-admin-setting-wrapper .nav-tab-active {
-  box-shadow: none; }
-
+/********************************** Admin extra page *************************************************/
 #wphb-admin-extra-panel {
   margin: 20px 0; }
   #wphb-admin-extra-panel .extra-item {
@@ -101,6 +99,14 @@
       min-height: 100px; }
   #wphb-admin-extra-panel .update-items {
     margin-top: 20px; }
+
+/********************************** Admin setting page *************************************************/
+#wphb-admin-setting-wrapper .nav-tab-active {
+  box-shadow: none; }
+
+/********************************** Admin add-ons page *************************************************/
+#wphb-admin-addons-wrapper .nav-tab-active {
+  box-shadow: none; }
 
 /****************************************** Admin booking page ***************************************************/
 .post-type-hb_booking .search-box {

@@ -122,60 +122,63 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		 */
 		public function includes() {
 
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-autoloader.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-autoloader.php' );
 			if ( is_admin() ) {
-				include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin.php' );
+				include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
 			} else {
 				if ( ! class_exists( 'Aq_Resize' ) ) {
-					include_once( WPHB_ABSPATH . 'includes/aq_resizer.php' );
+					include_once( WPHB_INCLUDES . 'aq_resizer.php' );
 				}
 			}
 
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-template-loader.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-ajax.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-install.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-upgrade.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-shortcodes.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-template-loader.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-ajax.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-install.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-upgrade.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-shortcodes.php' );
 
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-assets.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-settings.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-comments.php' );
-			include_once( WPHB_ABSPATH . 'includes/admin/class-wphb-admin.php' );
-			include_once( WPHB_ABSPATH . 'includes/wphb-template-hooks.php' );
-			include_once( WPHB_ABSPATH . 'includes/wphb-template-functions.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-resizer.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-post-types.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-query.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-roles.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-user.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-sessions.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-cart.php' );
-			include_once( WPHB_ABSPATH . 'includes/class-wphb-checkout.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-assets.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-settings.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-addons.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-comments.php' );
+			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
+			include_once( WPHB_INCLUDES . 'admin/background/class-wphb-background-query-items.php' );
+			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
+			include_once( WPHB_INCLUDES . 'wphb-template-hooks.php' );
+			include_once( WPHB_INCLUDES . 'wphb-template-functions.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-resizer.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-post-types.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-query.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-roles.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-user.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-sessions.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-cart.php' );
+			include_once( WPHB_INCLUDES . 'class-wphb-checkout.php' );
 
-			include_once( WPHB_ABSPATH . 'includes/wphb-core-functions.php' );
-			include_once( WPHB_ABSPATH . 'includes/wphb-functions.php' );
-			include_once( WPHB_ABSPATH . 'includes/wphb-webhooks.php' );
+			include_once( WPHB_INCLUDES . 'wphb-core-functions.php' );
+			include_once( WPHB_INCLUDES . 'wphb-functions.php' );
+			include_once( WPHB_INCLUDES . 'wphb-webhooks.php' );
 
 			// interface
-			include_once( WPHB_ABSPATH . 'includes/interfaces/interface-curd.php' );
+			include_once( WPHB_INCLUDES . 'interfaces/interface-curd.php' );
 
 			// curd
-			include_once( WPHB_ABSPATH . 'includes/curd/class-wphb-extra-curd.php' );
-			include_once( WPHB_ABSPATH . 'includes/curd/class-wphb-room-curd.php' );
+			include_once( WPHB_INCLUDES . 'curd/class-wphb-extra-curd.php' );
+			include_once( WPHB_INCLUDES . 'curd/class-wphb-room-curd.php' );
 
 			// room
-			include_once( WPHB_ABSPATH . 'includes/room/class-wphb-room.php' );
-			include_once( WPHB_ABSPATH . 'includes/room/wphb-room-functions.php' );
+			include_once( WPHB_INCLUDES . 'room/class-wphb-room.php' );
+			include_once( WPHB_INCLUDES . 'room/wphb-room-functions.php' );
 
 			// extra package
-			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra.php' );
-			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-package.php' );
-			include_once( WPHB_ABSPATH . 'includes/extra/class-wphb-extra-product.php' );
+			include_once( WPHB_INCLUDES . 'extra/class-wphb-extra.php' );
+			include_once( WPHB_INCLUDES . 'extra/class-wphb-extra-package.php' );
+			include_once( WPHB_INCLUDES . 'extra/class-wphb-extra-product.php' );
 
 			// booking
-			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-functions.php' );
-			include_once( WPHB_ABSPATH . 'includes/booking/wphb-booking-hooks.php' );
-			include_once( WPHB_ABSPATH . 'includes/booking/class-wphb-booking.php' );
+			include_once( WPHB_INCLUDES . 'booking/wphb-booking-functions.php' );
+			include_once( WPHB_INCLUDES . 'booking/wphb-booking-hooks.php' );
+			include_once( WPHB_INCLUDES . 'booking/class-wphb-booking.php' );
 		}
 
 		/**

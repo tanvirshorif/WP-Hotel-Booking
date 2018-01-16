@@ -24,7 +24,7 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 		/**
 		 * Init.
 		 */
-		public function init() {
+		public static function init() {
 			if ( ! is_user_logged_in() ) {
 				return;
 			}
