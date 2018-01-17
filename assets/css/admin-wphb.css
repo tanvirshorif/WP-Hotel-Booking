@@ -127,12 +127,52 @@
   #wphb-admin-extra-panel .update-items {
     margin-top: 20px; }
 
-/********************************** Admin setting page *************************************************/
-#wphb-admin-setting-wrapper .nav-tab-active {
-  box-shadow: none; }
-
 /********************************** Admin add-ons page *************************************************/
 #wphb-admin-addons-wrapper .nav-tab-active {
+  box-shadow: none; }
+
+/********************************** Admin about page *************************************************/
+#wphb-admin-about-wrapper {
+  margin-top: 25px; }
+  #wphb-admin-about-wrapper .heading .about-text {
+    width: 80%;
+    display: inline-block; }
+    #wphb-admin-about-wrapper .heading .about-text h1 {
+      margin: .2em 20px 0 0;
+      padding: 0;
+      color: #32373c;
+      line-height: 1.2em;
+      font-size: 2.8em;
+      font-weight: 400; }
+    #wphb-admin-about-wrapper .heading .about-text .description {
+      margin: 1em 70px 1em 0;
+      min-height: 60px;
+      color: #555d66;
+      font-weight: 400;
+      line-height: 1.6em;
+      font-size: 19px; }
+  #wphb-admin-about-wrapper .heading .badge {
+    width: 20%;
+    display: inline; }
+  #wphb-admin-about-wrapper .content {
+    clear: both; }
+    #wphb-admin-about-wrapper .content .feature-section {
+      width: 50%;
+      display: inline-block; }
+      #wphb-admin-about-wrapper .content .feature-section:first-child {
+        float: left; }
+      #wphb-admin-about-wrapper .content .feature-section > div {
+        padding-right: 20px; }
+      #wphb-admin-about-wrapper .content .feature-section h3 {
+        margin: 1.25em 0 .6em;
+        font-size: 20px;
+        line-height: 1.5; }
+      #wphb-admin-about-wrapper .content .feature-section p {
+        line-height: 1.5;
+        font-size: 14px; }
+
+/********************************** Admin setting page *************************************************/
+#wphb-admin-setting-wrapper .nav-tab-active {
   box-shadow: none; }
 
 /****************************************** Admin booking page ***************************************************/

@@ -188,17 +188,71 @@
     }
 }
 
-/********************************** Admin setting page *************************************************/
+/********************************** Admin add-ons page *************************************************/
 
-#wphb-admin-setting-wrapper {
+#wphb-admin-addons-wrapper {
     .nav-tab-active {
         box-shadow: none;
     }
 }
 
-/********************************** Admin add-ons page *************************************************/
+/********************************** Admin about page *************************************************/
 
-#wphb-admin-addons-wrapper {
+#wphb-admin-about-wrapper {
+    margin-top: 25px;
+    .heading {
+        .about-text {
+            width: 80%;
+            display: inline-block;
+            h1 {
+                margin: .2em 20px 0 0;
+                padding: 0;
+                color: #32373c;
+                line-height: 1.2em;
+                font-size: 2.8em;
+                font-weight: 400;
+            }
+            .description {
+                margin: 1em 70px 1em 0;
+                min-height: 60px;
+                color: #555d66;
+                font-weight: 400;
+                line-height: 1.6em;
+                font-size: 19px;
+            }
+        }
+        .badge {
+            width: 20%;
+            display: inline;
+        }
+    }
+    .content {
+        clear: both;
+        .feature-section {
+            width: 50%;
+            display: inline-block;
+            &:first-child {
+                float: left;
+            }
+            & > div {
+                padding-right: 20px;
+            }
+            h3 {
+                margin: 1.25em 0 .6em;
+                font-size: 20px;
+                line-height: 1.5;
+            }
+            p {
+                line-height: 1.5;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+/********************************** Admin setting page *************************************************/
+
+#wphb-admin-setting-wrapper {
     .nav-tab-active {
         box-shadow: none;
     }

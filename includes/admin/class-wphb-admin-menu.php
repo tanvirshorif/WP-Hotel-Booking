@@ -86,6 +86,14 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					'manage_hb_booking',
 					'wphb-settings',
 					array( $this, 'settings_page' )
+				),
+				'about'    => array(
+					'tp_hotel_booking',
+					__( 'About', 'wp-hotel-booking' ),
+					__( 'About', 'wp-hotel-booking' ),
+					'manage_hb_booking',
+					'wphb-about',
+					array( $this, 'about_page' )
 				)
 			);
 			foreach ( $more_items as $key => $item ) {
@@ -134,6 +142,15 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 */
 		public function settings_page() {
 			WPHB_Admin_Settings::output();
+		}
+
+		/**
+		 * Setting page view.
+		 *
+		 * @since 2.0
+		 */
+		public function about_page() {
+			hb_admin_view( 'about', array(), true );
 		}
 	}
 }
