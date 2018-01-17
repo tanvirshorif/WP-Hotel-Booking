@@ -27,16 +27,34 @@ hb_admin_view( 'extra/new' );
                @click="addExtra"><?php echo __( 'Add New', 'wp-hotel-booking' ); ?></a>
         </div>
         <div id="wphb-admin-extra-panel">
+            <div class="extra-items-heading">
+                <div class="name">
+                    <h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
+                </div>
+                <div class="desc">
+                    <h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
+                </div>
+                <div class="price">
+                    <h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
+                </div>
+                <div class="type">
+                    <h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
+                </div>
+                <div class="actions">
+                    <h4><?php _e( 'Actions', 'wp-hotel-booking' ); ?></h4>
+                </div>
+            </div>
+
             <template v-for="(item, index) in extra">
                 <wphb-admin-extra-item :extra="item" :index="index" :types="types"
                                        @updateExtra="updateExtra" @deleteExtra="deleteExtra"></wphb-admin-extra-item>
             </template>
-            <wphb-admin-extra-new v-if="add" :types="types" @newExtra="newExtra"
+            <wphb-admin-extra-new v-if="add || !extra.length" :types="types" @newExtra="newExtra"
                                   @deleteNew="deleteNew"></wphb-admin-extra-new>
-        </div>
 
-        <button class="button update-items button-primary"
-                @click="updateItems"><?php echo __( 'Update', 'wp-hotel-booking' ); ?></button>
+            <button class="button update-items button-primary"
+                    @click="updateItems"><?php echo __( 'Update', 'wp-hotel-booking' ); ?></button>
+        </div>
     </div>
 </script>
 
@@ -81,7 +99,7 @@ hb_admin_view( 'extra/new' );
                     this.add = false;
                 },
                 updateItems: function () {
-                    // code
+                    $store.dispatch('updateListExtra', this.extra);
                 }
             }
         })

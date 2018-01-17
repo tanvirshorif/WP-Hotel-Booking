@@ -17,7 +17,7 @@ if (typeof wphb_addition_packages !== 'undefined') {
     /**
      * Root store.
      */
-    (function (exports, Vue, Vuex, helpers, data) {
+    (function (exports, $, Vue, Vuex, helpers, data) {
 
         var state = helpers.cloneObject(data.wphb_extra);
 
@@ -27,6 +27,9 @@ if (typeof wphb_addition_packages !== 'undefined') {
         var getters = {
             extra: function (state) {
                 return state.extra;
+            },
+            unit: function (state) {
+                return state.unit;
             },
             types: function (state) {
                 return state.types;
@@ -57,6 +60,18 @@ if (typeof wphb_addition_packages !== 'undefined') {
             },
             'SET_ADDABLE_NEW': function (state, addable) {
                 state.addable = addable;
+            },
+            'PROCESSING_EXTRA': function (state, id) {
+                $('.extra-item.item-id-' + id).css('opacity', '0.5');
+            },
+            'COMPLETED_EXTRA': function (state, id) {
+                $('.extra-item.item-id-' + id).css('opacity', '1');
+            },
+            'PROCESSING_LIST_EXTRA': function (state) {
+                $('.extra-item').css('opacity', '0.5');
+            },
+            'COMPLETED_LIST_EXTRA': function (state) {
+                $('.extra-item').css('opacity', '1');
             },
             'UPDATE_ITEM_STATUS': function (item_id, status) {
 
@@ -92,6 +107,7 @@ if (typeof wphb_addition_packages !== 'undefined') {
             },
 
             updateExtra: function (context, extra) {
+                context.commit('PROCESSING_EXTRA', extra.id);
                 Vue.http.WPHB_Request({
                     type: 'update-extra',
                     extra: JSON.stringify(extra)
@@ -99,20 +115,40 @@ if (typeof wphb_addition_packages !== 'undefined') {
                     var result = response.body,
                         data = result.data;
                     if (data) {
+                        context.commit('COMPLETED_EXTRA', extra.id);
                         // context.commit('SET_LIST_EXTRA', '');
                     }
                 });
             },
 
             deleteExtra: function (context, payload) {
+                var _id = payload[0]['extra_id'];
+                context.commit('PROCESSING_EXTRA', _id);
+
                 Vue.http.WPHB_Request({
                     type: 'delete-extra',
-                    extra_id: payload[0]['extra_id']
+                    extra_id: _id
                 }).then(function (response) {
                     var result = response.body,
                         data = result.data;
                     if (data) {
                         context.commit('DELETE_EXTRA', payload[0]['index']);
+                    }
+                });
+            },
+
+            updateListExtra: function (context, listExtra) {
+                context.commit('PROCESSING_LIST_EXTRA');
+
+                Vue.http.WPHB_Request({
+                    type: 'update-list-extra',
+                    listExtra: JSON.stringify(listExtra)
+                }).then(function (response) {
+                    var result = response.body,
+                        data = result.data;
+                    if (data) {
+                        context.commit('SET_LIST_EXTRA', listExtra);
+                        context.commit('COMPLETED_LIST_EXTRA');
                     }
                 });
             },
@@ -143,7 +179,7 @@ if (typeof wphb_addition_packages !== 'undefined') {
             actions: actions
         });
 
-    })(window, Vue, Vuex, WPHB_Helpers, wphb_addition_packages);
+    })(window, jQuery, Vue, Vuex, WPHB_Helpers, wphb_addition_packages);
 }
 
 if (typeof WPHB_Extra_Store !== 'undefined') {

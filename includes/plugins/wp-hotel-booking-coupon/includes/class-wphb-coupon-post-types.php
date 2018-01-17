@@ -188,7 +188,7 @@ if ( ! class_exists( 'WPHB_Coupon_Post_Types' ) ) {
 						'name'    => 'coupon_discount_type',
 						'label'   => __( 'Discount type', 'wphb-coupon' ),
 						'type'    => 'select',
-						'std'     => '',
+						'std'     => 'fixed_cart',
 						'options' => array(
 							'fixed_cart'   => __( 'Cart discount', 'wphb-coupon' ),
 							'percent_cart' => __( 'Cart % discount', 'wphb-coupon' )

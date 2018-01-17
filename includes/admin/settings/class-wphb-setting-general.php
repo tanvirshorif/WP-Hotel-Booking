@@ -141,40 +141,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'max'     => 3,
 				),
 				array(
-					'type'    => 'checkbox',
-					'id'      => $prefix . 'currencies_enable',
-					'title'   => __( 'Switch Currency', 'wp-hotel-booking' ),
-					'default' => 1,
-					'desc'    => __( 'Enable switch currency', 'wp-hotel-booking' )
-				),
-				array(
-					'type'    => 'checkbox',
-					'id'      => $prefix . 'currencies_multiple_allowed',
-					'title'   => __( 'Switch Multiple Currencies', 'wp-hotel-booking' ),
-					'default' => 1,
-					'desc'    => __( 'Allow switch multiple currencies', 'wp-hotel-booking' )
-				),
-				array(
-					'type'    => 'select',
-					'id'      => $prefix . 'currencies_aggregator',
-					'title'   => __( 'Currency aggregator', 'wp-hotel-booking' ),
-					'options' => array(
-						'yahoo'  => 'http://finance.yahoo.com',
-						'google' => 'http://google.com/finance'
-					),
-					'default' => 'yahoo',
-				),
-				array(
-					'type'    => 'select',
-					'id'      => $prefix . 'currencies_storage',
-					'title'   => __( 'Currency storage', 'wp-hotel-booking' ),
-					'options' => array(
-						'session'   => __( 'Session', 'wp-hotel-booking' ),
-						'transient' => __( 'Transient', 'wp-hotel-booking' )
-					),
-					'default' => 'session'
-				),
-				array(
 					'type' => 'section_end',
 					'id'   => 'currency_settings'
 				)

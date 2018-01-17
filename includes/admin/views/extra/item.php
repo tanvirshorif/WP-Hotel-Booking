@@ -17,28 +17,29 @@ defined( 'ABSPATH' ) || exit;
 <script type="text/x-template" id="tmpl-admin-extra-item">
     <div :class="['extra-item', 'item-id-' + extra.id]">
         <div class="name">
-            <h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
             <input type="text" v-model="extra.title"/>
         </div>
         <div class="desc">
-            <h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-            <textarea v-model="extra.description"></textarea>
+            <textarea rows="2" v-model="extra.description"></textarea>
         </div>
         <div class="price">
-            <h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
-            <input type="number" min=0 v-model="extra.price"/>
+            <input type="number" min=0 v-model="extra.price" class="price"/>
             <span>/</span>
-            <input type="text" v-model="extra.unit"
+            <input type="text" v-model="extra.unit" class="unit"
                    placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ); ?>"/>
         </div>
         <div class="type">
-            <h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
             <select v-model="extra.type">
                 <option v-for="(name, key) in types" v-bind:value="key">{{name}}</option>
             </select>
         </div>
-        <div class="save"><a class="button dashicons dashicons-welcome-write-blog" @click="updateExtra"></a></div>
-        <div class="remove"><a class="button dashicons dashicons-trash" @click="deleteExtra"></a></div>
+        <div class="actions">
+            <a class="dashicons dashicons-welcome-write-blog update" @click="updateExtra"
+               title="<?php esc_attr_e( 'Save', 'wp-hotel-booking' ); ?>"></a>
+            <a class="dashicons dashicons-trash delete" @click="deleteExtra"
+               title="<?php esc_attr_e( 'Delete', 'wp-hotel-booking' ); ?>"></a>
+        </div>
+
     </div>
 </script>
 

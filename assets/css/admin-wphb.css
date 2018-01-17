@@ -56,47 +56,74 @@
 /********************************** Admin extra page *************************************************/
 #wphb-admin-extra-panel {
   margin: 20px 0; }
-  #wphb-admin-extra-panel .extra-item {
+  #wphb-admin-extra-panel .extra-items-heading, #wphb-admin-extra-panel .extra-item {
     border-bottom: 1px solid #dedede;
-    padding-bottom: 10px;
-    overflow: hidden; }
-    #wphb-admin-extra-panel .extra-item:nth-child(2n+1) {
-      background-color: #fff; }
-    #wphb-admin-extra-panel .extra-item > div {
+    padding: 12px 10px;
+    overflow: hidden;
+    background-color: #fff;
+    clear: both; }
+    #wphb-admin-extra-panel .extra-items-heading input, #wphb-admin-extra-panel .extra-items-heading select, #wphb-admin-extra-panel .extra-items-heading textarea, #wphb-admin-extra-panel .extra-item input, #wphb-admin-extra-panel .extra-item select, #wphb-admin-extra-panel .extra-item textarea {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-bottom: 1px dashed #DDD; }
+    #wphb-admin-extra-panel .extra-items-heading:nth-child(2n+1), #wphb-admin-extra-panel .extra-item:nth-child(2n+1) {
+      background-color: #f4fcff; }
+    #wphb-admin-extra-panel .extra-items-heading > div, #wphb-admin-extra-panel .extra-item > div {
       width: 20%;
       float: left; }
-    #wphb-admin-extra-panel .extra-item .remove {
+    #wphb-admin-extra-panel .extra-items-heading .remove, #wphb-admin-extra-panel .extra-item .remove {
       padding-top: 30px;
       width: 10%; }
-    #wphb-admin-extra-panel .extra-item .desc {
-      width: 30%; }
-    #wphb-admin-extra-panel .extra-item > div > input {
+    #wphb-admin-extra-panel .extra-items-heading .desc, #wphb-admin-extra-panel .extra-item .desc {
+      width: 42%; }
+    #wphb-admin-extra-panel .extra-items-heading > div > input, #wphb-admin-extra-panel .extra-item > div > input {
       width: 90%;
-      max-width: 90%;
       padding: 7px; }
-      #wphb-admin-extra-panel .extra-item > div > input[type="checkbox"] {
+      #wphb-admin-extra-panel .extra-items-heading > div > input[type="checkbox"], #wphb-admin-extra-panel .extra-item > div > input[type="checkbox"] {
         width: auto; }
-    #wphb-admin-extra-panel .extra-item > div > textarea, #wphb-admin-extra-panel .extra-item > div > select {
-      width: 90%;
-      max-width: 90%;
+    #wphb-admin-extra-panel .extra-items-heading > div > textarea, #wphb-admin-extra-panel .extra-items-heading > div > select, #wphb-admin-extra-panel .extra-item > div > textarea, #wphb-admin-extra-panel .extra-item > div > select {
+      width: 95%;
       padding: 7px; }
-    #wphb-admin-extra-panel .extra-item .rooms {
+    #wphb-admin-extra-panel .extra-items-heading .rooms, #wphb-admin-extra-panel .extra-item .rooms {
       width: 10%;
       text-align: center; }
-    #wphb-admin-extra-panel .extra-item > .type {
+    #wphb-admin-extra-panel .extra-items-heading > .name, #wphb-admin-extra-panel .extra-item > .name {
+      width: 18%; }
+    #wphb-admin-extra-panel .extra-items-heading > .type, #wphb-admin-extra-panel .extra-item > .type {
       width: 10%;
       text-align: center; }
-    #wphb-admin-extra-panel .extra-item > .price > * {
+    #wphb-admin-extra-panel .extra-items-heading > .actions, #wphb-admin-extra-panel .extra-item > .actions {
+      width: 10%;
+      text-align: center; }
+    #wphb-admin-extra-panel .extra-items-heading > .price > *, #wphb-admin-extra-panel .extra-item > .price > * {
       float: left; }
-    #wphb-admin-extra-panel .extra-item > .price input {
-      width: 45%; }
-    #wphb-admin-extra-panel .extra-item > .type select {
+    #wphb-admin-extra-panel .extra-items-heading > .price .price, #wphb-admin-extra-panel .extra-item > .price .price {
+      margin-right: 3px;
+      width: 70px; }
+    #wphb-admin-extra-panel .extra-items-heading > .price .unit, #wphb-admin-extra-panel .extra-item > .price .unit {
+      margin-left: 3px;
+      padding: 4px 0 4px 10px;
+      width: calc(100% - 100px); }
+    #wphb-admin-extra-panel .extra-items-heading > .type select, #wphb-admin-extra-panel .extra-item > .type select {
       width: 100%; }
-    #wphb-admin-extra-panel .extra-item > .price span, #wphb-admin-extra-panel .extra-item > .type select {
-      height: 36px;
-      line-height: 36px; }
-    #wphb-admin-extra-panel .extra-item > div > textarea {
-      min-height: 100px; }
+    #wphb-admin-extra-panel .extra-items-heading > .price span, #wphb-admin-extra-panel .extra-items-heading > .type select, #wphb-admin-extra-panel .extra-item > .price span, #wphb-admin-extra-panel .extra-item > .type select {
+      padding: 0;
+      line-height: 28px; }
+  #wphb-admin-extra-panel .extra-item .actions {
+    margin-top: 8px; }
+    #wphb-admin-extra-panel .extra-item .actions a {
+      color: #999;
+      cursor: pointer; }
+      #wphb-admin-extra-panel .extra-item .actions a:hover.update, #wphb-admin-extra-panel .extra-item .actions a:hover.save {
+        color: #0073aa; }
+      #wphb-admin-extra-panel .extra-item .actions a:hover.delete {
+        color: #d05d5d; }
+  #wphb-admin-extra-panel .extra-items-heading {
+    padding: 0 10px;
+    background-color: transparent !important; }
+    #wphb-admin-extra-panel .extra-items-heading h4 {
+      margin-top: 5px; }
   #wphb-admin-extra-panel .update-items {
     margin-top: 20px; }
 

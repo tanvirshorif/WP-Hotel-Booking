@@ -80,12 +80,20 @@
 
 #wphb-admin-extra-panel {
     margin: 20px 0;
-    .extra-item {
+    .extra-items-heading, .extra-item {
         border-bottom: 1px solid #dedede;
-        padding-bottom: 10px;
+        padding: 12px 10px;
         overflow: hidden;
+        background-color: #fff;
+        clear: both;
+        input, select, textarea {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            border-bottom: 1px dashed #DDD;
+        }
         &:nth-child(2n+1) {
-            background-color: #fff;
+            background-color: #f4fcff;
         }
         > div {
             width: 20%;
@@ -96,7 +104,7 @@
             width: 10%;
         }
         .desc {
-            width: 30%;
+            width: 42%;
         }
         > div > {
             input {
@@ -104,12 +112,10 @@
                     width: auto;
                 }
                 width: 90%;
-                max-width: 90%;
                 padding: 7px;
             }
             textarea, select {
-                width: 90%;
-                max-width: 90%;
+                width: 95%;
                 padding: 7px;
             }
         }
@@ -118,28 +124,63 @@
             text-align: center;
         }
         > {
+            .name {
+                width: 18%;
+            }
             .type {
                 width: 10%;
                 text-align: center;
             }
+            .actions {
+                width: 10%;
+                text-align: center;
+            }
+
             .price {
                 > * {
                     float: left;
                 }
-                input {
-                    width: 45%;
+                .price {
+                    margin-right: 3px;
+                    width: 70px;
+                }
+                .unit {
+                    margin-left: 3px;
+                    padding: 4px 0 4px 10px;
+                    width: calc(100% - 100px);
                 }
             }
             .type select {
                 width: 100%;
             }
             .price span, .type select {
-                height: 36px;
-                line-height: 36px;
+                padding: 0;
+                line-height: 28px;
             }
-            div > textarea {
-                min-height: 100px;
+        }
+    }
+    .extra-item {
+        .actions {
+            margin-top: 8px;
+            a {
+                color: #999;
+                cursor: pointer;
+                &:hover {
+                    &.update, &.save {
+                        color: #0073aa;
+                    }
+                    &.delete {
+                        color: #d05d5d;
+                    }
+                }
             }
+        }
+    }
+    .extra-items-heading {
+        padding: 0 10px;
+        background-color: transparent !important;
+        h4 {
+            margin-top: 5px;
         }
     }
     .update-items {

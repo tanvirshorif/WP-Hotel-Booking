@@ -200,6 +200,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 				wp_localize_script( 'wphb-admin-vue', 'wphb_addition_packages', array(
 					'wphb_extra' => array(
 						'extra'  => $hb_extra,
+						'unit'   => __( 'Package', 'wp-hotel-booking' ),
 						'types'  => is_array( hb_extra_types() ) ? hb_extra_types() : array(),
 						'action' => 'wphb_extra_panel',
 						'nonce'  => wp_create_nonce( 'wphb_admin_extra_nonce' )

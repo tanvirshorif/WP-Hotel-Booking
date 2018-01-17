@@ -40,6 +40,8 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 
 		/**
 		 * Handle extra panel actions.
+		 *
+		 * @return bool|int|WP_Error
 		 */
 		public static function extra_panel() {
 			check_ajax_referer( 'wphb_admin_extra_nonce', 'nonce' );
@@ -70,6 +72,19 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 						$result = true;
 					}
 					break;
+				case 'update-list-extra':
+					$list_extra = json_decode( wp_unslash( $args['listExtra'] ), true );
+
+					if ( is_array( $list_extra ) && $list_extra ) {
+						foreach ( $list_extra as $extra ) {
+							$result = $curd->update( $extra );
+							if ( ! $result ) {
+								return $result;
+							}
+						}
+					}
+
+					break;
 			}
 
 			if ( is_wp_error( $result ) ) {
@@ -77,6 +92,8 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			}
 
 			wp_send_json_success( $result );
+
+			return false;
 		}
 	}
 
