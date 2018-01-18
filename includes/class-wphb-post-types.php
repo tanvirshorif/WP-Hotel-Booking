@@ -76,6 +76,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			define( 'WPHB_Room_CTP', 'hb_room' );
 			define( 'WPHB_Extra_CPT', 'hb_extra_room' );
+			define( 'WPHB_Booking_CPT', 'hb_booking' );
 		}
 
 		/**
@@ -763,7 +764,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'show_in_menu'       => 'tp_hotel_booking',
 				'show_in_admin_bar'  => true,
 				'show_in_nav_menus'  => true,
-				'supports'           => array( 'title' ),
+				'supports'           => array( '' ),
 				'hierarchical'       => false,
 			);
 			$args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );

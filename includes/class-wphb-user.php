@@ -62,6 +62,33 @@ if ( ! class_exists( 'WPHB_User' ) ) {
 			return self::get_user( $user_id );
 		}
 
+		/**
+		 * Get all users info.
+		 *
+		 * @return array
+		 */
+		public static function get_users_info() {
+			$users = get_users();
+
+			$info = array();
+			if ( is_array( $users ) && $users ) {
+				foreach ( $users as $user ) {
+					$info[ $user->ID ] = array(
+						'user_login'   => $user->user_login,
+						'display_name' => $user->display_name,
+						'email'        => $user->user_email,
+						'avatar'       => get_avatar_url( $user->ID ),
+						'link'         => get_edit_user_link( $user->ID ),
+					);
+				}
+			}
+
+			return $info;
+		}
+
+		public static function localize_script() {
+
+		}
 	}
 
 }

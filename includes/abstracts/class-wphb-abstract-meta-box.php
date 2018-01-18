@@ -89,13 +89,7 @@ if ( ! class_exists( 'WPHB_Abstract_Meta_Box' ) ) {
 		 * @param $post
 		 */
 		public function meta_box_view( $post ) {
-			if ( is_array( $this->view ) ) {
-				foreach ( $this->view as $view ) {
-					hb_admin_view( "metaboxes/{$view}", array(), true );
-				}
-			} else {
-				hb_admin_view( "metaboxes/$this->view", array(), true );
-			}
+			hb_admin_view( "metaboxes/$this->view", array( 'post' => $post ), true );
 		}
 	}
 }

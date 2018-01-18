@@ -35,7 +35,6 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		public function __construct() {
 			add_filter( 'hotel_booking_get_product_class', array( $this, 'product_class' ), 10, 3 );
 			add_action( 'hotel_booking_room_details_quantity', array( $this, 'admin_booking_room_details' ), 10, 3 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'localize_script' ) );
 			add_action( 'admin_init', array( $this, 'save_extra' ) );
 		}
 
@@ -123,7 +122,6 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 				SELECT * FROM $wpdb->posts WHERE `ID` = %d AND `post_type` = %s
 			", $post_id, 'hb_extra_room' );
 
-
 				$results = $wpdb->get_results( $query, OBJECT );
 
 				$args = array(
@@ -172,41 +170,36 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		}
 
 		/**
-		 * Print js extras data.
-		 *
-		 * @since 2.0
+		 * Localize script in admin extra panel.
 		 */
-		public function localize_script() {
+		public static function localize_script() {
+			$extras = WPHB_Extra_CURD::get_extra();
 
-			$screen = get_current_screen();
-			if ( 'wp-hotel-booking_page_wphb-addition-packages' == $screen->id ) {
-				$extras = WPHB_Extra_CURD::get_extra();
-
-				if ( is_array( $extras ) ) {
-					$hb_extra = array();
-					foreach ( $extras as $extra ) {
-						$hb_extra[] = array(
-							'id'          => $extra->ID,
-							'title'       => $extra->post_title,
-							'description' => $extra->post_content,
-							'price'       => get_post_meta( $extra->ID, 'tp_hb_extra_room_price', true ),
-							'unit'        => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent_name', true ),
-							'type'        => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent', true )
-						);
-					}
+			if ( is_array( $extras ) ) {
+				$hb_extra = array();
+				foreach ( $extras as $extra ) {
+					$hb_extra[] = array(
+						'id'          => $extra->ID,
+						'title'       => $extra->post_title,
+						'description' => $extra->post_content,
+						'price'       => get_post_meta( $extra->ID, 'tp_hb_extra_room_price', true ),
+						'unit'        => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent_name', true ),
+						'type'        => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent', true )
+					);
 				}
-
-
-				wp_localize_script( 'wphb-admin-vue', 'wphb_addition_packages', array(
-					'wphb_extra' => array(
-						'extra'  => $hb_extra,
-						'unit'   => __( 'Package', 'wp-hotel-booking' ),
-						'types'  => is_array( hb_extra_types() ) ? hb_extra_types() : array(),
-						'action' => 'wphb_extra_panel',
-						'nonce'  => wp_create_nonce( 'wphb_admin_extra_nonce' )
-					)
-				) );
 			}
+
+			$localize = array(
+				'wphb_extra' => array(
+					'extra'  => $hb_extra,
+					'unit'   => __( 'Package', 'wp-hotel-booking' ),
+					'types'  => is_array( hb_extra_types() ) ? hb_extra_types() : array(),
+					'action' => 'wphb_extra_panel',
+					'nonce'  => wp_create_nonce( 'wphb_admin_extra_nonce' )
+				)
+			);
+
+			return $localize;
 		}
 
 		/**
@@ -224,5 +217,3 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 	}
 
 }
-
-new WPHB_Extra();

@@ -264,8 +264,11 @@
   .post-type-hb_booking .column-customer strong, .post-type-hb_booking .column-total strong {
     display: block; }
 
-.post-type-hb_booking .column-title, .post-type-hb_booking .column-check_in_date, .post-type-hb_booking .column-check_out_date, .post-type-hb_booking .column-booking_date, .post-type-hb_booking .column-status {
+.post-type-hb_booking .column-title, .post-type-hb_booking .column-check_in_date, .post-type-hb_booking .column-check_out_date, .post-type-hb_booking .column-booking_date {
   width: 14%; }
+
+.post-type-hb_booking .column-status {
+  width: 10%; }
 
 /****************************************** Admin booking detail ***************************************************/
 #hb-booking-details .hb-booking-details {
@@ -663,7 +666,7 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
 .hb_advance_payment {
   color: #dd6464; }
 
-/*end gallerry settings meta box*/
+/*end gallery settings meta box*/
 /**rating hb_room**/
 .wp-admin.post-type-hb_room .star-rating {
   float: left;

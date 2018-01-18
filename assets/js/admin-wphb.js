@@ -338,7 +338,7 @@
             });
         },
         select_booking_customer: function () {
-            $('#_hb_user_id').select2();
+            // $('#_hb_user_id').select2();
         },
         booking_date_filter: function () {
             $('#hb-booking-date-from').datepicker({

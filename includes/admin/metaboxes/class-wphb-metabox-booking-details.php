@@ -38,7 +38,7 @@ if ( ! class_exists( 'WPHB_Metabox_Booking_Details' ) ) {
 		/**
 		 * @var null
 		 */
-		protected $view = array( 'booking-details', 'booking-items-template-js' );
+		protected $view = 'booking';
 
 		/**
 		 * WPHB_Metabox_Booking_Details constructor.

@@ -59,9 +59,19 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			if ( is_admin() ) {
 				$dependencies = array_merge( $dependencies, array( 'backbone' ) );
 
+				wp_enqueue_script( 'jquery-ui-core' );
+				wp_enqueue_script( 'jquery-ui-autocomplete' );
+				wp_enqueue_script( 'backbone' );
+
 				wp_enqueue_script( 'wphb-vue', WPHB_PLUGIN_URL . 'assets/js/vendor/vue.js', $dependencies, '2.5.13' );
 				wp_enqueue_script( 'wphb-vuex', WPHB_PLUGIN_URL . 'assets/js/vendor/vuex.js', $dependencies, '3.0.1' );
 				wp_enqueue_script( 'wphb-vue-resource', WPHB_PLUGIN_URL . 'assets/js/vendor/vue-resource.min.js', $dependencies, '1.3.5' );
+
+				wp_enqueue_style( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/css/admin-wphb.css' );
+
+				wp_enqueue_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin-wphb.js', $dependencies, WPHB_VERSION, true );
+				wp_localize_script( 'wphb-admin', 'wphb_admin_js', hb_admin_js() );
+
 				wp_enqueue_script( 'wphb-admin-vue', WPHB_PLUGIN_URL . 'assets/js/admin-vue-wphb.js', array(
 					'jquery',
 					'wphb-vue',
@@ -69,10 +79,34 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 					'wphb-vue-resource'
 				), WPHB_VERSION );
 
-				wp_register_style( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/css/admin-wphb.css' );
+				$screen = get_current_screen();
 
-				wp_register_script( 'wphb-admin', WPHB_PLUGIN_URL . 'assets/js/admin-wphb.js', $dependencies, WPHB_VERSION, true );
-				wp_localize_script( 'wphb-admin', 'wphb_admin_js', hb_admin_js() );
+				switch ( $screen->id ) {
+					case 'wp-hotel-booking_page_wphb-addition-packages':
+
+						wp_localize_script( 'wphb-admin-vue', 'wphb_addition_packages', WPHB_Extra::localize_script() );
+						wp_enqueue_script( 'wphb-admin-extra-vue', WPHB_PLUGIN_URL . 'assets/js/admin/extra-editor.js', array(
+							'jquery',
+							'wphb-vue',
+							'wphb-vuex',
+							'wphb-vue-resource'
+						), WPHB_VERSION );
+						break;
+					case 'hb_booking':
+						global $post;
+
+						wp_localize_script( 'wphb-admin-vue', 'wphb_admin_booking', WPHB_Booking::localize_script( $post ) );
+
+						wp_enqueue_script( 'wphb-admin-booking-vue', WPHB_PLUGIN_URL . 'assets/js/admin/booking-editor.js', array(
+							'jquery',
+							'wphb-vue',
+							'wphb-vuex',
+							'wphb-vue-resource'
+						), WPHB_VERSION );
+						break;
+					default:
+						break;
+				}
 			} else {
 
 				wp_register_style( 'wphb-site', WPHB_PLUGIN_URL . 'assets/css/wphb.css', array(), WPHB_VERSION );
@@ -92,13 +126,6 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			 * Enqueue scripts.
 			 */
 			if ( is_admin() ) {
-
-				wp_enqueue_script( 'jquery-ui-core' );
-				wp_enqueue_script( 'jquery-ui-autocomplete' );
-				wp_enqueue_script( 'backbone' );
-
-				wp_enqueue_style( 'wphb-admin' );
-				wp_enqueue_script( 'wphb-admin' );
 
 				wp_enqueue_script( 'wphb-library-moment' );
 				wp_enqueue_style( 'wphb-library-fullcalendar' );

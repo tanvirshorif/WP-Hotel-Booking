@@ -385,8 +385,12 @@
         }
     }
 
-    .column-title, .column-check_in_date, .column-check_out_date, .column-booking_date, .column-status {
+    .column-title, .column-check_in_date, .column-check_out_date, .column-booking_date {
         width: 14%;
+    }
+
+    .column-status{
+        width: 10%;
     }
 }
 
@@ -875,7 +879,7 @@ form[name="hb-admin-settings-form"] {
     color: #dd6464;
 }
 
-/*end gallerry settings meta box*/
+/*end gallery settings meta box*/
 
 /**rating hb_room**/
 .wp-admin.post-type-hb_room .star-rating {

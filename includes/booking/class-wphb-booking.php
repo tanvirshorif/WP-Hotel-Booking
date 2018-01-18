@@ -439,6 +439,28 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 		}
 
 		/**
+		 * Localize script in admin extra panel.
+		 *
+		 * @param $post
+		 *
+		 * @return array
+		 */
+		public static function localize_script( $post ) {
+			$curd = new WPHB_Booking_CURD();
+			$data = $curd->load( $post );
+
+			$localize = array(
+				'wphb_booking' => array(
+					'item'   => $data,
+					'action' => 'wphb_admin_booking',
+					'nonce'  => wp_create_nonce( 'wphb_admin_booking_nonce' )
+				)
+			);
+
+			return $localize;
+		}
+
+		/**
 		 * Get an instance of WPHB_Booking by post ID or WP_Post object.
 		 *
 		 * @since 2.0
