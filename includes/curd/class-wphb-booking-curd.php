@@ -73,6 +73,7 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 					'email'       => get_post_meta( $id, '_hb_customer_email', true ),
 					'fax'         => get_post_meta( $id, '_hb_customer_fax', true ),
 				),
+				'rooms'    => hb_get_order_items( $id, 'line_item', null, true ),
 				'users'    => WPHB_User::get_users_info(),
 			);
 

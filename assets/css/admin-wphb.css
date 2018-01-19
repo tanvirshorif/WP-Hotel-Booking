@@ -224,17 +224,49 @@
     margin-bottom: 25px;
     text-align: center; }
     .post-type-hb_booking #booking-items table thead th {
-      height: 30px;
-      font-size: 16px;
-      padding: 10px;
-      font-weight: 500;
-      border: 1px solid #DDD; }
+      text-align: left;
+      padding: 1em;
+      font-weight: 400;
+      color: #999; }
       .post-type-hb_booking #booking-items table thead th.night, .post-type-hb_booking #booking-items table thead th.qty, .post-type-hb_booking #booking-items table thead th.actions, .post-type-hb_booking #booking-items table thead th.total {
         padding: 2px; }
-    .post-type-hb_booking #booking-items table tbody td {
-      padding: 20px 10px;
-      font-size: 14px;
-      border: 1px solid #DDD; }
+      .post-type-hb_booking #booking-items table thead th.checkin, .post-type-hb_booking #booking-items table thead th.checkout {
+        width: 115px; }
+      .post-type-hb_booking #booking-items table thead th.night {
+        width: 55px; }
+      .post-type-hb_booking #booking-items table thead th.qty {
+        width: 65px; }
+      .post-type-hb_booking #booking-items table thead th.actions {
+        width: 30px; }
+    .post-type-hb_booking #booking-items table tbody tr td {
+      padding: 15px 10px;
+      font-size: 13px;
+      text-align: left; }
+      .post-type-hb_booking #booking-items table tbody tr td.actions {
+        text-align: right; }
+        .post-type-hb_booking #booking-items table tbody tr td.actions a {
+          visibility: hidden;
+          color: #ccc; }
+          .post-type-hb_booking #booking-items table tbody tr td.actions a:hover {
+            color: #0073aa; }
+          .post-type-hb_booking #booking-items table tbody tr td.actions a.remove:hover {
+            color: #a00; }
+    .post-type-hb_booking #booking-items table tbody tr:hover .actions a {
+      visibility: visible; }
+    .post-type-hb_booking #booking-items table tbody tr.room-item {
+      background: #F5F5F5; }
+    .post-type-hb_booking #booking-items table tbody tr.extra-item td {
+      padding: 10px;
+      font-size: 12px; }
+    .post-type-hb_booking #booking-items table tfoot {
+      border-bottom: 1px solid #dfdfdf;
+      background: #F5F5F5;
+      line-height: 2em;
+      width: 50%;
+      margin: 0;
+      text-align: right; }
+      .post-type-hb_booking #booking-items table tfoot tr td {
+        padding: 10px 25px 10px 50px; }
   .post-type-hb_booking #booking-items .booking-actions {
     clear: both;
     overflow: auto; }
@@ -271,9 +303,6 @@
   width: 10%; }
 
 /****************************************** Admin booking detail ***************************************************/
-#hb-booking-details .hb-booking-details {
-  display: inline-block; }
-
 #hb-booking-details .booking-user-data {
   display: inline-block;
   width: calc(100% - 200px);

@@ -90,7 +90,7 @@ if ( ! function_exists( 'hb_get_booking_statuses' ) ) {
 }
 
 if ( ! function_exists( 'hb_get_order_items' ) ) {
-	function hb_get_order_items( $order_id = null, $item_type = 'line_item', $parent = null ) {
+	function hb_get_order_items( $booking_id = null, $item_type = 'line_item', $parent = null, $array_a = false ) {
 		global $wpdb;
 
 		if ( ! $parent ) {
@@ -99,7 +99,7 @@ if ( ! function_exists( 'hb_get_order_items' ) ) {
                         RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
                     WHERE post.ID = %d
                         AND booking.order_item_type = %s
-                ", $order_id, $item_type );
+                ", $booking_id, $item_type );
 		} else {
 			$query = $wpdb->prepare( "
                     SELECT booking.* FROM $wpdb->hotel_booking_order_items AS booking
@@ -107,10 +107,30 @@ if ( ! function_exists( 'hb_get_order_items' ) ) {
                     WHERE post.ID = %d
                         AND booking.order_item_type = %s
                         AND booking.order_item_parent = %d
-                ", $order_id, $item_type, $parent );
+                ", $booking_id, $item_type, $parent );
 		}
 
-		return $wpdb->get_results( $query );
+		$result = $array_a ? $wpdb->get_results( $query, ARRAY_A ) : $wpdb->get_results( $query );
+
+		$items = array();
+		if ( is_array( $result ) && $result && $array_a ) {
+			foreach ( $result as $key => $item ) {
+				$check_in_date  = hb_get_order_item_meta( $item['order_item_id'], 'check_in_date', true );
+				$check_out_date = hb_get_order_item_meta( $item['order_item_id'], 'check_out_date', true );
+
+				$items[ $key ]                    = $item;
+				$items[ $key ] ['edit_link']      = get_edit_post_link( hb_get_order_item_meta( $item['order_item_id'], 'product_id', true ) );
+				$items[ $key ] ['check_in_date']  = date_i18n( hb_get_date_format(), $check_in_date );
+				$items[ $key ] ['check_out_date'] = date_i18n( hb_get_date_format(), $check_out_date );
+				$items[ $key ] ['night']          = hb_count_nights_two_dates( $check_out_date, $check_in_date );
+				$items[ $key ] ['qty']            = hb_get_order_item_meta( $item['order_item_id'], 'qty', true );
+				$items[ $key ]['extra']           = hb_get_order_items( $booking_id, 'sub_item', $item->order_item_id );
+			}
+
+			return $items;
+		}
+
+		return $result;
 	}
 }
 

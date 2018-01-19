@@ -15,6 +15,9 @@ if (typeof wphb_admin_booking !== 'undefined') {
             },
             users: function (state) {
                 return state.users;
+            },
+            rooms: function (state) {
+                return state.rooms;
             }
         };
 

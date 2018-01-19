@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 $booking = WPHB_Booking::instance( $post->ID );
-$rooms   = hb_get_order_items( $post->ID );
+hb_admin_view( 'booking/items' );
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-overview">
@@ -47,6 +47,7 @@ $rooms   = hb_get_order_items( $post->ID );
                     </div>
                 </div>
             </div>
+            <wphb-booking-items></wphb-booking-items>
         </div>
     </div>
 

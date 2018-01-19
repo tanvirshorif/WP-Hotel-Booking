@@ -165,8 +165,8 @@ if ( ! class_exists( 'WPHB_Meta_Box' ) ) {
                             <div class="hb-form-field-input">
                                 <div class="hb-form-field-input-inner">
 									<?php
-									$tmpl = "metaboxes/fields/{$field['type']}.php";
-									hb_admin_view( $tmpl );
+									$tmpl = WPHB_INCLUDES . "admin/views/metaboxes/fields/{$field['type']}.php";
+									require $tmpl;
 									if ( ! empty( $field['desc'] ) ) {
 										printf( '<p class="description">%s</p>', $field['desc'] );
 									}
