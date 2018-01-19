@@ -17,6 +17,7 @@ defined( 'ABSPATH' ) || exit;
 global $post;
 $booking = WPHB_Booking::instance( $post->ID );
 hb_admin_view( 'booking/items' );
+hb_admin_view( 'booking/modal' );
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-overview">
@@ -47,8 +48,9 @@ hb_admin_view( 'booking/items' );
                     </div>
                 </div>
             </div>
-            <wphb-booking-items></wphb-booking-items>
+            <wphb-booking-items @openModal="openModal"></wphb-booking-items>
         </div>
+        <wphb-booking-modal-search></wphb-booking-modal-search>
     </div>
 
 </script>
@@ -60,7 +62,17 @@ hb_admin_view( 'booking/items' );
 
         Vue.component('wphb-booking-overview', {
             template: '#tmpl-admin-booking-overview',
-            props: ['customer', 'users']
+            props: ['customer', 'users'],
+            data: function () {
+                return {
+                    modal: false
+                }
+            },
+            methods: {
+                openModal: function () {
+                    this.modal = true;
+                }
+            }
         });
 
     })(Vue, WPHB_Booking_Store);

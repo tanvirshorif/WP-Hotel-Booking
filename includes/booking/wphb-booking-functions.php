@@ -115,16 +115,28 @@ if ( ! function_exists( 'hb_get_order_items' ) ) {
 		$items = array();
 		if ( is_array( $result ) && $result && $array_a ) {
 			foreach ( $result as $key => $item ) {
-				$check_in_date  = hb_get_order_item_meta( $item['order_item_id'], 'check_in_date', true );
-				$check_out_date = hb_get_order_item_meta( $item['order_item_id'], 'check_out_date', true );
 
-				$items[ $key ]                    = $item;
-				$items[ $key ] ['edit_link']      = get_edit_post_link( hb_get_order_item_meta( $item['order_item_id'], 'product_id', true ) );
-				$items[ $key ] ['check_in_date']  = date_i18n( hb_get_date_format(), $check_in_date );
-				$items[ $key ] ['check_out_date'] = date_i18n( hb_get_date_format(), $check_out_date );
-				$items[ $key ] ['night']          = hb_count_nights_two_dates( $check_out_date, $check_in_date );
-				$items[ $key ] ['qty']            = hb_get_order_item_meta( $item['order_item_id'], 'qty', true );
-				$items[ $key ]['extra']           = hb_get_order_items( $booking_id, 'sub_item', $item->order_item_id );
+				$items[ $key ] = $item;
+
+				$product_id = hb_get_order_item_meta( $item['order_item_id'], 'product_id', true );
+				$post_type  = get_post_type( $product_id );
+
+				if ( WPHB_Room_CPT == $post_type ) {
+					$check_in_date  = hb_get_order_item_meta( $item['order_item_id'], 'check_in_date', true );
+					$check_out_date = hb_get_order_item_meta( $item['order_item_id'], 'check_out_date', true );
+
+					$items[ $key ] ['edit_link']      = get_edit_post_link( hb_get_order_item_meta( $item['order_item_id'], 'product_id', true ) );
+					$items[ $key ] ['check_in_date']  = date_i18n( hb_get_date_format(), $check_in_date );
+					$items[ $key ] ['check_out_date'] = date_i18n( hb_get_date_format(), $check_out_date );
+					$items[ $key ] ['night']          = hb_count_nights_two_dates( $check_out_date, $check_in_date );
+					$items[ $key ] ['qty']            = hb_get_order_item_meta( $item['order_item_id'], 'qty', true );
+					$items[ $key ] ['price']          = hb_get_order_item_meta( $item['order_item_id'], 'subtotal', true );
+					$items[ $key ]['extra']           = hb_get_order_items( $booking_id, 'sub_item', $item['order_item_id'], true );
+				} else if ( WPHB_Extra_CPT == $post_type ) {
+					$items[ $key ]['unit']   = get_post_meta( $product_id, 'tp_hb_extra_room_respondent', true );
+					$items[ $key ] ['qty']   = hb_get_order_item_meta( $item['order_item_id'], 'qty', true );
+					$items[ $key ] ['price'] = hb_get_order_item_meta( $item['order_item_id'], 'subtotal', true );
+				}
 			}
 
 			return $items;

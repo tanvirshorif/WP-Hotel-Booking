@@ -344,8 +344,12 @@
                     &.qty {
                         width: 65px;
                     }
+                    &.price {
+                        width: 75px;
+                        text-align: right;
+                    }
                     &.actions {
-                        width: 30px;
+                        width: 15px;
                     }
                 }
             }
@@ -355,6 +359,9 @@
                         padding: 15px 10px;
                         font-size: 13px;
                         text-align: left;
+                        &.price {
+                            text-align: right;
+                        }
                         &.actions {
                             text-align: right;
                             a {

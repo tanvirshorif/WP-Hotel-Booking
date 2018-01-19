@@ -92,7 +92,8 @@
                 _self = this;
 
             // add room item for booking
-            _doc.on('click', '#add_room_item', _self.init_add_room_modal)
+            _doc
+                // .on('click', '#add_room_item', _self.init_add_room_modal)
             // edit booking room item
                 .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
                 // delete booking room item

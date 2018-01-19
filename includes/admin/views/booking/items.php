@@ -29,6 +29,7 @@ global $post;
                 <th class="checkout"><?php _e( 'Checkout' ); ?></th>
                 <th class="night"><?php _e( 'Night' ); ?></th>
                 <th class="qty"><?php _e( 'Quantity' ); ?></th>
+                <th class="price"><?php _e( 'Price' ); ?></th>
                 <th class="actions"></th>
             </tr>
             </thead>
@@ -42,6 +43,7 @@ global $post;
                     <td>{{room.check_out_date}}</td>
                     <td>{{room.night}}</td>
                     <td>{{room.qty}}</td>
+                    <td class="price">{{room.price}}$</td>
                     <td class="actions">
                         <a href="#" data-booking-id="<?php echo $post->ID; ?>"
                            :data-booking-item-id="room.order_item_id"
@@ -61,12 +63,10 @@ global $post;
                 <tr :data-order-parent="room.order_item_id" v-for="(extra, index) in room.extra" class="extra-item">
                     <td></td>
                     <td colspan="3">{{extra.order_item_name}}</td>
-                    <td>1
-
-						<?php ////echo esc_html( hb_get_order_item_meta( $package->order_item_id, 'qty', true ) ); ?>
-                    </td>
+                    <td>{{extra.qty}}</td>
+                    <td class="price">{{extra.price}}$</td>
                     <td class="actions">
-                        <a href="#" data-booking-id="<?php echo $post->ID; ?>"
+                        <a href="#" v-if="'number' === extra.unit" data-booking-id="<?php echo $post->ID; ?>"
                            :data-booking-item-id="extra.order_item_id"
                            data-booking-item-type="sub_item" class="dashicons dashicons-edit edit"
                            :data-booking-item-parent="extra.order_item_parent"
@@ -86,13 +86,16 @@ global $post;
             <tr>
                 <td colspan="5"><?php echo __( 'Sub Total' ); ?></td>
                 <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td colspan="5"><?php echo __( 'Tax' ); ?></td>
                 <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td colspan="5"><?php echo __( 'Grand Total', 'wp-hotel-booking' ); ?></td>
+                <td></td>
                 <td></td>
             </tr>
             </tfoot>
@@ -100,8 +103,8 @@ global $post;
 
         <div class="booking-actions">
             <div class="actions">
-                <a href="#" class="button"
-                   id="add_room_item"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?> </a>
+                <a href="#" class="button" id="add_room_item"
+                   @click="openModal"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?> </a>
             </div>
         </div>
     </div>
@@ -117,8 +120,12 @@ global $post;
             template: '#tmpl-admin-booking-items',
             computed: {
                 rooms: function () {
-                    console.log($store.getters['rooms']);
                     return $store.getters['rooms'];
+                }
+            },
+            methods: {
+                openModal: function () {
+                    this.$emit('openModal');
                 }
             }
         });

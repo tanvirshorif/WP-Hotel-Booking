@@ -74,7 +74,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
 			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
 
-			define( 'WPHB_Room_CTP', 'hb_room' );
+			define( 'WPHB_Room_CPT', 'hb_room' );
 			define( 'WPHB_Extra_CPT', 'hb_extra_room' );
 			define( 'WPHB_Booking_CPT', 'hb_booking' );
 		}

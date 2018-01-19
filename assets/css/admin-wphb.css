@@ -236,12 +236,17 @@
         width: 55px; }
       .post-type-hb_booking #booking-items table thead th.qty {
         width: 65px; }
+      .post-type-hb_booking #booking-items table thead th.price {
+        width: 75px;
+        text-align: right; }
       .post-type-hb_booking #booking-items table thead th.actions {
-        width: 30px; }
+        width: 15px; }
     .post-type-hb_booking #booking-items table tbody tr td {
       padding: 15px 10px;
       font-size: 13px;
       text-align: left; }
+      .post-type-hb_booking #booking-items table tbody tr td.price {
+        text-align: right; }
       .post-type-hb_booking #booking-items table tbody tr td.actions {
         text-align: right; }
         .post-type-hb_booking #booking-items table tbody tr td.actions a {
