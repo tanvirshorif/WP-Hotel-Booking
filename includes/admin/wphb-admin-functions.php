@@ -194,9 +194,8 @@ add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
 if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 	function hb_admin_init_metaboxes() {
 		$metaboxes = array(
-			new WPHB_Metabox_Booking_Details(),
+			new WPHB_Metabox_Booking_Editor(),
 			new WPHB_Metabox_Booking_Actions(), // booking actions
-			new WPHB_Metabox_Booking_Customer(), // booking customer
 			new WPHB_Metabox_Room_Price(), // room price
 		);
 

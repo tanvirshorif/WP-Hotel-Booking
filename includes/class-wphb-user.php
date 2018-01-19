@@ -81,6 +81,13 @@ if ( ! class_exists( 'WPHB_User' ) ) {
 						'link'         => get_edit_user_link( $user->ID ),
 					);
 				}
+				$info[ - 1 ] = array(
+					'user_login'   => __( '[Guest]', 'wp-hotel-booking' ),
+					'display_name' => __( '[Guest]', 'wp-hotel-booking' ),
+					'email'        => '',
+					'avatar'       => 'http://0.gravatar.com/avatar/02a243c4202b23e8ec78620f1ff48aa6?s=96&d=mm&r=g',
+					'link'         => '#',
+				);
 			}
 
 			return $info;

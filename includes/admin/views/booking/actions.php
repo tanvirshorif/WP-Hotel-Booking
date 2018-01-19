@@ -49,7 +49,7 @@ $users   = get_users( array( 'fields' => array( 'ID' ) ) );
 										$_id   = $_users->ID;
 										$_user = get_userdata( $_users->ID );
 										?>
-                                        <option value="<?php echo esc_attr( $_id ) ?>"><?php printf( '%s(#%s %s)', $_user->user_login, $_id, $_user->user_email ) ?></option>
+                                        <option value="<?php echo esc_attr( $_id ) ?>"><?php printf( '%s', $_user->user_login ) ?></option>
 									<?php } ?>
                                 </select>
                             </div>

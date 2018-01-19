@@ -1,9 +1,9 @@
 <?php
 
 /**
- * WP Hotel Booking booking details meta box class.
+ * WP Hotel Booking booking editor meta box class.
  *
- * @class       WPHB_Metabox_Booking_Details
+ * @class       WPHB_Metabox_Booking_Editor
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
  * @category    Class
@@ -16,14 +16,14 @@
 defined( 'ABSPATH' ) || exit();
 
 
-if ( ! class_exists( 'WPHB_Metabox_Booking_Details' ) ) {
+if ( ! class_exists( 'WPHB_Metabox_Booking_Editor' ) ) {
 
 	/**
-	 * Class WPHB_Metabox_Booking_Details.
+	 * Class WPHB_Metabox_Booking_Editor.
 	 *
 	 * @since 2.0
 	 */
-	class WPHB_Metabox_Booking_Details extends WPHB_Abstract_Meta_Box {
+	class WPHB_Metabox_Booking_Editor extends WPHB_Abstract_Meta_Box {
 
 		/**
 		 * @var string
@@ -38,10 +38,10 @@ if ( ! class_exists( 'WPHB_Metabox_Booking_Details' ) ) {
 		/**
 		 * @var null
 		 */
-		protected $view = 'booking';
+		protected $view = 'booking-editor';
 
 		/**
-		 * WPHB_Metabox_Booking_Details constructor.
+		 * WPHB_Metabox_Booking_Editor constructor.
 		 *
 		 * @since 2.0
 		 */
