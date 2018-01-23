@@ -93,8 +93,9 @@
 
             // add room item for booking
             _doc
-                // .on('click', '#add_room_item', _self.init_add_room_modal)
-            // edit booking room item
+            // .on('click', '#add_room_item', _self.init_add_room_modal)
+                .on('click', '.date input', _self.datepicker)
+                // edit booking room item
                 .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
                 // delete booking room item
                 .on('click', '#booking-items .actions .remove', _self.delete_booking_room)
@@ -116,6 +117,11 @@
             _self.booking_date_filter();
 
         },
+
+        datepicker: function () {
+            $(this).datepicker();
+        },
+
         init_add_room_modal: function (e) {
             e.preventDefault();
             var _self = $(this),

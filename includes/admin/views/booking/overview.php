@@ -50,7 +50,7 @@ hb_admin_view( 'booking/modal' );
             </div>
             <wphb-booking-items @openModal="openModal"></wphb-booking-items>
         </div>
-        <wphb-booking-modal-search></wphb-booking-modal-search>
+        <wphb-booking-modal-search :class="modal ? 'show' : ''" @closeModal="closeModal"></wphb-booking-modal-search>
     </div>
 
 </script>
@@ -71,6 +71,9 @@ hb_admin_view( 'booking/modal' );
             methods: {
                 openModal: function () {
                     this.modal = true;
+                },
+                closeModal: function () {
+                    this.modal = false;
                 }
             }
         });
