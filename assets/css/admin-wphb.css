@@ -112,12 +112,12 @@
       line-height: 28px; }
   #wphb-admin-extra-panel .extra-item .actions {
     margin-top: 8px; }
-    #wphb-admin-extra-panel .extra-item .actions a {
+    #wphb-admin-extra-panel .extra-item .actions span {
       color: #999;
       cursor: pointer; }
-      #wphb-admin-extra-panel .extra-item .actions a:hover.update, #wphb-admin-extra-panel .extra-item .actions a:hover.save {
+      #wphb-admin-extra-panel .extra-item .actions span:hover.update, #wphb-admin-extra-panel .extra-item .actions span:hover.save {
         color: #0073aa; }
-      #wphb-admin-extra-panel .extra-item .actions a:hover.delete {
+      #wphb-admin-extra-panel .extra-item .actions span:hover.delete {
         color: #d05d5d; }
   #wphb-admin-extra-panel .extra-items-heading {
     padding: 0 10px;
@@ -249,14 +249,15 @@
         text-align: right; }
       .post-type-hb_booking #booking-items table tbody tr td.actions {
         text-align: right; }
-        .post-type-hb_booking #booking-items table tbody tr td.actions a {
+        .post-type-hb_booking #booking-items table tbody tr td.actions span {
           visibility: hidden;
-          color: #ccc; }
-          .post-type-hb_booking #booking-items table tbody tr td.actions a:hover {
+          color: #ccc;
+          cursor: pointer; }
+          .post-type-hb_booking #booking-items table tbody tr td.actions span:hover {
             color: #0073aa; }
-          .post-type-hb_booking #booking-items table tbody tr td.actions a.remove:hover {
+          .post-type-hb_booking #booking-items table tbody tr td.actions span.remove:hover {
             color: #a00; }
-    .post-type-hb_booking #booking-items table tbody tr:hover .actions a {
+    .post-type-hb_booking #booking-items table tbody tr:hover .actions span {
       visibility: visible; }
     .post-type-hb_booking #booking-items table tbody tr.room-item {
       background: #F5F5F5; }
@@ -343,16 +344,36 @@
         right: 10px;
         top: 10px; }
     .post-type-hb_booking #booking-modal-search form.booking-room-item .main {
-      padding: 35px 10px; }
-      .post-type-hb_booking #booking-modal-search form.booking-room-item .main > div {
+      padding: 20px 10px 35px; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .heading > div, .post-type-hb_booking #booking-modal-search form.booking-room-item .main .content > div {
         display: inline-block; }
-      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room {
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .heading {
+        padding: 10px 5px;
+        font-weight: 500; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .room {
         width: 35%; }
-      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .date {
-        width: 50%; }
-        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .date input {
+        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .room select {
+          width: 90%; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .checkin, .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .checkout {
+        width: 25%; }
+        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .checkin input, .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .checkout input {
           display: inline-block;
-          width: 45%; }
+          width: 90%; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .room-item .qty select {
+        padding: 2px 10px; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item {
+        padding-top: 20px; }
+        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item .content {
+          padding-bottom: 4px; }
+        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item .extra {
+          width: 35%; }
+          .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item .extra input {
+            margin: -2px 10px 0 30px; }
+        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item .qty input {
+          width: 75px; }
+        .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item .type {
+          width: 150px;
+          text-transform: capitalize; }
     .post-type-hb_booking #booking-modal-search form.booking-room-item .footer {
       padding: 15px;
       border-top: 1px solid #eee; }

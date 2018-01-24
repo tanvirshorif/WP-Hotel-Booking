@@ -170,7 +170,7 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 
 			// valid request and require field
 			if ( empty( $errors ) ) {
-				$qty = hotel_booking_get_room_available( $room_id, array(
+				$qty = wphb_get_room_available( $room_id, array(
 					'check_in_date'  => $check_in_date,
 					'check_out_date' => $check_out_date
 				) );

@@ -94,11 +94,11 @@
             // add room item for booking
             _doc
             // .on('click', '#add_room_item', _self.init_add_room_modal)
-                .on('click', '.date input', _self.datepicker)
+                .on('click', '.checkin input, .checkout input', _self.datepicker)
                 // edit booking room item
                 .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
                 // delete booking room item
-                .on('click', '#booking-items .actions .remove', _self.delete_booking_room)
+                // .on('click', '#booking-items .actions .remove', _self.delete_booking_room)
                 // check room available
                 .on('wphb_check_room_available', _self.check_room_available)
                 // enable add cart
@@ -259,7 +259,7 @@
             if (target === 'hb-add-room') {
                 var _check_in = form.find('.check_in_date'),
                     _check_out = form.find('.check_out_date'),
-                    _select = form.find('.booking_search_room_items');
+                    _select = form.find('.select-item');
 
                 // select2
                 _select.select2({

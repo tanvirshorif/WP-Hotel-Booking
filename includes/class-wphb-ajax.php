@@ -287,7 +287,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			}
 
 			$product_id = absint( $_POST['product_id'] );
-			$qty        = hotel_booking_get_room_available( $product_id, array(
+			$qty        = wphb_get_room_available( $product_id, array(
 				'check_in_date'  => sanitize_text_field( $_POST['check_in_date_timestamp'] ),
 				'check_out_date' => sanitize_text_field( $_POST['check_out_date_timestamp'] ),
 				'excerpt'        => array(
@@ -353,7 +353,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'check_out_date'           => date_i18n( hb_get_date_format(), $check_out ),
 				'check_in_date_timestamp'  => $check_in,
 				'check_out_date_timestamp' => $check_out,
-				'qty'                      => hotel_booking_get_room_available( $product_id, array(
+				'qty'                      => wphb_get_room_available( $product_id, array(
 					'check_in_date'  => $check_out,
 					'check_out_date' => $check_out,
 					'excerpt'        => array( $booking_id )

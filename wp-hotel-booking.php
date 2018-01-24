@@ -165,7 +165,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			// curd
 			include_once( WPHB_INCLUDES . 'curd/class-wphb-booking-curd.php' );
 			include_once( WPHB_INCLUDES . 'curd/class-wphb-extra-curd.php' );
-			include_once( WPHB_INCLUDES . 'curd/class-wphb-room-curd.php' );
+			include_once( WPHB_INCLUDES . 'curd/class-wphb-roomx-curd.php' );
 
 			// room
 			include_once( WPHB_INCLUDES . 'room/class-wphb-room.php' );

@@ -14,7 +14,8 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-global $post;
+hb_admin_view( 'booking/loop/room' );
+hb_admin_view( 'booking/loop/extra' );
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-items">
@@ -22,6 +23,7 @@ global $post;
     <div id="booking-items">
         <h3><?php _e( 'Booking Items', 'wp-hotel-booking' ); ?></h3>
         <table cellpadding="0" cellspacing="0" class="booking_item_table">
+
             <thead>
             <tr>
                 <th class="item"><?php _e( 'Item' ); ?></th>
@@ -33,55 +35,16 @@ global $post;
                 <th class="actions"></th>
             </tr>
             </thead>
+
             <tbody>
-            <template v-for="(room, index) in rooms">
-                <tr class="room-item">
-                    <td>
-                        <a target="_blank" v-bind:href="room.edit_link">{{room.order_item_name}}</a>
-                    </td>
-                    <td>{{room.check_in_date}}</td>
-                    <td>{{room.check_out_date}}</td>
-                    <td>{{room.night}}</td>
-                    <td>{{room.qty}}</td>
-                    <td class="price">{{room.price}}$</td>
-                    <td class="actions">
-                        <a href="#" data-booking-id="<?php echo $post->ID; ?>"
-                           :data-booking-item-id="room.order_item_id"
-                           data-booking-item-type="line_item" class="dashicons dashicons-edit edit"
-                           title="<?php esc_attr_e( 'Edit item', 'wp-hotel-booking' ); ?>">
-                        </a>
-                        <a href="#" data-booking-id="<?php echo $post->ID; ?>"
-                           :data-booking-item-id="room.order_item_id"
-                           data-booking-item-type="line_item" class="dashicons dashicons-no-alt remove"
-                           title="<?php esc_attr_e( 'Delete item', 'wp-hotel-booking' ); ?>">
-                        </a>
-                    </td>
-                </tr>
-
-
-				<?php //$extra = hotel_booking_get_product_class( hb_get_order_item_meta( $package->order_item_id, 'product_id', true ) ); ?>
-                <tr :data-order-parent="room.order_item_id" v-for="(extra, index) in room.extra" class="extra-item">
-                    <td></td>
-                    <td colspan="3">{{extra.order_item_name}}</td>
-                    <td>{{extra.qty}}</td>
-                    <td class="price">{{extra.price}}$</td>
-                    <td class="actions">
-                        <a href="#" v-if="'number' === extra.unit" data-booking-id="<?php echo $post->ID; ?>"
-                           :data-booking-item-id="extra.order_item_id"
-                           data-booking-item-type="sub_item" class="dashicons dashicons-edit edit"
-                           :data-booking-item-parent="extra.order_item_parent"
-                           title="<?php esc_attr_e( 'Edit item', 'wp-hotel-booking' ); ?>">
-                        </a>
-                        <a href="#" data-booking-id="<?php echo $post->ID; ?>"
-                           :data-booking-item-id="extra.order_item_id"
-                           data-booking-item-type="sub_item" class="dashicons dashicons-no-alt remove"
-                           :data-booking-item-parent="extra.order_item_parent"
-                           title="<?php esc_attr_e( 'Delete item', 'wp-hotel-booking' ); ?>">
-                        </a>
-                    </td>
-                </tr>
+            <template v-for="(room, r_index) in rooms">
+                <wphb-booking-room :room="room" :index="r_index"></wphb-booking-room>
+                <template v-for="(extra, e_index) in room.extra">
+                    <wphb-booking-extra :r_index="r_index" :extra="extra" :index="e_index"></wphb-booking-extra>
+                </template>
             </template>
             </tbody>
+
             <tfoot>
             <tr>
                 <td colspan="5"><?php echo __( 'Sub Total' ); ?></td>

@@ -21,7 +21,7 @@ hb_admin_view( 'booking/modal' );
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-overview">
-    <div id="hb-booking-details" class="postbox ">
+    <div id="hb-booking-details" class="postbox " @keyup="keyUp">
         <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text"></span><span
                     class="toggle-indicator" aria-hidden="true"></span></button>
         <h2 class="hndle"><span><?php _e( 'Booking Details', 'wp-hotel-booking' ); ?></span></h2>
@@ -50,7 +50,8 @@ hb_admin_view( 'booking/modal' );
             </div>
             <wphb-booking-items @openModal="openModal"></wphb-booking-items>
         </div>
-        <wphb-booking-modal-search :class="modal ? 'show' : ''" @closeModal="closeModal"></wphb-booking-modal-search>
+        <wphb-booking-modal-search :class="modal ? 'show' : ''" @closeModal="closeModal"
+                                   @addItem="addItem"></wphb-booking-modal-search>
     </div>
 
 </script>
@@ -69,8 +70,19 @@ hb_admin_view( 'booking/modal' );
                 }
             },
             methods: {
+                keyUp: function (e) {
+                    var keyCode = e.keyCode;
+                    // escape update course item title
+                    if (keyCode === 27) {
+                        this.modal = false;
+                    }
+                },
                 openModal: function () {
                     this.modal = true;
+                },
+                addItem: function (item) {
+                    $store.dispatch('addItem', item);
+                    this.modal = false;
                 },
                 closeModal: function () {
                     this.modal = false;

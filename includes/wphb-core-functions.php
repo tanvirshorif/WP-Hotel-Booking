@@ -106,92 +106,19 @@ if ( ! function_exists( 'hotel_booking_set_table_name' ) ) {
 	add_action( 'switch_blog', 'hotel_booking_set_table_name', 0 );
 }
 
-if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
-
-	function hotel_booking_get_room_available( $room_id = null, $args = array() ) {
-		$valid  = true;
-		$errors = new WP_Error;
-		if ( ! $room_id ) {
-			$valid = false;
-			$errors->add( 'room_id_invalid', __( 'Room not found', 'wp-hotel-booking' ) );
-		}
-
-		$args = wp_parse_args( $args, array(
-			'check_in_date'  => '',
-			'check_out_date' => '',
-			'excerpt'        => array(
-				0
-			)
-		) );
-
-		if ( ! $args['check_in_date'] ) {
-			$valid = false;
-			$errors->add( 'check_in_date_not_available', __( 'Check in date is not valid', 'wp-hotel-booking' ) );
-		} else {
-			if ( ! is_numeric( $args['check_in_date'] ) ) {
-				$args['check_in_date'] = strtotime( $args['check_in_date'] );
-			}
-		}
-
-		if ( ! $args['check_out_date'] ) {
-			$valid = false;
-			$errors->add( 'check_out_date_not_available', __( 'Check out date is not valid', 'wp-hotel-booking' ) );
-		} else {
-			if ( ! is_numeric( $args['check_out_date'] ) ) {
-				$args['check_out_date'] = strtotime( $args['check_out_date'] );
-			}
-		}
-
-		// $valid is false
-		if ( $valid === false ) {
-			return $errors;
-		} else {
-			global $wpdb;
-
-			$not = $wpdb->prepare( "
-					SELECT SUM( meta.meta_value ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
-						LEFT JOIN {$wpdb->hotel_booking_order_items} AS order_item ON order_item.order_item_id = meta.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS room ON order_item.order_item_id = room.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkin ON order_item.order_item_id = checkin.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkout ON order_item.order_item_id = checkout.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->posts} AS booking ON booking.ID = order_item.order_id
-					WHERE
-						meta.meta_key = %s
-						AND room.meta_value = %d
-						AND room.meta_key = %s
-						AND checkin.meta_key = %s
-						AND checkout.meta_key = %s
-						AND (
-								( checkin.meta_value >= %d AND checkin.meta_value < %d )
-							OR 	( checkout.meta_value > %d AND checkout.meta_value <= %d )
-							OR 	( checkin.meta_value <= %d AND checkout.meta_value > %d )
-						)
-						AND booking.post_type = %s
-						AND booking.post_status IN ( %s, %s, %s )
-						AND order_item.order_id NOT IN( %s )
-				", 'qty', $room_id, 'product_id', 'check_in_date', 'check_out_date', $args['check_in_date'], $args['check_out_date'], $args['check_in_date'], $args['check_out_date'], $args['check_in_date'], $args['check_out_date'], 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending', implode( ',', $args['excerpt'] )
-			);
-
-			$sql = $wpdb->prepare( "
-					SELECT number.meta_value AS qty FROM $wpdb->postmeta AS number
-						INNER JOIN $wpdb->posts AS hb_room ON hb_room.ID = number.post_id
-					WHERE
-						number.meta_key = %s
-						AND hb_room.ID = %d
-						AND hb_room.post_type = %s
-				", '_hb_num_of_rooms', $room_id, 'hb_room' );
-
-			$qty = absint( $wpdb->get_var( $sql ) ) - absint( $wpdb->get_var( $not ) );
-			if ( $qty === 0 ) {
-				$errors->add( 'zero', __( 'This room is not available.', 'wp-hotel-booking' ) );
-
-				return $errors;
-			}
-
-			return apply_filters( 'hotel_booking_get_room_available', $qty, $room_id, $args );
-		}
+if ( ! function_exists( 'wphb_get_room_available' ) ) {
+	/**
+	 * Get quantity room available.
+	 *
+	 * @param null $room_id
+	 * @param array $args
+	 *
+	 * @return mixed|WP_Error
+	 */
+	function wphb_get_room_available( $room_id = null, $args = array() ) {
+		// get by curd
+		return WPHB_Room_CURD::get_room_available( $room_id, $args );
 	}
-
 }
 
 // product class process

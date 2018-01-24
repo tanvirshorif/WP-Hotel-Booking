@@ -109,7 +109,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 		 */
 		public static function get_extra() {
 			global $wpdb;
-			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s ORDER BY %s ASC", 'hb_extra_room', 'id' );
+			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s ORDER BY %s ASC", WPHB_Extra_CPT, 'id' );
 
 			return $wpdb->get_results( $query, OBJECT );
 		}

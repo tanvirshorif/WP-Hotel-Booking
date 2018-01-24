@@ -4,12 +4,15 @@ if (typeof wphb_admin_booking !== 'undefined') {
      */
     (function (exports, $, Vue, Vuex, helpers, data) {
 
-        var state = helpers.cloneObject(data.wphb_booking.item);
+        var state = helpers.cloneObject(data.booking.item);
 
         state.state = 'success';
         state.countCurrentRequest = 0;
 
         var getters = {
+            id: function (state) {
+                return state.booking.id;
+            },
             customer: function (state) {
                 return state.customer;
             },
@@ -18,12 +21,115 @@ if (typeof wphb_admin_booking !== 'undefined') {
             },
             rooms: function (state) {
                 return state.rooms;
+            },
+            newItem: function (state) {
+                return state.newItem;
+            },
+            nonce: function (state) {
+                return state.nonce;
+            },
+            action: function (state) {
+                return state.action;
             }
         };
 
-        var mutations = {};
+        var mutations = {
+            'SET_NEW_ITEM': function (state, item) {
+                state.newItem = item;
+            },
+            'SET_BOOKING_ITEMS': function (state, item) {
+                state.rooms.push(item);
+            },
+            'REMOVE_ROOM': function (state, index) {
+                state.rooms.splice(index, 1);
+            },
+            'REMOVE_EXTRA': function (state, room_index, extra_index) {
+                state.rooms[room_index]['extra'].splice(extra_index, 1);
+            },
+            'SET_STATUS': function (state, status) {
 
-        var actions = {};
+            },
+            'INCREASE_REQUEST': function (state) {
+                state.currentRequest++;
+            },
+            'DECREASE_REQUEST': function (state) {
+                state.currentRequest--;
+            }
+        };
+
+        var actions = {
+
+            checkAvailable: function (context, item) {
+                Vue.http.WPHB_Request({
+                    type: 'check-room-available',
+                    item: JSON.stringify(item)
+                }).then(function (response) {
+                    var result = response.body,
+                        data = result.data;
+                    if (data) {
+                        context.commit('SET_NEW_ITEM', data);
+                    }
+                });
+            },
+
+            addItem: function (context, item) {
+                Vue.http.WPHB_Request({
+                    type: 'add-item',
+                    item: JSON.stringify(item)
+                }).then(function (response) {
+                    var result = response.body,
+                        data = result.data;
+                    if (data) {
+                        context.commit('SET_BOOKING_ITEMS', data);
+                    }
+                });
+            },
+
+            removeRoom: function (context, payload) {
+                Vue.http.WPHB_Request({
+                    type: 'remove-item',
+                    booking_item_id: payload.booking_item_id
+                }).then(function (response) {
+                    var result = response.body,
+                        data = result.data;
+                    if (data) {
+                        context.commit('REMOVE_ROOM', payload.index);
+                    }
+                });
+            },
+
+            removeExtra: function (context, payload) {
+                Vue.http.WPHB_Request({
+                    type: 'remove-item',
+                    booking_item_id: payload.booking_item_id
+                }).then(function (response) {
+                    var result = response.body,
+                        data = result.data;
+                    if (data) {
+                        context.commit('REMOVE_EXTRA', payload.room_index, payload.extra_index);
+                    }
+                });
+            },
+
+            newRequest: function (context) {
+                context.commit('INCREASE_REQUEST');
+                context.commit('SET_STATUS', 'loading');
+
+                window.onbeforeunload = function () {
+                    return '';
+                }
+            },
+
+            requestCompleted: function (context, status) {
+                context.commit('DECREASE_REQUEST');
+
+                if (context.getters.currentRequest === 0) {
+                    context.commit('SET_STATUS', status);
+                    window.onbeforeunload = null;
+                }
+            }
+
+        };
 
         exports.WPHB_Booking_Store = new Vuex.Store({
             state: state,
@@ -37,6 +143,50 @@ if (typeof wphb_admin_booking !== 'undefined') {
 
 if (typeof WPHB_Booking_Store !== 'undefined') {
 
+    /**
+     * HTTP
+     */
+    (function (exports, Vue, $store) {
+
+        Vue.http.WPHB_Request = function (payload) {
+            payload['booking_id'] = $store.getters['id'];
+            payload['nonce'] = $store.getters['nonce'];
+            payload['action'] = $store.getters['action'];
+
+            return Vue.http.post(ajaxurl, payload, {
+                    emulateJSON: true,
+                    params: {
+                        namespace: 'WPHB_Admin_Booking'
+                    }
+                }
+            );
+        };
+
+        Vue.http.interceptors.push(function (request, next) {
+            if (request.params['namespace'] !== 'WPHB_Admin_Booking') {
+                next();
+                return;
+            }
+
+            $store.dispatch('newRequest');
+
+            next(function (response) {
+                var body = response.body,
+                    result = body.success || false;
+
+                if (result) {
+                    $store.dispatch('requestCompleted', 'success');
+                } else {
+                    $store.dispatch('requestCompleted', 'fail');
+                }
+            });
+        });
+
+    })(window, Vue, WPHB_Booking_Store);
+
+    /**
+     * Init.
+     */
     (function ($, Vue, $store) {
 
         $(document).ready(function () {

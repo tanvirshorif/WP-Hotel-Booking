@@ -206,19 +206,14 @@ if ( ! function_exists( 'hb_update_order_item' ) ) {
 }
 
 if ( ! function_exists( 'hb_remove_order_item' ) ) {
-	function hb_remove_order_item( $order_item_id = null ) {
-		global $wpdb;
-
-		$wpdb->delete( $wpdb->hotel_booking_order_items, array(
-			'order_item_id' => $order_item_id
-		), array( '%d' ) );
-
-
-		$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array(
-			'hotel_booking_order_item_id' => $order_item_id
-		), array( '%d' ) );
-
-		do_action( 'hotel_booking_remove_order_item', $order_item_id );
+	/**
+	 * Remove booking item.
+	 *
+	 * @param null $booking_item_id
+	 */
+	function hb_remove_order_item( $booking_item_id = null ) {
+		// user booking curd
+		WPHB_Booking_CURD::remove_booking_item( $booking_item_id );
 	}
 }
 

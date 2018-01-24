@@ -450,11 +450,10 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 			$data = $curd->load( $post );
 
 			$localize = array(
-				'wphb_booking' => array(
-					'item'   => $data,
-					'action' => 'wphb_admin_booking',
-					'nonce'  => wp_create_nonce( 'wphb_admin_booking_nonce' )
-				)
+				'booking' => array(
+					'item'   => $data
+				),
+				'modal'   => array()
 			);
 
 			return $localize;

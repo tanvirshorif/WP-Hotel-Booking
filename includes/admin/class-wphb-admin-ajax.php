@@ -30,7 +30,8 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			}
 
 			$actions = array(
-				'extra_panel'
+				'extra_panel',
+				'admin_booking'
 			);
 
 			foreach ( $actions as $action ) {
@@ -83,7 +84,76 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 							}
 						}
 					}
+					break;
+				default:
+					break;
+			}
 
+			if ( is_wp_error( $result ) ) {
+				wp_send_json_error( $result->get_error_message() );
+			}
+
+			wp_send_json_success( $result );
+
+			return false;
+		}
+
+		/**
+		 * Handle admin booking actions.
+		 *
+		 * @return bool|int|WP_Error
+		 */
+		public static function admin_booking() {
+			check_ajax_referer( 'wphb_admin_booking_nonce', 'nonce' );
+
+			$args = wp_parse_args( $_REQUEST, array( 'booking_id' => '', 'action' => '', 'type' => '' ) );
+
+			if ( ! $args['booking_id'] ) {
+				return false;
+			}
+
+			$booking    = WPHB_Booking::instance( $args['booking_id'] );
+			$booking_id = $args['booking_id'];
+
+			// curd
+			$curd = new WPHB_Booking_CURD();
+			// response
+			$result = false;
+
+			switch ( $args['type'] ) {
+				case 'check-room-available':
+					$item = json_decode( wp_unslash( $args['item'] ), true );
+
+					if ( ! $item ) {
+						break;
+					}
+
+					// get number room available
+					$result = $curd->check_room_available( $booking_id, $item );
+
+					break;
+
+				case 'add-item':
+					$item = json_decode( wp_unslash( $args['item'] ), true );
+
+					if ( ! $item ) {
+						break;
+					}
+
+					// add items to booking
+					$result = $curd->add_item( $booking_id, $item );
+					break;
+				case 'remove-item':
+					$booking_item_id = $args['booking_item_id'] ? $args['booking_item_id'] : 0;
+
+					if ( ! $booking_item_id ) {
+						break;
+					}
+
+					$result = $curd->remove_booking_item( $booking_item_id );
+
+					break;
+				default:
 					break;
 			}
 
