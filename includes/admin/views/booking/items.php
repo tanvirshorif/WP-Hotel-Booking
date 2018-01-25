@@ -38,7 +38,7 @@ hb_admin_view( 'booking/loop/extra' );
 
             <tbody>
             <template v-for="(room, r_index) in rooms">
-                <wphb-booking-room :room="room" :index="r_index"></wphb-booking-room>
+                <wphb-booking-room :room="room" :index="r_index" @openModalUpdate="openModalUpdate"></wphb-booking-room>
                 <template v-for="(extra, e_index) in room.extra">
                     <wphb-booking-extra :r_index="r_index" :extra="extra" :index="e_index"></wphb-booking-extra>
                 </template>
@@ -66,8 +66,8 @@ hb_admin_view( 'booking/loop/extra' );
 
         <div class="booking-actions">
             <div class="actions">
-                <a href="#" class="button" id="add_room_item"
-                   @click="openModal"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?> </a>
+                <span class="button" id="add_room_item"
+                      @click="openModalAdd"><?php _e( 'Add New Item', 'wp-hotel-booking' ); ?> </span>
             </div>
         </div>
     </div>
@@ -87,7 +87,10 @@ hb_admin_view( 'booking/loop/extra' );
                 }
             },
             methods: {
-                openModal: function () {
+                openModalUpdate: function (room) {
+                    this.$emit('openModal', room);
+                },
+                openModalAdd: function () {
                     this.$emit('openModal');
                 }
             }

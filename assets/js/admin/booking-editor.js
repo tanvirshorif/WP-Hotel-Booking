@@ -25,6 +25,9 @@ if (typeof wphb_admin_booking !== 'undefined') {
             newItem: function (state) {
                 return state.newItem;
             },
+            modal: function (state) {
+                return state.modal;
+            },
             nonce: function (state) {
                 return state.nonce;
             },

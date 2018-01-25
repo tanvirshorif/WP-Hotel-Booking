@@ -50,8 +50,9 @@ hb_admin_view( 'booking/modal' );
             </div>
             <wphb-booking-items @openModal="openModal"></wphb-booking-items>
         </div>
-        <wphb-booking-modal-search :class="modal ? 'show' : ''" @closeModal="closeModal"
-                                   @addItem="addItem"></wphb-booking-modal-search>
+        <wphb-booking-modal :class="modal.show ? 'show' : ''" :type="modal.type" :item="modalItem"
+                            @closeModal="closeModal" @checkAvailable="checkAvailable"
+                            @addItem="addItem"></wphb-booking-modal>
     </div>
 
 </script>
@@ -66,7 +67,15 @@ hb_admin_view( 'booking/modal' );
             props: ['customer', 'users'],
             data: function () {
                 return {
-                    modal: false
+                    modal: {
+                        show: false,
+                        type: 'add'
+                    }
+                }
+            },
+            computed: {
+                modalItem: function () {
+                    return $store.getters['newItem'];
                 }
             },
             methods: {
@@ -74,18 +83,25 @@ hb_admin_view( 'booking/modal' );
                     var keyCode = e.keyCode;
                     // escape update course item title
                     if (keyCode === 27) {
-                        this.modal = false;
+                        this.modal.show = false;
                     }
                 },
-                openModal: function () {
-                    this.modal = true;
+                openModal: function (room) {
+                    this.modal.show = true;
+                    if (room) {
+                        this.modal.type = 'update';
+                        this.modal.item = room;
+                    }
+                },
+                checkAvailable: function (item) {
+                    $store.dispatch('checkAvailable', item);
                 },
                 addItem: function (item) {
                     $store.dispatch('addItem', item);
-                    this.modal = false;
+                    this.modal.show = false;
                 },
                 closeModal: function () {
-                    this.modal = false;
+                    this.modal.show = false;
                 }
             }
         });

@@ -101,6 +101,12 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 					'available' => 0,
 					'extra'     => array()
 				),
+				'modal'    => array(
+					'i18n' => array(
+						'addNew'     => __( 'Add new item', 'wp-hotel-booking' ),
+						'updateItem' => __( 'Update item', 'wp-hotel-booking' )
+					)
+				),
 				'users'    => WPHB_User::get_users_info(),
 				'action'   => 'wphb_admin_booking',
 				'nonce'    => wp_create_nonce( 'wphb_admin_booking_nonce' )
@@ -162,6 +168,11 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 
 				$extra_product = WPHB_Extra_Product::instance( $room_id );
 				$item['extra'] = $extra_product->get_extra();
+
+//				echo '<pre>';
+//				var_dump($extra_product->get_extra());
+//				echo '</pre>';
+//				die();
 			} else {
 				return false;
 //				wp_send_json( array(

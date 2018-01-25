@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
         <td class="price">{{room.price}}$</td>
         <td class="actions">
             <span class="dashicons dashicons-edit edit"
-                  title="<?php esc_attr_e( 'Edit item', 'wp-hotel-booking' ); ?>"></span>
+                  title="<?php esc_attr_e( 'Edit item', 'wp-hotel-booking' ); ?>" @click="openModalUpdate"></span>
             <span class="dashicons dashicons-no-alt remove"
                   title="<?php esc_attr_e( 'Delete item', 'wp-hotel-booking' ); ?>" @click="removeRoom">
             </span>
@@ -44,6 +44,9 @@ defined( 'ABSPATH' ) || exit;
             props: ['room', 'index'],
             computed: {},
             methods: {
+                openModalUpdate: function () {
+                    this.$emit('openModalUpdate', this.room);
+                },
                 removeRoom: function () {
                     $store.dispatch('removeRoom', {index: this.index, booking_item_id: this.room.order_item_id});
                 }

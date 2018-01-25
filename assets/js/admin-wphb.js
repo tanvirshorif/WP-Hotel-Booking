@@ -96,7 +96,7 @@
             // .on('click', '#add_room_item', _self.init_add_room_modal)
                 .on('click', '.checkin input, .checkout input', _self.datepicker)
                 // edit booking room item
-                .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
+                // .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
                 // delete booking room item
                 // .on('click', '#booking-items .actions .remove', _self.delete_booking_room)
                 // check room available

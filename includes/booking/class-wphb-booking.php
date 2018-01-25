@@ -451,9 +451,8 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 
 			$localize = array(
 				'booking' => array(
-					'item'   => $data
-				),
-				'modal'   => array()
+					'item' => $data
+				)
 			);
 
 			return $localize;
