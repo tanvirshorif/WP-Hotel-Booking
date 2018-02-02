@@ -61,7 +61,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				array(
 					'type'    => 'number',
 					'id'      => $prefix . 'minimum_booking_day',
-					'title'   => __( 'Minimum booking day', 'wp-hotel-booking' ),
+					'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
 					'step'    => 'any'

@@ -81,15 +81,6 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 		}
 
 		/**
-		 * Print admin settings.
-		 *
-		 * @since 2.0
-		 */
-		public function admin_settings() {
-			hb_admin_view( 'gateways/offline-payment', array(), true );
-		}
-
-		/**
 		 * Check to see if this payment is enable.
 		 *
 		 * @since 2.0

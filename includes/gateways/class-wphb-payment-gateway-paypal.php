@@ -376,15 +376,6 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Paypal' ) ) {
 		}
 
 		/**
-		 * Print admin settings page.
-		 *
-		 * @since 2.0
-		 */
-		public function admin_settings() {
-			hb_admin_view( 'gateways/paypal', array(), true );
-		}
-
-		/**
 		 * Check payment gateway is enable.
 		 *
 		 * @since 2.0
