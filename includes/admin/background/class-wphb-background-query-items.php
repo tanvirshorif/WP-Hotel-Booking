@@ -32,7 +32,10 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 		/**
 		 * @var int
 		 */
-		protected $queue_lock_time = 3600;
+		protected $queue_lock_time = 60;
+
+
+		protected $action = 'yyyyyy';
 
 		/**
 		 * WPHB_Background_Query_Items constructor.
@@ -48,8 +51,11 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 		 */
 		public function dispatch_queue() {
 			if ( ! empty( $this->data ) ) {
+
 				$this->save()->dispatch();
 			}
+echo WPHB_ABSPATH;
+			print_r($this->data);
 		}
 
 		/**
@@ -58,6 +64,8 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 		 * @return bool|mixed
 		 */
 		protected function task( $data ) {
+
+			file_put_contents( WPHB_ABSPATH . 'xxxx.txt', '1234' );
 
 			if ( ! isset( $data['callback'] ) || ! is_callable( $data['callback'] ) ) {
 				return false;
@@ -163,6 +171,16 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 
 			return $themes;
 		}
+
+		/**
+		 * Schedule event
+		 */
+		protected function schedule_event() {
+			if ( ! wp_next_scheduled( $this->cron_hook_identifier ) ) {
+				wp_schedule_event( time()+10, $this->cron_interval_identifier, $this->cron_hook_identifier );
+			}
+		}
+
 
 		/**
 		 * Get all WP Hotel Booking Themeforest.net themes, do not allow third-party hook.

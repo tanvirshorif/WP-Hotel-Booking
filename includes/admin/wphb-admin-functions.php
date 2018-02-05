@@ -71,7 +71,6 @@ if ( ! function_exists( 'hb_admin_view' ) ) {
 	}
 }
 
-
 if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 	/**
 	 * Get admin setting tabs.
@@ -82,7 +81,6 @@ if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 		return apply_filters( 'hb_admin_settings_tabs', array() );
 	}
 }
-
 
 if ( ! function_exists( 'hb_admin_js' ) ) {
 	/**
@@ -111,6 +109,137 @@ if ( ! function_exists( 'hb_admin_js' ) ) {
 		);
 
 		return apply_filters( 'hb_admin_js', $js );
+	}
+}
+
+add_action( 'admin_footer', 'hb_admin_footer_advertisement', - 10 );
+
+if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
+
+	function hb_admin_footer_advertisement() {
+
+		$post_types = apply_filters( 'hb_post_types_footer_advertisement', array(
+			'hb_room',
+			'hb_booking'
+		) );
+
+		$pages = apply_filters( 'hb_pages_footer_advertisement', array(
+			'wp-hotel-booking_page_wphb-settings',
+			'wp-hotel-booking_page_wphb-about',
+			'wp-hotel-booking_page_wphb-about',
+			'wp-hotel-booking_page_wphb-addition-packages',
+			'wp-hotel-booking_page_wphb-pricing-table'
+		) );
+
+		if ( ! $screen = get_current_screen() ) {
+			return;
+		}
+
+		if ( ! ( ( in_array( $screen->post_type, $post_types ) && $screen->base === 'edit' ) || ( in_array( $screen->id, $pages ) ) ) ) {
+			return;
+		}
+
+		$theme_ids     = hb_get_wphb_themes();
+		$current_theme = wp_get_theme();
+
+		if ( false !== ( $key = array_search( $current_theme->name, $theme_ids, true ) ) ) {
+			unset( $theme_ids[ $key ] );
+		}
+
+		// Get items
+		$list_themes = (array) WPHB_Helper_Plugins::get_related_themes();
+		if ( empty ( $list_themes ) ) {
+			return;
+		}
+
+		shuffle( $list_themes ); ?>
+
+		<?php if ( $list_themes ) {
+
+//		    echo '<pre>';
+//		    var_dump($list_themes);
+//		    echo '</pre>';
+//		    die();
+		    ?>
+            <div id="wphb-advertisement" class="wphb-advertisement-slider">
+				<?php foreach ( $list_themes as $theme ) {
+					if ( empty( $theme['url'] ) ) {
+						continue;
+					}
+					$full_description  = hb_trim_content( $theme['description'] );
+					$short_description = hb_trim_content( $theme['description'], 75 );
+
+					$url_demo = $theme['attributes'][4]['value']; ?>
+
+                    <div id="thimpress-<?php echo esc_attr( $theme['id'] ); ?>" class="slide-item">
+                        <div class="slide-thumbnail">
+                            <a href="<?php echo esc_url( $theme['url'] ); ?>">
+                                <img src="<?php echo esc_url( $theme['previews']['landscape_preview']['landscape_url'] ) ?>"/>
+                            </a>
+                        </div>
+
+                        <div class="slide-detail">
+                            <h2><a href="<?php echo esc_url( $theme['url'] ); ?>"><?php echo $theme['name']; ?></a></h2>
+                            <p class="slide-description description-full">
+								<?php echo wp_kses_post( $full_description ); ?>
+                            </p>
+                            <p class="slide-description description-short">
+								<?php echo wp_kses_post( $short_description ); ?>
+                            </p>
+                            <p class="slide-controls">
+                                <a href="<?php echo esc_url( $theme['url'] ); ?>" class="button button-primary"
+                                   target="_blank"><?php _e( 'Get it now', 'wp-hotel-booking' ); ?></a>
+                                <a href="<?php echo esc_url( $url_demo ); ?>" class="button"
+                                   target="_blank"><?php _e( 'View Demo', 'wp-hotel-booking' ); ?></a>
+                            </p>
+                        </div>
+
+                    </div>
+				<?php } ?>
+            </div>
+		<?php }
+	}
+}
+
+if ( ! function_exists( 'hb_get_wphb_themes' ) ) {
+	/**
+	 * Get WPHB themeforest themes.
+	 *
+	 * @return mixed
+	 */
+	function hb_get_wphb_themes() {
+		return apply_filters( 'hb_wphb_themes',
+			array(
+				'21070438' => 'magazette',
+				'18828322' => 'hotelwp',
+				'13321455' => 'sailing'
+			)
+		);
+	}
+}
+
+if ( ! function_exists( 'hb_trim_content' ) ) {
+	/**
+	 * @param $content
+	 * @param int $count
+	 *
+	 * @return array|mixed|null|string|string[]
+	 */
+	function hb_trim_content( $content, $count = 0 ) {
+		$content = preg_replace( '/(?<=\S,)(?=\S)/', ' ', $content );
+		$content = str_replace( "\n", ' ', $content );
+		$content = explode( " ", $content );
+
+		$count = $count > 0 ? $count : sizeof( $content ) - 1;
+		$full  = $count >= sizeof( $content ) - 1;
+
+		$content = array_slice( $content, 0, $count );
+		$content = implode( " ", $content );
+		if ( ! $full ) {
+			$content .= '...';
+		}
+
+		return $content;
 	}
 }
 

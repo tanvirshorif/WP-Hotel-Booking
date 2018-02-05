@@ -22,7 +22,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 	class WPHB_Helper_Plugins {
 
 		/**
-		 * @var null
+		 * @var WPHB_Background_Query_Items
 		 */
 		protected static $_background_query_items = null;
 
@@ -198,7 +198,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 			if ( ! $themes = get_transient( 'wphb_related_themes' ) ) {
 				self::$_background_query_items->push_to_queue(
 					array(
-						'callback' => array( 'WPHB_Background_Query_items', 'get_related_themes' )
+						'callback' => array( 'WPHB_Background_Query_Items', 'get_related_themes' )
 					)
 				);
 			}
