@@ -24,9 +24,9 @@ if ( ! $themes ) {
 	<?php if ( is_array( $themes ) ) { ?>
         <h2><?php echo __( 'Themes', 'wp-hotel-booking' ); ?></h2>
 
-        <ul>
+        <ul class="related-themes">
 			<?php foreach ( $themes as $file => $theme ) {
-				hb_admin_view( 'addons/loop/theme' );
+				hb_admin_view( 'addons/loop/theme', array('theme'=> $theme) );
 			} ?>
         </ul>
 		<?php

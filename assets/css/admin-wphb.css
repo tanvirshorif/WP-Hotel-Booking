@@ -131,6 +131,83 @@
 #wphb-admin-addons-wrapper .nav-tab-active {
   box-shadow: none; }
 
+#wphb-admin-addons-wrapper .related-themes .plugin-card-top {
+  padding-bottom: 0; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-content {
+  position: relative; }
+
+#wphb-admin-addons-wrapper .related-themes .image-thumbnail a {
+  box-shadow: none; }
+  #wphb-admin-addons-wrapper .related-themes .image-thumbnail a img {
+    width: 100%; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-description {
+  margin: 0 0 25px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-height: 1.6em;
+  max-height: 8em;
+  color: #777; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-title {
+  margin-right: 100px;
+  font-size: 1.2em;
+  line-height: 1.3em;
+  margin-bottom: 0;
+  min-height: 3.2em; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-title a {
+  color: #545454;
+  text-decoration: none; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-rating {
+  float: right;
+  display: inline-block; }
+
+#wphb-admin-addons-wrapper .related-themes .star-rating {
+  display: inline-block; }
+
+#wphb-admin-addons-wrapper .related-themes .count-rating {
+  font-size: 15px;
+  position: relative;
+  top: 2px; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-detail {
+  position: absolute;
+  right: 3px;
+  top: -3px;
+  text-align: right;
+  line-height: 1.6em; }
+  #wphb-admin-addons-wrapper .related-themes .theme-detail:after {
+    content: '';
+    display: block;
+    clear: both; }
+  #wphb-admin-addons-wrapper .related-themes .theme-detail .theme-price {
+    display: inline-block;
+    font-size: 24px;
+    color: #545454;
+    font-weight: 700;
+    line-height: 1.3em; }
+
+#wphb-admin-addons-wrapper .related-themes .theme-footer {
+  clear: both;
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 20px;
+  background-color: #fafafa;
+  border-top: 1px solid #ddd;
+  overflow: hidden; }
+
+@media screen and (min-width: 1600px) {
+  #wphb-admin-addons-wrapper .plugin-card:not(.hide-if-js):nth-child(even) {
+    margin-right: 8px; }
+  #wphb-admin-addons-wrapper .plugin-card:not(.hide-if-js):nth-child(3n) {
+    margin-right: 0; } }
+
 /********************************** Admin about page *************************************************/
 #wphb-admin-about-wrapper {
   margin-top: 25px; }
