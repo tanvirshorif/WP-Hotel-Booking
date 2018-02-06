@@ -143,6 +143,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_INCLUDES . 'class-wphb-comments.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
 			include_once( WPHB_INCLUDES . 'admin/background/class-wphb-background-query-items.php' );
+			include_once( WPHB_INCLUDES . 'admin/helpers/class-wphb-helper-plugins.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
 			include_once( WPHB_INCLUDES . 'wphb-template-hooks.php' );
 			include_once( WPHB_INCLUDES . 'wphb-template-functions.php' );

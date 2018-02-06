@@ -180,7 +180,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 			if ( ! ( $plugins = get_transient( 'lp_plugins_wp' ) ) ) {
 				self::$_background_query_items->push_to_queue(
 					array(
-						'callback' => array( 'WPHB_Background_Query_items', 'query_free_addons' )
+						'callback' => array( 'WPHB_Background_Query_Items', 'query_free_addons' )
 					)
 				);
 			}
@@ -198,7 +198,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 			if ( ! $themes = get_transient( 'wphb_related_themes' ) ) {
 				self::$_background_query_items->push_to_queue(
 					array(
-						'callback' => array( 'WPHB_Background_Query_Items', 'get_related_themes' )
+						'callback' => array( 'WPHB_Background_Query_items', 'get_related_themes' )
 					)
 				);
 			}

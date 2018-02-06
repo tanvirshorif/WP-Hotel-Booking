@@ -139,12 +139,7 @@ if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
 			return;
 		}
 
-		$theme_ids     = hb_get_wphb_themes();
 		$current_theme = wp_get_theme();
-
-		if ( false !== ( $key = array_search( $current_theme->name, $theme_ids, true ) ) ) {
-			unset( $theme_ids[ $key ] );
-		}
 
 		// Get items
 		$list_themes = (array) WPHB_Helper_Plugins::get_related_themes();
@@ -152,15 +147,13 @@ if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
 			return;
 		}
 
+		if ( false !== ( $key = array_search( $current_theme->name, array_keys( $list_themes ), true ) ) ) {
+			unset( $list_themes[ $key ] );
+		}
+
 		shuffle( $list_themes ); ?>
 
-		<?php if ( $list_themes ) {
-
-//		    echo '<pre>';
-//		    var_dump($list_themes);
-//		    echo '</pre>';
-//		    die();
-		    ?>
+		<?php if ( $list_themes ) { ?>
             <div id="wphb-advertisement" class="wphb-advertisement-slider">
 				<?php foreach ( $list_themes as $theme ) {
 					if ( empty( $theme['url'] ) ) {
@@ -168,12 +161,11 @@ if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
 					}
 					$full_description  = hb_trim_content( $theme['description'] );
 					$short_description = hb_trim_content( $theme['description'], 75 );
-
 					$url_demo = $theme['attributes'][4]['value']; ?>
 
                     <div id="thimpress-<?php echo esc_attr( $theme['id'] ); ?>" class="slide-item">
                         <div class="slide-thumbnail">
-                            <a href="<?php echo esc_url( $theme['url'] ); ?>">
+                            <a target="_blank" href="<?php echo esc_url( $theme['url'] ); ?>">
                                 <img src="<?php echo esc_url( $theme['previews']['landscape_preview']['landscape_url'] ) ?>"/>
                             </a>
                         </div>
@@ -198,23 +190,6 @@ if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
 				<?php } ?>
             </div>
 		<?php }
-	}
-}
-
-if ( ! function_exists( 'hb_get_wphb_themes' ) ) {
-	/**
-	 * Get WPHB themeforest themes.
-	 *
-	 * @return mixed
-	 */
-	function hb_get_wphb_themes() {
-		return apply_filters( 'hb_wphb_themes',
-			array(
-				'21070438' => 'magazette',
-				'18828322' => 'hotelwp',
-				'13321455' => 'sailing'
-			)
-		);
 	}
 }
 

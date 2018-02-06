@@ -86,9 +86,6 @@ if ( ! class_exists( 'WPHB_Autoloader' ) ) {
 			if ( stripos( $class, 'wphb_abstract_' ) === 0 ) {
 				// abstract class
 				$path = WPHB_INCLUDES . '/abstracts/';
-			} else if ( stripos( $class, 'wphb_helper_' ) === 0 ) {
-				// admin helpers
-				$path = WPHB_INCLUDES . '/admin/helpers/';
 			} else if ( stripos( $class, 'wphb_metabox_' ) === 0 ) {
 				// admin metaboxes
 				$path = WPHB_INCLUDES . '/admin/metaboxes/';

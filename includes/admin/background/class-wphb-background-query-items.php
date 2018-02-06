@@ -34,8 +34,10 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 		 */
 		protected $queue_lock_time = 60;
 
-
-		protected $action = 'yyyyyy';
+		/**
+		 * @var string
+		 */
+		protected $action = 'wphb_background';
 
 		/**
 		 * WPHB_Background_Query_Items constructor.
@@ -54,8 +56,6 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 
 				$this->save()->dispatch();
 			}
-echo WPHB_ABSPATH;
-			print_r($this->data);
 		}
 
 		/**
@@ -64,8 +64,6 @@ echo WPHB_ABSPATH;
 		 * @return bool|mixed
 		 */
 		protected function task( $data ) {
-
-			file_put_contents( WPHB_ABSPATH . 'xxxx.txt', '1234' );
 
 			if ( ! isset( $data['callback'] ) || ! is_callable( $data['callback'] ) ) {
 				return false;
@@ -161,12 +159,17 @@ echo WPHB_ABSPATH;
 					$all_themes[ $theme['id'] ] = $theme;
 				}
 
+
 				if ( $wphb_themes = self::wphb_themeforest_themes() ) {
-					$themes = $wphb_themes;
+					foreach ( $all_themes as $theme ) {
+						if ( in_array( $theme['id'], array_keys( $wphb_themes ) ) ) {
+							$related[] = $theme;
+						}
+					}
 				} else {
-					$themes = $all_themes;
+					$related = $all_themes;
 				}
-				set_transient( 'wphb_related_themes', $themes, DAY_IN_SECONDS / 2 );
+				set_transient( 'wphb_related_themes', $related, DAY_IN_SECONDS / 2 );
 			}
 
 			return $themes;
@@ -177,7 +180,7 @@ echo WPHB_ABSPATH;
 		 */
 		protected function schedule_event() {
 			if ( ! wp_next_scheduled( $this->cron_hook_identifier ) ) {
-				wp_schedule_event( time()+10, $this->cron_interval_identifier, $this->cron_hook_identifier );
+				wp_schedule_event( time() + 10, $this->cron_interval_identifier, $this->cron_hook_identifier );
 			}
 		}
 
@@ -190,7 +193,8 @@ echo WPHB_ABSPATH;
 		private static function wphb_themeforest_themes() {
 			return array(
 				'18828322' => 'hotel-wp',
-				'13321455' => 'sailing'
+				'13321455' => 'sailing',
+				'21070438' => 'magazette'
 			);
 		}
 	}
