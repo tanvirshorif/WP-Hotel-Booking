@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin View: Loop related themes.
+ * Admin View: Loop related theme.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Views
@@ -31,10 +31,10 @@ defined( 'ABSPATH' ) || exit;
             </h2>
             <div class="theme-detail">
                 <div class="theme-price">
-					<?php echo $theme['price_cents'] / 100 . __( '$', 'learnpress' ); ?>
+					<?php echo $theme['price_cents'] / 100 . __( '$', 'wp-hotel-booking' ); ?>
                 </div>
                 <div class="number-sale">
-					<?php echo $theme['number_of_sales'] . __( ' sales', 'learnpress' ); ?>
+					<?php echo $theme['number_of_sales'] . __( ' sales', 'wp-hotel-booking' ); ?>
                 </div>
             </div>
 
@@ -51,9 +51,9 @@ defined( 'ABSPATH' ) || exit;
 				$demo['value'] = add_query_arg( $ref, $demo['value'] );
 				?>
                 <a class="button button-primary" target="_blank"
-                   href="<?php echo esc_url( $theme['url'] ); ?>"><?php echo __( 'Get it now', 'learnpress' ) ?></a>
+                   href="<?php echo esc_url( $theme['url'] ); ?>"><?php echo __( 'Get it now', 'wp-hotel-booking' ) ?></a>
                 <a class="button" target="_blank"
-                   href="<?php echo esc_url( $demo['value'] ); ?>"><?php _e( 'View Demo', 'learnpress' ); ?></a>
+                   href="<?php echo esc_url( $demo['value'] ); ?>"><?php _e( 'View Demo', 'wp-hotel-booking' ); ?></a>
                 <div class="theme-rating">
                             <span class="">
                                 <?php wp_star_rating( array(

@@ -2,12 +2,13 @@
 /*
     Plugin Name: WP Hotel Booking Block Room
     Plugin URI: https://thimpress.com/
-    Description: Block booking rooms for specific dates
+    Description: Block booking rooms for specific date.
     Author: ThimPress
     Version: 2.0
     Author URI: http://thimpress.com
     Requires at least: 4.2
-	Tested up to: 4.8
+	Tested up to: 4.9.4
+    Tags: wphb, wp-hotel-booking
 */
 
 /**

@@ -3,12 +3,13 @@
 /*
     Plugin Name: WP Hotel Booking WooCommerce
     Plugin URI: https://thimpress.com/
-    Description: Support paying for a booking with the payment system provided by WooCommerce
+    Description: Support paying for a booking with the payment system provided by WooCommerce.
     Author: ThimPress
     Version: 2.0
     Author URI: http://thimpress.com
     Requires at least: 4.2
-	Tested up to: 4.8
+	Tested up to: 4.9.4
+    Tags: wphb, wp-hotel-booking
 */
 
 /**

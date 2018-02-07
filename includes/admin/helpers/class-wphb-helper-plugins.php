@@ -30,8 +30,8 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 		 * @var array
 		 */
 		public static $plugins = array(
-			'installed' => false,
-			'more'      => false
+			'free'    => false,
+			'premium' => false
 		);
 
 		/**
@@ -76,14 +76,8 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 			$wp_installed = array();
 
 			foreach ( $all_plugins as $plugin_file => $plugin_data ) {
-
 				// If there is a tag
 				if ( empty( $plugin_data['Tags'] ) ) {
-					continue;
-				}
-
-				$tags = ( preg_split( '/\s*,\s*/', $plugin_data['Tags'] ) );
-				if ( ! in_array( 'wphb', $tags ) ) {
 					continue;
 				}
 
@@ -118,7 +112,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 					}
 				}
 			}
-			self::$plugins['installed'] = $plugins;
+			self::$plugins['free'] = $plugins;
 
 			if ( is_array( $wp_plugins ) ) {
 				self::$plugins['free'] = array_diff_key( $wp_plugins, (array) $wp_installed );
@@ -132,6 +126,25 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 
 		/**
 		 * Get plugin icon.
+		 *
+		 * @param $icons
+		 *
+		 * @return string
+		 */
+		public static function get_add_on_icon( $icons ) {
+			if ( ! empty( $icons['1x'] ) ) {
+				$icon = $icons['1x'];
+			} elseif ( ! empty( $icons['2x'] ) ) {
+				$icon = $icons['2x'];
+			} else {
+				$icon = WPHB_PLUGIN_URL . 'assets/images/icon-128x128.png';
+			}
+
+			return $icon;
+		}
+
+		/**
+		 * Get plugin icons.
 		 *
 		 * @param $plugin_data
 		 * @param $plugin_file
@@ -177,7 +190,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 		 */
 		public static function get_plugins_from_wp() {
 
-			if ( ! ( $plugins = get_transient( 'lp_plugins_wp' ) ) ) {
+			if ( ! ( $plugins = get_transient( 'wphb_plugins_wp' ) ) ) {
 				self::$_background_query_items->push_to_queue(
 					array(
 						'callback' => array( 'WPHB_Background_Query_Items', 'query_free_addons' )
@@ -238,7 +251,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 		 * @return bool
 		 */
 		public static function filter_plugins( $plugin ) {
-			return $plugin && preg_match( '!^wphb-.*!', $plugin->slug );
+			return $plugin && preg_match( '!^wp-hotel-booking.*!', $plugin->slug );
 		}
 
 		/**

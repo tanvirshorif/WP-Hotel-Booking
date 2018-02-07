@@ -202,6 +202,12 @@
   border-top: 1px solid #ddd;
   overflow: hidden; }
 
+#wphb-admin-addons-wrapper .install-addons .plugin-card .plugin-card-top .name, #wphb-admin-addons-wrapper .install-addons .plugin-card .plugin-card-top .desc {
+  margin-right: 0; }
+
+#wphb-admin-addons-wrapper .install-addons .plugin-card .plugin-card-bottom .plugin-version {
+  display: inline-block; }
+
 @media screen and (min-width: 1600px) {
   #wphb-admin-addons-wrapper .plugin-card:not(.hide-if-js):nth-child(even) {
     margin-right: 8px; }

@@ -22,11 +22,11 @@ if ( ! $add_ons ) {
 	echo __( 'All WP Hotel Booking add-ons really have been installed.', 'wp-hotel-booking' );
 } else { ?>
 	<?php if ( is_array( $add_ons ) ) { ?>
-        <h2><?php echo __( 'More add-ons', 'wp-hotel-booking' ); ?></h2>
+        <h2><?php echo __( 'Premium add-ons', 'wp-hotel-booking' ); ?></h2>
 
         <ul>
 			<?php foreach ( $add_ons as $file => $add_on ) {
-				hb_admin_view( 'addons/loop/plugin' );
+				hb_admin_view( 'addons/loop/plugin', array( 'add_on' => $add_on ) );
 			} ?>
         </ul>
 		<?php

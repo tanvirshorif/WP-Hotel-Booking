@@ -272,6 +272,21 @@
         }
     }
 
+    .install-addons {
+        .plugin-card {
+            .plugin-card-top {
+                .name, .desc {
+                    margin-right: 0;
+                }
+            }
+            .plugin-card-bottom {
+                .plugin-version {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
     @media screen and (min-width: 1600px) {
         .plugin-card:not(.hide-if-js):nth-child(even) {
             margin-right: 8px;

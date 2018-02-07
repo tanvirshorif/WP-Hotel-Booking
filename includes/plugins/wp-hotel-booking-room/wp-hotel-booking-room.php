@@ -3,12 +3,13 @@
 /*
     Plugin Name: WP Hotel Booking Room
     Plugin URI: https://thimpress.com/
-    Description: Support book room without search room
+    Description: Support book room without search room.
     Author: ThimPress
     Version: 2.0
     Author URI: http://thimpress.com
     Requires at least: 4.2
-	Tested up to: 4.8
+	Tested up to: 4.9.4
+    Tags: wphb, wp-hotel-booking
 */
 
 /**

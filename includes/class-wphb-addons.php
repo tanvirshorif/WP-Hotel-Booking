@@ -28,9 +28,9 @@ if ( ! class_exists( 'WPHB_Addons' ) ) {
 		 */
 		public static function get_addon_tabs() {
 			$tabs = array(
-				'installed' => __( 'Installed', 'wp-hotel-booking' ),
-				'more'      => __( 'Get more', 'wp-hotel-booking' ),
-				'themes'    => __( 'Themes', 'wp-hotel-booking' )
+				'free'    => __( 'Free', 'wp-hotel-booking' ),
+				'premium' => __( 'Premium', 'wp-hotel-booking' ),
+				'themes'  => __( 'Themes', 'wp-hotel-booking' )
 			);
 
 			return apply_filters( 'wphb_admin_add_on_tabs', $tabs );

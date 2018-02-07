@@ -80,9 +80,10 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 		 * @return array
 		 */
 		public static function query_free_addons() {
+
 			WPHB_Helper_Plugins::require_plugins_api();
 			// query plugin args
-			$args    = array(
+			$args = array(
 				'page'              => 1,
 				'per_page'          => 20,
 				'fields'            => array(
@@ -94,6 +95,8 @@ if ( ! class_exists( 'WPHB_Background_Query_Items' ) ) {
 				'installed_plugins' => WPHB_Helper_Plugins::get_installed_plugin_slugs(),
 				'author'            => 'thimpress'
 			);
+
+
 			$plugins = array();
 			try {
 				$query = plugins_api( 'query_plugins', $args );
