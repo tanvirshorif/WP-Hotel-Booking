@@ -25,7 +25,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_WPML_Support' ) ) {
 	 *
 	 * @version    2.0
 	 */
-	final class WP_Hotel_Booking_Wpml_Support {
+	final class WP_Hotel_Booking_WPML_Support {
 
 		/**
 		 * WP Hotel Booking WPML Support version.
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_WPML_Support' ) ) {
 		public $_version = '2.0';
 
 		/**
-		 * WP_Hotel_Booking_Woocommerce constructor.
+		 * WP_Hotel_Booking_WPML_Support constructor.
 		 *
 		 * @since 2.0
 		 */
@@ -44,7 +44,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_WPML_Support' ) ) {
 		}
 
 		/**
-		 * Init WP_Hotel_Booking_Woocommerce.
+		 * Init WP_Hotel_Booking_WPML_Support.
 		 *
 		 * @since 2.0
 		 */
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_WPML_Support' ) ) {
 		}
 
 		/**
-		 * Define WP Hotel Booking Woocommerce constants.
+		 * Define WP Hotel Booking WPML constants.
 		 *
 		 * @since 2.0
 		 */

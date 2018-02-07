@@ -160,7 +160,7 @@ if ( ! class_exists( 'WPHB_Abstract_Product' ) ) {
 					$return = get_the_title( $this->ID );
 					break;
 				case 'capacity':
-					$term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+					$term_id = get_post_meta( $this->post->ID, '_hb_room_origin_capacity', true ) ? get_post_meta( $this->post->ID, '_hb_room_origin_capacity', true ) : get_post_meta( $this->post->ID, '_hb_room_capacity', true );
 					$return  = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
 					if ( ! $return ) {
 						$return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );

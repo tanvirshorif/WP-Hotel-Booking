@@ -58,6 +58,7 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 			$this->sitepress = $sitepress;
 			// default language setup
 			$this->default_language_code = $this->sitepress->get_default_language();
+			// current language
 			$this->current_language_code = defined( 'ICL_LANGUAGE_CODE' ) ? ICL_LANGUAGE_CODE : null;
 			// filter dropdown rooms
 			add_filter( 'hotel_booking_rooms_dropdown', array( $this, 'hotel_booking_rooms_dropdown' ) );
@@ -92,6 +93,9 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 			add_filter( 'get_max_capacity_of_rooms', array( $this, 'max_capacity_of_rooms' ) );
 
 			add_filter( 'hotel_booking_query_search_parser', array( $this, 'parse_available_rooms' ) );
+
+			// update translate room capacity
+			add_action( 'icl_make_duplicate', array( $this, 'update_capacity_meta' ), 10, 4 );
 		}
 
 		/**
@@ -160,6 +164,49 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 			}
 
 			return $fields;
+		}
+
+		/**
+		 * Update cap.
+		 *
+		 * @param $master_post_id
+		 * @param $lang
+		 * @param $post_array
+		 * @param $id
+		 */
+		public function update_capacity_meta( $master_post_id, $lang, $post_array, $id ) {
+			if ( ( get_post_type( $master_post_id ) == 'hb_room' ) && $cap_id = get_post_meta( $master_post_id, '_hb_room_capacity', true ) ) {
+				$cap = $this->get_room_capacity( $cap_id, $this->default_language_code, $lang );
+				update_post_meta( $id, '_hb_room_capacity', $cap );
+				update_post_meta( $id, '_hb_room_origin_capacity', $this->get_room_capacity( $cap_id, $this->default_language_code ) );
+			}
+		}
+
+		/**
+		 * Get cap current lang from default lang.
+		 *
+		 * @param $default_cap
+		 * @param $default_lang
+		 * @param $current_lang
+		 *
+		 * @return null|string
+		 */
+		private function get_room_capacity( $default_cap, $default_lang, $current_lang = null ) {
+			global $wpdb;
+
+			if ( ! $current_lang ) {
+				return $default_cap;
+			}
+
+			$current_cap = $wpdb->get_var(
+				$wpdb->prepare( "
+				SELECT cap_current.element_id FROM {$wpdb->prefix}icl_translations cap_current
+			    INNER JOIN {$wpdb->prefix}icl_translations cap_default ON cap_default.trid = cap_current.trid
+			    WHERE 
+			    cap_default.element_id = %d AND cap_default.language_code = %s AND cap_current.language_code = %s AND cap_current.element_type = %s
+			    ", (int) $default_cap, $default_lang, $current_lang, 'tax_hb_room_capacity' ) );
+
+			return $current_cap ? $current_cap : $default_cap;
 		}
 
 		/**
@@ -366,8 +413,8 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 					AND wpml_translation.language_code = %s
 				GROUP BY rooms.post_name
 				HAVING ( available_rooms > 0 AND blocked = 0 )
-				ORDER BY term_cap.meta_value DESC
-			", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $args['adults'], $args['child'], $this->current_language_code );
+				ORDER BY term_cap.meta_value ASC
+			", '_hb_num_of_rooms', '_hb_room_origin_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $args['adults'], $args['child'], $this->current_language_code );
 
 			return $query;
 		}
@@ -402,7 +449,7 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 				}
 			}
 
-			$booked                      = $wpdb->get_var( $wpdb->prepare( "
+			$booked = $wpdb->get_var( $wpdb->prepare( "
 			SELECT COUNT( DISTINCT product.hotel_booking_order_item_id ) FROM $wpdb->hotel_booking_order_itemmeta AS product
 			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS check_in ON product.hotel_booking_order_item_id = check_in.hotel_booking_order_item_id
 			LEFT JOIN $wpdb->hotel_booking_order_itemmeta AS check_out ON product.hotel_booking_order_item_id = check_out.hotel_booking_order_item_id
@@ -489,10 +536,7 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 				foreach ( $terms as $term ) {
 					$default_term = $this->get_object_default_language( $term->term_id, 'hb_room_capacity', true );
 					$cap          = get_term_meta( $default_term, 'hb_max_number_of_adults', true );
-					/**
-					 * @since  1.1.2
-					 * use term meta
-					 */
+					// use term meta, since 1.1.2
 					if ( ! $cap ) {
 						$cap = get_option( "hb_taxonomy_capacity_{$default_term}" );
 					}
@@ -505,7 +549,6 @@ if ( ! class_exists( 'WPHB_WPML_Support' ) ) {
 			return $max;
 		}
 	}
-
 }
 
 new WPHB_WPML_Support();
