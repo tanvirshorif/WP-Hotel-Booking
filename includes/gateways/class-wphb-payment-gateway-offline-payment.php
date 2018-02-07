@@ -88,7 +88,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 		 * @return bool
 		 */
 		public function is_enable() {
-			return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
+			return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on' || $this->_settings['enable'] == 1;
 		}
 
 		/**

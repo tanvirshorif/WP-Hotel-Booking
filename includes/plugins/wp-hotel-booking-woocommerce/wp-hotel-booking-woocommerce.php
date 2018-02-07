@@ -9,6 +9,7 @@
     Author URI: http://thimpress.com
     Requires at least: 4.2
 	Tested up to: 4.9.4
+    WC tested up to: 3.3
     Tags: wphb, wp-hotel-booking
 */
 
