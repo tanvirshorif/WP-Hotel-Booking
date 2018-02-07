@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 
 			// set booking received endpoint transient
-			set_transient('wphb_booking_received_endpoint', 1, WEEK_IN_SECONDS);
+			set_transient( 'wphb_booking_received_endpoint', 1, WEEK_IN_SECONDS );
 		}
 
 		/**
@@ -73,7 +73,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 		}
 
-		static function do_install() {
+		/**
+		 * Do install process.
+		 */
+		public static function do_install() {
 			// create pages
 			self::create_pages();
 			// create update options
@@ -82,8 +85,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			self::create_tables();
 		}
 
-		// create options default
-		static function create_options() {
+		/**
+		 * Create default options
+		 */
+		public static function create_options() {
 			$settings_pages = WPHB_Admin_Settings::get_settings_pages();
 
 			foreach ( $settings_pages as $setting ) {
@@ -98,8 +103,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 		}
 
-		// create page. Eg: hotel-checkout, hotel-cart
-		static function create_pages() {
+		/**
+		 * Create default page.
+		 */
+		public static function create_pages() {
 			if ( ! function_exists( 'hb_create_page ' ) ) {
 				include_once( WPHB_INCLUDES . 'admin/wphb-admin-functions.php' );
 				include_once( WPHB_INCLUDES . 'wphb-functions.php' );
@@ -154,8 +161,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 		}
 
-		// create tables. Eg: booking_items
-		static function create_tables() {
+		/**
+		 * Create database tables.
+		 */
+		public static function create_tables() {
 			global $wpdb;
 
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -253,7 +262,5 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 				restore_current_blog();
 			}
 		}
-
 	}
-
 }
