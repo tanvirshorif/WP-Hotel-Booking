@@ -332,13 +332,14 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Paypal' ) ) {
 			if ( $advance_payment && ! $pay_all ) {
 				$custom['advance_payment'] = $advance_payment;
 			}
+
+			$settings = hb_settings();
+			$endpoint = $settings->get( 'booking_received', 'thank-you' );
+
 			$query = array(
 				'business'      => $paypal_email,
 				'item_name'     => $cart_description,
-				'return'        => add_query_arg( array(
-					'hb-transaction-method' => 'paypal-standard',
-					'paypal-nonce'          => $nonce
-				), hb_get_return_url() ),
+				'return'        => hb_get_cart_url() . "/$endpoint/?booking=$booking_id&key=$booking->booking_key",
 				'currency_code' => hb_get_currency(),
 				'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
 				'no_note'       => '1',

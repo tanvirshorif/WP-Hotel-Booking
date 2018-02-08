@@ -411,11 +411,51 @@ if ( ! function_exists( 'hb_room_review_item' ) ) {
 }
 
 if ( ! function_exists( 'hb_body_class' ) ) {
-
+	/**
+	 * Add custom class for plugin pages.
+	 *
+	 * @param $classes
+	 *
+	 * @return array
+	 */
 	function hb_body_class( $classes ) {
+		global $post;
+
 		$classes = (array) $classes;
+
+		switch ( $post->ID ) {
+			case hb_get_page_id( 'cart' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-cart';
+				break;
+			case hb_get_page_id( 'checkout' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-checkout';
+				break;
+			case hb_get_page_id( 'search' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-search-rooms';
+				break;
+			case hb_get_page_id( 'account' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-account';
+				break;
+			case hb_get_page_id( 'terms' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-terms';
+				break;
+			default:
+				break;
+		}
+
 		if ( is_room() || is_room_taxonomy() ) {
 			$classes[] = 'wp-hotel-booking';
+			$classes[] = 'wp-hotel-booking-room-page';
+		}
+
+		if ( false !== get_query_var( 'thank-you', false ) ) {
+			$classes[] = 'wphb-page';
+			$classes[] = 'wphb-thank-you';
 		}
 
 		return array_unique( $classes );

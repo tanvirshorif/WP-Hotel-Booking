@@ -126,7 +126,6 @@ global $hb_settings;
             <p>
                 <a href="<?php echo hb_get_checkout_url() ?>"
                    class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
-                <button type="submit" class="hb_button update"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
             </p>
         </form>
     </div>
