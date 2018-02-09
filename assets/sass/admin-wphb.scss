@@ -1016,6 +1016,81 @@
     }
 }
 
+//================================= Admin tools page ================================================================//
+
+.wp-hotel-booking_page_wphb-tools {
+
+    #wphb-theme-override-templates {
+        margin-top: 25px;
+        thead{
+            h4{
+                margin: 8px 0;
+            }
+        }
+        tbody {
+            th {
+                font-weight: bold;
+                p {
+                    margin: 0 0 0 10px;
+                    display: inline-block;
+                    a {
+                        font-weight: normal;
+                        outline: none;
+                        border: none;
+                        box-shadow: none;
+                        margin: 0;
+                        padding: 2px 8px;
+                        border-radius: 3px;
+                        &.current {
+                            background: #00aadc;
+                            color: #FFF;
+                        }
+                    }
+                }
+            }
+
+            .template-row {
+                code {
+                    &:before {
+                        font-family: Dashicons;
+                        vertical-align: middle;
+                        margin-top: -1px;
+                        display: inline-block;
+                        margin-right: 5px;
+                    }
+                }
+
+                &.up-to-date {
+                    .template-file {
+                        code {
+                            &:before {
+                                content: "\f147";
+                                color: #0085ba;
+                            }
+                        }
+                    }
+                    .template-version {
+                        color: #1859ff;
+                    }
+                }
+                &.outdated, &.undefined {
+                    .template-file {
+                        code {
+                            &:before {
+                                content: "\f534";
+                                color: #FF0000;
+                            }
+                        }
+                    }
+                    .template-version {
+                        color: #FF0000;
+                    }
+                }
+            }
+        }
+    }
+}
+
 //================================= Admin settings page ================================================================//
 
 form[name="hb-admin-settings-form"] {

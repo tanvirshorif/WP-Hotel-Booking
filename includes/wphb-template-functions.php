@@ -23,7 +23,7 @@ if ( ! function_exists( 'hb_template_path' ) ) {
 	 * @return mixed
 	 */
 	function hb_template_path() {
-		return apply_filters( 'hb_template_path', WPHB_PLUGIN_PATH );
+		return apply_filters( 'hb_template_path', 'wp-hotel-booking' );
 	}
 }
 
@@ -46,8 +46,8 @@ if ( ! function_exists( 'hb_get_template_part' ) ) {
 		}
 
 		// Get default slug-name.php
-		if ( ! $template && $name && file_exists( WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
-			$template = WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
+		if ( ! $template && $name && file_exists( WPHB_TEMPLATES . "{$slug}-{$name}.php" ) ) {
+			$template = WPHB_TEMPLATES . "{$slug}-{$name}.php";
 		}
 
 		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
@@ -128,7 +128,7 @@ if ( ! function_exists( 'hb_locate_template' ) ) {
 		}
 
 		if ( ! $default_path ) {
-			$default_path = WPHB_PLUGIN_PATH . '/templates/';
+			$default_path = WPHB_TEMPLATES;
 		}
 
 		$template = null;

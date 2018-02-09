@@ -599,7 +599,9 @@
                 // dismiss notice
                 .on('click', '.hb-dismiss-notice button', _self.dismiss_notice)
                 // admin add-on tabs
-                .on('click', '#wphb-admin-addons-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_addon_tabs);
+                .on('click', '#wphb-admin-addons-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_addon_tabs)
+                // filter override templates
+                .on('click', '#wphb-theme-override-templates .template-filter', _self.filter_override_templates);
 
             // datetime picker field
             _self.datetime_metabox_field();
@@ -731,6 +733,34 @@
             _self.addClass('nav-tab-active');
             $('.admin-addons-tab-content').hide();
             $('#addons-' + _tab).show();
+        },
+        filter_override_templates: function (e) {
+            var $link = $(this),
+                template = $link.data('template'),
+                filter = $link.data('filter');
+            if ($link.hasClass('current')) {
+                return false;
+            }
+            $link.addClass('current').siblings('a').removeClass('current');
+            var $templatesList = $('#wphb-theme-override-templates'),
+                $templates = $templatesList.find('tr[data-template]');
+
+            if (!template) {
+                if (!filter) {
+                    $templates.removeClass('hide-if-js');
+                } else {
+                    $templates.map(function () {
+                        $(this).toggleClass('hide-if-js', $(this).data('filter-' + filter) !== 'yes');
+                    })
+                }
+            } else {
+                $templates.map(function () {
+                    $(this).toggleClass('hide-if-js', $(this).data('template') !== template);
+                })
+            }
+
+            $('.no-templates').toggleClass('hide-if-js', !!$templatesList.find('tr.template-row:not(.hide-if-js):first').length);
+            return false;
         }
     };
 

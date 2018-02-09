@@ -43,6 +43,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-ajax.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-settings.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-menu.php' );
+			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-tools.php' );
 			include_once( WPHB_INCLUDES . 'admin/wphb-admin-functions.php' );
 		}
 

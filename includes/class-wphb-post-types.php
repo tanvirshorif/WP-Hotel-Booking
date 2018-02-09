@@ -687,7 +687,15 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'show_in_admin_bar'  => true,
 				'show_in_nav_menus'  => true,
 				'taxonomies'         => array( 'room_category', 'room_tag' ),
-				'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
+				'supports'           => array(
+					'title',
+					'editor',
+					'thumbnail',
+					'revisions',
+					'comments',
+					'author',
+					'custom-fields'
+				),
 				'hierarchical'       => false,
 				'rewrite'            => array(
 					'slug'       => _x( 'rooms', 'URL slug', 'wp-hotel-booking' ),

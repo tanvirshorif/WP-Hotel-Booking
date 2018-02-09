@@ -82,6 +82,17 @@ if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wphb_get_admin_tools_tabs' ) ) {
+	/**
+	 * Get admin tool tabs.
+	 *
+	 * @return mixed
+	 */
+	function wphb_get_admin_tools_tabs() {
+		return apply_filters( 'wphb/admin/tool-tabs', array() );
+	}
+}
+
 if ( ! function_exists( 'hb_admin_js' ) ) {
 	/**
 	 * Print admin scripts.
@@ -161,7 +172,7 @@ if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
 					}
 					$full_description  = hb_trim_content( $theme['description'] );
 					$short_description = hb_trim_content( $theme['description'], 75 );
-					$url_demo = $theme['attributes'][4]['value']; ?>
+					$url_demo          = $theme['attributes'][4]['value']; ?>
 
                     <div id="thimpress-<?php echo esc_attr( $theme['id'] ); ?>" class="slide-item">
                         <div class="slide-thumbnail">

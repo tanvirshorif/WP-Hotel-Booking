@@ -730,6 +730,43 @@
   opacity: .7;
   z-index: 99900; }
 
+.wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates {
+  margin-top: 25px; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates thead h4 {
+    margin: 8px 0; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody th {
+    font-weight: bold; }
+    .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody th p {
+      margin: 0 0 0 10px;
+      display: inline-block; }
+      .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody th p a {
+        font-weight: normal;
+        outline: none;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 2px 8px;
+        border-radius: 3px; }
+        .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody th p a.current {
+          background: #00aadc;
+          color: #FFF; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row code:before {
+    font-family: Dashicons;
+    vertical-align: middle;
+    margin-top: -1px;
+    display: inline-block;
+    margin-right: 5px; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.up-to-date .template-file code:before {
+    content: "\f147";
+    color: #0085ba; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.up-to-date .template-version {
+    color: #1859ff; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.outdated .template-file code:before, .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.undefined .template-file code:before {
+    content: "\f534";
+    color: #FF0000; }
+  .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.outdated .template-version, .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.undefined .template-version {
+    color: #FF0000; }
+
 form[name="hb-admin-settings-form"] .subsubsub {
   float: none;
   margin: 10px 0 0; }
