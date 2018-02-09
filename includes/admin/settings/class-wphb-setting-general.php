@@ -55,13 +55,12 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'general_settings',
 					'title' => __( 'General Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'General options for system.', 'wp-hotel-booking' ),
-					'class' => 'general-section'
+					'desc'  => __( 'General options for system.', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'number',
 					'id'      => $prefix . 'minimum_booking_day',
-					'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
+					'title'   => __( 'Minimum booking day', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
 					'step'    => 'any'
@@ -98,8 +97,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'currency_settings',
 					'title' => __( 'Currency Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'The options for display rooms price on the frontend.', 'wp-hotel-booking' ),
-					'class' => 'general-section'
+					'desc'  => __( 'The options for display rooms price on the frontend.', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'select',
@@ -139,6 +137,40 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'default' => 1,
 					'min'     => 0,
 					'max'     => 3,
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'currencies_enable',
+					'title'   => __( 'Switch Currency', 'wp-hotel-booking' ),
+					'default' => 1,
+					'desc'    => __( 'Enable switch currency', 'wp-hotel-booking' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'currencies_multiple_allowed',
+					'title'   => __( 'Switch Multiple Currencies', 'wp-hotel-booking' ),
+					'default' => 1,
+					'desc'    => __( 'Allow switch multiple currencies', 'wp-hotel-booking' )
+				),
+				array(
+					'type'    => 'select',
+					'id'      => $prefix . 'currencies_aggregator',
+					'title'   => __( 'Currency aggregator', 'wp-hotel-booking' ),
+					'options' => array(
+						'yahoo'  => 'http://finance.yahoo.com',
+						'google' => 'http://google.com/finance'
+					),
+					'default' => 'yahoo',
+				),
+				array(
+					'type'    => 'select',
+					'id'      => $prefix . 'currencies_storage',
+					'title'   => __( 'Currency storage', 'wp-hotel-booking' ),
+					'options' => array(
+						'session'   => __( 'Session', 'wp-hotel-booking' ),
+						'transient' => __( 'Transient', 'wp-hotel-booking' )
+					),
+					'default' => 'session'
 				),
 				array(
 					'type' => 'section_end',

@@ -55,8 +55,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'catalog_room_setting',
 					'title' => __( 'Catalog Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'Catalog settings display column number and image size used in room list ( archive page, related room ).', 'wp-hotel-booking' ),
-					'class' => 'general-section'
+					'desc'  => __( 'Catalog settings display column number and image size used in room list ( archive page, related room ).', 'wp-hotel-booking' )
 				),
 				array(
 					'id'      => $prefix . 'catalog_number_column',

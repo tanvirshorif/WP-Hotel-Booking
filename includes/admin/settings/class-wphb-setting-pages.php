@@ -54,9 +54,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Pages' ) ) {
 				array(
 					'type'  => 'section_start',
 					'id'    => 'hotel_booking_pages',
-					'title' => __( 'System Pages', 'wp-hotel-booking' ),
-					'desc'  => __( 'Setup default pages.', 'wp-hotel-booking' ),
-					'class' => 'general-section'
+					'title' => __( 'System Pages', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',

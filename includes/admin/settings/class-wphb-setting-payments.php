@@ -50,21 +50,12 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
 			$prefix = 'tp_hotel_booking_';
 
-			$section  = '';
-			$sections = $this->get_sections();
-			if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
-				$section = sanitize_text_field( $_REQUEST['section'] );
-			}
-
-			$section = $section ? $section : reset( array_keys( $sections ) );
-
 			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 				array(
 					'type'  => 'section_start',
-					'id'    => 'payment_general_checkout',
+					'id'    => 'payment_general_setting',
 					'title' => __( 'General Options', 'wp-hotel-booking' ),
-					'desc'  => __( 'Payment General options for system.', 'wp-hotel-booking' ),
-					'class' => 'general-checkout'
+					'desc'  => __( 'Payment General options for system.', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'checkbox',
@@ -83,14 +74,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 				),
 				array(
 					'type' => 'section_end',
-					'id'   => 'payment_general_checkout'
+					'id'   => 'payment_general_setting'
 				),
 				array(
 					'type'  => 'section_start',
 					'id'    => 'checkout_endpoints',
 					'title' => __( 'Checkout Endpoints', 'wp-hotel-booking' ),
-					'desc'  => wp_kses( __( 'Endpoints are appended to your page URLs to handle specific actions during the checkout process. <strong>They should be unique.</strong>', 'wp-hotel-booking' ), array( 'strong' => array() ) ),
-					'class' => 'general-checkout'
+					'desc'  => wp_kses( __( 'Endpoints are appended to your page URLs to handle specific actions during the checkout process. <strong>They should be unique.</strong>', 'wp-hotel-booking' ), array( 'strong' => array() ) )
 				),
 				array(
 					'type'    => 'text',
@@ -102,72 +92,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 				array(
 					'type' => 'section_end',
 					'id'   => 'checkout_endpoints'
-				),
-
-				array(
-					'type'   => 'section_start',
-					'id'     => 'offline_payment',
-					'title'  => __( 'Offline payment', 'wp-hotel-booking' ),
-					'desc'   => __( 'Setting for Offline payment.', 'wp-hotel-booking' ),
-					'class'  => 'offline-payment',
-					'hidden' => $section == 'offline_payment' ? true : false
-				),
-
-				array(
-					'type'    => 'checkbox',
-					'id'      => $prefix . 'offline-payment[enable]',
-					'title'   => __( 'Enable', 'wp-hotel-booking' ),
-					'desc'    => __( 'Enable payment booking room via offline.', 'wp-hotel-booking' ),
-					'default' => 1
-				),
-
-				array(
-					'type' => 'section_end',
-					'id'   => 'offline_payment'
-				),
-
-				array(
-					'type'   => 'section_start',
-					'id'     => 'paypal',
-					'title'  => __( 'Paypal', 'wp-hotel-booking' ),
-					'desc'   => __( 'Setting for Paypal payment gateway.', 'wp-hotel-booking' ),
-					'class'  => 'paypal',
-					'hidden' => $section == 'paypal' ? true : false
-				),
-
-				array(
-					'type'    => 'checkbox',
-					'id'      => $prefix . 'paypal[enable]',
-					'title'   => __( 'Enable', 'wp-hotel-booking' ),
-					'desc'    => __( 'Enable payment booking room via Paypal.', 'wp-hotel-booking' ),
-					'default' => 0
-				),
-
-				array(
-					'type'  => 'text',
-					'id'    => $prefix . 'paypal[email]',
-					'title' => __( 'Paypal email', 'wp-hotel-booking' ),
-					'desc'  => __( 'Paypal email.', 'wp-hotel-booking' )
-				),
-
-				array(
-					'type'    => 'checkbox',
-					'id'      => $prefix . 'paypal[sandbox]',
-					'title'   => __( 'Sandbox Mode', 'wp-hotel-booking' ),
-					'desc'    => __( 'Enable Paypal sandbox mode.', 'wp-hotel-booking' ),
-					'default' => 0
-				),
-
-				array(
-					'type'  => 'text',
-					'id'    => $prefix . 'paypal[sandbox_email]',
-					'title' => __( 'Paypal sandbox email', 'wp-hotel-booking' ),
-					'desc'  => __( 'Paypal sandbox email.', 'wp-hotel-booking' )
-				),
-
-				array(
-					'type' => 'section_end',
-					'id'   => 'paypal'
 				),
 
 			) );
@@ -188,7 +112,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 			$payments = hb_get_payment_gateways();
 			if ( $current_section && $current_section !== 'general' ) {
 				foreach ( $payments as $payment ) {
-					if ( $payment->slug === $current_section ) {
+					if ( $payment->slug === $current_section && is_callable( array( $payment, 'admin_settings' ) ) ) {
 						$payment->admin_settings();
 						break;
 					}
@@ -206,13 +130,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 		 * @return mixed
 		 */
 		public function get_sections() {
-			$sections['general-checkout'] = __( 'General', 'wp-hotel-booking' );
+			$sections            = array();
+			$sections['general'] = __( 'General', 'wp-hotel-booking' );
 
-			$sections = array(
-				'general-checkout' => __( 'General', 'wp-hotel-booking' ),
-				'offline-payment'  => __( 'Offline payment', 'wp-hotel-booking' ),
-				'paypal'           => __( 'Paypal', 'wp-hotel-booking' ),
-			);
+			$payments = hb_get_payment_gateways();
+			foreach ( $payments as $payment ) {
+				$sections[ $payment->slug ] = $payment->title;
+			}
 
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
 		}

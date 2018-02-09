@@ -598,10 +598,6 @@
                 .on('click', '.room-gallery-input .attachment .dashicons-trash', _self.remove_image_selector)
                 // dismiss notice
                 .on('click', '.hb-dismiss-notice button', _self.dismiss_notice)
-                // admin setting tabs
-                .on('click', '#wphb-admin-setting-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_setting_tabs)
-                // admin setting subtabs
-                .on('click', '.hb-admin-sub-tab.subsubsub li a', _self.admin_setting_sub_tabs)
                 // admin add-on tabs
                 .on('click', '#wphb-admin-addons-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_addon_tabs);
 

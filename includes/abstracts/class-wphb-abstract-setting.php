@@ -178,22 +178,19 @@ if ( ! class_exists( 'WPHB_Abstract_Setting' ) ) {
 				$current_section = sanitize_text_field( array_keys( $sections )[0] );
 			}
 
-			if ( $sections ) {
-				$html   = array();
-				$html[] = '<ul class="hb-admin-sub-tab subsubsub">';
-				$sub    = array();
+			$html = array();
 
-				foreach ( $sections as $id => $text ) {
-					$sub[] =
-						'<li>
-						<a href="?page=wphb-settings&tab=' . $this->id . '&section=' . $id . '"' . ( $current_section === $id ? ' class="current"' : '' ) . ' data-subtab="' . $id . '">' . esc_html( $text ) . '</a>
+			$html[] = '<ul class="hb-admin-sub-tab subsubsub">';
+			$sub    = array();
+			foreach ( $sections as $id => $text ) {
+				$sub[] = '<li>
+						<a href="?page=wphb-settings&tab=' . $this->id . '&section=' . $id . '"' . ( $current_section === $id ? ' class="current"' : '' ) . '>' . esc_html( $text ) . '</a>
 					</li>';
-				}
-				$html[] = implode( '&nbsp;|&nbsp;', $sub );
-				$html[] = '</ul>';
-
-				echo implode( '', $html );
 			}
+			$html[] = implode( '&nbsp;|&nbsp;', $sub );
+			$html[] = '</ul>';
+
+			echo implode( '', $html );
 		}
 
 	}

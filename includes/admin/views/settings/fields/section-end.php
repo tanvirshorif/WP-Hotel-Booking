@@ -20,5 +20,3 @@ defined( 'ABSPATH' ) || exit;
 </table>
 
 <?php do_action( 'hotel_booking_setting_field_' . $field['id'] . '_after' ); ?>
-
-</div>

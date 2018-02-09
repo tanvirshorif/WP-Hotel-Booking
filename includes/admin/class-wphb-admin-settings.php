@@ -56,32 +56,25 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 				$selected_tab = reset( $tab_keys );
 			} ?>
 
-            <div id='wphb-admin-setting-wrapper' class="wrap">
+            <div class="wrap">
                 <h2 class="nav-tab-wrapper">
-					<?php if ( is_array( $tabs ) && $tabs ) { ?>
+					<?php if ( $tabs ) { ?>
 						<?php foreach ( $tabs as $slug => $title ) { ?>
                             <a class="nav-tab<?php echo sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ); ?>"
-                               href="?page=wphb-settings&tab=<?php echo esc_attr( $slug ); ?>"
-                               data-tab="<?php echo esc_attr( $slug ); ?>">
+                               href="?page=wphb-settings&tab=<?php echo esc_attr( $slug ); ?>">
 								<?php echo esc_html( $title ); ?>
                             </a>
 						<?php } ?>
 					<?php } ?>
                 </h2>
-				<?php if ( is_array( $tabs ) && $tabs ) { ?>
-					<?php foreach ( $tabs as $slug => $title ) { ?>
-                        <form method="post" action="" enctype="multipart/form-data" name="hb-admin-settings-form"
-                              id="settings-<?php echo esc_attr( $slug ); ?>"
-                              style="<?php echo $selected_tab !== $slug ? 'display: none' : ''; ?>">
-							<?php do_action( 'hb_admin_settings_tab_before', $slug ); ?>
-							<?php do_action( 'hb_admin_settings_sections_' . $slug ); ?>
-							<?php do_action( 'hb_admin_settings_tab_' . $slug ); ?>
-							<?php wp_nonce_field( 'hb_admin_settings_tab_' . $slug, 'hb_admin_settings_tab_' . $slug . '_field' ); ?>
-							<?php do_action( 'hb_admin_settings_tab_after', $slug ); ?>
-                            <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
-                        </form>
-					<?php } ?>
-				<?php } ?>
+                <form method="post" action="" enctype="multipart/form-data" name="hb-admin-settings-form">
+					<?php do_action( 'hb_admin_settings_tab_before', $selected_tab ); ?>
+					<?php do_action( 'hb_admin_settings_sections_' . $selected_tab ); ?>
+					<?php do_action( 'hb_admin_settings_tab_' . $selected_tab ); ?>
+					<?php wp_nonce_field( 'hb_admin_settings_tab_' . $selected_tab, 'hb_admin_settings_tab_' . $selected_tab . '_field' ); ?>
+					<?php do_action( 'hb_admin_settings_tab_after', $selected_tab ); ?>
+                    <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
+                </form>
             </div>
 			<?php
 		}
