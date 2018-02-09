@@ -28,6 +28,11 @@ defined( 'ABSPATH' ) || exit;
     </div>
     <div class="content">
         <div class="feature-section">
+            <div class="changelog">
+
+            </div>
+        </div>
+        <div class="feature-section">
             <div class="news">
                 <h3><?php _e( 'What\'s news', 'wp-hotel-booking' ); ?></h3>
                 <p><?php echo wp_kses( __( 'Always stay up-to-date with the latest version of WP Hotel Booking by checking our <a href="https://wordpress.org/plugins/wp-hotel-booking/#developers" target="_blank">change log</a> regularly.', 'wp-hotel-booking' ), array(
@@ -46,8 +51,6 @@ defined( 'ABSPATH' ) || exit;
 						)
 					) ); ?></p>
             </div>
-        </div>
-        <div class="feature-section">
             <div class="get-support">
                 <h3><?php _e( 'Get Support', 'wp-hotel-booking' ); ?></h3>
                 <p><?php _e( 'Find help in our forum and get free updates when purchasing the PRO version which boats a lot more advanced features.', 'wp-hotel-booking' ); ?></p>

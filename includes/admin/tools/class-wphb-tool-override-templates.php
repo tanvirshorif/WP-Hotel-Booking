@@ -36,7 +36,7 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 		 * WPHB_Admin_Tool_Override_Template constructor.
 		 */
 		public function __construct() {
-			$this->title = __( 'Override template', 'wp-hotel-booking' );
+			$this->title = __( 'Override Templates', 'wp-hotel-booking' );
 			parent::__construct();
 		}
 

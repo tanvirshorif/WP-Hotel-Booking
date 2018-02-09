@@ -33,8 +33,8 @@ if ( ! class_exists( 'WPHB_Admin_Tools' ) ) {
 			$tabs = array();
 
 			$tabs[] = include_once 'tools/class-wphb-tool-override-templates.php';
-			$tabs[] = include_once 'tools/class-wphb-tool-import-export.php';
-			$tabs[] = include_once 'tools/class-wphb-tool-db-checker.php';
+			$tabs[] = include_once 'tools/class-wphb-tool-system-status.php';
+			$tabs[] = include_once 'tools/class-wphb-tool-feedback.php';
 
 			return apply_filters( 'wphb/admin/tool-page-tabs', $tabs );
 		}
