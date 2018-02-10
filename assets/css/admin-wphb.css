@@ -240,8 +240,9 @@
   #wphb-admin-about-wrapper .content {
     clear: both; }
     #wphb-admin-about-wrapper .content .feature-section {
-      width: 50%;
-      display: inline-block; }
+      width: 46%;
+      display: inline-block;
+      margin-right: 2%; }
       #wphb-admin-about-wrapper .content .feature-section:first-child {
         float: left; }
       #wphb-admin-about-wrapper .content .feature-section > div {
@@ -253,6 +254,9 @@
       #wphb-admin-about-wrapper .content .feature-section p {
         line-height: 1.5;
         font-size: 14px; }
+      #wphb-admin-about-wrapper .content .feature-section .changelog {
+        max-height: 500px;
+        overflow-y: auto; }
 
 /********************************** Admin setting page *************************************************/
 #wphb-admin-setting-wrapper .nav-tab-active {

@@ -330,8 +330,9 @@
     .content {
         clear: both;
         .feature-section {
-            width: 50%;
+            width: 46%;
             display: inline-block;
+            margin-right: 2%;
             &:first-child {
                 float: left;
             }
@@ -346,6 +347,10 @@
             p {
                 line-height: 1.5;
                 font-size: 14px;
+            }
+            .changelog {
+                max-height: 500px;
+                overflow-y: auto;
             }
         }
     }
@@ -1022,8 +1027,8 @@
 
     #wphb-theme-override-templates {
         margin-top: 25px;
-        thead{
-            h4{
+        thead {
+            h4 {
                 margin: 8px 0;
             }
         }

@@ -28,8 +28,11 @@ defined( 'ABSPATH' ) || exit;
     </div>
     <div class="content">
         <div class="feature-section">
-            <div class="changelog">
-
+            <div class="changelog postbox">
+                <h2 class="hndle"><?php _e( 'Changelog', 'wp-hotel-booking' ); ?></h2>
+                <div class="inside">
+					<?php include_once( WPHB_PLUGIN_PATH . '/changelog.html' ); ?>
+                </div>
             </div>
         </div>
         <div class="feature-section">
