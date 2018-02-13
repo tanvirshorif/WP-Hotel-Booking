@@ -149,6 +149,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			// helper
 			include_once( WPHB_INCLUDES . 'admin/helpers/class-wphb-helper-plugins.php' );
 			include_once( WPHB_INCLUDES . 'admin/helpers/class-wphb-helper-override-template.php' );
+			include_once( WPHB_INCLUDES . 'admin/helpers/class-wphb-helper-for-developer.php' );
 
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
 			include_once( WPHB_INCLUDES . 'wphb-template-hooks.php' );

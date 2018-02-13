@@ -771,6 +771,17 @@
   .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.outdated .template-version, .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.undefined .template-version {
     color: #FF0000; }
 
+.wp-hotel-booking_page_wphb-tools #wphb-developer-access {
+  background: #fff;
+  padding: 20px;
+  margin-top: 20px; }
+  .wp-hotel-booking_page_wphb-tools #wphb-developer-access h2 {
+    margin-top: 0; }
+  .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link {
+    margin-top: 15px; }
+    .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link textarea {
+      padding: 8px; }
+
 form[name="hb-admin-settings-form"] .subsubsub {
   float: none;
   margin: 10px 0 0; }

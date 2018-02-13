@@ -43,12 +43,29 @@ if ( ! class_exists( 'WPHB_Admin_Tool_System_Status' ) ) {
 		/**
 		 * Output.
 		 */
-		public function output() {
-			echo 'ttt';
-		}
-
+		public function output() { ?>
+            <div id="wphb-developer-access">
+                <h2><?php _e( 'Developer access', 'wp-hotel-booking' ); ?></h2>
+                <form method="post">
+					<?php wp_nonce_field( 'wphb_developer_access', 'wphb_developer_access' ); ?>
+					<?php if ( WPHB_Helper_For_Developer::is_granted() ) { ?>
+						<?php $link_access = WPHB_Helper_For_Developer::get_link_access(); ?>
+                        <input type="hidden" name="wphb-revoke-developer-access" value="1" title="revoke">
+                        <button class="button button-secondary"
+                                type="submit"><?php esc_html_e( 'Revoke developer access', 'wp-hotel-booking' ); ?></button>
+                        <div class="link">
+                        <textarea id="wpbh-link-developer-access" class="widefat" title="link" rows="1"
+                                  readonly><?php echo esc_url( $link_access ); ?></textarea>
+                        </div>
+					<?php } else { ?>
+                        <input type="hidden" name="wphb-grant-developer-access" value="1" title="grant">
+                        <button class="button button-primary"
+                                type="submit"><?php esc_html_e( 'Allow developer access', 'wp-hotel-booking' ); ?></button>
+					<?php } ?>
+                </form>
+            </div>
+		<?php }
 	}
-
 }
 
 return new WPHB_Admin_Tool_System_Status();
