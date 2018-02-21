@@ -421,6 +421,10 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 	function hb_body_class( $classes ) {
 		global $post;
 
+		if ( ! isset( $post->ID ) ) {
+			return $classes;
+		}
+
 		$classes = (array) $classes;
 
 		switch ( $post->ID ) {
