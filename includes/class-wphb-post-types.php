@@ -772,7 +772,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'show_in_menu'       => 'tp_hotel_booking',
 				'show_in_admin_bar'  => true,
 				'show_in_nav_menus'  => true,
-				'supports'           => array( '' ),
+				'supports'           => array( 'custom-fields' ),
 				'hierarchical'       => false,
 			);
 			$args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );
