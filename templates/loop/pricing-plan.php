@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 <?php
 $week_names = hb_date_names();
 $plans      = hb_room_get_pricing_plans( get_the_ID() );
+$date_order = hb_start_of_week_order();
 ?>
 
 <?php foreach ( $plans as $plan ) { ?>
@@ -37,7 +38,7 @@ $plans      = hb_room_get_pricing_plans( get_the_ID() );
     <table class="hb_room_pricing_plans">
         <thead>
         <tr>
-	        <?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+	        <?php foreach ( $date_order as $i ) {  ?>
                 <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
 	        <?php } ?>
         </tr>
@@ -45,7 +46,7 @@ $plans      = hb_room_get_pricing_plans( get_the_ID() );
         <tbody>
         <tr>
 			<?php $prices = $plan->prices ?>
-			<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+			<?php foreach ( $date_order as $i ) {  ?>
                 <td>
 					<?php $price = isset( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
 					<?php printf( '%s', hb_format_price( $price ) ) ?>

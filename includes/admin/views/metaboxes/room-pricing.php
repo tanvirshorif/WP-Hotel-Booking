@@ -20,6 +20,7 @@ global $post;
 $week_names   = hb_date_names();
 $regular_plan = hb_room_get_regular_plan( $post->ID );
 $plan_id      = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
+$date_order   = hb_start_of_week_order();
 ?>
 
 <div class="hb-pricing-list">
@@ -27,7 +28,7 @@ $plan_id      = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
     <table>
         <thead>
         <tr>
-			<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+			<?php foreach ( $date_order as $i ) { ?>
                 <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
 			<?php } ?>
         </tr>
@@ -35,7 +36,7 @@ $plan_id      = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
         <tbody>
         <tr>
 			<?php $prices = isset( $regular_plan->prices ) ? $regular_plan->prices : array(); ?>
-			<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+			<?php foreach ( $date_order as $i ) { ?>
                 <td>
 					<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                     <input class="hb-pricing-price" type="number" min="0" step="any"

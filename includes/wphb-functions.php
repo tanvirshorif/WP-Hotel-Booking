@@ -565,6 +565,24 @@ if ( ! function_exists( 'hb_date_names' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hb_start_of_week_order' ) ) {
+	function hb_start_of_week_order() {
+		$start = get_option( 'start_of_week' );
+
+		$order = array();
+
+		for ( $i = (int) $start; $i < 7; $i ++ ) {
+			$order[] = $i;
+		}
+
+		for ( $j = 0; $j < $start; $j ++ ) {
+			$order[] = $j;
+		}
+
+		return $order;
+	}
+}
+
 if ( ! function_exists( 'hb_date_to_name' ) ) {
 	function hb_date_to_name( $date ) {
 		$date_names = hb_date_names();

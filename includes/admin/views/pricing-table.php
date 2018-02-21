@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <?php
-$room_id = intval( hb_get_request( 'hb-room' ) );
+$room_id      = intval( hb_get_request( 'hb-room' ) );
 $week_names   = hb_date_names();
 $plans        = hb_room_get_pricing_plans( $room_id );
 $regular_plan = null;
@@ -28,6 +28,7 @@ foreach ( $plans as $k => $plan ) {
 	}
 }
 $count_plants = count( $plans );
+$date_order   = hb_start_of_week_order();
 ?>
 
 <div class="wrap" id="tp_hotel_booking_pricing">
@@ -54,7 +55,7 @@ $count_plants = count( $plans );
                     <table>
                         <thead>
                         <tr>
-							<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+							<?php foreach ( $date_order as $i ) { ?>
                                 <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
 							<?php } ?>
                         </tr>
@@ -65,7 +66,7 @@ $count_plants = count( $plans );
 							$prices  = isset( $regular_plan->prices ) ? $regular_plan->prices : array();
 							$plan_id = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
 							?>
-							<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+							<?php foreach ( $date_order as $i ) { ?>
                                 <td>
 									<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                     <input class="hb-pricing-price" type="number" min="0" step="any"
@@ -117,7 +118,7 @@ $count_plants = count( $plans );
                                 <table>
                                     <thead>
                                     <tr>
-										<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+										<?php foreach ( $date_order as $i ) { ?>
                                             <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
 										<?php } ?>
                                     </tr>
@@ -125,7 +126,7 @@ $count_plants = count( $plans );
                                     <tbody>
                                     <tr>
 										<?php $prices = $plan->prices; ?>
-										<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+										<?php foreach ( $date_order as $i ) { ?>
                                             <td>
 												<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                                 <input class="hb-pricing-price" type="number" min="0" step="any"
@@ -172,14 +173,14 @@ $count_plants = count( $plans );
             <table>
                 <thead>
                 <tr>
-					<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+					<?php foreach ( $date_order as $i ) { ?>
                         <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
 					<?php } ?>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-					<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
+					<?php foreach ( $date_order as $i ) { ?>
                         <td>
                             <input class="hb-pricing-price" type="number" min="0" step="any"
                                    name="price[__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"/>
