@@ -37,7 +37,8 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 				'hotel_booking_lastest_reviews' => __CLASS__ . '::hotel_booking_lastest_reviews',
 				'hotel_booking_mini_cart'       => __CLASS__ . '::hotel_booking_mini_cart',
 				'hotel_booking_rooms'           => __CLASS__ . '::hotel_booking_rooms',
-				'hotel_booking_slider'          => __CLASS__ . '::hotel_booking_slider'
+				'hotel_booking_slider'          => __CLASS__ . '::hotel_booking_slider',
+				'hotel_booking_thankyou'        => __CLASS__ . '::hotel_booking_thankyou'
 			);
 
 			foreach ( $shortcodes as $shortcode => $function ) {
@@ -310,6 +311,27 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			if ( $query->have_posts() ) {
 				hb_get_template( 'shortcodes/rooms-carousel.php', array( 'atts' => $atts, 'query' => $query ) );
 			}
+		}
+
+		/**
+         * Thankyou page.
+         *
+		 * @param array $atts
+		 *
+		 * @return string
+		 */
+		public static function hotel_booking_thankyou( $atts = array() ) {
+			$template = apply_filters( 'hotel_booking_thankyou_tpl', 'checkout/thank-you.php' );
+			$args     = wp_parse_args( $atts, array(
+				'booking_id'  => '',
+				'booking_key' => ''
+			) );
+			ob_start();
+			do_action( 'hb_wrapper_start' );
+			hb_get_template( $template, $args );
+			do_action( 'hb_wrapper_end' );
+
+			return ob_get_clean();
 		}
 
 		/**

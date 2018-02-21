@@ -65,6 +65,9 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 			} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && ! count( $cart->cart_contents ) ) {
 				wp_redirect( hb_get_cart_url() );
 				exit();
+			} else if ( hb_get_page_id( 'thankyou' ) && is_page( hb_get_page_id( 'thankyou' ) ) && hb_get_thank_you_url() ) {
+				wp_redirect( hb_get_cart_url() );
+				exit();
 			}
 		}
 

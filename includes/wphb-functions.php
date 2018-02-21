@@ -1787,7 +1787,28 @@ if ( ! function_exists( 'hb_get_account_url' ) ) {
 
 		return apply_filters( 'hb_account_url', $url );
 	}
+}
 
+if ( ! function_exists( 'hb_get_thank_you_url' ) ) {
+
+	function hb_get_thank_you_url( $booking_id = '', $booking_key = '' ) {
+
+		if ( ! ( $booking_id && $booking_key ) ) {
+			return false;
+		}
+
+		$id = hb_get_page_id( 'thankyou' );
+
+		$url = home_url();
+		if ( $id ) {
+			$url = get_the_permalink( $id );
+		}
+
+		return apply_filters( 'hb_thank_you_url', add_query_arg( array(
+			'booking' => $booking_id,
+			'key'     => $booking_key
+		), $url ) );
+	}
 }
 
 if ( ! function_exists( 'hb_random_color_part' ) ) {

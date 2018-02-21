@@ -75,25 +75,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 				array(
 					'type' => 'section_end',
 					'id'   => 'payment_general_setting'
-				),
-				array(
-					'type'  => 'section_start',
-					'id'    => 'checkout_endpoints',
-					'title' => __( 'Checkout Endpoints', 'wp-hotel-booking' ),
-					'desc'  => wp_kses( __( 'Endpoints are appended to your page URLs to handle specific actions during the checkout process. <strong>They should be unique.</strong>', 'wp-hotel-booking' ), array( 'strong' => array() ) )
-				),
-				array(
-					'type'    => 'text',
-					'id'      => $prefix . 'booking_received',
-					'title'   => __( 'Booking Received', 'wp-hotel-booking' ),
-					'default' => 'thank-you',
-					'desc'    => __( 'Please update permalink after change booking received endpoint url.', 'wp-hotel-booking' )
-				),
-				array(
-					'type' => 'section_end',
-					'id'   => 'checkout_endpoints'
-				),
-
+				)
 			) );
 		}
 

@@ -333,13 +333,10 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Paypal' ) ) {
 				$custom['advance_payment'] = $advance_payment;
 			}
 
-			$settings = hb_settings();
-			$endpoint = $settings->get( 'booking_received', 'thank-you' );
-
 			$query = array(
 				'business'      => $paypal_email,
 				'item_name'     => $cart_description,
-				'return'        => hb_get_cart_url() . "/$endpoint/?booking=$booking_id&key=$booking->booking_key",
+				'return'        => hb_get_thank_you_url( $booking_id, $booking->booking_key ),
 				'currency_code' => hb_get_currency(),
 				'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
 				'no_note'       => '1',
@@ -384,7 +381,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Paypal' ) ) {
 		 * @return bool
 		 */
 		public function is_enable() {
-			return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on'|| $this->_settings['enable'] == 1;
+			return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on' || $this->_settings['enable'] == 1;
 		}
 	}
 }

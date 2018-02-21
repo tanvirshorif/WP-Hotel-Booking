@@ -448,6 +448,10 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 				$classes[] = 'wp-hotel-booking-page';
 				$classes[] = 'wp-hotel-booking-terms';
 				break;
+			case hb_get_page_id( 'thankyou' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-thank-you';
+				break;
 			default:
 				break;
 		}
@@ -455,11 +459,6 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 		if ( is_room() || is_room_taxonomy() ) {
 			$classes[] = 'wp-hotel-booking';
 			$classes[] = 'wp-hotel-booking-room-page';
-		}
-
-		if ( false !== get_query_var( 'thank-you', false ) ) {
-			$classes[] = 'wphb-page';
-			$classes[] = 'wphb-thank-you';
 		}
 
 		return array_unique( $classes );

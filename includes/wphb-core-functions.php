@@ -38,50 +38,6 @@ if ( ! function_exists( 'wphb_booking_status_description' ) ) {
 
 }
 
-add_action( 'init', 'wphb_add_booking_received_endpoint' );
-
-if ( ! function_exists( 'wphb_add_booking_received_endpoint' ) ) {
-	/**
-	 * Add booking received endpoint.
-	 */
-	function wphb_add_booking_received_endpoint() {
-
-		$settings = hb_settings();
-		$endpoint = $settings->get( 'booking_received', 'thank-you' );
-
-		add_rewrite_endpoint( $endpoint, EP_PERMALINK | EP_PAGES );
-		add_rewrite_tag( $endpoint, '([^&]+)' );
-
-		if ( get_transient( 'wphb_booking_received_endpoint' ) ) {
-			delete_transient( 'wphb_booking_received_endpoint' );
-			flush_rewrite_rules();
-		}
-	}
-}
-
-add_action( 'template_include', 'wphb_booking_received_template' );
-
-if ( ! function_exists( 'wphb_booking_received_template' ) ) {
-	/**
-	 * Get booking thank you page template.
-	 *
-	 * @param $template
-	 *
-	 * @return string
-	 */
-	function wphb_booking_received_template( $template ) {
-
-		$settings = hb_settings();
-		$endpoint = $settings->get( 'booking_received', 'thank-you' );
-
-		if ( false !== get_query_var( $endpoint, false ) ) {
-			return hb_template_path() . '/templates/checkout/thank-you.php';
-		}
-
-		return $template;
-	}
-}
-
 /**
  * set table name.
  */

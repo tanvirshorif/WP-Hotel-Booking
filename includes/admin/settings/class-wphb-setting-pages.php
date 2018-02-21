@@ -82,6 +82,11 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Pages' ) ) {
 					'title' => __( 'Terms And Conditions Page', 'wp-hotel-booking' )
 				),
 				array(
+					'type'  => 'select_page',
+					'id'    => $prefix . 'thankyou_page_id',
+					'title' => __( 'Thank You Page', 'wp-hotel-booking' )
+				),
+				array(
 					'type' => 'section_end',
 					'id'   => 'hotel_booking_pages'
 				)
