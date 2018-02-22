@@ -222,7 +222,12 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			if ( array_key_exists( $woo_cart_id, $cart_items ) ) {
 				$woocommerce->cart->set_quantity( $woo_cart_id, $params['quantity'] );
 			} else {
-				$woocommerce->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'], null, array(), $woo_cart_param );
+				if ( class_exists( 'SitePress' ) ) {
+					global $sitepress;
+					if ( $sitepress->get_default_language() == ICL_LANGUAGE_CODE ) {
+						$woocommerce->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'], null, array(), $woo_cart_param );
+					}
+				}
 			}
 
 			do_action( 'hb_wc_after_add_to_cart', $cart_item_id, $params );
