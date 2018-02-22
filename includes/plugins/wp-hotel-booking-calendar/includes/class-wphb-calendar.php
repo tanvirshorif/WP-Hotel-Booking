@@ -5,7 +5,7 @@
  *
  * @class       WPHB_Calendar
  * @version     2.0
- * @package     WP_Hotel_Booking_Block_Room/Classes
+ * @package     WP_Hotel_Booking_Calendar/Classes
  * @category    Class
  * @author      Thimpress, leehld
  */
@@ -44,6 +44,10 @@ if ( ! class_exists( 'WPHB_Calendar' ) ) {
 			// enqueue script
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+			// ajax
+			add_action( 'wp_ajax_wphb_load_booking_calendar', array( $this, 'load_booking_calendar' ) );
+			add_action( 'wp_ajax_nopriv_wphb_load_booking_calendar', array( $this, 'load_booking_calendar' ) );
 		}
 
 		/**
@@ -110,6 +114,10 @@ if ( ! class_exists( 'WPHB_Calendar' ) ) {
 		 */
 		public function booking_calendar() {
 			require_once WPHB_CALENDAR_ABSPATH . '/includes/admin/views/calendar.php';
+		}
+
+		public static function load_booking_calendar() {
+
 		}
 
 		/**

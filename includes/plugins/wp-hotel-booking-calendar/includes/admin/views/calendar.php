@@ -35,5 +35,22 @@ defined( 'ABSPATH' ) || exit;
 		} ?>
     </form>
 
+    <h2 class="hotel-booking-fullcalendar-month"><?php printf( '%s', date_i18n( 'F, Y', time() ) ) ?></h2>
+    <div class="hotel-booking-fullcalendar-toolbar">
+        <div class="fc-right">
+            <div class="fc-button-group">
+                <button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"
+                        data-month="<?php echo date( 'm/d/Y', strtotime( '-1 month', time() ) ) ?>"
+                        data-room=<?php echo esc_attr( $room_id ) ?>>
+                    <span class="fc-icon fc-icon-left-single-arrow"></span>
+                </button>
+                <button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"
+                        data-month="<?php echo date( 'm/d/Y', strtotime( '+1 month', time() ) ) ?>"
+                        data-room=<?php echo esc_attr( $room_id ) ?>>
+                    <span class="fc-icon fc-icon-right-single-arrow"></span>
+                </button>
+            </div>
+        </div>
+    </div>
     <div id="calendar"></div>
 </div>

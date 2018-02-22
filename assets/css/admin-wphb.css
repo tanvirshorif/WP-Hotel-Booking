@@ -782,6 +782,25 @@
     .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link textarea {
       padding: 8px; }
 
+.fc-day-header.fc-widget-header {
+  font-weight: 500;
+  font-size: 12px; }
+  .fc-day-header.fc-widget-header.fc-sat, .fc-day-header.fc-widget-header.fc-sun {
+    color: red; }
+
+.fc-widget-content .fc-day-grid-container {
+  height: auto !important; }
+
+.fc-widget-content .fc-content-skeleton > table > thead tr {
+  border-bottom: 1px solid; }
+
+.fc-event-container .fc-day-grid-event {
+  border-radius: 0;
+  margin-top: 5px;
+  clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%); }
+  .fc-event-container .fc-day-grid-event .fc-content {
+    padding: 10px 0 10px 25px; }
+
 form[name="hb-admin-settings-form"] .subsubsub {
   float: none;
   margin: 10px 0 0; }

@@ -146,42 +146,18 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 				'check_out_date' => strtotime( $item['check_out'] ),
 				'excerpt'        => array( $booking_id )
 			);
-
-			$qty = WPHB_Room_CURD::get_room_available( $room_id, $args );
+			$qty  = WPHB_Room_CURD::get_room_available( $room_id, $args );
 
 			if ( $qty && ! is_wp_error( $qty ) ) {
-
-//				// HB_Room_Extra instead of HB_Room
-//				$extra_product = WPHB_Extra_Product::instance( $room_id );
-//				$room_extra    = $extra_product->get_extra();
-//
-//				$args = apply_filters( 'hotel_booking_check_room_available', array(
-//					'status'       => true,
-//					'qty'          => $qty,
-//					'qty_selected' => isset( $_POST['order_item_id'] ) ? hb_get_order_item_meta( $_POST['order_item_id'], 'qty', true ) : 0,
-//					'product_id'   => $room_id,
-//					'extra'        => $room_extra
-//				) );
-//				wp_send_json( $args );
-
 				$item['available'] = $qty;
-
-				$extra_product = WPHB_Extra_Product::instance( $room_id );
-				$item['extra'] = $extra_product->get_extra();
-
-//				echo '<pre>';
-//				var_dump($extra_product->get_extra());
-//				echo '</pre>';
-//				die();
 			} else {
-				return false;
-//				wp_send_json( array(
-//					'status'  => false,
-//					'message' => $qty->get_error_message()
-//				) );
+				wp_send_json( array(
+					'status'  => false,
+					'message' => $qty->get_error_message()
+				) );
 			}
 
-//			$item['available'] = 1;
+			$item['available'] = 1;
 
 			return $item;
 		}

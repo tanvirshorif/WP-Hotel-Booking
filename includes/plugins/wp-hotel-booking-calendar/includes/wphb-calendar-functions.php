@@ -212,17 +212,18 @@ if ( ! function_exists( 'wphb_calendar_get_room_bookings' ) ) {
 	/**
 	 * Get all bookings by room id.
 	 *
-	 * @param $id
+	 * @param $room_id
 	 *
 	 * @return array
 	 */
-	function wphb_calendar_get_room_bookings($id) {
+	function wphb_calendar_get_room_bookings( $room_id ) {
 		global $wpdb;
 
 		$query = $wpdb->prepare( "
-			SELECT check_in.meta_value AS check_in, check_out.meta_value AS check_out FROM {$wpdb->hotel_booking_order_itemmeta} AS product_id
+			SELECT check_in.meta_value AS check_in, check_out.meta_value AS check_out, booking.ID AS id, qty.meta_value AS qty FROM {$wpdb->hotel_booking_order_itemmeta} AS product_id
 				LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS check_in ON product_id.hotel_booking_order_item_id = check_in.hotel_booking_order_item_id AND check_in.meta_key = %s
 				LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS check_out ON product_id.hotel_booking_order_item_id = check_out.hotel_booking_order_item_id AND check_out.meta_key = %s
+				LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS qty ON product_id.hotel_booking_order_item_id = qty.hotel_booking_order_item_id AND qty.meta_key = %s
 				LEFT JOIN {$wpdb->hotel_booking_order_items} AS booking_items ON product_id.hotel_booking_order_item_id = booking_items.order_item_id
 				LEFT JOIN {$wpdb->posts} AS booking on booking_items.order_id = booking.ID
 			WHERE
@@ -230,21 +231,29 @@ if ( ! function_exists( 'wphb_calendar_get_room_bookings' ) ) {
 		  		AND booking.post_status IN ( %s, %s, %s)
 		  		AND product_id.meta_key = %s
 		  		AND product_id.meta_value = %d
-			", 'check_in_date', 'check_out_date', 'hb_booking', 'hb-completed', 'hb-pending', 'hb-processing', 'product_id', $id );
+			", 'check_in_date', 'check_out_date', 'qty', 'hb_booking', 'hb-completed', 'hb-pending', 'hb-processing', 'product_id', $room_id );
 
 		$query = apply_filters( 'hb_calendar_booking_query', $query );
 
-		$data = array();
+		$calendar_data = array();
 
 		if ( $bookings = $wpdb->get_results( $query, ARRAY_A ) ) {
 			foreach ( $bookings as $key => $booking ) {
-				$data[] = array(
-					'start' => date( hb_get_date_format(), $booking['check_in'] ),
-					'end'   => date( hb_get_date_format(), $booking['check_out'] )
-				);
+				if ( ! $booking_id = $booking['id'] ) {
+					return $calendar_data;
+				}
+
+				for ( $i = 0; $i < $booking['qty']; $i ++ ) {
+					$calendar_data[] = array(
+						'title' => get_post_meta( $booking_id, '_hb_customer_first_name', true ) . ' ' . get_post_meta( $booking_id, '_hb_customer_last_name', true ) . ' #' . $booking_id . ' #' . ( $i + 1 ),
+						'start' => date( hb_get_date_format(), $booking['check_in'] ),
+						'end'   => date( hb_get_date_format(), $booking['check_out'] ),
+						'color' => hb_random_color()
+					);
+				}
 			}
 		}
 
-		return $data;
+		return $calendar_data;
 	}
 }

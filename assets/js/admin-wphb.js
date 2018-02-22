@@ -493,17 +493,17 @@
                 }
 
                 _calendar.fullCalendar({
-                    // header: {
-                    //     left: '',
-                    //     right: ''
-                    // },
-                    // ignoreTimezone: false,
-                    // handleWindowResize: true,
-                    // editable: false,
-                    // defaultView: 'singleRowMonth',
-                    // events: function (start, end, timezone, callback) {
-                    //     callback(JSON.parse(_events));
-                    // }
+                    header: {
+                        left: '',
+                        right: ''
+                    },
+                    ignoreTimezone: false,
+                    handleWindowResize: true,
+                    editable: false,
+                    defaultView: 'singleRowMonth',
+                    events: function (start, end, timezone, callback) {
+                        callback(JSON.parse(_events));
+                    }
                 });
             }
         },
