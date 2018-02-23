@@ -1,4 +1,4 @@
-?><?php
+<?php
 
 /**
  * The template for displaying room reviews in single room page.
@@ -17,14 +17,12 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<?php
-global $hb_room;
-global $hb_settings;
+<?php global $hb_room, $hb_settings;
 
 if ( ! comments_open() ) {
 	return;
-}
-?>
+} ?>
+
 <div id="reviews">
     <div id="comments">
         <h2>

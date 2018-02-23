@@ -62,8 +62,8 @@ if ( ! class_exists( 'WPHB_Calendar' ) ) {
 		public function admin_sub_menu( $menus ) {
 			$menus['calendar'] = array(
 				'tp_hotel_booking',
-				__( 'Calendar', 'wphb-calendar' ),
-				__( 'Calendar', 'wphb-calendar' ),
+				__( 'Booking Calendar', 'wphb-calendar' ),
+				__( 'Booking Calendar', 'wphb-calendar' ),
 				'manage_hb_booking',
 				'wphb-calendar',
 				array( $this, 'booking_calendar' )
@@ -84,7 +84,7 @@ if ( ! class_exists( 'WPHB_Calendar' ) ) {
 		public function calendar_single_room_tabs( $tabs ) {
 			$tabs[] = array(
 				'id'      => 'hb_room_calendar',
-				'title'   => __( 'Calendar', 'wp-calendar' ),
+				'title'   => __( 'Booking Calendar', 'wp-calendar' ),
 				'content' => ''
 			);
 
@@ -101,6 +101,9 @@ if ( ! class_exists( 'WPHB_Calendar' ) ) {
 
 			if ( ! is_admin() ) {
 				if ( is_singular( 'hb_room' ) ) {
+					wp_enqueue_script( 'wphb-library-moment' );
+					wp_enqueue_style( 'wphb-library-fullcalendar' );
+					wp_enqueue_script( 'wphb-library-fullcalendar' );
 					wp_enqueue_script( 'wphb-calendar-site', WPHB_CALENDAR_URL . 'assets/js/site.js', $dependencies );
 					wp_localize_script( 'wphb-calendar-site', 'wphb_calendar_booking', array( 'booking' => wphb_calendar_get_room_bookings( get_the_ID() ) ) );
 				}

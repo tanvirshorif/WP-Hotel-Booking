@@ -25,6 +25,7 @@ defined( 'ABSPATH' ) || exit;
             &nbsp;&nbsp;<?php echo hb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
         </p>
 		<?php if ( $room_id ) {
+			wp_enqueue_style( 'wphb-calendar-admin', WPHB_CALENDAR_URL . 'assets/css/admin.css' );
 			wp_enqueue_script( 'wphb-calendar-admin', WPHB_CALENDAR_URL . 'assets/js/admin.js', array(
 				'jquery',
 				'jquery-ui-sortable',
@@ -52,5 +53,12 @@ defined( 'ABSPATH' ) || exit;
             </div>
         </div>
     </div>
-    <div id="calendar"></div>
+    <div class="calendar-wrapper">
+        <div class="sidebar">
+			<?php for ( $i = 0; $i < get_post_meta( $room_id, '_hb_num_of_rooms', true ); $i ++ ) { ?>
+                <div class="name"># <?php echo( $i + 1 ); ?></div>
+			<?php } ?>
+        </div>
+        <div id="calendar"></div>
+    </div>
 </div>

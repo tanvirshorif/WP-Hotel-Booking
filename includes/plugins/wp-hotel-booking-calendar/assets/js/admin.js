@@ -16,6 +16,8 @@
                     left: '',
                     right: ''
                 },
+                width: "50",
+                contentHeight: 650,
                 ignoreTimezone: false,
                 handleWindowResize: true,
                 editable: false,

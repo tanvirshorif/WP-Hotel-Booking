@@ -295,7 +295,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 			),
 			array(
 				'name'  => 'gallery',
-				'label' => __( 'Gallery images', 'wp-hotel-booking' ),
+				'label' => __( 'Gallery Images', 'wp-hotel-booking' ),
 				'desc'  => __( 'Room gallery images', 'wp-hotel-booking' ),
 				'type'  => 'gallery'
 			)

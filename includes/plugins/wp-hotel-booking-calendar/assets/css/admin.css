@@ -1,0 +1,82 @@
+
+.wp-hotel-booking_page_wphb-calendar .calendar-wrapper {
+    clear: both;
+}
+
+.wp-hotel-booking_page_wphb-calendar .calendar-wrapper .sidebar {
+    margin-top: 45px;
+    width: 75px;
+    display: inline-block;
+}
+
+.wp-hotel-booking_page_wphb-calendar .calendar-wrapper .sidebar .name {
+    height: 42px;
+    text-align: center;
+    line-height: 38px;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar {
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: calc(100% - 80px);
+    display: inline-block;
+    float: right;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar .fc-day-header.fc-widget-header {
+    border: 1px solid #ccc;
+    padding: 4px 0 5px;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar .fc-ltr .fc-basic-view .fc-day-number {
+    text-align: center;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar .fc-toolbar {
+    display: none;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar .fc-widget-content .fc-content-skeleton > table thead tr td {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar .fc-widget-content .fc-content-skeleton > table > tbody > tr > td {
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-top: none;
+}
+
+.wp-hotel-booking_page_wphb-calendar #calendar td, .wp-hotel-booking_page_wphb-calendar #calendar th {
+    border-width: 0;
+    width: 50px;
+    padding: 0;
+}
+
+.fc-day-header.fc-widget-header {
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.fc-day-header.fc-widget-header.fc-sat, .fc-day-header.fc-widget-header.fc-sun {
+    color: red;
+}
+
+.fc-widget-content .fc-day-grid-container {
+    height: auto !important;
+}
+
+.fc-widget-content .fc-content-skeleton > table > thead tr {
+    border-bottom: 1px solid;
+}
+
+.fc-event-container .fc-day-grid-event {
+    border-radius: 0;
+    margin-top: 5px;
+    /*clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);*/
+}
+
+.fc-event-container .fc-day-grid-event .fc-content {
+    padding: 10px 0 10px 5px;
+}
