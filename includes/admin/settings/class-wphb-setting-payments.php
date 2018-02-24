@@ -65,6 +65,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 					'default' => 1
 				),
 				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'customer_cancel_booking',
+					'title'   => __( 'Cancel Booking', 'wp-hotel-booking' ),
+					'desc'    => __( 'Allow customer cancels booking from Hotel Account page', 'wp-hotel-booking' ),
+					'default' => 0,
+				),
+				array(
 					'type'    => 'number',
 					'id'      => $prefix . 'cancel_payment',
 					'title'   => __( 'Cancel Payment', 'wp-hotel-booking' ),

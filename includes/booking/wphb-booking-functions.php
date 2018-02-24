@@ -319,7 +319,12 @@ if ( ! function_exists( 'hb_delete_order_item_meta' ) ) {
 
 // get sub total booking
 if ( ! function_exists( 'hb_booking_subtotal' ) ) {
-
+	/**
+	 * @param null $booking_id
+	 *
+	 * @return int|null|string
+	 * @throws Exception
+	 */
 	function hb_booking_subtotal( $booking_id = null ) {
 		if ( ! $booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
@@ -332,7 +337,12 @@ if ( ! function_exists( 'hb_booking_subtotal' ) ) {
 
 // get total booking
 if ( ! function_exists( 'hb_booking_total' ) ) {
-
+	/**
+	 * @param null $booking_id
+	 *
+	 * @return int|null|string
+	 * @throws Exception
+	 */
 	function hb_booking_total( $booking_id = null ) {
 		if ( ! $booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
@@ -344,7 +354,12 @@ if ( ! function_exists( 'hb_booking_total' ) ) {
 }
 // get total booking
 if ( ! function_exists( 'hb_booking_tax_total' ) ) {
-
+	/**
+	 * @param null $booking_id
+	 *
+	 * @return float|int|null|string
+	 * @throws Exception
+	 */
 	function hb_booking_tax_total( $booking_id = null ) {
 		if ( ! $booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
@@ -396,10 +411,16 @@ if ( ! function_exists( 'hb_get_booking_status_label' ) ) {
 }
 
 if ( ! function_exists( 'hb_booking_get_check_in_date' ) ) {
-	// get min check in date of booking order
+	/**
+	 * get min check in date of booking order
+	 *
+	 * @param null $booking_id
+	 *
+	 * @return array
+	 */
 	function hb_booking_get_check_in_date( $booking_id = null ) {
 		if ( ! $booking_id ) {
-			return;
+			return array();
 		}
 
 		$order_items = hb_get_order_items( $booking_id );
@@ -415,10 +436,16 @@ if ( ! function_exists( 'hb_booking_get_check_in_date' ) ) {
 }
 
 if ( ! function_exists( 'hb_booking_get_check_out_date' ) ) {
-	// get min check in date of booking order
+	/**
+	 * get min check in date of booking order
+	 *
+	 * @param null $booking_id
+	 *
+	 * @return array|mixed
+	 */
 	function hb_booking_get_check_out_date( $booking_id = null ) {
 		if ( ! $booking_id ) {
-			return;
+			return '';
 		}
 
 		$order_items = hb_get_order_items( $booking_id );
@@ -496,10 +523,16 @@ if ( ! function_exists( 'hb_send_admin_booking_email' ) ) {
 
 		if ( 'booking_completed' == $status ) {
 			$to      = $settings->get( 'email_booking_completed_recipients', get_option( 'admin_email' ) );
-			$subject = $settings->get( 'email_booking_completed_subject', '[{site_title}] Reservation completed ({booking_number}) - {booking_date}' );
+			$subject = $settings->get( 'email_booking_completed_subject', '[{site_title}] Reservation Completed ({booking_number}) - {booking_date}' );
 
 			$heading = $settings->get( 'email_booking_completed_heading', __( 'Booking completed', 'wp-hotel-booking' ) );
 			$desc    = $settings->get( 'email_booking_completed_heading_desc', __( 'The customer had completed the transaction', 'wp-hotel-booking' ) );
+		} else if ( 'booking_cancelled' == $status ) {
+			$to      = get_option( 'admin_email' );
+			$subject = '[{site_title}] Reservation Cancelled ({booking_number}) - {booking_date}';
+
+			$heading = __( 'Booking cancelled', 'wp-hotel-booking' );
+			$desc    = __( 'The customer had cancelled the booking', 'wp-hotel-booking' );
 		} else {
 			$to      = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
 			$subject = $settings->get( 'email_new_booking_subject', '[{site_title}] Reservation completed ({booking_number}) - {booking_date}' );

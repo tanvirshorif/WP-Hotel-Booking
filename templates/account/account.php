@@ -3,7 +3,7 @@
 /**
  * The template for displaying user account page.
  *
- * This template can be overridden by copying it to yourtheme/wp-hotel-booking/account//account.php.
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/account/account.php.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Templates
@@ -44,20 +44,33 @@ if ( ! $bookings ) {
             <th><?php _e( 'Booking Date', 'wp-hotel-booking' ); ?></th>
             <th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
             <th><?php _e( 'Status', 'wp-hotel-booking' ); ?></th>
+            <th><?php _e( 'Actions', 'wp-hotel-booking' ); ?></th>
         </tr>
         </thead>
 
         <tbody>
-		<?php foreach ( $bookings as $booking ) : ?>
-
+		<?php foreach ( $bookings as $booking ) { ?>
             <tr>
                 <td><?php printf( '%s', hb_format_order_number( $booking->id ) ) ?></td>
                 <td><?php printf( '%s', date_i18n( hb_get_date_format(), strtotime( $booking->post_date ) ) ) ?></td>
                 <td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
                 <td><?php printf( '%s', hb_get_booking_status_label( $booking->id ) ) ?></td>
+                <td>
+                    <a href="<?php echo esc_attr( hb_get_thank_you_url( $booking->id, $booking->booking_key ) ); ?>"
+                       target="_blank" class="view-booking"><?php _e( 'View', 'wp-hotel-booking' ); ?></a>
+					<?php $status = get_post_status( $booking->id ); ?>
+					<?php if ( get_option( 'tp_hotel_booking_customer_cancel_booking' ) && in_array( $status, array(
+							'hb-pending',
+							'hb-processing'
+						) ) ) { ?>
+                        <a href="#" class="customer-cancel-booking"
+                           data-booking-id="<?php echo esc_attr( $booking->id ); ?>">
+							<?php _e( 'Cancel Booking', 'wp-hotel-booking' ); ?>
+                        </a>
+					<?php } ?>
+                </td>
             </tr>
-
-		<?php endforeach; ?>
+		<?php } ?>
         </tbody>
 
     </table>

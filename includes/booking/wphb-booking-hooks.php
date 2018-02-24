@@ -166,3 +166,21 @@ if ( ! function_exists( 'hb_send_booking_completed_email' ) ) {
 		return true;
 	}
 }
+
+add_action( 'wphb_customer_cancel_booking', 'wphb_send_booking_cancelled_email' );
+
+if ( ! function_exists( 'wphb_send_booking_cancelled_email' ) ) {
+
+	function wphb_send_booking_cancelled_email( $booking_id = null ) {
+		if ( ! $booking_id ) {
+			return false;
+		}
+
+		$booking = WPHB_Booking::instance( $booking_id );
+
+		// send customer email
+		hb_send_admin_booking_email( $booking, 'booking_cancelled' );
+
+		return true;
+	}
+}

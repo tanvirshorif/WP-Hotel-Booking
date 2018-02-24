@@ -45,7 +45,7 @@
 
     // check validate integer
     function isInteger(a) {
-        return Number(a) || ( a % 1 === 0 );
+        return Number(a) || (a % 1 === 0);
     }
 
     // check validate email
@@ -800,7 +800,9 @@
             // toggle payment gateway description
                 .on('click', 'input[name="hb-payment-method"]', _self.toggle_payment_description)
                 // validate booking fields and process booking
-                .on('submit', '#hb-payment-form', _self.checkout_booking);
+                .on('submit', '#hb-payment-form', _self.checkout_booking)
+                // customer request cancel booking
+                .on('click', '.customer-cancel-booking', _self.cancel_booking);
         },
         fetch_customer_info: function () {
             var _button = $(this),
@@ -958,8 +960,34 @@
             html.push('</div>');
 
             pos.after(html.join(''));
-        }
+        },
+        cancel_booking: function (e) {
+            e.preventDefault();
+            var _button = $(this),
+                _booking_id = _button.data('booking-id');
 
+            $.ajax({
+                url: hotel_settings.ajax,
+                dataType: 'html',
+                type: 'post',
+                data: {
+                    action: 'wphb_cancel_booking',
+                    booking_id: _booking_id,
+                    nonce: hotel_settings.nonce
+                },
+                success: function (response) {
+                    _button.removeClass('hb_loading');
+                    response = parseJSON(response);
+                    if (response) {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                    _button.hide();
+
+                }
+            });
+        }
     };
 
     var WPHB_Room = {
