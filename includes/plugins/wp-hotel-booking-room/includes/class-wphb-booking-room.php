@@ -39,6 +39,7 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 				return;
 			}
 
+			add_action( 'hotel_booking_after_loop_room_item', array( $this, 'archive_add_button' ) );
 			add_action( 'hotel_booking_single_room_title', array( $this, 'single_add_button' ), 9 );
 			add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -53,13 +54,23 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 		}
 
 		/**
+		 *
+		 */
+		public function archive_add_button() {
+			ob_start();
+			wphb_room_get_template( 'archive-button.php' );
+			$html = ob_get_clean();
+			echo $html;
+		}
+
+		/**
 		 * Get search button in single room page.
 		 *
 		 * @since 2.0
 		 */
 		public function single_add_button() {
 			ob_start();
-			wphb_room_get_template( 'button.php' );
+			wphb_room_get_template( 'single-button.php' );
 			$html = ob_get_clean();
 			echo $html;
 		}
@@ -73,7 +84,7 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 			$html = array();
 			ob_start();
 			// search form.
-			wphb_room_get_template( 'search-available.php' );
+			wphb_room_get_template( 'popup.php' );
 			$html[] = ob_get_clean();
 			echo implode( '', $html );
 		}

@@ -3,7 +3,7 @@
 /**
  * The template for button check availability in single room.
  *
- * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/button.php.
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/single-button.php.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking_Room/Templates

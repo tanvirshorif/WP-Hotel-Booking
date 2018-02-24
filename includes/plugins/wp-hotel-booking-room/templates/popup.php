@@ -3,7 +3,7 @@
 /**
  * The template for search available room from.
  *
- * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/search-available.php.
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking-room/popup.php.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking_Room/Templates
@@ -20,18 +20,15 @@ defined( 'ABSPATH' ) || exit;
 
 <?php
 global $post;
-if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_room' ) {
-	return;
-}
-?>
+//if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_room' ) {
+//	return;
+//} ?>
 
 <div id="single_booking_room_lightbox"></div>
 <!--Single search form-->
 <script type="text/html" id="tmpl-hb-room-load-form">
-
     <form action="POST" name="hb-search-single-room"
           class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action hb-room-meta">
-
         <div class="hb-booking-room-form-header">
             <h2><?php printf( '%s', $post->post_title ) ?></h2>
             <p class="description"><?php _e( 'Please set arrival date and departure date before check available.', 'wp-hotel-booking-room' ); ?></p>
@@ -78,17 +75,17 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
 
 	<?php do_action( 'hotel_booking_room_before_quantity', $post ); ?>
     <# if ( typeof data.qty !== 'undefined' ) { #>
-        <div class="hb-booking-room-form-group">
-            <div class="hb-booking-room-form-field hb-form-field-input">
-                <select name="hb-num-of-rooms" class="number_room_select">
-                    <option value="0"><?php _e( 'Select Quantity', 'wphb-booking-room' ); ?></option>
-                    <# for( var i = 1; i<= data.qty; i++ ) { #>
-                    <option value="{{ i }}">{{ i }}</option>
-                    <# } #>
-                </select>
-            </div>
+    <div class="hb-booking-room-form-group">
+        <div class="hb-booking-room-form-field hb-form-field-input">
+            <select name="hb-num-of-rooms" class="number_room_select">
+                <option value="0"><?php _e( 'Select Quantity', 'wphb-booking-room' ); ?></option>
+                <# for( var i = 1; i<= data.qty; i++ ) { #>
+                <option value="{{ i }}">{{ i }}</option>
+                <# } #>
+            </select>
         </div>
-        <# } #>
-			<?php do_action( 'hotel_booking_room_after_quantity', $post ); ?>
+    </div>
+    <# } #>
+	<?php do_action( 'hotel_booking_room_after_quantity', $post ); ?>
 
 </script>

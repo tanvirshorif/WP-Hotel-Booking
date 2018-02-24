@@ -56,3 +56,14 @@
     float: left;
     padding-top: 0;
 }
+
+.post-type-archive-hb_room li.hb_room .hb_button.booking-now {
+    background: #2a2a2a;
+    position: absolute;
+    bottom: -15px;
+    border-radius: 0;
+}
+
+.post-type-archive-hb_room li.hb_room .hb_button.booking-now:hover {
+    background: #ffb606;
+}
