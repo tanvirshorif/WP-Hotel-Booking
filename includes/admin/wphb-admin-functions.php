@@ -481,3 +481,34 @@ if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 
 	add_action( 'do_meta_boxes', 'hb_remove_revolution_slider_meta_boxes' );
 }
+
+if ( ! function_exists( 'wphb_get_screen_ids' ) ) {
+	/**
+     * Get all screen ids.
+     *
+	 * @return mixed
+	 */
+	function wphb_get_screen_ids() {
+		$wphb_screen_id = sanitize_title( __( 'WP-Hotel-Booking', 'wp-hotel-booking' ) );
+		$screen_id      = array(
+			'toplevel_page_' . $wphb_screen_id,
+			$wphb_screen_id . '_page_wphb-addition-packages',
+			$wphb_screen_id . '_page_wphb-pricing-table',
+			$wphb_screen_id . '_page_wphb-addons',
+			$wphb_screen_id . '_page_wphb-settings',
+			$wphb_screen_id . '_page_wphb-about',
+			$wphb_screen_id . '_page_wphb-about',
+			$wphb_screen_id . '_page_wphb-tools',
+			WPHB_Room_CPT,
+			'hb_room',
+			'edit-hb_room',
+			'hb_booking',
+			'edit-hb_booking',
+			'edit-hb_room_capacity',
+			'edit-hb_room_type',
+			'edit-hb_room_location'
+		);
+
+		return apply_filters( 'wphb_screen_ids', $screen_id );
+	}
+}

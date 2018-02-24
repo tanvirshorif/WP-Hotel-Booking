@@ -601,7 +601,9 @@
                 // admin add-on tabs
                 .on('click', '#wphb-admin-addons-wrapper .nav-tab-wrapper a.nav-tab', _self.admin_addon_tabs)
                 // filter override templates
-                .on('click', '#wphb-theme-override-templates .template-filter', _self.filter_override_templates);
+                .on('click', '#wphb-theme-override-templates .template-filter', _self.filter_override_templates)
+                // admin click rating plugin
+                .on('click', '.wphb-rating-star', _self.click_rating_plugin);
 
             // datetime picker field
             _self.datetime_metabox_field();
@@ -761,6 +763,15 @@
 
             $('.no-templates').toggleClass('hide-if-js', !!$templatesList.find('tr.template-row:not(.hide-if-js):first').length);
             return false;
+        },
+        click_rating_plugin: function () {
+            $('#footer-left').hide();
+            $.ajax({
+                url: ajaxurl,
+                data: {
+                    action: 'wphb_rating_plugin'
+                }
+            });
         }
     };
 

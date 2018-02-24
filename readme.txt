@@ -71,6 +71,9 @@ Yes.
 * Restructure core
 * Add booking thank you page
 * Support multiple location
+* Allow customer cancel booking in hotel account page
+* Add list WP Hotel booking add-ons admin page
+* Add tool check override templates
 
 = 1.7.8 =
 * Add Hotel Manager role to manage hotel booking

@@ -62,48 +62,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		}
 
 		/**
-		 * Customer request cancel booking.
-		 */
-		public static function cancel_booking() {
-			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
-				return;
-			}
-
-			if ( ! isset( $_POST['booking_id'] ) || get_post_type( $_POST['booking_id'] ) != 'hb_booking' ) {
-				hb_send_json( array(
-					'status'  => 'warning',
-					'message' => __( 'Invalid Booking ID.', 'wp-hotel-booking' )
-				) );
-			}
-
-			$booking_id = $_POST['booking_id'];
-			$booking    = get_post( $booking_id );
-			if ( $booking->post_author != get_current_user_id() ) {
-				hb_send_json( array(
-					'status'  => 'warning',
-					'message' => __( 'You are not permission to cancel this booking.', 'wp-hotel-booking' )
-				) );
-			}
-
-			$booking = WPHB_Booking::instance( $booking_id );
-			$booking->update_status( 'cancelled' );
-
-			/**
-			 * @hook wphb_send_booking_cancelled_email
-			 */
-			do_action( 'wphb_customer_cancel_booking', $booking_id );
-
-			$results = array(
-				'status'  => 'success',
-				'message' => __( 'Cancel booking successfully.', 'wp-hotel-booking' )
-			);
-
-			$results = apply_filters( 'wphb_customer_cancel_booking_result', $results, $booking_id );
-
-			hb_send_json( $results );
-		}
-
-		/**
 		 * Fetch customer information with user email.
 		 *
 		 * @since 2.0
@@ -685,7 +643,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function dismiss_notice() {
+		public static function admin_dismiss_notice() {
 			if ( is_multisite() ) {
 				update_site_option( 'wphb_notice_remove_hotel_booking', 1 );
 			} else {
@@ -694,6 +652,48 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			wp_send_json( array(
 				'status' => 'done'
 			) );
+		}
+
+		/**
+		 * Customer request cancel booking.
+		 */
+		public static function cancel_booking() {
+			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
+				return;
+			}
+
+			if ( ! isset( $_POST['booking_id'] ) || get_post_type( $_POST['booking_id'] ) != 'hb_booking' ) {
+				hb_send_json( array(
+					'status'  => 'warning',
+					'message' => __( 'Invalid Booking ID.', 'wp-hotel-booking' )
+				) );
+			}
+
+			$booking_id = $_POST['booking_id'];
+			$booking    = get_post( $booking_id );
+			if ( $booking->post_author != get_current_user_id() ) {
+				hb_send_json( array(
+					'status'  => 'warning',
+					'message' => __( 'You are not permission to cancel this booking.', 'wp-hotel-booking' )
+				) );
+			}
+
+			$booking = WPHB_Booking::instance( $booking_id );
+			$booking->update_status( 'cancelled' );
+
+			/**
+			 * @hook wphb_send_booking_cancelled_email
+			 */
+			do_action( 'wphb_customer_cancel_booking', $booking_id );
+
+			$results = array(
+				'status'  => 'success',
+				'message' => __( 'Cancel booking successfully.', 'wp-hotel-booking' )
+			);
+
+			$results = apply_filters( 'wphb_customer_cancel_booking_result', $results, $booking_id );
+
+			hb_send_json( $results );
 		}
 
 	}

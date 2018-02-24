@@ -31,7 +31,8 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 
 			$actions = array(
 				'extra_panel',
-				'admin_booking'
+				'admin_booking',
+				'rating_plugin'
 			);
 
 			foreach ( $actions as $action ) {
@@ -164,6 +165,15 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			wp_send_json_success( $result );
 
 			return false;
+		}
+
+		/**
+		 * Admin click rating plugin.
+		 */
+		public static function rating_plugin() {
+			update_option( 'wphb_request_plugin_rating', 1 );
+
+			return true;
 		}
 	}
 

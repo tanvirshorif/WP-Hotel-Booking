@@ -32,6 +32,7 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 			add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
+			add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
 		}
 
 		/**
@@ -166,8 +167,29 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
             </script>
 			<?php
 		}
-	}
 
+		/**
+		 * Add invite admin rating.
+		 *
+		 * @param $text
+		 *
+		 * @return string
+		 */
+		public function admin_footer_text( $text ) {
+			$current_screen = get_current_screen();
+			$wphb_pages     = wphb_get_screen_ids();
+
+			if ( isset( $current_screen->id ) && in_array( $current_screen->id, $wphb_pages ) ) {
+				if ( ! get_option( 'wphb_request_plugin_rating' ) ) {
+					$text = sprintf( __( 'If you like <strong>WP Hotel Booking</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thanks in advance!', 'wp-hotel-booking' ), '<a href="https://wordpress.org/support/plugin/wp-hotel-booking/reviews/?filter=5#postform" target="_blank" class="wphb-rating-star" data-rated="' . esc_attr__( 'Thanks you so much!', 'wp-hotel-booking' ) . '">', '</a>' );
+				} else {
+					$text = __( 'Thank you for create Your hotel website with WP Hotel Booking.', 'wp-hotel-booking' );
+				}
+			}
+
+			return $text;
+		}
+	}
 }
 
 new WPHB_Assets();
