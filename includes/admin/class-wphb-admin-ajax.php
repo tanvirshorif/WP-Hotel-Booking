@@ -32,7 +32,11 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			$actions = array(
 				'extra_panel',
 				'admin_booking',
-				'rating_plugin'
+				'load_room_ajax',
+				'admin_load_pricing_calendar',
+				'admin_dismiss_notice',
+				'admin_rating_plugin',
+
 			);
 
 			foreach ( $actions as $action ) {
@@ -112,8 +116,6 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			if ( ! $args['booking_id'] ) {
 				return false;
 			}
-
-			$booking    = WPHB_Booking::instance( $args['booking_id'] );
 			$booking_id = $args['booking_id'];
 
 			// curd
@@ -168,15 +170,89 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 		}
 
 		/**
+		 * Ajax load room in booking details.
+		 *
+		 * @since 2.0
+		 */
+		public static function load_room_ajax() {
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['room'] ) ) {
+				return;
+			}
+
+			$title = sanitize_text_field( $_POST['room'] );
+			global $wpdb;
+			$sql = $wpdb->prepare( "
+				SELECT room.ID AS ID, room.post_title AS post_title FROM $wpdb->posts AS room
+				WHERE
+					room.post_title LIKE %s
+					AND room.post_type = %s
+					AND room.post_status = %s
+					GROUP BY room.post_name
+			", '%' . $wpdb->esc_like( $title ) . '%', 'hb_room', 'publish' );
+
+			$rooms = $wpdb->get_results( $sql );
+			wp_send_json( $rooms );
+			die();
+		}
+
+		/**
+		 * Admin load pricing calendar.
+		 *
+		 * @since 2.0
+		 */
+		public static function admin_load_pricing_calendar() {
+			check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
+
+			if ( ! isset( $_POST['room_id'] ) ) {
+				wp_send_json( array(
+					'status'  => false,
+					'message' => __( 'Room is not exists.', 'wp-hotel-booking' )
+				) );
+			}
+
+			$room_id = absint( $_POST['room_id'] );
+			if ( ! isset( $_POST['month'] ) ) {
+				wp_send_json( array(
+					'status'  => false,
+					'message' => __( 'Date is not exists.', 'wp-hotel-booking' )
+				) );
+			}
+			$date = sanitize_text_field( $_POST['month'] );
+
+			wp_send_json( array(
+				'status'     => true,
+				'events'     => hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y', strtotime( $date ) ) ),
+				'next'       => date( 'm/d/Y', strtotime( '+1 month', strtotime( $date ) ) ),
+				'prev'       => date( 'm/d/Y', strtotime( '-1 month', strtotime( $date ) ) ),
+				'month_name' => date_i18n( 'F, Y', strtotime( $date ) )
+			) );
+		}
+
+		/**
+		 * Dismiss remove TP Hotel Booking plugin notice.
+		 *
+		 * @since 2.0
+		 */
+		public static function admin_dismiss_notice() {
+			if ( is_multisite() ) {
+				update_site_option( 'wphb_notice_remove_hotel_booking', 1 );
+			} else {
+				update_option( 'wphb_notice_remove_hotel_booking', 1 );
+			}
+			wp_send_json( array(
+				'status' => 'done'
+			) );
+		}
+
+		/**
 		 * Admin click rating plugin.
 		 */
-		public static function rating_plugin() {
+		public static function admin_rating_plugin() {
 			update_option( 'wphb_request_plugin_rating', 1 );
 
 			return true;
 		}
 	}
-
 }
 
 add_action( 'init', array( 'WPHB_Admin_Ajax', 'init' ) );

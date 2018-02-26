@@ -51,11 +51,14 @@ if ( ! class_exists( 'WPHB_Admin_Tool_System_Status' ) ) {
 					<?php if ( WPHB_Helper_For_Developer::is_granted() ) { ?>
 						<?php $link_access = WPHB_Helper_For_Developer::get_link_access(); ?>
                         <input type="hidden" name="wphb-revoke-developer-access" value="1" title="revoke">
-                        <button class="button button-secondary"
-                                type="submit"><?php esc_html_e( 'Revoke developer access', 'wp-hotel-booking' ); ?></button>
-                        <div class="link">
-                        <textarea id="wpbh-link-developer-access" class="widefat" title="link" rows="1"
-                                  readonly><?php echo esc_url( $link_access ); ?></textarea>
+                        <button class="button button-secondary" type="submit">
+							<?php esc_html_e( 'Revoke developer access', 'wp-hotel-booking' ); ?>
+                        </button>
+                        <button class="button button-primary copy-developer-access-link">
+							<?php esc_html_e( 'Copy link', 'wp-hotel-booking' ); ?>
+                        </button>
+                        <div class="link"><textarea id="wpbh-link-developer-access" class="widefat" title="link"
+                                                    rows="1" readonly><?php echo esc_url( $link_access ); ?></textarea>
                         </div>
 					<?php } else { ?>
                         <input type="hidden" name="wphb-grant-developer-access" value="1" title="grant">
