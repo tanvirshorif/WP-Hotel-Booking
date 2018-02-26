@@ -1825,7 +1825,7 @@ if ( ! function_exists( 'hb_get_thank_you_url' ) ) {
 		return apply_filters( 'hb_thank_you_url', add_query_arg( array(
 			'booking' => $booking_id,
 			'key'     => $booking_key
-		), $url ) );
+		), $url ), $url, $id, $booking_id, $booking_key );
 	}
 }
 

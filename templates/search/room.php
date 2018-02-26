@@ -69,22 +69,28 @@ global $hb_settings;
 								<?php hb_get_template( 'search/price-breakdown.php', array( 'room' => $room ) ); ?>
                             </div>
                         </li>
-                        <li class="hb_search_quantity">
-                            <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
-                            <div>
-								<?php
-								hb_dropdown_numbers(
-									array(
-										'name'             => 'hb-num-of-rooms',
-										'min'              => 1,
-										'show_option_none' => __( 'Select', 'wp-hotel-booking' ),
-										'max'              => $room->post->available_rooms,
-										'class'            => 'number_room_select'
-									)
-								);
-								?>
-                            </div>
-                        </li>
+						<?php if ( ! get_option( 'tp_hotel_booking_single_purchase', true ) ) { ?>
+                            <li class="hb_search_quantity">
+                                <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
+                                <div>
+									<?php
+									hb_dropdown_numbers(
+										array(
+											'name'             => 'hb-num-of-rooms',
+											'min'              => 1,
+											'show_option_none' => __( 'Select', 'wp-hotel-booking' ),
+											'max'              => $room->post->available_rooms,
+											'class'            => 'number_room_select'
+										)
+									);
+									?>
+                                </div>
+                            </li>
+						<?php } else { ?>
+                            <select name="hb-num-of-rooms" class="number_room_select" style="display: none;">
+                                <option value="1">1</option>
+                            </select>
+						<?php } ?>
                         <li class="hb_search_add_to_cart">
                             <button class="hb_add_to_cart"
                                     disabled="disabled"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>

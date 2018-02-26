@@ -58,9 +58,16 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'desc'  => __( 'General options for system.', 'wp-hotel-booking' )
 				),
 				array(
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_single_purchase',
+					'title'   => __( 'Single Purchase', 'wp-hotel-booking' ),
+					'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
+					'default' => 1,
+				),
+				array(
 					'type'    => 'number',
 					'id'      => $prefix . 'minimum_booking_day',
-					'title'   => __( 'Minimum booking day', 'wp-hotel-booking' ),
+					'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
 					'step'    => 'any'
