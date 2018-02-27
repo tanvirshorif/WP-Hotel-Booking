@@ -60,6 +60,7 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 
 = 2.0 =
 + Compatible with WP Hotel Booking version 2.0
++ Add option allow Book now in archive room page
 
 = 1.7.4 =
 + Publish WP Hotel Booking Room to Wordpress

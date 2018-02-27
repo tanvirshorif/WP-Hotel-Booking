@@ -265,6 +265,13 @@
 .wp-hotel-booking_page_wphb-settings .form-table td {
   padding-bottom: 0; }
 
+.wphb-admin-panel {
+  background: #fff;
+  padding: 20px;
+  margin-top: 20px; }
+  .wphb-admin-panel h2 {
+    margin-top: 0; }
+
 /****************************************** Admin booking page ***************************************************/
 .post-type-hb_booking .search-box {
   display: none; }
@@ -774,16 +781,10 @@
   .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.outdated .template-version, .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.undefined .template-version {
     color: #FF0000; }
 
-.wp-hotel-booking_page_wphb-tools #wphb-developer-access {
-  background: #fff;
-  padding: 20px;
-  margin-top: 20px; }
-  .wp-hotel-booking_page_wphb-tools #wphb-developer-access h2 {
-    margin-top: 0; }
-  .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link {
-    margin-top: 15px; }
-    .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link textarea {
-      padding: 8px; }
+.wp-hotel-booking_page_wphb-tools #wphb-developer-access .link {
+  margin-top: 15px; }
+  .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link textarea {
+    padding: 8px; }
 
 form[name="hb-admin-settings-form"] .subsubsub {
   float: none;

@@ -372,6 +372,15 @@
     }
 }
 
+.wphb-admin-panel {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    h2 {
+        margin-top: 0;
+    }
+}
+
 /****************************************** Admin booking page ***************************************************/
 .post-type-hb_booking {
     // archive booking page
@@ -1104,12 +1113,6 @@
     }
 
     #wphb-developer-access {
-        background: #fff;
-        padding: 20px;
-        margin-top: 20px;
-        h2 {
-            margin-top: 0;
-        }
         .link {
             margin-top: 15px;
             textarea {

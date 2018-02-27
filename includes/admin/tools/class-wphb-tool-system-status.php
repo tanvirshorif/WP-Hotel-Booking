@@ -44,7 +44,7 @@ if ( ! class_exists( 'WPHB_Admin_Tool_System_Status' ) ) {
 		 * Output.
 		 */
 		public function output() { ?>
-            <div id="wphb-developer-access">
+            <div id="wphb-developer-access" class="wphb-admin-panel">
                 <h2><?php _e( 'Developer access', 'wp-hotel-booking' ); ?></h2>
                 <form method="post">
 					<?php wp_nonce_field( 'wphb_developer_access', 'wphb_developer_access' ); ?>
@@ -67,6 +67,14 @@ if ( ! class_exists( 'WPHB_Admin_Tool_System_Status' ) ) {
 					<?php } ?>
                 </form>
             </div>
+
+            <div id="wphb-db-checker" class="wphb-admin-panel">
+                <h2><?php _e( 'Database', 'wp-hotel-booking' ); ?></h2>
+                <button class="button button-secondary" id="check_db_status" type="submit">
+					<?php esc_html_e( 'Force Database', 'wp-hotel-booking' ); ?></button>
+                <p><i><?php _e( 'Check up to date and force update database.' ); ?></i></p>
+            </div>
+
 		<?php }
 	}
 }

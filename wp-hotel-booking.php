@@ -87,8 +87,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 		 */
 		private function init_hooks() {
 
-			add_action( 'admin_init', array( 'WPHB_Install', 'create_tables' ) );
-
 			register_activation_hook( __FILE__, array( 'WPHB_Install', 'install' ) );
 			register_activation_hook( __FILE__, array( 'WPHB_Upgrade', 'upgrade' ) );
 			register_activation_hook( __FILE__, array( 'WPHB_Install', 'uninstall' ) );

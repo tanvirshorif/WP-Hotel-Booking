@@ -36,7 +36,7 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 				'admin_load_pricing_calendar',
 				'admin_dismiss_notice',
 				'admin_rating_plugin',
-
+				'admin_force_update_db'
 			);
 
 			foreach ( $actions as $action ) {
@@ -249,6 +249,18 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 		 */
 		public static function admin_rating_plugin() {
 			update_option( 'wphb_request_plugin_rating', 1 );
+
+			return true;
+		}
+
+		/**
+		 * Check missing db tables.
+		 *
+		 * @return bool
+		 */
+		public static function admin_force_update_db() {
+			$install = new WPHB_Install();
+			$install::create_tables();
 
 			return true;
 		}

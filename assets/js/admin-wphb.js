@@ -604,7 +604,9 @@
                 .on('click', '#wphb-theme-override-templates .template-filter', _self.filter_override_templates)
                 // admin click rating plugin
                 .on('click', '.wphb-rating-star', _self.click_rating_plugin)
-
+                // check missing table
+                .on('click', '#check_db_status', _self.check_db_status)
+                // developer access
                 .on('click', '.copy-developer-access-link', _self.copy_developer_access_link);
 
             // datetime picker field
@@ -772,6 +774,16 @@
                 url: ajaxurl,
                 data: {
                     action: 'wphb_admin_rating_plugin'
+                }
+            });
+        },
+        check_db_status: function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: ajaxurl,
+                data: {
+                    action: 'wphb_admin_force_update_db'
                 }
             });
         },

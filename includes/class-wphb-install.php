@@ -31,6 +31,11 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 		static $upgrade = array();
 
 		/**
+		 * @var bool
+		 */
+		static $missing_table = false;
+
+		/**
 		 * Install processes.
 		 *
 		 * @since 2.0
@@ -167,20 +172,19 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 		}
 
 		/**
-		 * Create database tables.
+		 * Get core tables.
+		 *
+		 * @return array
 		 */
-		public static function create_tables() {
+		public static function get_core_tables() {
 			global $wpdb;
 
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			$charset_collate = $wpdb->get_charset_collate();
 
-			$table = $wpdb->prefix . 'hotel_booking_order_items';
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" ) != $table ) {
-
-				// order items
-				$sql = "
-				CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_order_items (
+			return array(
+				$wpdb->prefix . 'hotel_booking_order_items' =>
+					"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_order_items (
 					order_item_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 					order_item_name longtext NOT NULL,
 					order_item_type varchar(255) NOT NULL,
@@ -188,17 +192,10 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 					order_id bigint(20) unsigned NOT NULL,
 					UNIQUE KEY order_item_id (order_item_id),
 					PRIMARY KEY  (order_item_id)
-				) $charset_collate;
-			";
-				dbDelta( $sql );
-			}
+				) $charset_collate",
 
-			$table = $wpdb->prefix . 'hotel_booking_order_itemmeta';
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" ) != $table ) {
-
-				// order item meta
-				$sql = "
-				CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_order_itemmeta (
+				$wpdb->prefix . 'hotel_booking_order_itemmeta' =>
+					"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_order_itemmeta (
 					meta_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 					hotel_booking_order_item_id bigint(20) unsigned NOT NULL,
 					meta_key varchar(255) NULL,
@@ -207,16 +204,9 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 					PRIMARY KEY  (meta_id),
 					KEY hotel_booking_order_item_id(hotel_booking_order_item_id),
 					KEY meta_key(meta_key)
-				) $charset_collate;
-			";
-				dbDelta( $sql );
-			}
+				) $charset_collate",
 
-			$table = $wpdb->prefix . 'hotel_booking_plans';
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" ) != $table ) {
-
-				// pricing tables
-				$sql = "
+				$wpdb->prefix . 'hotel_booking_plans' => "
 				CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_plans (
 					plan_id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 					room_id bigint(20) unsigned NOT NULL,
@@ -225,12 +215,28 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 					pricing longtext NULL,
 					UNIQUE KEY plan_id (plan_id),
 					PRIMARY KEY  (plan_id)
-				) $charset_collate;
-			";
-				dbDelta( $sql );
-			}
+				) $charset_collate"
+			);
 		}
 
+		/**
+		 * Create database tables.
+		 */
+		public static function create_tables() {
+			global $wpdb;
+
+			$tables = self::get_core_tables();
+			$number = 0;
+			foreach ( $tables as $table => $sql ) {
+				if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" ) != $table ) {
+					dbDelta( $sql );
+					$number ++;
+				}
+			}
+			if ( $number != count( $tables ) ) {
+				self::$missing_table = true;
+			}
+		}
 
 		/**
 		 * Add tables to delete when delete blog.
