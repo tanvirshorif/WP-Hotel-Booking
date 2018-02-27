@@ -383,9 +383,9 @@ if ( ! function_exists( 'hotel_booking_single_room_gallery' ) ) {
 
 }
 
-if ( ! function_exists( 'hotel_booking_single_room_infomation' ) ) {
+if ( ! function_exists( 'hotel_booking_single_room_information' ) ) {
 
-	function hotel_booking_single_room_infomation() {
+	function hotel_booking_single_room_information() {
 		hb_get_template( 'single-room/tabs.php' );
 	}
 

@@ -127,8 +127,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 
 		/**
 		 * Admin settings option.
-         *
-         * @since 2.0
+		 *
+		 * @since 2.0
 		 *
 		 * @param $settings
 		 *
@@ -147,10 +147,17 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 				),
 				array(
 					'type'    => 'checkbox',
+					'id'      => $prefix . 'enable_archive_book',
+					'title'   => __( 'Archive room page', 'wphb-booking-room' ),
+					'default' => 0,
+					'desc'    => __( 'Enable Book Now in archive room page', 'wphb-booking-room' )
+				),
+				array(
+					'type'    => 'checkbox',
 					'id'      => $prefix . 'enable_single_book',
-					'title'   => __( 'Enable', 'wphb-booking-room' ),
-					'default' => 1,
-					'desc'    => __( 'Allow booking in single room page', 'wphb-booking-room' )
+					'title'   => __( 'Single room page', 'wphb-booking-room' ),
+					'default' => 0,
+					'desc'    => __( 'Enable Book Now in single room page', 'wphb-booking-room' )
 				),
 				array(
 					'type' => 'section_end',

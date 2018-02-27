@@ -1,5 +1,5 @@
 
-#single_booking_room_lightbox {
+#book_room_now_popup {
     max-width: 1000px;
     min-width: 500px;
     background: #fff;
@@ -7,15 +7,15 @@
     margin: 0 auto;
 }
 
-#single_booking_room_lightbox * {
+#book_room_now_popup * {
     color: #777;
 }
 
-#single_booking_room_lightbox .hb_button {
+#book_room_now_popup .hb_button {
     color: #fff;
 }
 
-#single_booking_room_lightbox form > div {
+#book_room_now_popup form > div {
     padding: 10px;
     overflow: hidden;
 }
@@ -50,7 +50,7 @@
     float: left;
 }
 
-#single_booking_room_lightbox .hb_addition_package_extra {
+#book_room_now_popup .hb_addition_package_extra {
     display: block;
     width: 60%;
     float: left;
@@ -60,10 +60,20 @@
 .post-type-archive-hb_room li.hb_room .hb_button.booking-now {
     background: #2a2a2a;
     position: absolute;
-    bottom: -15px;
+    top: 50%;
     border-radius: 0;
 }
 
-.post-type-archive-hb_room li.hb_room .hb_button.booking-now:hover {
-    background: #ffb606;
+.post-type-archive-hb_room li.hb_room .hb_button.booking-now i {
+    color: #fff;
+}
+
+#book_room_now_popup .number_room_select {
+    display: block;
+}
+
+body.single-hb_room .check_availability_room {
+    float: right;
+    margin-top: 25px;
+    margin-left: 20px;
 }

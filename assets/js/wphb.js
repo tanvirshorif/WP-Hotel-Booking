@@ -268,6 +268,7 @@
             var _doc = $(document),
                 _self = this;
             // enable add cart
+
             _doc.on('change', '.number_room_select', _self.enable_add_cart)
             // add to cart
                 .on('submit', '.hb-search-room-results', _self.add_to_cart)

@@ -35,12 +35,17 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
-			if ( ! hb_settings()->get( 'enable_single_book' ) ) {
+
+			$book_now_single  = get_option( 'tp_hotel_booking_enable_single_book' );
+			$book_now_archive = get_option( 'tp_hotel_booking_enable_single_book' );
+
+			if ( ! $book_now_archive && ! $book_now_single ) {
 				return;
 			}
 
-			add_action( 'hotel_booking_after_loop_room_item', array( $this, 'archive_add_button' ) );
-			add_action( 'hotel_booking_single_room_title', array( $this, 'single_add_button' ), 9 );
+			add_action( 'hb_archive_room_thumbnail', array( $this, 'archive_add_button' ) );
+			add_action( 'hb_before_single_room_price', array( $this, 'single_add_button' ) );
+
 			add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
@@ -54,25 +59,31 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 		}
 
 		/**
-		 *
+		 * Add book now button in archive room page.
 		 */
 		public function archive_add_button() {
-			ob_start();
-			wphb_room_get_template( 'archive-button.php' );
-			$html = ob_get_clean();
-			echo $html;
+			if ( get_option( 'tp_hotel_booking_enable_archive_book', true ) ) {
+				ob_start();
+				wphb_room_get_template( 'archive-button.php' );
+				$html = ob_get_clean();
+				echo $html;
+			}
 		}
 
 		/**
-		 * Get search button in single room page.
+		 * Add book now button in single room page.
 		 *
 		 * @since 2.0
 		 */
 		public function single_add_button() {
-			ob_start();
-			wphb_room_get_template( 'single-button.php' );
-			$html = ob_get_clean();
-			echo $html;
+			if ( get_option( 'tp_hotel_booking_enable_single_book', true ) ) {
+				if ( is_singular( 'hb_room' ) ) {
+					ob_start();
+					wphb_room_get_template( 'single-button.php' );
+					$html = ob_get_clean();
+					echo $html;
+				}
+			}
 		}
 
 		/**

@@ -45,7 +45,7 @@ add_action( 'hotel_booking_after_room_loop', 'hotel_booking_after_room_loop' );
 // gallery
 add_action( 'hotel_booking_single_room_gallery', 'hotel_booking_single_room_gallery' );
 // room details
-add_action( 'hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
+add_action( 'hotel_booking_single_room_information', 'hotel_booking_single_room_information' );
 // room related
 add_action( 'hotel_booking_after_single_product', 'hotel_booking_single_room_related' );
 // room rating

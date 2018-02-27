@@ -25,7 +25,8 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 ?>
 
 <div class="media">
-    <a href="<?php the_permalink(); ?>">
+    <a href="<?php the_permalink(); ?>" class="thumbnail">
 		<?php $hb_room->getImage( 'catalog' ); ?>
+		<?php do_action( 'hb_archive_room_thumbnail' ); ?>
     </a>
 </div>

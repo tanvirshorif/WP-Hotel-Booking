@@ -326,9 +326,6 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   background: #ffb606;
   color: #fff;
   min-height: 40px;
@@ -417,7 +414,7 @@
     .rooms .hb_room .media img {
       width: 100%;
       height: auto; }
-    .rooms .hb_room .media a:before {
+    .rooms .hb_room .media a.thumbnail:before {
       content: '';
       position: absolute;
       width: 0;

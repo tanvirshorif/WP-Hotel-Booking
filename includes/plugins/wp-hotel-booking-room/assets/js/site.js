@@ -1,7 +1,7 @@
 (function ($) {
 
     function isInteger(a) {
-        return Number(a) || ( a % 1 === 0 );
+        return Number(a) || (a % 1 === 0);
     }
 
     // set default option for datepicker
@@ -24,7 +24,7 @@
                 _doc = $(document);
 
             // load booking form
-            _doc.on('click', '#check_availability_room', _self.load_booking_form)
+            _doc.on('click', '.check_availability_room', _self.load_booking_form)
             // trigger lightbox open
                 .on('booking_room_lightbox_init', _self.lightbox_init)
                 // check room available
@@ -38,13 +38,13 @@
                 _room_id = _self.attr('data-id'),
                 _room_name = _self.attr('data-name'),
                 _target = 'hb-room-load-form',
-                _lightbox = '#single_booking_room_lightbox';
+                _lightbox = '#book_room_now_popup';
 
-            $(_lightbox).html(wp.template(_target)({_room_id: _room_id, _room_name: _room_name}));
+            $(_lightbox).html(wp.template(_target)({id: _room_id, name: _room_name}));
             $.magnificPopup.open({
                 type: 'inline',
                 items: {
-                    src: '#single_booking_room_lightbox'
+                    src: _lightbox
                 },
                 callbacks: {
                     open: function () {
@@ -54,10 +54,10 @@
             });
             return false;
         },
-        lightbox_init: function (e, button, lightbox, taget) {
+        lightbox_init: function (e, button, lightbox, target) {
             e.preventDefault();
             // search form
-            if (taget === 'hb-room-load-form') {
+            if (target === 'hb-room-load-form') {
                 WPHB_Booking_Room.datepicker_init()
             }
         },
@@ -100,6 +100,7 @@
                     _check_out_text.val(res.check_out_date_text);
                     if (res.qty) {
                         _container.append(wp.template('hb-room-load-form-cart')(res));
+                        $('.hb-booking-room-form-footer');
                     }
                 }
             }).fail(function () {
@@ -152,7 +153,7 @@
                     var _timestamp = _form.find('input[name="' + _input.name + '"]');
                     _timestamp = $(_timestamp).datepicker('getDate');
                     _timestamp = new Date(_timestamp);
-                    _timestamp = _timestamp.getTime() / 1000 - ( _timestamp.getTimezoneOffset() * 60 );
+                    _timestamp = _timestamp.getTime() / 1000 - (_timestamp.getTimezoneOffset() * 60);
 
                     data[_input.name + '_timestamp'] = _timestamp;
                 }

@@ -21,5 +21,4 @@ defined( 'ABSPATH' ) || exit;
 <?php global $hb_room; ?>
 
 <a href="#" data-id="<?php echo esc_attr( $hb_room->ID ) ?>" data-name="<?php echo esc_attr( $hb_room->name ) ?>"
-   class="hb_button hb_primary"
-   id="check_availability_room"><?php _e( 'Check Availability This Room', 'wp-hotel-booking-room' ); ?></a>
+   class="hb_button hb_primary check_availability_room"><?php _e( 'Book Now', 'wp-hotel-booking-room' ); ?></a>

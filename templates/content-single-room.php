@@ -54,10 +54,16 @@ if ( post_password_required() ) {
 		 */
 		do_action( 'hotel_booking_single_room_gallery' );
 
+
 		/**
-		 * hotel_booking_single_room_infomation hook
+		 * @deprecated
 		 */
 		do_action( 'hotel_booking_single_room_infomation' );
+
+		/**
+		 * hotel_booking_single_room_information hook
+		 */
+		do_action( 'hotel_booking_single_room_information' );
 		?>
 
     </div><!-- .summary -->
