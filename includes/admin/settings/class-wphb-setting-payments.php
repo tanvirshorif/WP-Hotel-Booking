@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 				$section = reset( $sections );
 			}
 
-			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
+			return apply_filters( 'wphb_admin_setting_fields_payments', array(
 				array(
 					'type'  => 'section_start',
 					'id'    => 'payment_general_setting',
@@ -103,9 +103,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 		public function get_sections() {
 			$sections            = array();
 			$sections['general'] = __( 'General', 'wp-hotel-booking' );
-			$sections            = apply_filters( 'wphb_admin_setting_' . $this->id . '_sections', $sections );
 
-			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
+			return apply_filters( 'wphb_admin_setting_payments_sections', $sections );
 		}
 
 	}

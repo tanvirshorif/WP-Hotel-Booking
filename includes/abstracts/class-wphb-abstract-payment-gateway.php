@@ -48,7 +48,7 @@ if ( ! class_exists( 'WPHB_Abstract_Payment_Gateway' ) ) {
 		public function __construct() {
 			// add admin setting
 			add_filter( 'wphb_admin_setting_payments_sections', array( $this, 'add_section' ) );
-			add_filter( 'hotel_booking_admin_setting_fields_payments', array( $this, 'add_fields' ), 10, 2 );
+			add_filter( 'wphb_admin_setting_fields_payments', array( $this, 'add_fields' ), 10, 2 );
 		}
 
 		/**

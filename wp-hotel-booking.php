@@ -151,6 +151,11 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_INCLUDES . 'admin/helpers/class-wphb-helper-override-template.php' );
 			include_once( WPHB_INCLUDES . 'admin/helpers/class-wphb-helper-for-developer.php' );
 
+			// email
+			include_once( WPHB_INCLUDES . 'admin/email/class-wphb-email-new-booking.php' );
+			include_once( WPHB_INCLUDES . 'admin/email/class-wphb-email-booking-completed.php' );
+			include_once( WPHB_INCLUDES . 'admin/email/class-wphb-email-booking-cancelled.php' );
+
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin.php' );
 			include_once( WPHB_INCLUDES . 'wphb-template-hooks.php' );
 			include_once( WPHB_INCLUDES . 'wphb-template-functions.php' );
