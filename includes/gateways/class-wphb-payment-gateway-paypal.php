@@ -109,6 +109,52 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Paypal' ) ) {
 		}
 
 		/**
+		 * Admin setting fields.
+		 *
+		 * @return array
+		 */
+		public function setting_fields() {
+			$prefix = 'tp_hotel_booking_';
+
+			return array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'paypal_setting',
+					'title' => $this->_title,
+					'desc'  => __( 'Options for checkout via ' . $this->_title . '.', 'wp-hotel-booking' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'paypal[enable]',
+					'title'   => __( 'Enable', 'wp-hotel-booking' ),
+					'desc'    => __( 'Enable checkout booking via Paypal', 'wp-hotel-booking' ),
+					'default' => 0,
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'paypal[email]',
+					'title' => __( 'Paypal email', 'wp-hotel-booking' ),
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'paypal[sandbox]',
+					'title'   => __( 'Sandbox Mode', 'wp-hotel-booking' ),
+					'desc'    => __( 'Enable use Paypal Sandbox mode', 'wp-hotel-booking' ),
+					'default' => 0,
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'paypal[sandbox_email]',
+					'title' => __( 'Paypal sandbox email', 'wp-hotel-booking' ),
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'offline_payment_setting'
+				)
+			);
+		}
+
+		/**
 		 * Display text in total column.
 		 *
 		 * @since 2.0

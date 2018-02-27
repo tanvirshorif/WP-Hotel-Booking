@@ -50,6 +50,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
 			$prefix = 'tp_hotel_booking_';
 
+			$sections = $this->get_sections();
+			if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
+				$section = sanitize_text_field( $_REQUEST['section'] );
+			} else {
+				$section = reset( $sections );
+			}
+
 			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
 				array(
 					'type'  => 'section_start',
@@ -83,32 +90,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 					'type' => 'section_end',
 					'id'   => 'payment_general_setting'
 				)
-			) );
-		}
-
-		/**
-		 * Output setting page.
-		 *
-		 * @since 2.0
-		 */
-		public function output() {
-			$current_section = null;
-
-			if ( isset( $_REQUEST['section'] ) ) {
-				$current_section = sanitize_text_field( $_REQUEST['section'] );
-			}
-
-			$payments = hb_get_payment_gateways();
-			if ( $current_section && $current_section !== 'general' ) {
-				foreach ( $payments as $payment ) {
-					if ( $payment->slug === $current_section && is_callable( array( $payment, 'admin_settings' ) ) ) {
-						$payment->admin_settings();
-						break;
-					}
-				}
-			} else {
-				parent::output();
-			}
+			), $section );
 		}
 
 		/**
@@ -121,11 +103,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 		public function get_sections() {
 			$sections            = array();
 			$sections['general'] = __( 'General', 'wp-hotel-booking' );
-
-			$payments = hb_get_payment_gateways();
-			foreach ( $payments as $payment ) {
-				$sections[ $payment->slug ] = $payment->title;
-			}
+			$sections            = apply_filters( 'wphb_admin_setting_' . $this->id . '_sections', $sections );
 
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
 		}

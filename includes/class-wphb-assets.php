@@ -183,7 +183,10 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 				if ( ! get_option( 'wphb_request_plugin_rating' ) ) {
 					$text = sprintf( __( 'If you like <strong>WP Hotel Booking</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thanks in advance!', 'wp-hotel-booking' ), '<a href="https://wordpress.org/support/plugin/wp-hotel-booking/reviews/?filter=5#postform" target="_blank" class="wphb-rating-star" data-rated="' . esc_attr__( 'Thanks you so much!', 'wp-hotel-booking' ) . '">', '</a>' );
 				} else {
-					$text = __( 'Thank you for create Your hotel website with WP Hotel Booking.', 'wp-hotel-booking' );
+					$text = wp_kses( __( '<i>Thank you for create Your hotel website with <strong>WP Hotel Booking</strong></i>.', 'wp-hotel-booking' ), array(
+						'i'      => array(),
+						'strong' => array()
+					) );
 				}
 			}
 

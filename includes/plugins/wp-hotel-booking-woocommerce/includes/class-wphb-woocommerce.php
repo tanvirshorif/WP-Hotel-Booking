@@ -133,6 +133,35 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 		}
 
 		/**
+		 * Admin setting fields.
+		 *
+		 * @return array
+		 */
+		public function setting_fields() {
+			$prefix = 'tp_hotel_booking_';
+
+			return array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'woo_payment_setting',
+					'title' => $this->_title,
+					'desc'  => __( 'Options for checkout via ' . $this->_title . '.', 'wphb-woocommerce' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'wc_enable',
+					'title'   => __( 'Enable', 'wphb-woocommerce' ),
+					'desc'    => __( 'Check this option to enable make booking payments via WooCommerce', 'wphb-woocommerce' ),
+					'default' => 1,
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'woo_payment_setting'
+				)
+			);
+		}
+
+		/**
 		 * Override woo mail templates.
 		 *
 		 * @since 2.0
@@ -830,15 +859,6 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			}
 
 			$woocommerce->cart->cart_contents = $woo_cart_contents;
-		}
-
-		/**
-		 * Admin setting page.
-		 *
-		 * @since 2.0
-		 */
-		public function admin_settings() {
-			include_once WPHB_WOO_PAYMENT_ABSPATH . 'includes/admin/views/settings.php';
 		}
 	}
 }

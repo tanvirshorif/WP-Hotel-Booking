@@ -46,6 +46,49 @@ if ( ! class_exists( 'WPHB_Abstract_Payment_Gateway' ) ) {
 		 * @since 2.0
 		 */
 		public function __construct() {
+			// add admin setting
+			add_filter( 'wphb_admin_setting_payments_sections', array( $this, 'add_section' ) );
+			add_filter( 'hotel_booking_admin_setting_fields_payments', array( $this, 'add_fields' ), 10, 2 );
+		}
+
+		/**
+		 * Add admin setting section.
+		 *
+		 * @param $sections
+		 *
+		 * @return mixed
+		 */
+		public function add_section( $sections ) {
+			if ( $this->_slug && $this->_title ) {
+				$sections[ $this->_slug ] = $this->_title;
+			}
+
+			return $sections;
+		}
+
+		/**
+		 * Add admin setting fields for section.
+		 *
+		 * @param $fields
+		 * @param $section
+		 *
+		 * @return array
+		 */
+		public function add_fields( $fields, $section ) {
+			if ( $section == $this->_slug ) {
+				$fields = $this->setting_fields();
+			}
+
+			return $fields;
+		}
+
+		/**
+		 * Get setting fields.
+		 *
+		 * @return array
+		 */
+		public function setting_fields() {
+			return array();
 		}
 
 		/**

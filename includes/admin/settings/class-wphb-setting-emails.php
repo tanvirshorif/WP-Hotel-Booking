@@ -46,10 +46,11 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 			$prefix = 'tp_hotel_booking_';
 
-			$section  = 'email-options';
 			$sections = $this->get_sections();
 			if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
 				$section = sanitize_text_field( $_REQUEST['section'] );
+			} else {
+				$section = reset( $sections );
 			}
 
 			$settings = array(

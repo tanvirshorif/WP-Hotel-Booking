@@ -102,7 +102,66 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 		 */
 		public function init() {
 			add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
+		}
 
+		/**
+		 * Admin setting fields.
+		 *
+		 * @return array
+		 */
+		public function setting_fields() {
+			$prefix = 'tp_hotel_booking_';
+
+			return array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'stripe_setting',
+					'title' => $this->_title,
+					'desc'  => __( 'Options for checkout via ' . $this->_title . '.', 'wphb-authorize-payment' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'stripe[enable]',
+					'title'   => __( 'Enable', 'wphb-authorize-payment' ),
+					'desc'    => __( 'Enable checkout booking via Stripe', 'wphb-authorize-payment' ),
+					'default' => 1,
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'stripe[test_mode]',
+					'title'   => __( 'Test Mode', 'wphb-authorize-payment' ),
+					'desc'    => __( 'Enable use Stripe Test mode', 'wphb-authorize-payment' ),
+					'default' => 1,
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'stripe[test_secret_key]',
+					'title' => __( 'Test Secret Key', 'wphb-authorize-payment' ),
+					'desc'  => __( 'Stripe Test Secret Key', 'wphb-authorize-payment' ),
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'stripe[test_publish_key]',
+					'title' => __( 'Test Publishable  Key', 'wphb-authorize-payment' ),
+					'desc'  => __( 'Stripe Test Publishable  Key', 'wphb-authorize-payment' ),
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'stripe[live_secret_key]',
+					'title' => __( 'Live Secret Key', 'wphb-authorize-payment' ),
+					'desc'  => __( 'Stripe Live Secret Key', 'wphb-authorize-payment' ),
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'stripe[live_publish_key]',
+					'title' => __( 'Live Publishable  Key', 'wphb-authorize-payment' ),
+					'desc'  => __( 'Stripe Live Publishable  Key', 'wphb-authorize-payment' ),
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'stripe_setting'
+				)
+			);
 		}
 
 		/**
@@ -232,7 +291,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 		 * @return array
 		 */
 		public function process_checkout( $booking_id = null ) {
-			$cart = WPHB_Cart::instance();
+			$cart    = WPHB_Cart::instance();
 			$booking = WPHB_Booking::instance( $booking_id );
 
 			$cus_id = $this->add_customer( $booking_id );
@@ -291,15 +350,6 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
             TPBooking_Payment_Stripe.stripe_secret = "' . $this->_stripe_secret . '";
             TPBooking_Payment_Stripe.stripe_publish = "' . $this->_stripe_publish . '";
         </script>';
-		}
-
-		/**
-		 * Admin setting page.
-		 *
-		 * @since 2.0
-		 */
-		public function admin_settings() {
-			include_once WPHB_STRIPE_PAYMENT_ABSPATH . '/includes/admin/views/settings.php';
 		}
 
 		/**

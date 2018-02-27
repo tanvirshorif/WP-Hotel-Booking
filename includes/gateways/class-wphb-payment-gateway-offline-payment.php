@@ -53,6 +53,35 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 		}
 
 		/**
+		 * Admin setting fields.
+		 *
+		 * @return array
+		 */
+		public function setting_fields() {
+			$prefix = 'tp_hotel_booking_';
+
+			return array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'offline_payment_setting',
+					'title' => $this->_title,
+					'desc'  => __( 'Options for checkout via ' . $this->_title . '.', 'wp-hotel-booking' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'offline-payment[enable]',
+					'title'   => __( 'Enable', 'wp-hotel-booking' ),
+					'desc'    => __( 'Enable checkout booking via Offline payment', 'wp-hotel-booking' ),
+					'default' => 1,
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'offline_payment_setting'
+				)
+			);
+		}
+
+		/**
 		 * Payment method title.
 		 *
 		 * @since 2.0

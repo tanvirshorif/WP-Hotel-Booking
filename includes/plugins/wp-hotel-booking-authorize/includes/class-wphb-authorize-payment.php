@@ -85,7 +85,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		public function __construct() {
 			parent::__construct();
 
-			$this->_title       = __( 'Authorize', 'wphb-authorize-payment' );
+			$this->_title       = __( 'Authorize.Net', 'wphb-authorize-payment' );
 			$this->_description = __( 'Pay with Authorize.net', 'wphb-authorize-payment' );
 			$this->_settings    = WPHB_Settings::instance()->get( 'authorize' );
 
@@ -127,6 +127,54 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 			// settings form, frontend payment select form
 			add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
 			$this->payment_callback();
+		}
+
+		/**
+		 * Admin setting fields.
+		 *
+		 * @return array
+		 */
+		public function setting_fields() {
+			$prefix = 'tp_hotel_booking_';
+
+			return array(
+				array(
+					'type'  => 'section_start',
+					'id'    => 'authorize_setting',
+					'title' => $this->_title,
+					'desc'  => __( 'Options for checkout via ' . $this->_title . '.', 'wphb-authorize-payment' )
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'authorize[enable]',
+					'title'   => __( 'Enable', 'wphb-authorize-payment' ),
+					'desc'    => __( 'Enable checkout booking via Authorize.Net', 'wphb-authorize-payment' ),
+					'default' => 1,
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'authorize[sandbox]',
+					'title'   => __( 'Sandbox Mode', 'wphb-authorize-payment' ),
+					'desc'    => __( 'Enable use Authorize.Net Sandbox mode', 'wphb-authorize-payment' ),
+					'default' => 1,
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'authorize[api_login_id]',
+					'title' => __( 'API Login ID', 'wphb-authorize-payment' ),
+					'desc'  => __( 'Authorize.Net API Login ID', 'wphb-authorize-payment' ),
+				),
+				array(
+					'type'  => 'text',
+					'id'    => $prefix . 'authorize[transaction_key]',
+					'title' => __( 'Transaction Key', 'wphb-authorize-payment' ),
+					'desc'  => __( 'Authorize.Net Transaction Key', 'wphb-authorize-payment' ),
+				),
+				array(
+					'type' => 'section_end',
+					'id'   => 'authorize_setting'
+				)
+			);
 		}
 
 		/**
@@ -358,15 +406,6 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 				'result'   => 'success',
 				'redirect' => $this->_get_authorize_basic_checkout_url( $booking_id )
 			);
-		}
-
-		/**
-		 * Admin setting page.
-		 *
-		 * @since 2.0
-		 */
-		public function admin_settings() {
-			include_once WPHB_AUTHORIZE_PAYMENT_ABSPATH . '/includes/admin/views/settings.php';
 		}
 
 		/**

@@ -59,32 +59,38 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Pages' ) ) {
 				array(
 					'type'  => 'select_page',
 					'id'    => $prefix . 'search_page_id',
-					'title' => __( 'Search Page', 'wp-hotel-booking' )
+					'title' => __( 'Search Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel search room page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
 					'id'    => $prefix . 'checkout_page_id',
-					'title' => __( 'Checkout Page', 'wp-hotel-booking' )
+					'title' => __( 'Checkout Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel checkout page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
 					'id'    => $prefix . 'cart_page_id',
-					'title' => __( 'Cart Page', 'wp-hotel-booking' )
+					'title' => __( 'Cart Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel cart page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
 					'id'    => $prefix . 'account_page_id',
-					'title' => __( 'Account Page', 'wp-hotel-booking' )
+					'title' => __( 'Account Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel user account page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
 					'id'    => $prefix . 'terms_page_id',
-					'title' => __( 'Terms And Conditions Page', 'wp-hotel-booking' )
+					'title' => __( 'Terms And Conditions Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel terms and conditions page', 'wp-hotel-booking' )
 				),
 				array(
 					'type'  => 'select_page',
 					'id'    => $prefix . 'thankyou_page_id',
-					'title' => __( 'Thank You Page', 'wp-hotel-booking' )
+					'title' => __( 'Thank You Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel thank you page', 'wp-hotel-booking' )
 				),
 				array(
 					'type' => 'section_end',

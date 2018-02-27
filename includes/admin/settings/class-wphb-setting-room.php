@@ -58,6 +58,20 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'desc'  => __( 'Catalog settings display column number and image size used in room list ( archive page, related room ).', 'wp-hotel-booking' )
 				),
 				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'price_including_tax',
+					'title'   => __( 'Price including tax', 'wp-hotel-booking' ),
+					'desc'    => __( 'Include tax room price in archive room page', 'wp-hotel-booking' ),
+					'default' => 1,
+				),
+				array(
+					'id'      => $prefix . 'catalog_display_rating',
+					'title'   => __( 'Display rating', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'desc'    => __( 'Show room rating in archive page', 'wp-hotel-booking' ),
+					'default' => 1
+				),
+				array(
 					'id'      => $prefix . 'catalog_number_column',
 					'type'    => 'number',
 					'default' => 4,
@@ -94,18 +108,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'default' => 'min',
 				),
 				array(
-					'type'    => 'checkbox',
-					'id'      => $prefix . 'price_including_tax',
-					'title'   => __( 'Price including tax', 'wp-hotel-booking' ),
-					'default' => 1,
-				),
-				array(
-					'id'      => $prefix . 'catalog_display_rating',
-					'title'   => __( 'Display rating', 'wp-hotel-booking' ),
-					'type'    => 'checkbox',
-					'default' => 1
-				),
-				array(
 					'type' => 'section_end',
 					'id'   => 'catalog_room_setting'
 				),
@@ -114,6 +116,38 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'id'    => 'room_setting',
 					'title' => __( 'Room Options', 'wp-hotel-booking' ),
 					'desc'  => __( 'Room settings display column number and image size used in gallery single page', 'wp-hotel-booking' )
+				),
+				array(
+					'id'      => $prefix . 'display_pricing_plans',
+					'title'   => __( 'Pricing plans', 'wp-hotel-booking' ),
+					'desc'    => __( 'Show pricing plans in single room page', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'default' => 1
+				),
+				array(
+					'id'      => $prefix . 'enable_review_rating',
+					'title'   => __( 'Rating reviews', 'wp-hotel-booking' ),
+					'desc'    => __( 'Enable ratings on reviews', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'default' => 1,
+					'atts'    => array(
+						'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );"
+					)
+				),
+				array(
+					'id'      => $prefix . 'review_rating_required',
+					'title'   => __( 'Require rating', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'desc'    => __( 'Ratings are required to leave a review', 'wp-hotel-booking' ),
+					'default' => 1,
+					'class'   => array( 'enable_ratings_on_reviews' )
+				),
+				array(
+					'id'      => $prefix . 'enable_gallery_lightbox',
+					'title'   => __( 'Gallery lightbox', 'wp-hotel-booking' ),
+					'type'    => 'checkbox',
+					'default' => 1,
+					'desc'    => __( 'Enable room gallery lightbox', 'wp-hotel-booking' )
 				),
 				array(
 					'id'      => $prefix . 'room_image_gallery',
@@ -140,35 +174,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'height' => 150
 					),
 					'title'   => __( 'Room images thumbnail', 'wp-hotel-booking' )
-				),
-				array(
-					'id'      => $prefix . 'display_pricing_plans',
-					'title'   => __( 'Display pricing plans', 'wp-hotel-booking' ),
-					'type'    => 'checkbox',
-					'default' => 1
-				),
-				array(
-					'id'      => $prefix . 'enable_review_rating',
-					'title'   => __( 'Enable ratings on reviews', 'wp-hotel-booking' ),
-					'type'    => 'checkbox',
-					'default' => 1,
-					'atts'    => array(
-						'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );"
-					)
-				),
-				array(
-					'id'      => $prefix . 'review_rating_required',
-					'title'   => __( 'Ratings are required to leave a review', 'wp-hotel-booking' ),
-					'type'    => 'checkbox',
-					'default' => 1,
-					'trclass' => array( 'enable_ratings_on_reviews' )
-				),
-				array(
-					'id'      => $prefix . 'enable_gallery_lightbox',
-					'title'   => __( 'Gallery lightbox', 'wp-hotel-booking' ),
-					'type'    => 'checkbox',
-					'default' => 1,
-					'desc'    => __( 'Enable room gallery lightbox', 'wp-hotel-booking' )
 				),
 				array(
 					'type' => 'section_end',
