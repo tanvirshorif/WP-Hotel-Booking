@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WP Hotel Booking template functions.
  *
@@ -15,7 +14,6 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! function_exists( 'hb_template_path' ) ) {
 	/**
 	 * Get plugin template path.
@@ -27,16 +25,15 @@ if ( ! function_exists( 'hb_template_path' ) ) {
 	}
 }
 
-/**
- * get template part
- *
- * @param   string $slug
- * @param   string $name
- *
- * @return  string
- */
 if ( ! function_exists( 'hb_get_template_part' ) ) {
-
+	/**
+	 * Get template part
+	 *
+	 * @param $slug
+	 * @param string $name
+	 *
+	 * @return mixed|string
+	 */
 	function hb_get_template_part( $slug, $name = '' ) {
 		$template = '';
 
@@ -66,7 +63,6 @@ if ( ! function_exists( 'hb_get_template_part' ) ) {
 		return $template;
 	}
 }
-
 
 if ( ! function_exists( 'hb_get_template' ) ) {
 	/**
@@ -102,25 +98,22 @@ if ( ! function_exists( 'hb_get_template' ) ) {
 	}
 }
 
-/**
- * Locate a template and return the path for inclusion.
- *
- * This is the load order:
- *
- *        yourtheme        /    $template_path    /    $template_name
- *        yourtheme        /    $template_name
- *        $default_path    /    $template_name
- *
- * @access public
- *
- * @param string $template_name
- * @param string $template_path (default: '')
- * @param string $default_path (default: '')
- *
- * @return string
- */
 if ( ! function_exists( 'hb_locate_template' ) ) {
-
+	/**
+	 * Locate a template and return the path for inclusion.
+	 *
+	 * This is the load order:
+	 *
+	 *         yourtheme        /    $template_path    /    $template_name
+	 *         yourtheme        /    $template_name
+	 *         $default_path    /    $template_name
+	 *
+	 * @param $template_name
+	 * @param string $template_path
+	 * @param string $default_path
+	 *
+	 * @return mixed
+	 */
 	function hb_locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
 		if ( ! $template_path ) {
@@ -133,14 +126,12 @@ if ( ! function_exists( 'hb_locate_template' ) ) {
 
 		$template = null;
 		// Look within passed path within the theme - this is priority
-		// if( hb_enable_overwrite_template() ) {
 		$template = locate_template(
 			array(
 				trailingslashit( $template_path ) . $template_name,
 				$template_name
 			)
 		);
-		// }
 		// Get default template
 		if ( ! $template ) {
 			$template = $default_path . $template_name;
@@ -152,7 +143,16 @@ if ( ! function_exists( 'hb_locate_template' ) ) {
 }
 
 if ( ! function_exists( 'hb_get_template_content' ) ) {
-
+	/**
+	 * Get template content, for JS template.
+	 *
+	 * @param $template_name
+	 * @param array $args
+	 * @param string $template_path
+	 * @param string $default_path
+	 *
+	 * @return string
+	 */
 	function hb_get_template_content( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
 		ob_start();
 		hb_get_template( $template_name, $args, $template_path, $default_path );
@@ -162,26 +162,69 @@ if ( ! function_exists( 'hb_get_template_content' ) ) {
 }
 
 if ( ! function_exists( 'hb_enqueue_lightbox_assets' ) ) {
-
+	/**
+	 * Enqueue lightbox in search room page.
+	 */
 	function hb_enqueue_lightbox_assets() {
 		wp_enqueue_script( 'wphb-lightbox2' );
 		wp_enqueue_style( 'wphb-lightbox2' );
 	}
 }
 
+if ( ! function_exists( 'hb_print_mini_cart_template' ) ) {
+	/**
+	 * Print mini cart JS template.
+	 */
+	function hb_print_mini_cart_template() {
+		echo hb_get_template_content( 'cart/mini-cart-js-template.php' );
+	}
+}
+
+if ( ! function_exists( 'hb_setup_room_data' ) ) {
+	/**
+	 * Setup room data, global $hb_room.
+	 *
+	 * @param $post
+	 *
+	 * @return bool|mixed|WPHB_Room
+	 */
+	function hb_setup_room_data( $post ) {
+		/**
+		 * Setup room data.
+		 *
+		 * @since 2.0
+		 *
+		 * @param $post
+		 *
+		 * @return bool|mixed
+		 */
+		unset( $GLOBALS['hb_room'] );
+
+		if ( is_int( $post ) ) {
+			$post = get_post( $post );
+		}
+
+		if ( ! $post ) {
+			$post = $GLOBALS['post'];
+		}
+
+		if ( empty( $post->post_type ) || ! in_array( $post->post_type, array( 'hb_room' ) ) ) {
+			return false;
+		}
+
+		return $GLOBALS['hb_room'] = WPHB_Room::instance( $post );
+	}
+}
+
 /* * **************************************************************** Loop ***************************************************************** */
 
 if ( ! function_exists( 'hotel_booking_page_title' ) ) {
-
 	/**
-	 * hotel_booking_page_title function.
+	 * Page title.
 	 *
-	 * @param  boolean $echo
-	 *
-	 * @return string
+	 * @param bool $echo
 	 */
 	function hotel_booking_page_title( $echo = true ) {
-
 		if ( is_search() ) {
 			$page_title = sprintf( __( 'Search Results: &ldquo;%s&rdquo;', 'wp-hotel-booking' ), get_search_query() );
 
@@ -189,10 +232,8 @@ if ( ! function_exists( 'hotel_booking_page_title' ) ) {
 				$page_title .= sprintf( __( '&nbsp;&ndash; Page %s', 'wp-hotel-booking' ), get_query_var( 'paged' ) );
 			}
 		} elseif ( is_tax() ) {
-
 			$page_title = single_term_title( "", false );
 		} else {
-
 			$shop_page_id = hb_get_page_id( 'shop' );
 			$page_title   = get_the_title( $shop_page_id );
 		}
@@ -202,198 +243,123 @@ if ( ! function_exists( 'hotel_booking_page_title' ) ) {
 		if ( $echo ) {
 			echo sprintf( '%s', $page_title );
 		} else {
-			return $page_title;
+			echo $page_title;
 		}
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_room_loop_start' ) ) {
-
 	/**
-	 * Output the start of a room loop. By default this is a UL
-	 *
-	 * @param bool $echo
-	 *
-	 * @return string
+	 * Room loop start.
 	 */
-	function hotel_booking_room_loop_start( $echo = true ) {
+	function hotel_booking_room_loop_start() {
 		ob_start();
 		hb_get_template( 'loop/loop-start.php' );
-		if ( $echo ) {
-			echo ob_get_clean();
-		} else {
-			return ob_get_clean();
-		}
+
+		echo ob_get_clean();
 	}
-
 }
+
 if ( ! function_exists( 'hotel_booking_room_loop_end' ) ) {
-
 	/**
-	 * Output the end of a room loop. By default this is a UL
-	 *
-	 * @param bool $echo
-	 *
-	 * @return string
+	 * Output the end of a room loop. By default this is a <ul>
 	 */
-	function hotel_booking_room_loop_end( $echo = true ) {
+	function hotel_booking_room_loop_end() {
 		ob_start();
-
 		hb_get_template( 'loop/loop-end.php' );
 
-		if ( $echo ) {
-			echo ob_get_clean();
-		} else {
-			return ob_get_clean();
-		}
+		echo ob_get_clean();
 	}
-
 }
-if ( ! function_exists( 'hotel_booking_template_loop_room_title' ) ) {
 
+if ( ! function_exists( 'hotel_booking_template_loop_room_title' ) ) {
 	/**
 	 * Show the room title in the room loop. By default this is an H3
 	 */
 	function hotel_booking_template_loop_room_title() {
 		hb_get_template( 'loop/title.php' );
 	}
-
-}
-if ( ! function_exists( 'hotel_booking_taxonomy_archive_description' ) ) {
-
-	/**
-	 * Show an archive description on taxonomy archives
-	 *
-	 * @subpackage  Archives
-	 */
-	function hotel_booking_taxonomy_archive_description() {
-		if ( is_tax( array( 'room_cat', 'room_tag' ) ) && get_query_var( 'paged' ) == 0 ) {
-			$description = hb_format_content( term_description() );
-			if ( $description ) {
-				echo '<div class="term-description">' . $description . '</div>';
-			}
-		}
-	}
-
-}
-if ( ! function_exists( 'hotel_booking_room_archive_description' ) ) {
-
-	/**
-	 * Show a shop page description on room archives
-	 *
-	 * @subpackage  Archives
-	 */
-	function hotel_booking_room_archive_description() {
-		if ( is_post_type_archive( 'room' ) && get_query_var( 'paged' ) == 0 ) {
-			$shop_page = get_post( hb_get_page_id( 'shop' ) );
-			if ( $shop_page ) {
-				$description = hb_format_content( $shop_page->post_content );
-				if ( $description ) {
-					echo '<div class="page-description">' . $description . '</div>';
-				}
-			}
-		}
-	}
-
-}
-
-if ( ! function_exists( 'hotel_booking_room_subcategories' ) ) {
-
-	/**
-	 * Display product sub categories as thumbnails.
-	 *
-	 * @subpackage  Loop
-	 *
-	 * @param array $args
-	 *
-	 * @return null|boolean
-	 */
-	function hotel_booking_room_subcategories( $args = array() ) {
-
-	}
-
-}
-
-/* =====================================================
-  =                      template hooks                  =
-  ===================================================== */
-if ( ! function_exists( 'hotel_booking_before_main_content' ) ) {
-
-	function hotel_booking_before_main_content() {
-		return;
-	}
-
-}
-
-if ( ! function_exists( 'hotel_booking_after_main_content' ) ) {
-
-	// others room block
-	function hotel_booking_after_main_content() {
-		return;
-	}
-
-}
-
-if ( ! function_exists( 'hotel_booking_sidebar' ) ) {
-
-	function hotel_booking_sidebar() {
-		return;
-	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_loop_room_thumbnail' ) ) {
-
+	/**
+	 * Room thumbnail.
+	 */
 	function hotel_booking_loop_room_thumbnail() {
 		hb_get_template( 'loop/thumbnail.php' );
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_room_title' ) ) {
-
+	/**
+	 * Room title.
+	 */
 	function hotel_booking_room_title() {
 		hb_get_template( 'loop/title.php' );
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_loop_room_price' ) ) {
-
+	/**
+	 * Room price/
+	 */
 	function hotel_booking_loop_room_price() {
 		hb_get_template( 'loop/price.php' );
 	}
+}
 
+if ( ! function_exists( 'hotel_booking_loop_room_rating' ) ) {
+	/**
+	 * Loop room rating.
+	 */
+	function hotel_booking_loop_room_rating() {
+		global $hb_room;
+		global $hb_settings;
+		if ( $hb_settings->get( 'catalog_display_rating' ) ) {
+			hb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
+		}
+	}
 }
 
 if ( ! function_exists( 'hotel_booking_after_room_loop' ) ) {
-
+	/**
+	 * After room loop.
+	 */
 	function hotel_booking_after_room_loop() {
 		hb_get_template( 'loop/pagination.php' );
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_single_room_gallery' ) ) {
-
+	/**
+	 * Single room gallery.
+	 */
 	function hotel_booking_single_room_gallery() {
 		hb_get_template( 'single-room/gallery.php' );
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_single_room_information' ) ) {
-
+	/**
+	 * Single room information.
+	 */
 	function hotel_booking_single_room_information() {
 		hb_get_template( 'single-room/tabs.php' );
 	}
+}
 
+if ( ! function_exists( 'hotel_show_pricing' ) ) {
+	/**
+	 * Single room pricing plan.
+	 */
+	function hotel_show_pricing() {
+		hb_get_template( 'loop/pricing-plan.php' );
+	}
 }
 
 if ( ! function_exists( 'hb_room_review_item' ) ) {
 	/**
-	 * Output the review item in single room page.
+	 * Single room review item.
 	 *
 	 * @param $comment
 	 * @param $args
@@ -407,7 +373,6 @@ if ( ! function_exists( 'hb_room_review_item' ) ) {
 			'depth'   => $depth
 		) );
 	}
-
 }
 
 if ( ! function_exists( 'hb_body_class' ) ) {
@@ -463,23 +428,25 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 
 		return array_unique( $classes );
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_single_room_related' ) ) {
-	/*
-	 * related room
-	 * @return html
+	/**
+	 * Single room related room.
 	 */
-
 	function hotel_booking_single_room_related() {
 		hb_get_template( 'single-room/related-room.php' );
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_num_room_archive' ) ) {
-
+	/**
+	 * Set number room per page.
+	 *
+	 * @param $query
+	 *
+	 * @return mixed
+	 */
 	function hotel_booking_num_room_archive( $query ) {
 		if ( ! is_admin() && isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type'] === 'hb_room' && is_archive() ) {
 			global $hb_settings;
@@ -488,125 +455,16 @@ if ( ! function_exists( 'hotel_booking_num_room_archive' ) ) {
 
 		return $query;
 	}
-
-}
-
-if ( ! function_exists( 'hotel_booking_remove_widget_search' ) ) {
-
-	function hotel_booking_remove_widget_search( $sidebar_widgets ) {
-		global $post;
-
-		if ( ! is_page() ) {
-			return $sidebar_widgets;
-		}
-
-		if ( ! $post->ID == hb_get_page_id( 'search' ) ) {
-			return $sidebar_widgets;
-		}
-
-		foreach ( $sidebar_widgets as $sidebarID => $widgets ) {
-			foreach ( $widgets as $key => $widget ) {
-				if ( strpos( $widget, 'hb_widget_search' ) === 0 ) {
-					unset( $sidebar_widgets[ $sidebarID ][ $key ] );
-				}
-			}
-		}
-
-		return $sidebar_widgets;
-	}
-
-}
-
-if ( ! function_exists( 'hotel_booking_loop_room_rating' ) ) {
-
-	function hotel_booking_loop_room_rating() {
-		global $hb_room;
-		global $hb_settings;
-		if ( $hb_settings->get( 'catalog_display_rating' ) ) {
-			hb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
-		}
-	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_after_loop_room_item' ) ) {
-
+	/**
+	 * After loop room item.
+	 */
 	function hotel_booking_after_loop_room_item() {
 		global $hb_settings;
 		if ( $hb_settings->get( 'enable_gallery_lightbox' ) ) {
 			hb_get_template( 'loop/gallery-lightbox.php' );
 		}
-	}
-
-}
-
-if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
-
-	function hb_setup_shortcode_page_content( $content ) {
-		global $post;
-
-		$page_id = $post->ID;
-
-		if ( ! $page_id ) {
-			return $content;
-		}
-
-		if ( hb_get_page_id( 'cart' ) == $page_id ) {
-			$content = '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']';
-		} else if ( hb_get_page_id( 'checkout' ) == $page_id ) {
-			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
-		} else if ( hb_get_page_id( 'search' ) == $page_id ) {
-			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
-		} else if ( hb_get_page_id( 'account' ) == $page_id ) {
-			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
-		}
-
-		return do_shortcode( $content );
-	}
-
-}
-
-if ( ! function_exists( 'hotel_show_pricing' ) ) {
-
-	function hotel_show_pricing() {
-		hb_get_template( 'loop/pricing-plan.php' );
-	}
-
-}
-/*=====  End of template hooks  ======*/
-add_action( 'wp_footer', 'hb_print_mini_cart_template' );
-if ( ! function_exists( 'hb_print_mini_cart_template' ) ) {
-	function hb_print_mini_cart_template() {
-		echo hb_get_template_content( 'cart/mini-cart-js-template.php' );
-	}
-}
-
-if ( ! function_exists( 'hb_global_room_data' ) ) {
-
-	function hb_global_room_data( $post ) {
-		/**
-		 * Setup room data.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $post
-		 *
-		 * @return bool|mixed
-		 */
-		unset( $GLOBALS['hb_room'] );
-
-		if ( is_int( $post ) ) {
-			$post = get_post( $post );
-		}
-
-		if ( ! $post ) {
-			$post = $GLOBALS['post'];
-		}
-
-		if ( empty( $post->post_type ) || ! in_array( $post->post_type, array( 'hb_room' ) ) ) {
-			return false;
-		}
-
-		return $GLOBALS['hb_room'] = WPHB_Room::instance( $post );
 	}
 }

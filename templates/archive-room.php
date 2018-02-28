@@ -31,9 +31,6 @@ do_action( 'hotel_booking_before_main_content' );
 <?php
 /**
  * hotel_booking_archive_description hook
- *
- * @hooked hotel_booking_taxonomy_archive_description - 10
- * @hooked hotel_booking_room_archive_description - 10
  */
 do_action( 'hotel_booking_archive_description' );
 ?>
@@ -51,8 +48,6 @@ do_action( 'hotel_booking_archive_description' );
 	?>
 
 	<?php hotel_booking_room_loop_start(); ?>
-
-	<?php hotel_booking_room_subcategories(); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 

@@ -15,34 +15,28 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! function_exists( 'wphb_booking_status_description' ) ) {
 	/**
 	 * Get booking status description.
 	 *
-	 * @param $status
-	 *
-	 * @return mixed
+	 * @return array|mixed
 	 */
-	function wphb_booking_status_description( $status ) {
-		static $descriptions = null;
-		$descriptions = array(
-			'hb-pending'    => __( 'Booking received in case user buy a course but doesn\'t finalise the booking.', 'wp-hotel-booking' ),
+	function wphb_booking_status_description() {
+		$descriptions = apply_filters( 'hb_booking_status_description', array(
+			'hb-pending'    => __( 'Booking received in case user buy a course but does not finalise the booking.', 'wp-hotel-booking' ),
 			'hb-processing' => __( 'Payment received and the booking is awaiting fulfillment.', 'wp-hotel-booking' ),
 			'hb-completed'  => __( 'Booking fulfilled and complete.', 'wp-hotel-booking' ),
 			'hb-cancelled'  => __( 'The booking is cancelled by an admin or the customer.', 'wp-hotel-booking' )
-		);
+		) );
 
-		return apply_filters( 'hb_booking_status_description', ! empty( $descriptions[ $status ] ) ? $descriptions[ $status ] : '' );
+		return is_array( $descriptions ) ? $descriptions : array();
 	}
-
 }
 
-/**
- * set table name.
- */
 if ( ! function_exists( 'hotel_booking_set_table_name' ) ) {
-
+	/**
+	 * Set tables name.
+	 */
 	function hotel_booking_set_table_name() {
 		global $wpdb;
 		$order_item          = 'hotel_booking_order_items';
@@ -57,9 +51,6 @@ if ( ! function_exists( 'hotel_booking_set_table_name' ) ) {
 		$wpdb->tables[] = 'hotel_booking_order_itemmeta';
 		$wpdb->tables[] = 'hotel_booking_plans';
 	}
-
-	add_action( 'init', 'hotel_booking_set_table_name', 0 );
-	add_action( 'switch_blog', 'hotel_booking_set_table_name', 0 );
 }
 
 if ( ! function_exists( 'wphb_get_room_available' ) ) {
@@ -77,9 +68,15 @@ if ( ! function_exists( 'wphb_get_room_available' ) ) {
 	}
 }
 
-// product class process
 if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
-
+	/**
+	 * Product class process.
+	 *
+	 * @param null $product_id
+	 * @param array $params
+	 *
+	 * @return mixed
+	 */
 	function hotel_booking_get_product_class( $product_id = null, $params = array() ) {
 
 		$post_type = get_post_type( $product_id );
@@ -94,10 +91,18 @@ if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
 
 		return apply_filters( 'hotel_booking_get_product_class', $product, $product_id, $params );
 	}
-
 }
 
 if ( ! function_exists( 'hb_create_page' ) ) {
+	/**
+	 * @param $slug
+	 * @param string $option
+	 * @param string $page_title
+	 * @param string $page_content
+	 * @param int $post_parent
+	 *
+	 * @return int|mixed|null|string|WP_Error
+	 */
 	function hb_create_page( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0 ) {
 		global $wpdb;
 
@@ -174,36 +179,23 @@ if ( ! function_exists( 'hb_create_page' ) ) {
 	}
 }
 
-if ( is_multisite() ) {
-	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && ! get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {
-		add_action( 'network_admin_notices', 'hb_notice_remove_hotel_booking' );
-		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
-	}
-} else {
-	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && ! get_option( 'wphb_notice_remove_hotel_booking' ) ) {
-		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
-	}
-}
-
-/**
- * Show notice required remove tp hotel booking plugin and add-ons
- */
-
 if ( ! function_exists( 'hb_notice_remove_hotel_booking' ) ) {
+	/**
+	 * Show notice required remove tp hotel booking plugin and add-ons.
+	 */
 	function hb_notice_remove_hotel_booking() { ?>
         <div class="notice notice-error hb-dismiss-notice is-dismissible">
             <p>
 				<?php echo __( wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ) ), 'wp-hotel-booking' ); ?>
             </p>
-
         </div>
 	<?php }
 }
 
-
-add_action( 'widgets_init', 'hotel_booking_widget_init' );
 if ( ! function_exists( 'hotel_booking_widget_init' ) ) {
-
+	/**
+	 * Register widget.
+	 */
 	function hotel_booking_widget_init() {
 		register_widget( 'HB_Widget_Search' );
 		register_widget( 'HB_Widget_Room_Carousel' );
@@ -211,17 +203,16 @@ if ( ! function_exists( 'hotel_booking_widget_init' ) ) {
 		register_widget( 'HB_Widget_Lastest_Reviews' );
 		register_widget( 'HB_Widget_Mini_Cart' );
 	}
-
 }
 
 if ( ! function_exists( 'hb_currency_countries' ) ) {
-
 	/**
-	 * country code => currency code
-	 * @return array
+	 * Get country code, equivalent currency code
+	 *
+	 * @return array|mixed
 	 */
 	function hb_currency_countries() {
-		$country_currency = array(
+		$country_currency = apply_filters( 'hb_currency_countries', array(
 			"US" => "USD",
 			"EN" => "EUR",
 			"BE" => "EUR",
@@ -273,76 +264,55 @@ if ( ! function_exists( 'hb_currency_countries' ) ) {
 			"TH" => "THB",
 			"ZA" => "ZAR",
 			"VI" => "VND"
-		);
+		) );
 
-		return apply_filters( 'hb_currency_countries', $country_currency );
-	}
-
-}
-
-if ( ! function_exists( 'is_hb_checkout' ) ) {
-
-	function is_hb_checkout() {
-		return ( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' );
+		return is_array( $country_currency ) ? $country_currency : array();
 	}
 }
-
 
 if ( ! function_exists( 'is_hb_cart' ) ) {
-
+	/**
+	 * @return bool
+	 */
 	function is_hb_cart() {
 		return ( is_page( hb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' );
 	}
 }
 
-if ( ! function_exists( 'hb_extra_types' ) ) {
+if ( ! function_exists( 'is_hb_checkout' ) ) {
 	/**
-	 * @return mixed
+	 * @return bool
 	 */
-	function hb_extra_types() {
-		return apply_filters( 'hb_extra_type', array(
-				'trip'   => __( 'Trip', 'wp-hb-extra' ),
-				'number' => __( 'Number', 'wp-hb-extra' )
-			)
-		);
+	function is_hb_checkout() {
+		return ( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' );
 	}
 }
 
-if ( ! function_exists( 'hb_extra_select' ) ) {
+if ( ! function_exists( 'is_hb_thank_you' ) ) {
 	/**
-	 * Generate select field html.
-	 *
-	 * @param string $name
-	 * @param array $options
-	 * @param array $selected
-	 * @param bool $multitye
+	 * @return bool
 	 */
-	function hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) { ?>
-        <select name="<?php echo esc_attr( $name ); ?>"<?php echo sprintf( '%s', $multitye ? ' multiple' : '' ) ?>>
-			<?php if ( $options['options'] ) { ?>
-				<?php foreach ( $options['options'] as $key => $option ) { ?>
-					<?php if ( is_array( $option['value'] ) ) { ?>
-                        <optgroup label="">
-							<?php foreach ( $option['value'] as $index => $value ) { ?>
-                                <option value="<?php printf( '%s', $value['value'] ) ?>" <?php selected( $selected, $value['value'], 1 ); ?>>
-									<?php printf( '%s', $value['text'] ) ?>
-                                </option>
-							<?php } ?>
-                        </optgroup>
-					<?php } else { ?>
-                        <option value="<?php printf( '%s', $option['value'] ) ?>" <?php selected( $selected, $option['value'], 1 ); ?>>
-							<?php printf( '%s', $option['text'] ) ?>
-                        </option>
-					<?php } ?>
-				<?php } ?>
-			<?php } ?>
-        </select>
-		<?php
+	function is_hb_thank_you() {
+		return ( is_page( hb_get_page_id( 'thankyou' ) ) || hb_get_request( 'hotel-booking' ) === 'thankyou' );
+	}
+}
+
+if ( ! function_exists( 'hb_extra_types' ) ) {
+	/**
+	 * @return array|mixed
+	 */
+	function hb_extra_types() {
+		$types = apply_filters( 'hb_extra_type', array(
+				'trip'   => __( 'Trip', 'wp-hotel-booking' ),
+				'number' => __( 'Number', 'wp-hotel-booking' )
+			)
+		);
+
+		return is_array( $types ) ? $types : array();
 	}
 }
 
 if ( ! function_exists( 'hb_room_extra_options' ) ) {
-
 	/**
 	 * Get extra package to select when admin create room.
 	 *
@@ -352,25 +322,20 @@ if ( ! function_exists( 'hb_room_extra_options' ) ) {
 	 */
 	function hb_room_extra_options() {
 
-		$options = array();
+		$extras = WPHB_Extra_CURD::get_extra();
 
-		$args   = array( 'post_type' => 'hb_extra_room', 'order' => 'ASC' );
-		$extras = new WP_Query( $args );
-
-		if ( $extras->have_posts() ) {
-			while ( $extras->have_posts() ) {
-				$extras->the_post();
-				$options[ get_the_ID() ] = get_the_title();
+		$hb_extra = array();
+		if ( is_array( $extras ) ) {
+			foreach ( $extras as $extra ) {
+				$hb_extra[ $extra->ID ] = $extra->post_title;
 			}
-			wp_reset_postdata();
 		}
 
-		return $options;
+		return $hb_extra;
 	}
 }
 
 if ( ! function_exists( 'hb_get_return_url' ) ) {
-
 	/**
 	 * Get check out return URL.
 	 *
@@ -394,7 +359,6 @@ if ( ! function_exists( 'hb_get_user' ) ) {
 	function hb_get_user( $user = null ) {
 		return WPHB_User::get_user( $user );
 	}
-
 }
 
 if ( ! function_exists( 'hb_get_current_user' ) ) {
@@ -412,5 +376,34 @@ if ( ! function_exists( 'hb_get_current_user' ) ) {
 
 		return $hb_curent_user;
 	}
+}
 
+if ( ! function_exists( 'hb_setup_page_content' ) ) {
+	/**
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	function hb_setup_page_content( $content ) {
+		global $post;
+
+		$page_id = $post->ID;
+		if ( ! $page_id ) {
+			return $content;
+		}
+
+		if ( hb_get_page_id( 'cart' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']';
+		} else if ( hb_get_page_id( 'checkout' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
+		} else if ( hb_get_page_id( 'search' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
+		} else if ( hb_get_page_id( 'account' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
+		} else if ( hb_get_page_id( 'thankyou' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']';
+		}
+
+		return do_shortcode( $content );
+	}
 }

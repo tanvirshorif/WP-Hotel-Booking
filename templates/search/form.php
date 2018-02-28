@@ -93,7 +93,7 @@ $uniqid         = uniqid();
 			<?php if ( $settings->get( 'multiple_location' ) ) { ?>
                 <li class="hb-form-field">
 					<?php echo $show_label ? __( 'Location', 'wp-hotel-booking' ) : ''; ?>
-					<?php hb_dropdown_locations( array(
+					<?php hb_dropdown_room_locations( array(
 						'name'             => 'room_location',
 						'show_option_none' => __( 'Location', 'wp-hotel-booking' ),
 						'selected'         => $location

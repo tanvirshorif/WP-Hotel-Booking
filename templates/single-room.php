@@ -43,10 +43,8 @@ do_action( 'hotel_booking_after_main_content' );
 <?php
 /**
  * hotel_booking_sidebar hook
- *
- * @hooked hotel_booking_sidebar - 10
  */
-// do_action( 'hotel_booking_sidebar' );
+ do_action( 'hotel_booking_sidebar' );
 ?>
 
 <?php get_footer(); ?>

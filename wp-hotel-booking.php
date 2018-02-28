@@ -111,6 +111,8 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 
 			// Load class instances.
 			$this->user = hb_get_current_user();
+
+			hb_get_payment_gateways();
 		}
 
 		/**
@@ -166,6 +168,7 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_INCLUDES . 'class-wphb-cart.php' );
 			include_once( WPHB_INCLUDES . 'class-wphb-checkout.php' );
 
+			include_once( WPHB_INCLUDES . 'wphb-core-hooks.php' );
 			include_once( WPHB_INCLUDES . 'wphb-core-functions.php' );
 			include_once( WPHB_INCLUDES . 'wphb-functions.php' );
 			include_once( WPHB_INCLUDES . 'wphb-webhooks.php' );

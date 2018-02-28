@@ -65,7 +65,7 @@ $room_extra    = $extra_product->get_extra();
 								<?php } ?>
                                 <label>
                                     <strong><?php printf( '%s', hb_format_price( $extra->amount_singular ) ) ?></strong>
-                                    <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hb-extra' ) ) ?></small>
+                                    <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ) ?></small>
                                 </label>
                             </div>
                         </div>

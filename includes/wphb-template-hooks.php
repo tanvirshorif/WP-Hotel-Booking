@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WP Hotel Booking Template Hooks
  *
@@ -16,23 +15,38 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <?php
-
-/**
- * Show message on shortcodes
- */
+// show message on shortcodes
 add_action( 'hotel_booking_wrapper_shortcode_start', 'hb_display_message' );
 
-
+// enqueue lightbox in search room page
 add_action( 'hb_before_search_result', 'hb_enqueue_lightbox_assets' );
 
-// single-room.php hook template
-add_action( 'hotel_booking_before_main_content', 'hotel_booking_before_main_content' );
+// setup global room data variable
+add_action( 'the_post', 'hb_setup_room_data' );
+
+// add page body class
+add_filter( 'body_class', 'hb_body_class' );
+
+// room per page
+add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+
+// hide pricing plan
+add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', 'hotel_show_pricing' );
+
+// remove old action
+remove_action( 'hotel_booking_single_room_information_tabs', array( 'WPHB_Comments', 'addTabReviews' ) );
+
+// print mini cart JS template
+add_action( 'wp_footer', 'hb_print_mini_cart_template' );
+
+// parse params from request has encoded in search room page
+add_action( 'init', 'hb_parse_request' );
+
+// maybe modify page content
+add_filter( 'the_content', 'hb_maybe_modify_page_content' );
+
+// after main content
 add_action( 'hotel_booking_after_main_content', 'hotel_booking_after_main_content' );
-
-// get global room data variable
-add_action( 'the_post', 'hb_global_room_data' );
-
-add_action( 'hotel_booking_sidebar', 'hotel_booking_sidebar' );
 //thumbnail
 add_action( 'hotel_booking_loop_room_thumbnail', 'hotel_booking_loop_room_thumbnail' );
 // title
@@ -50,17 +64,5 @@ add_action( 'hotel_booking_single_room_information', 'hotel_booking_single_room_
 add_action( 'hotel_booking_after_single_product', 'hotel_booking_single_room_related' );
 // room rating
 add_action( 'hotel_booking_loop_room_rating', 'hotel_booking_loop_room_rating' );
-add_filter( 'body_class', 'hb_body_class' );
-
-add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
-
-add_filter( 'the_content', 'hb_setup_shortcode_page_content' );
-add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', 'hotel_show_pricing' );
 
 
-
-// remove old action
-remove_action( 'hotel_booking_single_room_information_tabs', array( 'WPHB_Comments', 'addTabReviews' ) );
-
-// deprecated functions
-//_deprecated_function('hotel_display_pricing_plans', '2.0');

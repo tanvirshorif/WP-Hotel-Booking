@@ -175,8 +175,8 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		public static function localize_script() {
 			$extras = WPHB_Extra_CURD::get_extra();
 
+			$hb_extra = array();
 			if ( is_array( $extras ) ) {
-				$hb_extra = array();
 				foreach ( $extras as $extra ) {
 					$hb_extra[] = array(
 						'id'          => $extra->ID,
@@ -193,7 +193,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 				'wphb_extra' => array(
 					'extra'  => $hb_extra,
 					'unit'   => __( 'Package', 'wp-hotel-booking' ),
-					'types'  => is_array( hb_extra_types() ) ? hb_extra_types() : array(),
+					'types'  => hb_extra_types(),
 					'action' => 'wphb_extra_panel',
 					'nonce'  => wp_create_nonce( 'wphb_admin_extra_nonce' )
 				)
