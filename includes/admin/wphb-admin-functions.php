@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WP Hotel Booking admin core functions.
  *
@@ -14,7 +13,6 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-
 
 if ( ! function_exists( 'hb_get_admin_view' ) ) {
 	/**
@@ -100,7 +98,7 @@ if ( ! function_exists( 'hb_admin_js' ) ) {
 	 * @return mixed
 	 */
 	function hb_admin_js() {
-		$js = array(
+		$js = apply_filters( 'hb_admin_js', array(
 			'choose_images'                 => __( 'Choose images', 'wp-hotel-booking' ),
 			'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'wp-hotel-booking' ),
 			'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'wp-hotel-booking' ),
@@ -117,120 +115,17 @@ if ( ! function_exists( 'hb_admin_js' ) ) {
 			'remove_image'                  => __( 'Remove this image', 'wp-hotel-booking' ),
 			'date_range'                    => __( 'Date range', 'wp-hotel-booking' ),
 			'select_extra_placeholder'      => __( 'Select package', 'wp-hotel-booking' )
-		);
+		) );
 
-		return apply_filters( 'hb_admin_js', $js );
+		return is_array( $js ) ? $js : array();
 	}
 }
 
-add_action( 'admin_footer', 'hb_admin_footer_advertisement', - 10 );
-
-if ( ! function_exists( 'hb_admin_footer_advertisement' ) ) {
-
-	function hb_admin_footer_advertisement() {
-
-		$post_types = apply_filters( 'hb_post_types_footer_advertisement', array(
-			'hb_room',
-			'hb_booking'
-		) );
-
-		$pages = apply_filters( 'hb_pages_footer_advertisement', array(
-			'wp-hotel-booking_page_wphb-settings',
-			'wp-hotel-booking_page_wphb-about',
-			'wp-hotel-booking_page_wphb-about',
-			'wp-hotel-booking_page_wphb-addition-packages',
-			'wp-hotel-booking_page_wphb-pricing-table'
-		) );
-
-		if ( ! $screen = get_current_screen() ) {
-			return;
-		}
-
-		if ( ! ( ( in_array( $screen->post_type, $post_types ) && $screen->base === 'edit' ) || ( in_array( $screen->id, $pages ) ) ) ) {
-			return;
-		}
-
-		$current_theme = wp_get_theme();
-
-		// Get items
-		$list_themes = (array) WPHB_Helper_Plugins::get_related_themes();
-		if ( empty ( $list_themes ) ) {
-			return;
-		}
-
-		if ( false !== ( $key = array_search( $current_theme->name, array_keys( $list_themes ), true ) ) ) {
-			unset( $list_themes[ $key ] );
-		}
-
-		shuffle( $list_themes ); ?>
-
-		<?php if ( $list_themes ) { ?>
-            <div id="wphb-advertisement" class="wphb-advertisement-slider">
-				<?php foreach ( $list_themes as $theme ) {
-					if ( empty( $theme['url'] ) ) {
-						continue;
-					}
-					$full_description  = hb_trim_content( $theme['description'] );
-					$short_description = hb_trim_content( $theme['description'], 75 );
-					$url_demo          = $theme['attributes'][4]['value']; ?>
-
-                    <div id="thimpress-<?php echo esc_attr( $theme['id'] ); ?>" class="slide-item">
-                        <div class="slide-thumbnail">
-                            <a target="_blank" href="<?php echo esc_url( $theme['url'] ); ?>">
-                                <img src="<?php echo esc_url( $theme['previews']['landscape_preview']['landscape_url'] ) ?>"/>
-                            </a>
-                        </div>
-
-                        <div class="slide-detail">
-                            <h2><a href="<?php echo esc_url( $theme['url'] ); ?>"><?php echo $theme['name']; ?></a></h2>
-                            <p class="slide-description description-full">
-								<?php echo wp_kses_post( $full_description ); ?>
-                            </p>
-                            <p class="slide-description description-short">
-								<?php echo wp_kses_post( $short_description ); ?>
-                            </p>
-                            <p class="slide-controls">
-                                <a href="<?php echo esc_url( $theme['url'] ); ?>" class="button button-primary"
-                                   target="_blank"><?php _e( 'Get it now', 'wp-hotel-booking' ); ?></a>
-                                <a href="<?php echo esc_url( $url_demo ); ?>" class="button"
-                                   target="_blank"><?php _e( 'View Demo', 'wp-hotel-booking' ); ?></a>
-                            </p>
-                        </div>
-
-                    </div>
-				<?php } ?>
-            </div>
-		<?php }
-	}
-}
-
-if ( ! function_exists( 'hb_trim_content' ) ) {
+if ( ! function_exists( 'hb_admin_room_meta_boxes' ) ) {
 	/**
-	 * @param $content
-	 * @param int $count
-	 *
-	 * @return array|mixed|null|string|string[]
+	 * Add admin meta box.
 	 */
-	function hb_trim_content( $content, $count = 0 ) {
-		$content = preg_replace( '/(?<=\S,)(?=\S)/', ' ', $content );
-		$content = str_replace( "\n", ' ', $content );
-		$content = explode( " ", $content );
-
-		$count = $count > 0 ? $count : sizeof( $content ) - 1;
-		$full  = $count >= sizeof( $content ) - 1;
-
-		$content = array_slice( $content, 0, $count );
-		$content = implode( " ", $content );
-		if ( ! $full ) {
-			$content .= '...';
-		}
-
-		return $content;
-	}
-}
-
-if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
-	function hb_add_meta_boxes() {
+	function hb_admin_room_meta_boxes() {
 		WPHB_Meta_Box::instance(
 			'room_settings',
 			array(
@@ -303,10 +198,10 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 	}
 }
 
-add_action( 'admin_init', 'hb_add_meta_boxes', 50 );
-
-add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
 if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
+	/**
+	 * @return mixed
+	 */
 	function hb_admin_init_metaboxes() {
 		$metaboxes = array(
 			new WPHB_Metabox_Booking_Editor(),
@@ -318,56 +213,11 @@ if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 	}
 }
 
-if ( ! function_exists( 'hb_request_query' ) ) {
-
-	function hb_request_query( $vars = array() ) {
-		global $typenow, $wp_query, $wp_post_statuses;
-
-		if ( 'hb_booking' === $typenow ) {
-			// Status
-			if ( ! isset( $vars['post_status'] ) ) {
-				$post_statuses = hb_get_booking_statuses();
-
-				foreach ( $post_statuses as $status => $value ) {
-					if ( isset( $wp_post_statuses[ $status ] ) && false === $wp_post_statuses[ $status ]->show_in_admin_all_list ) {
-						unset( $post_statuses[ $status ] );
-					}
-				}
-
-				$vars['post_status'] = array_keys( $post_statuses );
-			}
-		}
-
-		return $vars;
-	}
-}
-
-add_filter( 'request', 'hb_request_query' );
-
-if ( ! function_exists( 'hb_edit_post_change_title_in_list' ) ) {
-	function hb_edit_post_change_title_in_list() {
-		add_filter( 'the_title', 'hb_edit_post_new_title_in_list', 100, 2 );
-	}
-}
-
-add_action( 'admin_head-edit.php', 'hb_edit_post_change_title_in_list' );
-
-if ( ! function_exists( 'hb_edit_post_new_title_in_list' ) ) {
-
-	function hb_edit_post_new_title_in_list( $title, $post_id ) {
-		global $post_type;
-		if ( $post_type == 'hb_booking' ) {
-			$title = hb_format_order_number( $post_id );
-		}
-
-		return $title;
-	}
-}
-
 if ( ! function_exists( 'hb_admin_js_template' ) ) {
-
-	function hb_admin_js_template() {
-		?>
+	/**
+	 * Admin js template.
+	 */
+	function hb_admin_js_template() { ?>
         <script type="text/html" id="tmpl-room-type-gallery">
             <tr id="room-gallery-{{data.id}}" class="room-gallery">
                 <td colspan="{{data.colspan}}">
@@ -420,72 +270,10 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
 	}
 }
 
-add_action( 'admin_print_scripts', 'hb_admin_js_template' );
-
-if ( ! function_exists( 'hb_get_rooms' ) ) {
-	/**
-	 * get all of post have post type hb_room
-	 */
-	function hb_get_rooms() {
-		$args = array(
-			'post_type'      => 'hb_room',
-			'posts_per_page' => - 1,
-			'order'          => 'ASC',
-			'orderby'        => 'title'
-		);
-
-		return get_posts( $args );
-	}
-}
-
-add_action( 'hb_booking_detail_update_meta_box', 'hb_booking_detail_update_meta_box', 10, 3 );
-if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
-
-	function hb_booking_detail_update_meta_box( $key, $value, $post_id ) {
-		if ( ! ( get_post_type( $post_id ) == 'hb_booking' && $key == '_hb_booking_status' ) ) {
-			return;
-		}
-
-		$status = sanitize_text_field( $value );
-		remove_action( 'save_post', array( 'WPHB_Metabox_Booking_Actions', 'update' ) );
-
-		$booking = WPHB_Booking::instance( $post_id );
-		$booking->update_status( $status );
-
-		add_action( 'save_post', array( 'WPHB_Metabox_Booking_Actions', 'update' ) );
-	}
-
-	add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );
-	if ( ! function_exists( 'hb_update_meta_box_gallery' ) ) {
-		function hb_update_meta_box_gallery( $post_id ) {
-			if ( get_post_type() !== 'hb_room' ) {
-				return;
-			}
-
-			if ( ! $_POST['_hb_gallery'] || empty( $_POST['_hb_gallery'] ) ) {
-				update_post_meta( $post_id, '_hb_gallery', array() );
-			}
-		}
-	}
-
-	if ( is_admin() ) {
-		if ( ! function_exists( 'hb_remove_revolution_slider_meta_boxes' ) ) {
-		}
-		function hb_remove_revolution_slider_meta_boxes() {
-
-			remove_meta_box( 'mymetabox_revslider_0', 'hb_room', 'normal' );
-			remove_meta_box( 'mymetabox_revslider_0', 'hb_booking', 'normal' );
-			remove_meta_box( 'submitdiv', 'hb_booking', 'side' );
-		}
-	}
-
-	add_action( 'do_meta_boxes', 'hb_remove_revolution_slider_meta_boxes' );
-}
-
 if ( ! function_exists( 'wphb_get_screen_ids' ) ) {
 	/**
-     * Get all screen ids.
-     *
+	 * Get all screen ids.
+	 *
 	 * @return mixed
 	 */
 	function wphb_get_screen_ids() {
@@ -512,3 +300,5 @@ if ( ! function_exists( 'wphb_get_screen_ids' ) ) {
 		return apply_filters( 'wphb_screen_ids', $screen_id );
 	}
 }
+
+

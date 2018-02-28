@@ -1992,3 +1992,176 @@ if ( ! function_exists( 'hb_dropdown_pages' ) ) {
 	}
 
 }
+
+if ( ! function_exists( 'hb_footer_advertisement' ) ) {
+	/**
+	 *Footer advertisement.
+	 */
+	function hb_footer_advertisement() {
+
+		$post_types = apply_filters( 'hb_post_types_footer_advertisement', array(
+			'hb_room',
+			'hb_booking'
+		) );
+
+		$pages = apply_filters( 'hb_pages_footer_advertisement', array(
+			'wp-hotel-booking_page_wphb-settings',
+			'wp-hotel-booking_page_wphb-about',
+			'wp-hotel-booking_page_wphb-about',
+			'wp-hotel-booking_page_wphb-addition-packages',
+			'wp-hotel-booking_page_wphb-pricing-table'
+		) );
+
+		if ( ! $screen = get_current_screen() ) {
+			return;
+		}
+
+		if ( ! ( ( in_array( $screen->post_type, $post_types ) && $screen->base === 'edit' ) || ( in_array( $screen->id, $pages ) ) ) ) {
+			return;
+		}
+
+		$current_theme = wp_get_theme();
+
+		// Get items
+		$list_themes = (array) WPHB_Helper_Plugins::get_related_themes();
+		if ( empty ( $list_themes ) ) {
+			return;
+		}
+
+		if ( false !== ( $key = array_search( $current_theme->name, array_keys( $list_themes ), true ) ) ) {
+			unset( $list_themes[ $key ] );
+		}
+
+		shuffle( $list_themes ); ?>
+
+		<?php if ( $list_themes ) { ?>
+            <div id="wphb-advertisement" class="wphb-advertisement-slider">
+				<?php foreach ( $list_themes as $theme ) {
+					if ( empty( $theme['url'] ) ) {
+						continue;
+					}
+					$full_description  = hb_trim_content( $theme['description'] );
+					$short_description = hb_trim_content( $theme['description'], 75 );
+					$url_demo          = $theme['attributes'][4]['value']; ?>
+
+                    <div id="thimpress-<?php echo esc_attr( $theme['id'] ); ?>" class="slide-item">
+                        <div class="slide-thumbnail">
+                            <a target="_blank" href="<?php echo esc_url( $theme['url'] ); ?>">
+                                <img src="<?php echo esc_url( $theme['previews']['landscape_preview']['landscape_url'] ) ?>"/>
+                            </a>
+                        </div>
+
+                        <div class="slide-detail">
+                            <h2><a href="<?php echo esc_url( $theme['url'] ); ?>"><?php echo $theme['name']; ?></a></h2>
+                            <p class="slide-description description-full">
+								<?php echo wp_kses_post( $full_description ); ?>
+                            </p>
+                            <p class="slide-description description-short">
+								<?php echo wp_kses_post( $short_description ); ?>
+                            </p>
+                            <p class="slide-controls">
+                                <a href="<?php echo esc_url( $theme['url'] ); ?>" class="button button-primary"
+                                   target="_blank"><?php _e( 'Get it now', 'wp-hotel-booking' ); ?></a>
+                                <a href="<?php echo esc_url( $url_demo ); ?>" class="button"
+                                   target="_blank"><?php _e( 'View Demo', 'wp-hotel-booking' ); ?></a>
+                            </p>
+                        </div>
+
+                    </div>
+				<?php } ?>
+            </div>
+		<?php }
+	}
+}
+
+if ( ! function_exists( 'hb_trim_content' ) ) {
+	/**
+	 * @param $content
+	 * @param int $count
+	 *
+	 * @return array|mixed|null|string|string[]
+	 */
+	function hb_trim_content( $content, $count = 0 ) {
+		$content = preg_replace( '/(?<=\S,)(?=\S)/', ' ', $content );
+		$content = str_replace( "\n", ' ', $content );
+		$content = explode( " ", $content );
+
+		$count = $count > 0 ? $count : sizeof( $content ) - 1;
+		$full  = $count >= sizeof( $content ) - 1;
+
+		$content = array_slice( $content, 0, $count );
+		$content = implode( " ", $content );
+		if ( ! $full ) {
+			$content .= '...';
+		}
+
+		return $content;
+	}
+}
+
+if ( ! function_exists( 'hb_request_query' ) ) {
+	/**
+	 * @param array $vars
+	 *
+	 * @return array
+	 */
+	function hb_request_query( $vars = array() ) {
+		global $typenow, $wp_query, $wp_post_statuses;
+
+		if ( 'hb_booking' === $typenow ) {
+			// Status
+			if ( ! isset( $vars['post_status'] ) ) {
+				$post_statuses = hb_get_booking_statuses();
+
+				foreach ( $post_statuses as $status => $value ) {
+					if ( isset( $wp_post_statuses[ $status ] ) && false === $wp_post_statuses[ $status ]->show_in_admin_all_list ) {
+						unset( $post_statuses[ $status ] );
+					}
+				}
+
+				$vars['post_status'] = array_keys( $post_statuses );
+			}
+		}
+
+		return $vars;
+	}
+}
+
+if ( ! function_exists( 'hb_edit_post_change_title_in_list' ) ) {
+	/**
+	 * Add hook to change booking title in admin archive.
+	 */
+	function hb_edit_post_change_title_in_list() {
+		add_filter( 'the_title', 'hb_edit_post_new_title_in_list', 100, 2 );
+	}
+}
+
+if ( ! function_exists( 'hb_edit_post_new_title_in_list' ) ) {
+	/**
+	 * @param $title
+	 * @param $post_id
+	 *
+	 * @return string
+	 */
+	function hb_edit_post_new_title_in_list( $title, $post_id ) {
+		global $post_type;
+		if ( $post_type == 'hb_booking' ) {
+			$title = hb_format_order_number( $post_id );
+		}
+
+		return $title;
+	}
+}
+
+if ( ! function_exists( 'hb_remove_revolution_slider_meta_boxes' ) ) {
+	/**
+	 * Remove revolution slider meta boxes.
+	 */
+	function hb_remove_revolution_slider_meta_boxes() {
+		if ( is_admin() ) {
+			remove_meta_box( 'mymetabox_revslider_0', 'hb_room', 'normal' );
+			remove_meta_box( 'mymetabox_revslider_0', 'hb_booking', 'normal' );
+			remove_meta_box( 'submitdiv', 'hb_booking', 'side' );
+		}
+	}
+}

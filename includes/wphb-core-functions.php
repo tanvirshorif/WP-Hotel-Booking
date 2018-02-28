@@ -407,3 +407,43 @@ if ( ! function_exists( 'hb_setup_page_content' ) ) {
 		return do_shortcode( $content );
 	}
 }
+
+if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
+	/**
+     * Update booking.
+     *
+	 * @param $key
+	 * @param $value
+	 * @param $post_id
+	 */
+	function hb_booking_detail_update_meta_box( $key, $value, $post_id ) {
+		if ( ! ( get_post_type( $post_id ) == 'hb_booking' && $key == '_hb_booking_status' ) ) {
+			return;
+		}
+
+		$status = sanitize_text_field( $value );
+		remove_action( 'save_post', array( 'WPHB_Metabox_Booking_Actions', 'update' ) );
+
+		$booking = WPHB_Booking::instance( $post_id );
+		$booking->update_status( $status );
+
+		add_action( 'save_post', array( 'WPHB_Metabox_Booking_Actions', 'update' ) );
+	}
+}
+
+if ( ! function_exists( 'hb_update_meta_box_gallery' ) ) {
+	/**
+     * Update room gallery meta box.
+     *
+	 * @param $post_id
+	 */
+	function hb_update_meta_box_gallery( $post_id ) {
+		if ( get_post_type() !== 'hb_room' ) {
+			return;
+		}
+
+		if ( ! $_POST['_hb_gallery'] || empty( $_POST['_hb_gallery'] ) ) {
+			update_post_meta( $post_id, '_hb_gallery', array() );
+		}
+	}
+}
