@@ -1015,16 +1015,16 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   text-decoration: none; }
 
 .hb-booking-status.hb-completed a {
-  background-color: #008cff; }
+  background-color: #2ea2cc; }
 
 .hb-booking-status.hb-pending a {
-  background-color: #cccccc; }
+  background-color: #ffba00; }
 
 .hb-booking-status.hb-processing a {
-  background-color: #ffb316; }
+  background-color: #73a724; }
 
 .hb-booking-status.hb-cancelled a {
-  background-color: #b55b5b; }
+  background-color: #a00; }
 
 .hb-booking-status a {
   font-size: 10px;

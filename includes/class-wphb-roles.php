@@ -148,9 +148,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$admin->add_cap( 'manage_hb_booking' );
 
 		}
-
 	}
-
 }
 
 new WPHB_Roles();

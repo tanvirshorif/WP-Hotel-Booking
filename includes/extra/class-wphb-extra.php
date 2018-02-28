@@ -215,5 +215,4 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 			return self::$_instances;
 		}
 	}
-
 }

@@ -603,7 +603,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		 *
 		 * @param null $cart_item_id
 		 *
-		 * @return mixed|void
+		 * @return mixed
 		 */
 		public function get_cart_item_param( $cart_item_id = null ) {
 			$params    = array();
@@ -941,7 +941,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				return;
 			}
 
-			remove_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
+			remove_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10 );
 
 			if ( $posts['hb_optional_quantity_selected'] ) {
 				$selected_quantity = $posts['hb_optional_quantity'];
@@ -1009,10 +1009,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		}
 
 		/**
-		 * add to cart results
+		 * @param $results
+		 * @param $room
 		 *
-		 * @param [array] $results [results]
-		 * @param [object] $room    [room object class]
+		 * @return mixed
 		 */
 		public function add_to_cart_results( $results, $room ) {
 			if ( ! isset( $results['cart_id'] ) ) {
@@ -1077,23 +1077,11 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
 					?>
                     <tr style="background-color: #FFFFFF;">
-
                         <td></td>
-
-                        <td>
-							<?php echo esc_html( $cart_item->quantity ); ?>
-                        </td>
-
-                        <td colspan="3">
-							<?php printf( '%s', $cart_item->product_data->title ) ?>
-                        </td>
-
-                        <td>
-							<?php echo hb_format_price( $cart_item->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ) ?>
-                        </td>
-
+                        <td><?php echo esc_html( $cart_item->quantity ); ?></td>
+                        <td colspan="3"><?php printf( '%s', $cart_item->product_data->title ) ?></td>
+                        <td><?php echo hb_format_price( $cart_item->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ) ?></td>
                     </tr>
-
 					<?php
 				}
 			}
@@ -1217,11 +1205,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 
 					if ( isset( $optional['order_item_id'] ) ) {
 						$sub_order_item_id = absint( $optional['order_item_id'] );
-						if ( $qty === 0 ) {
-							hb_remove_booking_item( $sub_order_item_id );
-						} else {
-							hb_remove_booking_item( $sub_order_item_id, $param );
-						}
+						hb_remove_booking_item( $sub_order_item_id );
 					} else {
 						$sub_order_item_id = hb_add_booking_item( $order_id, $param );
 					}
@@ -1238,14 +1222,13 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 
 				} else {
 					if ( isset( $optional['order_item_id'] ) ) {
-						hb_remove_order_item( $optional['order_item_id'] );
+						hb_remove_booking_item( $optional['order_item_id'] );
 					}
 				}
 			}
 		}
 
 	}
-
 }
 
 WPHB_Cart::instance();

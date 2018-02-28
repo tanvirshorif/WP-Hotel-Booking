@@ -92,10 +92,6 @@ if ( ! class_exists( 'WPHB_User' ) ) {
 
 			return $info;
 		}
-
-		public static function localize_script() {
-
-		}
 	}
 
 }

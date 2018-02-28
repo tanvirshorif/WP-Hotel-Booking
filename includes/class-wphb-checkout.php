@@ -62,7 +62,7 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 				hb_get_payment_gateways();
 				$requested_transaction_method = sanitize_text_field( $_REQUEST[ $method_var ] );
 				hb_do_transaction( $requested_transaction_method );
-			} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && ! count( $cart->cart_contents ) ) {
+			} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && ! count( $cart->get_cart_contents() ) ) {
 				wp_redirect( hb_get_cart_url() );
 				exit();
 			} else if ( hb_get_page_id( 'thankyou' ) && is_page( hb_get_page_id( 'thankyou' ) ) && hb_get_thank_you_url() ) {
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 			$booking_info = apply_filters( 'hotel_booking_checkout_booking_info', $transaction->booking_info, $transaction );
 			$order_items  = apply_filters( 'hotel_booking_checkout_booking_order_items', $transaction->order_items, $transaction );
 
-			if ( $cart->cart_items_count === 0 ) {
+			if ( count( $cart->get_cart_contents() ) === 0 ) {
 				hb_send_json( array(
 					'result'  => 'fail',
 					'message' => __( 'Your cart is empty.', 'wp-hotel-booking' )
@@ -204,9 +204,7 @@ if ( ! class_exists( 'WPHB_Checkout' ) ) {
 
 			return self::$_instance;
 		}
-
 	}
-
 }
 
 new WPHB_Checkout();

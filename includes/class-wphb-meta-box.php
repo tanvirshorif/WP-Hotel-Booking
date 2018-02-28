@@ -276,7 +276,5 @@ if ( ! class_exists( 'WPHB_Meta_Box' ) ) {
 
 			return self::$_meta_boxes[ $id ];
 		}
-
 	}
-
 }

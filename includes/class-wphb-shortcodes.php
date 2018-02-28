@@ -221,7 +221,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 
 				<?php $cart = WPHB_Cart::instance(); ?>
 
-				<?php if ( $cart->cart_contents ) { ?>
+				<?php if ( $cart->get_cart_contents() ) { ?>
 					<?php hb_get_template( 'cart/mini-cart.php' ); ?>
 				<?php } else { ?>
                     <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty.', 'wp-hotel-booking' ) ?></p>
@@ -314,8 +314,8 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		}
 
 		/**
-         * Thankyou page.
-         *
+		 * Thankyou page.
+		 *
 		 * @param array $atts
 		 *
 		 * @return string
