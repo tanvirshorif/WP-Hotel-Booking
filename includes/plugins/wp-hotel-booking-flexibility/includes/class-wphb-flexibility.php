@@ -194,7 +194,7 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 		 * @param $order_item_id
 		 */
 		public function admin_check_in_time( $order_item_id ) {
-			printf( '%s', date_i18n( hb_get_time_format(), hb_get_order_item_meta( $order_item_id, 'check_in_time', true ) + 1 ) );
+			printf( '%s', date_i18n( hb_get_time_format(), hb_get_booking_item_meta( $order_item_id, 'check_in_time', true ) + 1 ) );
 		}
 
 		/**
@@ -205,7 +205,7 @@ if ( ! class_exists( 'WPHB_Flexibility' ) ) {
 		 * @param $order_item_id
 		 */
 		public function admin_check_out_time( $order_item_id ) {
-			printf( '%s', date_i18n( hb_get_time_format(), hb_get_order_item_meta( $order_item_id, 'check_out_time', true ) + 1 ) );
+			printf( '%s', date_i18n( hb_get_time_format(), hb_get_booking_item_meta( $order_item_id, 'check_out_time', true ) + 1 ) );
 		}
 
 		/**

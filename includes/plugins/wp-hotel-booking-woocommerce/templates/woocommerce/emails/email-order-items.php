@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 <?php
 // get booking items
 $booking_id = hb_get_post_id_meta( '_hb_woo_order_id', $order->get_order_number() );
-$room_items = hb_get_order_items( $booking_id );
+$room_items = hb_get_booking_items( $booking_id );
 
 $text_align = is_rtl() ? 'right' : 'left';
 ?>
@@ -61,9 +61,9 @@ $text_align = is_rtl() ? 'right' : 'left';
 			<?php if ( $room_items ) { ?>
 				<?php foreach ( $room_items as $room ) { ?>
                     <td class="td"
-                        style="text-align:<?php echo $text_align; ?>; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?></td>
+                        style="text-align:<?php echo $text_align; ?>; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?></td>
                     <td class="td"
-                        style="text-align:<?php echo $text_align; ?>; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?></td>
+                        style="text-align:<?php echo $text_align; ?>; vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;"><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?></td>
 					<?php break;
 				} ?>
 			<?php } ?>

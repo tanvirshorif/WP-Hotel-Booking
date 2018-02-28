@@ -29,7 +29,7 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 
 	if ( $booking->booking_key === $key ) {
 
-		$rooms = hb_get_order_items( $booking_id );
+		$rooms = hb_get_booking_items( $booking_id );
 		?>
         <div class="hb-message message">
             <div class="hb-message-content">
@@ -83,35 +83,35 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 
                     <tr>
                         <td>
-							<?php printf( '<a href="%s">%s</a>', get_permalink( hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
+							<?php printf( '<a href="%s">%s</a>', get_permalink( hb_get_booking_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
                         </td>
                         <td>
-							<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
+							<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
                         </td>
                         <td>
-							<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
+							<?php printf( '%d', hb_count_nights_two_dates( hb_get_booking_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_booking_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
                         </td>
                         <td>
-							<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ) ?>
+							<?php printf( '%s', hb_get_booking_item_meta( $room->order_item_id, 'qty', true ) ) ?>
                         </td>
                         <td>
-							<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
+							<?php printf( '%s', hb_format_price( hb_get_booking_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
                         </td>
                     </tr>
 
-					<?php $packages = hb_get_order_items( $booking->id, 'sub_item', $room->order_item_id ); ?>
+					<?php $packages = hb_get_booking_items( $booking->id, 'sub_item', $room->order_item_id ); ?>
 					<?php if ( $packages ) { ?>
 						<?php foreach ( $packages as $package ) { ?>
-							<?php $extra = hotel_booking_get_product_class( hb_get_order_item_meta( $package->order_item_id, 'product_id', true ) ); ?>
+							<?php $extra = hotel_booking_get_product_class( hb_get_booking_item_meta( $package->order_item_id, 'product_id', true ) ); ?>
                             <tr data-order-parent="<?php echo esc_attr( $room->order_item_id ); ?>">
                                 <td colspan="3">
 									<?php echo esc_html( $package->order_item_name ); ?>
                                 </td>
                                 <td>
-									<?php echo esc_html( hb_get_order_item_meta( $package->order_item_id, 'qty', true ) ); ?>
+									<?php echo esc_html( hb_get_booking_item_meta( $package->order_item_id, 'qty', true ) ); ?>
                                 </td>
                                 <td>
-									<?php echo esc_html( hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
+									<?php echo esc_html( hb_format_price( hb_get_booking_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
                                 </td>
                             </tr>
 						<?php } ?>

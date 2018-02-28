@@ -192,7 +192,6 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 
 			// booking
 			include_once( WPHB_INCLUDES . 'booking/wphb-booking-functions.php' );
-			include_once( WPHB_INCLUDES . 'booking/wphb-booking-hooks.php' );
 			include_once( WPHB_INCLUDES . 'booking/class-wphb-booking.php' );
 		}
 

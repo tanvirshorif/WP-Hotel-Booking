@@ -40,14 +40,14 @@ if ( ! apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
 		?>
     </td>
 	<?php foreach ( $room_items as $room ) { ?>
-		<?php if ( get_post_type( hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ) == 'hb_room' ) { ?>
+		<?php if ( get_post_type( hb_get_booking_item_meta( $room->order_item_id, 'product_id', true ) ) == 'hb_room' ) { ?>
             <td class="td"
                 style="vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;">
-				<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
+				<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
             </td>
             <td class="td"
                 style="vertical-align:middle; border: 1px solid #eee; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;">
-				<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?></td>
+				<?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?></td>
 		<?php } ?>
 		<?php
 		break;

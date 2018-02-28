@@ -25,14 +25,14 @@ defined( 'ABSPATH' ) || exit;
         <th><?php _e( '#', 'wp-hotel-booking' ) ?></th>
         <th><?php _e( 'Price', 'wp-hotel-booking' ) ?></th>
     </tr>
-	<?php $items = hb_get_order_items( $booking->id ); ?>
+	<?php $items = hb_get_booking_items( $booking->id ); ?>
 	<?php foreach ( $items as $k => $item ) { ?>
         <tr>
             <td><?php printf( '%s', $item->order_item_name ) ?></td>
-            <td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true ) ) ) ?></td>
-            <td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $item->order_item_id, 'check_out_date', true ) ) ) ?></td>
-            <td><?php printf( '%s', hb_get_order_item_meta( $item->order_item_id, 'qty', true ) ) ?></td>
-            <td><?php printf( '%s', hb_format_price( hb_get_order_item_meta( $item->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
+            <td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $item->order_item_id, 'check_in_date', true ) ) ) ?></td>
+            <td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $item->order_item_id, 'check_out_date', true ) ) ) ?></td>
+            <td><?php printf( '%s', hb_get_booking_item_meta( $item->order_item_id, 'qty', true ) ) ?></td>
+            <td><?php printf( '%s', hb_format_price( hb_get_booking_item_meta( $item->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
         </tr>
 
 		<?php do_action( 'hotel_booking_email_after_room_item', $item, $booking ); ?>

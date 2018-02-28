@@ -64,6 +64,30 @@ add_action( 'hb_booking_detail_update_meta_box', 'hb_booking_detail_update_meta_
 add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );
 
 
+//========================================== Booking Hooks ===========================================//
+
+// restrict booking
+add_action( 'restrict_manage_posts', 'hb_booking_restrict_manage_posts' );
+
+// schedule cancel booking mail
+add_action( 'hotel_booking_create_booking', 'hb_schedule_cancel_booking', 10, 1 );
+add_action( 'hb_booking_status_changed', 'hb_schedule_cancel_booking', 10, 1 );
+
+// cancel booking
+add_action( 'hotel_booking_change_cancel_booking_status', 'hb_cancel_booking', 10, 1 );
+
+// new booking mail
+add_action( 'hb_place_order', 'hb_send_place_booking_email', 10, 2 );
+
+// booking completed mail
+add_action( 'hb_booking_status_changed', 'hb_send_booking_completed_email', 10, 3 );
+
+// booking cancelled mail
+add_action( 'wphb_customer_cancel_booking', 'wphb_send_booking_cancelled_email' );
+
+
+
+
 
 
 

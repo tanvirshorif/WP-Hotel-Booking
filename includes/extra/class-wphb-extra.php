@@ -53,7 +53,7 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 			}
 			$parent_quantity = 1;
 			if ( isset( $params['order_item_id'] ) ) {
-				$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
+				$parent_quantity = hb_get_booking_item_meta( hb_get_parent_booking_item( $params['order_item_id'] ), 'quantity', true );
 			} else if ( ! is_admin() && isset( $params['parent_id'] ) && $cart = WPHB_Cart::instance() ) {
 				$parent = $cart->get_cart_item( $params['parent_id'] );
 				if ( $parent ) {

@@ -1,21 +1,29 @@
 <?php
 
 /**
- * @Author: ducnvtt
- * @Date:   2016-04-12 13:08:14
- * @Last Modified by:   someone
- * @Last Modified time: 2016-05-13 14:55:29
+ * WP Hotel Booking room functions.
+ *
+ * @version     2.0
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
-
-	// get pricing plans
+	/**
+	 * @param null $room_id
+	 *
+	 * @return mixed
+	 */
 	function hb_room_get_pricing_plans( $room_id = null ) {
 		if ( ! $room_id ) {
-			// throw new Exception( __( 'Room id is not exists.', 'wp-hotel-booking' ), 503 );
+			return array();
 		}
 
 		global $wpdb;
@@ -30,8 +38,8 @@ if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
 				WHERE
 					plans.room_id = %d
 					AND room.post_type = %s
-					AND room.post_status = %s
-			", $room_id, 'hb_room', 'publish' );
+					AND room.post_status = %s",
+			$room_id, 'hb_room', 'publish' );
 
 		$cols  = $wpdb->get_results( $sql );
 		$plans = array();
@@ -49,21 +57,13 @@ if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
 
 		return apply_filters( 'hb_room_get_pricing_plans', $plans, $room_id );
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
-
 	/**
-	 * hb_room_set_pricing_plan set new pricing plans
+	 * @param array $args
 	 *
-	 * @param  array $args
-	 *
-	 * @start_time
-	 * @end_time
-	 * @pricing param
-	 * @plan id if update
-	 * @return plan id
+	 * @return int
 	 */
 	function hb_room_set_pricing_plan( $args = array() ) {
 		$args = wp_parse_args( $args, array(
@@ -113,14 +113,18 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 
 		return $plan_id;
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
-
+	/**
+	 * @param null $room_id
+	 * @param null $date
+	 *
+	 * @return mixed
+	 */
 	function hb_room_get_selected_plan( $room_id = null, $date = null ) {
 		if ( ! $room_id ) {
-			return;
+			return null;
 		}
 
 		if ( ! $date ) {
@@ -152,7 +156,11 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 }
 
 if ( ! function_exists( 'hb_room_get_regular_plan' ) ) {
-
+	/**
+	 * @param null $room_id
+	 *
+	 * @return mixed|null
+	 */
 	function hb_room_get_regular_plan( $room_id = null ) {
 		if ( ! $room_id ) {
 			return null;
@@ -170,23 +178,19 @@ if ( ! function_exists( 'hb_room_get_regular_plan' ) ) {
 
 		return apply_filters( 'hb_room_get_regular_plan', $regular_plan );
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
-
 	/**
-	 * hb_room_remove_pricing
-	 * remove pricing plan by id of table $wpdb->hotel_booking_plans
+	 * Remove pricing plan by id of table 'hotel_booking_plans'.
 	 *
-	 * @param  $plan_id integer
+	 * @param null $plan_id
 	 *
-	 * @return null if $plan_id invalid and plan id if valid
+	 * @return null
 	 */
 	function hb_room_remove_pricing( $plan_id = null ) {
-
 		if ( ! $plan_id ) {
-			return;
+			return false;
 		}
 
 		global $wpdb;
@@ -196,11 +200,15 @@ if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
 
 		return $plan_id;
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
-
+	/**
+	 * @param null $room_id
+	 * @param null $date
+	 *
+	 * @return array|mixed|string
+	 */
 	function hotel_booking_print_pricing_json( $room_id = null, $date = null ) {
 		$start = date( 'm/01/Y', strtotime( $date ) );
 		$end   = date( 'm/t/Y', strtotime( $date ) );
@@ -225,5 +233,4 @@ if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
 
 		return json_encode( $json );
 	}
-
 }

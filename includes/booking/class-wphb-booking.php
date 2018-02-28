@@ -395,7 +395,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 		public function add_booking_items( $booking_items = array() ) {
 			// clean order item
 			if ( $this->id ) {
-				hb_empty_booking_order_items( $this->id );
+				hb_empty_booking_items( $this->id );
 			}
 			if ( ! empty( $booking_items ) ) {
 				$parents = array();
@@ -403,7 +403,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 				foreach ( $booking_items AS $k => $booking_item ) {
 					if ( ! isset( $booking_item['parent_id'] ) || ! $booking_item['parent_id'] ) {
 						$product_id      = $booking_item['product_id'];
-						$booking_item_id = hb_add_order_item( $this->id, array(
+						$booking_item_id = hb_add_booking_item( $this->id, array(
 							'order_item_name' => get_the_title( $product_id ),
 							'order_item_type' => 'line_item'
 						) );
@@ -412,7 +412,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 						// add order items meta
 						foreach ( $booking_item as $meta_key => $meta_value ) {
 							if ( $meta_key !== 'parent_id' ) {
-								hb_add_order_item_meta( $booking_item_id, $meta_key, $meta_value );
+								hb_add_booking_item_meta( $booking_item_id, $meta_key, $meta_value );
 							}
 						}
 					}
@@ -422,7 +422,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 				foreach ( $booking_items AS $k => $booking_item ) {
 					if ( isset( $booking_item['parent_id'] ) && array_key_exists( $booking_item['parent_id'], $parents ) ) {
 						$product_id      = $booking_item['product_id'];
-						$booking_item_id = hb_add_order_item( $this->id, array(
+						$booking_item_id = hb_add_booking_item( $this->id, array(
 							'order_item_name'   => get_the_title( $product_id ),
 							'order_item_type'   => 'sub_item',
 							'order_item_parent' => $parents[ $booking_item['parent_id'] ]
@@ -430,7 +430,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 						// add order items meta
 						foreach ( $booking_item as $meta_key => $meta_value ) {
 							if ( $meta_key !== 'parent_id' ) {
-								hb_add_order_item_meta( $booking_item_id, $meta_key, $meta_value );
+								hb_add_booking_item_meta( $booking_item_id, $meta_key, $meta_value );
 							}
 						}
 					}

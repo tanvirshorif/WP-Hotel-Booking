@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 <?php
 // get booking items
 $booking_id = hb_get_post_id_meta( '_hb_woo_order_id', $order->get_order_number() );
-$room_items = hb_get_order_items( $booking_id );
+$room_items = hb_get_booking_items( $booking_id );
 ?>
 
 <!--check rtl-->

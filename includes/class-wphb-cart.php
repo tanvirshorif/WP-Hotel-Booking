@@ -1116,7 +1116,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		}
 
 		public function email_booking_post_type_extra_item( $room, $hb_booking ) {
-			$packages = hb_get_order_items( $hb_booking->id, 'sub_item', $room->order_item_id );
+			$packages = hb_get_booking_items( $hb_booking->id, 'sub_item', $room->order_item_id );
 
 			if ( ! $packages ) {
 				return;
@@ -1127,10 +1127,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				$html[] = '<tr>';
 
 				$html[] = '<td>' . sprintf( '%s', $package->order_item_name ) . '</td>';
-				$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_in_date', true ) ) ) . '</td>';
-				$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_out_date', true ) ) ) . '</td>';
-				$html[] = '<td>' . sprintf( '%s', hb_get_order_item_meta( $package->order_item_id, 'qty', true ) ) . '</td>';
-				$html[] = '<td>' . sprintf( '%s', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $package->order_item_id, 'check_in_date', true ) ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $package->order_item_id, 'check_out_date', true ) ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', hb_get_booking_item_meta( $package->order_item_id, 'qty', true ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', hb_format_price( hb_get_booking_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ) . '</td>';
 
 				$html[] = '</tr>';
 			}
@@ -1156,11 +1156,11 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			$order_child_id = array();
 			$order_subs     = array();
 			if ( isset( $args['order_id'], $args['order_item_id'] ) ) {
-				$sub_items = hb_get_sub_item_order_item_id( $args['order_item_id'] );
+				$sub_items = hb_get_sub_item_booking_item_id( $args['order_item_id'] );
 				if ( $sub_items ) {
 					foreach ( $sub_items as $it_id ) {
-						$order_child_id[ hb_get_order_item_meta( $it_id, 'product_id', true ) ] = hb_get_order_item_meta( $it_id, 'qty', true );
-						$order_subs[ hb_get_order_item_meta( $it_id, 'product_id', true ) ]     = $it_id;
+						$order_child_id[ hb_get_booking_item_meta( $it_id, 'product_id', true ) ] = hb_get_booking_item_meta( $it_id, 'qty', true );
+						$order_subs[ hb_get_booking_item_meta( $it_id, 'product_id', true ) ]     = $it_id;
 					}
 				}
 			}
@@ -1211,29 +1211,29 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 					$product = hotel_booking_get_product_class( $product_id, array(
 						'check_in_date'  => $check_in_date,
 						'check_out_date' => $check_out_date,
-						'room_quantity'  => hb_get_order_item_meta( $order_item_id, 'qty', true ),
+						'room_quantity'  => hb_get_booking_item_meta( $order_item_id, 'qty', true ),
 						'quantity'       => isset( $optional['qty'] ) ? $optional['qty'] : 0
 					) );
 
 					if ( isset( $optional['order_item_id'] ) ) {
 						$sub_order_item_id = absint( $optional['order_item_id'] );
 						if ( $qty === 0 ) {
-							hb_remove_order_item( $sub_order_item_id );
+							hb_remove_booking_item( $sub_order_item_id );
 						} else {
-							hb_update_order_item( $sub_order_item_id, $param );
+							hb_remove_booking_item( $sub_order_item_id, $param );
 						}
 					} else {
-						$sub_order_item_id = hb_add_order_item( $order_id, $param );
+						$sub_order_item_id = hb_add_booking_item( $order_id, $param );
 					}
 
 					if ( $qty ) {
-						hb_update_order_item_meta( $sub_order_item_id, 'product_id', $product_id );
-						hb_update_order_item_meta( $sub_order_item_id, 'qty', $qty );
-						hb_update_order_item_meta( $sub_order_item_id, 'check_in_date', $check_in_date );
-						hb_update_order_item_meta( $sub_order_item_id, 'check_out_date', $check_out_date );
-						hb_update_order_item_meta( $sub_order_item_id, 'subtotal', $product->price );
-						hb_update_order_item_meta( $sub_order_item_id, 'total', $product->price_tax );
-						hb_update_order_item_meta( $sub_order_item_id, 'tax_total', $product->price_tax - $product->price );
+						hb_update_booking_item_meta( $sub_order_item_id, 'product_id', $product_id );
+						hb_update_booking_item_meta( $sub_order_item_id, 'qty', $qty );
+						hb_update_booking_item_meta( $sub_order_item_id, 'check_in_date', $check_in_date );
+						hb_update_booking_item_meta( $sub_order_item_id, 'check_out_date', $check_out_date );
+						hb_update_booking_item_meta( $sub_order_item_id, 'subtotal', $product->price );
+						hb_update_booking_item_meta( $sub_order_item_id, 'total', $product->price_tax );
+						hb_update_booking_item_meta( $sub_order_item_id, 'tax_total', $product->price_tax - $product->price );
 					}
 
 				} else {
