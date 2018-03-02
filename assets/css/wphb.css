@@ -403,6 +403,13 @@
 .post-type-archive-hb_room .rooms.hb-catalog-column-2 > .hb_room {
   width: 50%; }
 
+.post-type-archive-hb_room .rooms .hb_room .summary {
+  margin: 0; }
+  .post-type-archive-hb_room .rooms .hb_room .summary .title {
+    padding-top: 5px; }
+    .post-type-archive-hb_room .rooms .hb_room .summary .title a {
+      box-shadow: none; }
+
 .rooms .hb_room {
   list-style: none;
   float: left;
@@ -464,7 +471,7 @@
   .rooms .hb_room .price {
     position: absolute;
     right: 25px;
-    bottom: 70px;
+    bottom: 40px;
     text-align: right;
     font-weight: 700;
     font-size: 24px;

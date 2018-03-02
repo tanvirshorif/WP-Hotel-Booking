@@ -38,6 +38,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 				'hotel_booking_mini_cart'       => __CLASS__ . '::hotel_booking_mini_cart',
 				'hotel_booking_rooms'           => __CLASS__ . '::hotel_booking_rooms',
 				'hotel_booking_slider'          => __CLASS__ . '::hotel_booking_slider',
+				'hb_widget_room_filter'         => __CLASS__ . '::hb_widget_room_filter',
 				'hotel_booking_thankyou'        => __CLASS__ . '::hotel_booking_thankyou'
 			);
 
@@ -297,20 +298,27 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 */
 		public static function hotel_booking_slider( $atts ) {
 			$number_rooms = isset( $atts['rooms'] ) ? (int) $atts['rooms'] : 10;
-			// $posts = get_terms( 'hb_room_type', array('hide_empty' => 0)); gallery of room_type taxonmy change to gallery of room post_type
 
 			$args  = array(
 				'post_type'      => 'hb_room',
 				'posts_per_page' => $number_rooms,
 				'orderby'        => 'date',
-				'order'          => 'DESC',
-				// 'meta_key'          => '_hb_gallery'
+				'order'          => 'DESC'
 			);
 			$query = new WP_Query( $args );
 
 			if ( $query->have_posts() ) {
 				hb_get_template( 'shortcodes/rooms-carousel.php', array( 'atts' => $atts, 'query' => $query ) );
 			}
+		}
+
+		/**
+         * Room filter by price.
+         *
+		 * @param $atts
+		 */
+		public static function hb_widget_room_filter( $atts ) {
+			hb_get_template( 'shortcodes/room-filter.php', array( 'atts' => $atts ) );
 		}
 
 		/**
