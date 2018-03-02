@@ -23,8 +23,7 @@ hb_admin_view( 'extra/new' );
     <div>
         <div class="wrap">
             <h1 class="wp-heading-inline"><?php _e( 'Addition Packages', 'wp-hotel-booking' ); ?></h1>
-            <a href="#" class="page-title-action"
-               @click="addExtra"><?php echo __( 'Add New', 'wp-hotel-booking' ); ?></a>
+            <a class="page-title-action" @click="addExtra"><?php echo __( 'Add New', 'wp-hotel-booking' ); ?></a>
         </div>
         <div id="wphb-admin-extra-panel">
             <div class="extra-items-heading">

@@ -63,44 +63,60 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 				case 'new-extra':
 					$extra = json_decode( wp_unslash( $args['extra'] ), true );
 					// create new extra
-					$result = $curd->create( $extra );
+					$data = $curd->create( $extra );
 
+					$result = self::_handle_response( $data, __( 'New Extra successful', 'wp-hotel-booking' ) );
 					break;
 				case 'update-extra':
-					$extra  = json_decode( wp_unslash( $args['extra'] ), true );
-					$result = $curd->update( $extra );
+					$extra = json_decode( wp_unslash( $args['extra'] ), true );
+					// update extra
+					$data   = $curd->update( $extra );
+					$result = self::_handle_response( $data, __( 'Update Extra successful', 'wp-hotel-booking' ) );
 					break;
 				case 'delete-extra':
 					$id = $args['extra_id'] ? $args['extra_id'] : '';
 
 					if ( $id && get_post_type( $id ) == WPHB_Extra_CPT ) {
+						// delete extra
 						wp_delete_post( $id, true );
-						$result = true;
+						$result = self::_handle_response( true, __( 'Delete Extra successful', 'wp-hotel-booking' ) );
 					}
 					break;
 				case 'update-list-extra':
 					$list_extra = json_decode( wp_unslash( $args['listExtra'] ), true );
 
+					$data = true;
 					if ( is_array( $list_extra ) && $list_extra ) {
 						foreach ( $list_extra as $extra ) {
-							$result = $curd->update( $extra );
-							if ( ! $result ) {
-								return $result;
+							$update = $curd->update( $extra );
+							if ( ! $update || is_wp_error( $update ) ) {
+								$data = false;
+								break;
 							}
 						}
 					}
+					$result = self::_handle_response( $data, __( 'Update successful', 'wp-hotel-booking' ) );
 					break;
 				default:
 					break;
 			}
 
-			if ( is_wp_error( $result ) ) {
-				wp_send_json_error( $result->get_error_message() );
-			}
-
 			wp_send_json_success( $result );
 
 			return false;
+		}
+
+		/**
+		 * @param $data
+		 * @param string $success_message
+		 *
+		 * @return array
+		 */
+		private static function _handle_response( $data, $success_message = '' ) {
+			return array(
+				'data'    => $data,
+				'message' => ( is_wp_error( $data ) || ! $data ) ? __( 'Something wrong', 'wp-hotel-booking' ) : $success_message
+			);
 		}
 
 		/**

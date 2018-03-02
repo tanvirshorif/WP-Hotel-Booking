@@ -46,10 +46,7 @@ defined( 'ABSPATH' ) || exit;
 				?>
             </div>
             <div class="theme-footer">
-				<?php
-				$demo          = $theme['attributes'][4];
-				$demo['value'] = add_query_arg( $ref, $demo['value'] );
-				?>
+				<?php $demo = $theme['attributes'][4]; ?>
                 <a class="button button-primary" target="_blank"
                    href="<?php echo esc_url( $theme['url'] ); ?>"><?php echo __( 'Get it now', 'wp-hotel-booking' ) ?></a>
                 <a class="button" target="_blank"

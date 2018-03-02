@@ -501,9 +501,7 @@
                     handleWindowResize: true,
                     editable: false,
                     defaultView: 'singleRowMonth',
-                    events: function (start, end, timezone, callback) {
-                        callback(JSON.parse(_events));
-                    }
+                    events: _events
                 });
             }
         },

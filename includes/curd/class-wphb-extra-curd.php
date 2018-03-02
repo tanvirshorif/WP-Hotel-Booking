@@ -87,7 +87,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 			$extra = wp_parse_args( $extra, $this->_args );
 
 			$id = $extra['id'];
-			if ( $id && get_post_type( $id == WPHB_Extra_CPT ) ) {
+			if ( $id && get_post_type( $id ) == WPHB_Extra_CPT ) {
 				$update = wp_update_post(
 					array(
 						'ID'           => $id,

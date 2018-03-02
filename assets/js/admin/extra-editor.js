@@ -1,4 +1,3 @@
-
 if (typeof wphb_addition_packages !== 'undefined') {
     /**
      * Addition package store.
@@ -102,7 +101,6 @@ if (typeof wphb_addition_packages !== 'undefined') {
                         data = result.data;
                     if (data) {
                         context.commit('COMPLETED_EXTRA', extra.id);
-                        // context.commit('SET_LIST_EXTRA', '');
                     }
                 });
             },
@@ -201,6 +199,9 @@ if (typeof WPHB_Extra_Store !== 'undefined') {
 
                 if (result) {
                     $store.dispatch('requestCompleted', 'success');
+                    if (body.data.message) {
+                        alert(body.data.message);
+                    }
                 } else {
                     $store.dispatch('requestCompleted', 'fail');
                 }

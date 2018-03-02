@@ -94,18 +94,16 @@ $date_order   = hb_start_of_week_order();
 						?>
                         <div class="hb-pricing-table">
                             <h3 class="hb-pricing-table-title">
-                                <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+                                <span><?php _e( 'From', 'wp-hotel-booking' ); ?></span>
                                 <input type="text" class="datepicker"
                                        name="date-start[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
-                                       value="<?php printf( '%s', date_i18n( hb_get_date_format(), $start ) ); ?>"
-                                       readonly="readonly"/>
+                                       value="<?php printf( '%s', date_i18n( hb_get_date_format(), $start ) ); ?>"/>
                                 <input type="hidden" name="date-start-timestamp[<?php echo esc_attr( $plan->ID ); ?>]"
                                        value="<?php echo esc_attr( $start ); ?>"/>
-
+                                <span><?php _e( 'To', 'wp-hotel-booking' ); ?></span>
                                 <input type="text" class="datepicker"
                                        name="date-end[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
-                                       value="<?php printf( '%s', date_i18n( hb_get_date_format(), $end ) ); ?>"
-                                       readonly="readonly"/>
+                                       value="<?php printf( '%s', date_i18n( hb_get_date_format(), $end ) ); ?>"/>
                                 <input type="hidden" name="date-end-timestamp[<?php echo esc_attr( $plan->ID ); ?>]"
                                        value="<?php echo esc_attr( $end ); ?>"/>
                             </h3>
@@ -159,9 +157,10 @@ $date_order   = hb_start_of_week_order();
 <script type="text/html" id="tmpl-hb-pricing-table">
     <div class="hb-pricing-table">
         <h3 class="hb-pricing-table-title">
-            <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+            <span><?php _e( 'From', 'wp-hotel-booking' ); ?></span>
             <input type="text" class="datepicker" name="date-start[__INDEX__]" size="10" readonly="readonly"/>
             <input type="hidden" name="date-start-timestamp[__INDEX__]"/>
+            <span><?php _e( 'To', 'wp-hotel-booking' ); ?></span>
             <input type="text" class="datepicker" name="date-end[__INDEX__]" size="10" readonly="readonly"/>
             <input type="hidden" name="date-end-timestamp[__INDEX__]"/>
         </h3>
