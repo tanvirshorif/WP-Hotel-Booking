@@ -410,8 +410,8 @@ if ( ! function_exists( 'hb_setup_page_content' ) ) {
 
 if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 	/**
-     * Update booking.
-     *
+	 * Update booking.
+	 *
 	 * @param $key
 	 * @param $value
 	 * @param $post_id
@@ -433,8 +433,8 @@ if ( ! function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 
 if ( ! function_exists( 'hb_update_meta_box_gallery' ) ) {
 	/**
-     * Update room gallery meta box.
-     *
+	 * Update room gallery meta box.
+	 *
 	 * @param $post_id
 	 */
 	function hb_update_meta_box_gallery( $post_id ) {
@@ -445,6 +445,43 @@ if ( ! function_exists( 'hb_update_meta_box_gallery' ) ) {
 		if ( ! $_POST['_hb_gallery'] || empty( $_POST['_hb_gallery'] ) ) {
 			update_post_meta( $post_id, '_hb_gallery', array() );
 		}
+	}
+}
+
+if ( ! function_exists( 'hb_notice_required_permalink' ) ) {
+	/**
+	 * Required 'Post name' permalink.
+	 */
+	function hb_notice_required_permalink() {
+		if ( current_user_can( 'manage_options' ) ) {
+			if ( ! get_option( 'permalink_structure' ) || get_option( 'permalink_structure' ) != '/%postname%/' ) { ?>
+                <div class="error">
+                    <p>
+						<?php echo sprintf( wp_kses( __( '<strong>WP Hotel Booking</strong> requires permalink option <strong>Post name</strong> is enabled. Please enable it <a href="%s" target="_blank">here</a> to ensure that all functions work properly.', 'wp-hotel-booking' ), array(
+							'a'      => array(
+								'target' => array(),
+								'href'   => array()
+							),
+							'strong' => array()
+						) ), admin_url( 'options-permalink.php' ) ); ?>
+                    </p>
+                </div>
+			<?php }
+		}
+	}
+}
+
+if ( ! function_exists( 'hb_get_option' ) ) {
+	/**
+	 * Get wphb option.
+	 *
+	 * @param string $name
+	 * @param string $prefix
+	 *
+	 * @return mixed
+	 */
+	function hb_get_option( $name = '', $prefix = 'tp_hotel_booking_' ) {
+		return get_option( $prefix . $name );
 	}
 }
 

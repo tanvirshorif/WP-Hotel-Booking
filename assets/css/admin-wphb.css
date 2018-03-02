@@ -25,7 +25,8 @@
   cursor: move; }
 
 .post-type-hb_room .hb-form-field {
-  margin: 0 0 15px 0; }
+  margin: 0 0 15px 0;
+  min-height: 25px; }
   .post-type-hb_room .hb-form-field label {
     font-size: 14px;
     font-weight: 600; }
@@ -51,6 +52,7 @@
   padding: 5px 5px 5px 0; }
 
 .hb-pricing-list tbody td input {
+  text-align: center;
   width: 100%; }
 
 /********************************** Admin extra page *************************************************/

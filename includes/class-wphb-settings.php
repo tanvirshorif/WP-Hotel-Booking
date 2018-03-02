@@ -82,6 +82,14 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 *
 		 * @return mixed
 		 */
+		/**
+		 * Get option value.
+		 *
+		 * @param $name
+		 * @param bool $default
+		 *
+		 * @return bool|mixed
+		 */
 		function get( $name, $default = false ) {
 			if ( strpos( $name, 'tp_hotel_booking_' ) === 0 ) {
 				$name = str_replace( 'tp_hotel_booking_', '', $name );

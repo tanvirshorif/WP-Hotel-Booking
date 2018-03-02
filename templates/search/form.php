@@ -17,7 +17,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $show_label     = ! isset( $atts['show_label'] ) || $atts['show_label'] === 'true';
-$layout         = isset( $atts['layout'] ) ? $atts['layout'] : 'horizontal';
+$layout         = isset( $atts['layout'] ) ? $atts['layout'] : '';
 $check_in_date  = hb_get_request( 'check_in_date' );
 $check_out_date = hb_get_request( 'check_out_date' );
 $adults         = hb_get_request( 'adults', 0 );
@@ -36,7 +36,9 @@ $uniqid         = uniqid();
 
 			<?php do_action( 'hotel_booking_before_check_in_field', $uniqid, $show_label ); ?>
             <li class="hb-form-field">
-                <p><?php echo $show_label ? __( 'Arrival Date', 'wp-hotel-booking' ) : ''; ?></p>
+				<?php if ( $show_label ) { ?>
+                    <div><?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?></div>
+				<?php } ?>
                 <div class="hb-form-field-input hb_datepicker_input_field">
                     <input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr( $uniqid ); ?>"
                            class="hb_input_date_check" value="<?php echo esc_attr( $check_in_date ); ?>"/>
@@ -46,7 +48,9 @@ $uniqid         = uniqid();
 
 			<?php do_action( 'hotel_booking_before_check_out_field', $uniqid, $show_label ); ?>
             <li class="hb-form-field">
-                <p><?php echo $show_label ? __( 'Departure Date', 'wp-hotel-booking' ) : ''; ?></p>
+				<?php if ( $show_label ) { ?>
+                    <div><?php _e( 'Departure Date', 'wp-hotel-booking' ); ?></div>
+				<?php } ?>
                 <div class="hb-form-field-input hb_datepicker_input_field">
                     <input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr( $uniqid ) ?>"
                            class="hb_input_date_check" value="<?php echo esc_attr( $check_out_date ); ?>"/>
@@ -55,7 +59,9 @@ $uniqid         = uniqid();
 			<?php do_action( 'hotel_booking_after_check_out_field', $uniqid, $show_label ); ?>
 
             <li class="hb-form-field">
-				<?php echo $show_label ? __( 'Adults', 'wp-hotel-booking' ) : ''; ?>
+				<?php if ( $show_label ) { ?>
+                    <div><?php _e( 'Adults', 'wp-hotel-booking' ); ?></div>
+				<?php } ?>
                 <div class="hb-form-field-input">
 					<?php
 					hb_dropdown_numbers(
@@ -71,28 +77,32 @@ $uniqid         = uniqid();
 					?>
                 </div>
             </li>
-
-            <li class="hb-form-field">
-				<?php echo $show_label ? __( 'Children', 'wp-hotel-booking' ) : ''; ?>
-                <div class="hb-form-field-input">
-					<?php
-					hb_dropdown_numbers(
-						array(
-							'name'              => 'max_child',
-							'min'               => 1,
-							'max'               => hb_get_max_child_of_rooms(),
-							'option_none_value' => 0,
-							'selected'          => $max_child,
-						)
-					);
-					?>
-                </div>
-            </li>
-
-			<?php $settings = hb_settings(); ?>
-			<?php if ( $settings->get( 'multiple_location' ) ) { ?>
+			<?php if ( ! hb_get_option( 'disable_children' ) ) { ?>
                 <li class="hb-form-field">
-					<?php echo $show_label ? __( 'Location', 'wp-hotel-booking' ) : ''; ?>
+					<?php if ( $show_label ) { ?>
+                        <div><?php _e( 'Children', 'wp-hotel-booking' ); ?></div>
+					<?php } ?>
+                    <div class="hb-form-field-input">
+						<?php
+						hb_dropdown_numbers(
+							array(
+								'name'              => 'max_child',
+								'min'               => 1,
+								'max'               => hb_get_max_child_of_rooms(),
+								'option_none_value' => 0,
+								'selected'          => $max_child,
+							)
+						);
+						?>
+                    </div>
+                </li>
+			<?php } ?>
+			<?php $settings = hb_settings(); ?>
+			<?php if ( hb_get_option( 'multiple_location' ) ) { ?>
+                <li class="hb-form-field">
+	                <?php if ( $show_label ) { ?>
+                        <div><?php _e( 'Location', 'wp-hotel-booking' ); ?></div>
+	                <?php } ?>
 					<?php hb_dropdown_room_locations( array(
 						'name'             => 'room_location',
 						'show_option_none' => __( 'Location', 'wp-hotel-booking' ),
@@ -104,7 +114,6 @@ $uniqid         = uniqid();
         </ul>
 
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
-
         <input type="hidden" name="hotel-booking" value="results"/>
         <input type="hidden" name="action" value="wphb_parse_search_params"/>
         <p class="hb-submit">

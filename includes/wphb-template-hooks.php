@@ -45,8 +45,6 @@ add_action( 'init', 'hb_parse_request' );
 // maybe modify page content
 add_filter( 'the_content', 'hb_maybe_modify_page_content' );
 
-// after main content
-add_action( 'hotel_booking_after_main_content', 'hotel_booking_after_main_content' );
 //thumbnail
 add_action( 'hotel_booking_loop_room_thumbnail', 'hotel_booking_loop_room_thumbnail' );
 // title

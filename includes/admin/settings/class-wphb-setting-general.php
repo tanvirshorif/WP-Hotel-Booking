@@ -62,7 +62,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'id'      => 'tp_hotel_booking_single_purchase',
 					'title'   => __( 'Single Purchase', 'wp-hotel-booking' ),
 					'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
-					'default' => 1,
+					'default' => 0,
 				),
 				array(
 					'type'    => 'checkbox',
@@ -72,9 +72,16 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'desc'    => __( 'Enable multiple location', 'wp-hotel-booking' )
 				),
 				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'disable_children',
+					'title'   => __( 'Disable Children', 'wp-hotel-booking' ),
+					'default' => 0,
+					'desc'    => __( 'Disable children field in search room page', 'wp-hotel-booking' )
+				),
+				array(
 					'type'    => 'number',
 					'id'      => $prefix . 'minimum_booking_day',
-					'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
+					'title'   => __( 'Minimum Booking Nights', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
 					'step'    => 'any'
@@ -140,7 +147,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				array(
 					'type'    => 'number',
 					'id'      => $prefix . 'price_number_of_decimal',
-					'title'   => __( 'Number of decimal', 'wp-hotel-booking' ),
+					'title'   => __( 'Number Of Decimal', 'wp-hotel-booking' ),
 					'default' => 1,
 					'min'     => 0,
 					'max'     => 3,

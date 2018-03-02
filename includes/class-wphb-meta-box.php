@@ -168,7 +168,9 @@ if ( ! class_exists( 'WPHB_Meta_Box' ) ) {
 									$tmpl = WPHB_INCLUDES . "admin/views/metaboxes/fields/{$field['type']}.php";
 									require $tmpl;
 									if ( ! empty( $field['desc'] ) ) {
-										printf( '<p class="description">%s</p>', $field['desc'] );
+										if ( ! isset( $field['options'] ) || ( ( isset( $field['options'] ) ) && $field['options'] ) ) {
+											printf( '<p class="description">%s</p>', $field['desc'] );
+										}
 									}
 									?>
                                 </div>

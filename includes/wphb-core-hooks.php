@@ -51,6 +51,11 @@ add_filter( 'request', 'hb_request_query' );
 // change booking title in admin archive booking page
 add_action( 'admin_head-edit.php', 'hb_edit_post_change_title_in_list' );
 
+//========================================== Admin Hooks ===========================================//
+
+// required permalink
+add_action( 'admin_notices', 'hb_notice_required_permalink' );
+
 // admin script
 add_action( 'admin_print_scripts', 'hb_admin_js_template' );
 

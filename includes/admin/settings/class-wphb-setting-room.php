@@ -129,18 +129,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'title'   => __( 'Rating reviews', 'wp-hotel-booking' ),
 					'desc'    => __( 'Enable ratings on reviews', 'wp-hotel-booking' ),
 					'type'    => 'checkbox',
-					'default' => 1,
-					'atts'    => array(
-						'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );"
-					)
+					'default' => 1
 				),
 				array(
 					'id'      => $prefix . 'review_rating_required',
 					'title'   => __( 'Require rating', 'wp-hotel-booking' ),
 					'type'    => 'checkbox',
 					'desc'    => __( 'Ratings are required to leave a review', 'wp-hotel-booking' ),
-					'default' => 1,
-					'class'   => array( 'enable_ratings_on_reviews' )
+					'default' => 1
 				),
 				array(
 					'id'      => $prefix . 'enable_gallery_lightbox',

@@ -33,6 +33,7 @@
 
     .hb-form-field {
         margin: 0 0 15px 0;
+        min-height: 25px;
         label {
             font-size: 14px;
             font-weight: 600;
@@ -70,6 +71,7 @@
     tbody {
         td {
             input {
+                text-align: center;
                 width: 100%;
             }
         }
