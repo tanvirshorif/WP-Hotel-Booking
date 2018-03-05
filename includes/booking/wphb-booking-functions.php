@@ -96,7 +96,6 @@ if ( ! function_exists( 'hb_get_booking_items' ) ) {
 	 * @return array|null|object
 	 */
 	function hb_get_booking_items( $booking_id = null, $item_type = 'line_item', $parent = null, $array_a = false ) {
-		_deprecated_function( 'hb_get_order_items', '2.0' );
 
 		global $wpdb;
 
@@ -163,7 +162,6 @@ if ( ! function_exists( 'hb_add_booking_item' ) ) {
 	 * @return bool|int
 	 */
 	function hb_add_booking_item( $booking_id = null, $param = array() ) {
-		_deprecated_function( 'hb_add_order_item', '2.0' );
 
 		global $wpdb;
 
@@ -207,7 +205,6 @@ if ( ! function_exists( 'hb_update_booking_item' ) ) {
 	 * @return bool
 	 */
 	function hb_update_booking_item( $item_id = null, $param = array() ) {
-		_deprecated_function( 'hb_update_order_item', '2.0' );
 
 		global $wpdb;
 
@@ -229,7 +226,6 @@ if ( ! function_exists( 'hb_remove_booking_item' ) ) {
 	 * @param null $booking_item_id
 	 */
 	function hb_remove_booking_item( $booking_item_id = null ) {
-		_deprecated_function( 'hb_remove_order_item', '2.0' );
 
 		// user booking curd
 		WPHB_Booking_CURD::remove_booking_item( $booking_item_id );
@@ -243,7 +239,6 @@ if ( ! function_exists( 'hb_get_parent_booking_item' ) ) {
 	 * @return null|string
 	 */
 	function hb_get_parent_booking_item( $order_item_id = null ) {
-		_deprecated_function( 'hb_get_parent_order_item', '2.0' );
 
 		global $wpdb;
 		$query = $wpdb->prepare( "
@@ -264,7 +259,6 @@ if ( ! function_exists( 'hb_get_sub_item_booking_item_id' ) ) {
 	 * @return array
 	 */
 	function hb_get_sub_item_booking_item_id( $order_item_id = null ) {
-		_deprecated_function( 'hb_get_sub_item_order_item_id', '2.0' );
 
 		global $wpdb;
 		$query = $wpdb->prepare( "
@@ -284,7 +278,6 @@ if ( ! function_exists( 'hb_empty_booking_items' ) ) {
 	 * @return false|int
 	 */
 	function hb_empty_booking_items( $booking_id = null ) {
-		_deprecated_function( 'hb_empty_booking_order_items', '2.0' );
 
 		global $wpdb;
 
@@ -312,7 +305,6 @@ if ( ! function_exists( 'hb_add_booking_item_meta' ) ) {
 	 * @return false|int
 	 */
 	function hb_add_booking_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $unique = false ) {
-		_deprecated_function( 'hb_add_booking_item_meta', '2.0' );
 
 		return add_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $unique );
 	}
@@ -330,7 +322,6 @@ if ( ! function_exists( 'hb_update_booking_item_meta' ) ) {
 	 * @return bool|int
 	 */
 	function hb_update_booking_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $prev_value = false ) {
-		_deprecated_function( 'hb_update_order_item_meta', '2.0' );
 
 		return update_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $prev_value );
 	}
@@ -347,7 +338,6 @@ if ( ! function_exists( 'hb_get_booking_item_meta' ) ) {
 	 * @return mixed
 	 */
 	function hb_get_booking_item_meta( $item_id = null, $key = null, $single = true ) {
-		_deprecated_function( 'hb_get_order_item_meta', '2.0' );
 
 		return get_metadata( 'hotel_booking_order_item', $item_id, $key, $single );
 	}
@@ -365,7 +355,6 @@ if ( ! function_exists( 'hb_delete_booking_item_meta' ) ) {
 	 * @return bool
 	 */
 	function hb_delete_booking_item_meta( $item_id = null, $meta_key = null, $meta_value = '', $delete_all = false ) {
-		_deprecated_function( 'hb_delete_order_item_meta', '2.0' );
 
 		return delete_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $delete_all );
 	}
