@@ -47,7 +47,7 @@
 .post-type-hb_room .select2-container--default .select2-search--inline .select2-search__field {
   margin-top: 7px; }
 
-/********************************** Room regular price and pricing plans *************************************************/
+/********************************** Room regular price *************************************************/
 .hb-pricing-list th, .hb-pricing-list td {
   padding: 5px 5px 5px 0; }
 
@@ -55,6 +55,7 @@
   text-align: center;
   width: 100%; }
 
+/********************************** Pricing plans *************************************************/
 /********************************** Admin extra page *************************************************/
 #wphb-admin-extra-panel {
   margin: 20px 0; }

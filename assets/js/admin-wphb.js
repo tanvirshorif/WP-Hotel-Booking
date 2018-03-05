@@ -500,8 +500,13 @@
                     ignoreTimezone: false,
                     handleWindowResize: true,
                     editable: false,
-                    defaultView: 'singleRowMonth',
-                    events: _events
+                    defaultView: 'month',
+                    events: _events,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        alert('Event: ' + calEvent.title);
+                    },
+                    contentHeight: 400,
+                    aspectRatio: 3
                 });
             }
         },

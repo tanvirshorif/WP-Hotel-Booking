@@ -21,7 +21,7 @@
                 ignoreTimezone: false,
                 handleWindowResize: true,
                 editable: false,
-                defaultView: 'singleRowMonth',
+                defaultView: 'month',
                 events: wphb_calendar_booking.booking
             })
         }
