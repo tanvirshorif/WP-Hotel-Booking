@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-room">
-    <tr class="room-item">
+    <tr class="room-item" v-if="room">
         <td>
             <a target="_blank" v-bind:href="room.edit_link">{{room.order_item_name}}</a>
         </td>
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
         <td>{{room.check_out_date}}</td>
         <td>{{room.night}}</td>
         <td>{{room.qty}}</td>
-        <td class="price">{{room.price}}$</td>
+        <td class="price">{{room.price}}{{booking.currency}}</td>
         <td class="actions">
             <span class="dashicons dashicons-edit edit"
                   title="<?php esc_attr_e( 'Edit item', 'wp-hotel-booking' ); ?>" @click="openModalUpdate"></span>
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 
         Vue.component('wphb-booking-room', {
             template: '#tmpl-admin-booking-room',
-            props: ['room', 'index'],
+            props: ['booking', 'room', 'index'],
             computed: {},
             methods: {
                 openModalUpdate: function () {

@@ -55,24 +55,34 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 		 *
 		 * @return array|bool
 		 */
+		/**
+		 * @param object $booking
+		 *
+		 * @return array|bool
+		 * @throws Exception
+		 */
 		public function load( &$booking ) {
 			if ( ! $booking->ID || get_post_type( $booking->ID ) != WPHB_Booking_CPT ) {
 				return false;
 			}
-			$id   = $booking->ID;
+
+			// WPHB_Booking
+			$booking = WPHB_Booking::instance( $booking->ID );
+
+			$id   = $booking->id;
 			$data = array(
 				'booking'  => array(
 					'id'                      => $id,
 					'status'                  => get_post_status( $id ),
 					'note'                    => get_the_content( $id ),
-					'tax'                     => get_post_meta( $id, '_hb_tax', true ),
 					'advance_payment'         => get_post_meta( $id, '_hb_advance_payment', true ),
 					'advance_payment_setting' => get_post_meta( $id, '_hb_advance_payment_setting', true ),
-					'currency'                => get_post_meta( $id, '_hb_currency', true ),
+					'currency'                => hb_get_currency_symbol( $booking->currency ),
 					'method'                  => get_post_meta( $id, '_hb_method', true ),
 					'method_title'            => get_post_meta( $id, '_hb_method_title', true ),
-					'total'                   => get_post_meta( $id, '_hb_total', true ),
-					'sub_total'               => get_post_meta( $id, '_hb_sub_total', true ),
+					'sub_total'               => hb_booking_subtotal( $id ),
+					'tax'                     => hb_booking_tax_total( $id ),
+					'total'                   => hb_booking_total( $id ),
 					'woo_order_id'            => get_post_meta( $id, '_hb_woo_order_id', true )
 				),
 				'customer' => array(
@@ -295,9 +305,9 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 			$extra = $wpdb->get_results( $sql, ARRAY_A );
 
 			if ( $extra ) {
-				foreach ( $extra as $key => $booking_extra_item_id ) {
-					$wpdb->delete( $wpdb->hotel_booking_order_items, array( 'order_item_id' => (int) $booking_extra_item_id ), array( '%d' ) );
-					$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array( 'hotel_booking_order_item_id' => (int) $booking_extra_item_id ), array( '%d' ) );
+				foreach ( $extra as $key => $_extra ) {
+					$wpdb->delete( $wpdb->hotel_booking_order_items, array( 'order_item_id' => $_extra['order_item_id'] ), array( '%d' ) );
+					$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array( 'hotel_booking_order_item_id' => $_extra['order_item_id'] ), array( '%d' ) );
 				}
 			}
 

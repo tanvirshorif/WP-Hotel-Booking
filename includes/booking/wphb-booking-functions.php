@@ -128,17 +128,31 @@ if ( ! function_exists( 'hb_get_booking_items' ) ) {
 				$post_type  = get_post_type( $product_id );
 
 				if ( WPHB_Room_CPT == $post_type ) {
-					$check_in_date  = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_date', true );
-					$check_out_date = hb_get_booking_item_meta( $item['order_item_id'], 'check_out_date', true );
-
+					$check_in_date                    = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_date', true );
+					$check_out_date                   = hb_get_booking_item_meta( $item['order_item_id'], 'check_out_date', true );
+					$items[ $key ] ['id']             = $product_id;
 					$items[ $key ] ['edit_link']      = get_edit_post_link( hb_get_booking_item_meta( $item['order_item_id'], 'product_id', true ) );
 					$items[ $key ] ['check_in_date']  = date_i18n( hb_get_date_format(), $check_in_date );
 					$items[ $key ] ['check_out_date'] = date_i18n( hb_get_date_format(), $check_out_date );
 					$items[ $key ] ['night']          = hb_count_nights_two_dates( $check_out_date, $check_in_date );
 					$items[ $key ] ['qty']            = hb_get_booking_item_meta( $item['order_item_id'], 'qty', true );
 					$items[ $key ] ['price']          = hb_get_booking_item_meta( $item['order_item_id'], 'subtotal', true );
-					$items[ $key ]['extra']           = hb_get_booking_items( $booking_id, 'sub_item', $item['order_item_id'], true );
+					// extra booking item
+					$items[ $key ]['extra'] = hb_get_booking_items( $booking_id, 'sub_item', $item['order_item_id'], true );
+					// all room extra
+					$items[ $key ]['all_extra'] = array();
+					if ( $extra = get_post_meta( $product_id, '_hb_room_extra', true ) ) {
+						foreach ( $extra as $extra_id ) {
+							$items[ $key ]['all_extra'][ $extra_id ] = array(
+								'id'    => $extra_id,
+								'title' => get_the_title( $extra_id ),
+								'type'  => get_post_meta( $extra_id, 'tp_hb_extra_room_respondent', true )
+							);
+						}
+					};
 				} else if ( WPHB_Extra_CPT == $post_type ) {
+					$items[ $key ] ['id']    = $product_id;
+					$items[ $key ] ['title'] = get_post_type( $product_id );
 					$items[ $key ]['unit']   = get_post_meta( $product_id, 'tp_hb_extra_room_respondent', true );
 					$items[ $key ] ['qty']   = hb_get_booking_item_meta( $item['order_item_id'], 'qty', true );
 					$items[ $key ] ['price'] = hb_get_booking_item_meta( $item['order_item_id'], 'subtotal', true );
@@ -541,19 +555,19 @@ if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
 					'check-out-date' => __( 'Check-out date', 'wp-hotel-booking' )
 				)
 			); ?>
-			<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
-			<input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
-			       name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
-			<input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
-			<input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
-			       name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
-			<input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
-			<select name="filter-type">
-				<option value=""><?php _e( 'Filter By', 'wp-hotel-booking' ); ?></option>
+            <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+            <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
+                   name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
+            <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
+            <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
+                   name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
+            <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
+            <select name="filter-type">
+                <option value=""><?php _e( 'Filter By', 'wp-hotel-booking' ); ?></option>
 				<?php foreach ( $filter_types as $slug => $text ) { ?>
-					<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
+                    <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
 				<?php } ?>
-			</select>
+            </select>
 			<?php
 		}
 	}

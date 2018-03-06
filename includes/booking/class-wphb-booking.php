@@ -444,6 +444,7 @@ if ( ! class_exists( 'WPHB_Booking' ) ) {
 		 * @param $post
 		 *
 		 * @return array
+		 * @throws Exception
 		 */
 		public static function localize_script( $post ) {
 			$curd = new WPHB_Booking_CURD();

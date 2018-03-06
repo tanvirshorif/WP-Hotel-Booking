@@ -16,11 +16,11 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-extra">
-    <tr class="extra-item" :data-room-item="this.r_index">
+    <tr class="extra-item" :data-room-item="this.r_index" v-if="extra">
         <td></td>
         <td colspan="3">{{extra.order_item_name}}</td>
         <td>{{extra.qty}}</td>
-        <td class="price">{{extra.price}}$</td>
+        <td class="price">{{extra.price}}{{booking.currency}}</td>
         <td class="actions">
             <span class="dashicons dashicons-no-alt remove"
                   title="<?php esc_attr_e( 'Delete item', 'wp-hotel-booking' ); ?>" @click="removeExtra"></span>
@@ -34,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
 
         Vue.component('wphb-booking-extra', {
             template: '#tmpl-admin-booking-extra',
-            props: ['extra', 'index', 'r_index'],
+            props: ['booking', 'extra', 'index', 'r_index'],
             computed: {},
             methods: {
                 removeExtra: function () {

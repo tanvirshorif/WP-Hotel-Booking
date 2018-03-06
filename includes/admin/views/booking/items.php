@@ -35,12 +35,18 @@ hb_admin_view( 'booking/loop/extra' );
                 <th class="actions"></th>
             </tr>
             </thead>
-
             <tbody>
+            <!-- init component -->
+            <wphb-booking-room></wphb-booking-room>
+            <wphb-booking-extra></wphb-booking-extra>
+
+            <!-- loop -->
             <template v-for="(room, r_index) in rooms">
-                <wphb-booking-room :room="room" :index="r_index" @openModalUpdate="openModalUpdate"></wphb-booking-room>
+                <wphb-booking-room :booking="booking" :room="room" :index="r_index"
+                                   @openModalUpdate="openModalUpdate"></wphb-booking-room>
                 <template v-for="(extra, e_index) in room.extra">
-                    <wphb-booking-extra :r_index="r_index" :extra="extra" :index="e_index"></wphb-booking-extra>
+                    <wphb-booking-extra :booking="booking" :r_index="r_index" :extra="extra"
+                                        :index="e_index"></wphb-booking-extra>
                 </template>
             </template>
             </tbody>
@@ -48,17 +54,17 @@ hb_admin_view( 'booking/loop/extra' );
             <tfoot>
             <tr>
                 <td colspan="5"><?php echo __( 'Sub Total' ); ?></td>
-                <td></td>
+                <td>{{booking.sub_total}}{{booking.currency}}</td>
                 <td></td>
             </tr>
             <tr>
                 <td colspan="5"><?php echo __( 'Tax' ); ?></td>
-                <td></td>
+                <td>{{booking.tax}}{{booking.currency}}</td>
                 <td></td>
             </tr>
             <tr>
                 <td colspan="5"><?php echo __( 'Grand Total', 'wp-hotel-booking' ); ?></td>
-                <td></td>
+                <td>{{booking.total}}{{booking.currency}}</td>
                 <td></td>
             </tr>
             </tfoot>
@@ -84,6 +90,9 @@ hb_admin_view( 'booking/loop/extra' );
             computed: {
                 rooms: function () {
                     return $store.getters['rooms'];
+                },
+                booking: function () {
+                    return $store.getters['booking'];
                 }
             },
             methods: {
@@ -91,7 +100,7 @@ hb_admin_view( 'booking/loop/extra' );
                     this.$emit('openModal', room);
                 },
                 openModalAdd: function () {
-                    this.$emit('openModal');
+                    this.$emit('openModal', false);
                 }
             }
         });

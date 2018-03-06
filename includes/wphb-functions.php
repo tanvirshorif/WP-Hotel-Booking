@@ -1042,54 +1042,54 @@ if ( ! function_exists( 'hb_get_currency_symbol' ) ) {
 			case 'NZD' :
 			case 'SGD' :
 			case 'USD' :
-				$currency_symbol = '&#36;';
+				$currency_symbol = '$';
 				break;
 			case 'BDT':
-				$currency_symbol = '&#2547;&nbsp;';
+				$currency_symbol = '৳';
 				break;
 			case 'BGN' :
-				$currency_symbol = '&#1083;&#1074;.';
+				$currency_symbol = 'лв.';
 				break;
 			case 'BRL' :
-				$currency_symbol = '&#82;&#36;';
+				$currency_symbol = 'R$';
 				break;
 			case 'CHF' :
-				$currency_symbol = '&#67;&#72;&#70;';
+				$currency_symbol = 'CHF';
 				break;
 			case 'CNY' :
 			case 'JPY' :
 			case 'RMB' :
-				$currency_symbol = '&yen;';
+				$currency_symbol = '¥';
 				break;
 			case 'CZK' :
-				$currency_symbol = '&#75;&#269;';
+				$currency_symbol = 'Kč';
 				break;
 			case 'DKK' :
 				$currency_symbol = 'kr.';
 				break;
 			case 'DOP' :
-				$currency_symbol = 'RD&#36;';
+				$currency_symbol = 'RD$';
 				break;
 			case 'EGP' :
 				$currency_symbol = 'EGP';
 				break;
 			case 'EUR' :
-				$currency_symbol = '&euro;';
+				$currency_symbol = '€';
 				break;
 			case 'GBP' :
-				$currency_symbol = '&pound;';
+				$currency_symbol = '£';
 				break;
 			case 'HRK' :
 				$currency_symbol = 'Kn';
 				break;
 			case 'HUF' :
-				$currency_symbol = '&#70;&#116;';
+				$currency_symbol = 'Ft';
 				break;
 			case 'IDR' :
 				$currency_symbol = 'Rp';
 				break;
 			case 'ILS' :
-				$currency_symbol = '&#8362;';
+				$currency_symbol = '₪';
 				break;
 			case 'INR' :
 				$currency_symbol = 'Rs.';
@@ -1098,58 +1098,58 @@ if ( ! function_exists( 'hb_get_currency_symbol' ) ) {
 				$currency_symbol = 'Kr.';
 				break;
 			case 'KIP' :
-				$currency_symbol = '&#8365;';
+				$currency_symbol = '₭';
 				break;
 			case 'KRW' :
-				$currency_symbol = '&#8361;';
+				$currency_symbol = '₩';
 				break;
 			case 'MYR' :
-				$currency_symbol = '&#82;&#77;';
+				$currency_symbol = 'RM';
 				break;
 			case 'NGN' :
-				$currency_symbol = '&#8358;';
+				$currency_symbol = '₦';
 				break;
 			case 'NOK' :
-				$currency_symbol = '&#107;&#114;';
+				$currency_symbol = 'kr';
 				break;
 			case 'NPR' :
 				$currency_symbol = 'Rs.';
 				break;
 			case 'PHP' :
-				$currency_symbol = '&#8369;';
+				$currency_symbol = '₱';
 				break;
 			case 'PLN' :
 				$currency_symbol = '&#122;&#322;';
 				break;
 			case 'PYG' :
-				$currency_symbol = '&#8370;';
+				$currency_symbol = 'zł';
 				break;
 			case 'RON' :
 				$currency_symbol = 'lei';
 				break;
 			case 'RUB' :
-				$currency_symbol = '&#1088;&#1091;&#1073;.';
+				$currency_symbol = 'руб.';
 				break;
 			case 'SEK' :
-				$currency_symbol = '&#107;&#114;';
+				$currency_symbol = 'kr';
 				break;
 			case 'THB' :
 				$currency_symbol = '&#3647;';
 				break;
 			case 'TRY' :
-				$currency_symbol = '&#8378;';
+				$currency_symbol = '฿';
 				break;
 			case 'TWD' :
-				$currency_symbol = '&#78;&#84;&#36;';
+				$currency_symbol = 'NT$';
 				break;
 			case 'UAH' :
-				$currency_symbol = '&#8372;';
+				$currency_symbol = '₴';
 				break;
 			case 'VND' :
-				$currency_symbol = '&#8363;';
+				$currency_symbol = '₫';
 				break;
 			case 'ZAR' :
-				$currency_symbol = '&#82;';
+				$currency_symbol = 'R';
 				break;
 			default :
 				$currency_symbol = $currency;

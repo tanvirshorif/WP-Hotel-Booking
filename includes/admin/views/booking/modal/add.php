@@ -72,7 +72,8 @@ defined( 'ABSPATH' ) || exit; ?>
                     </div>
                     <div class="type">{{extra.respondent}}</div>
                     <div class="qty">
-                        <input type="number" v-model="extra.qty" v-bind:readonly="extra.respondent == 'trip'"/></div>
+                        <input type="number" min="1" v-model="extra.qty" v-bind:readonly="extra.respondent == 'trip'"/>
+                    </div>
                 </div>
             </div>
         </div>

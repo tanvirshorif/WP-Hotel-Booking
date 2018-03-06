@@ -50,9 +50,11 @@ hb_admin_view( 'booking/modal' );
             </div>
             <wphb-booking-items @openModal="openModal"></wphb-booking-items>
         </div>
-        <wphb-booking-modal :class="modal.show ? 'show' : ''" :type="modal.type" :item="modalItem"
+        <wphb-booking-modal :class="modal.show ? 'show' : ''" :type="modal.type" :item="modal.item"
                             @closeModal="closeModal" @checkAvailable="checkAvailable"
                             @addItem="addItem"></wphb-booking-modal>
+
+        <wphb-booking-modal-update></wphb-booking-modal-update>
     </div>
 
 </script>
@@ -69,7 +71,8 @@ hb_admin_view( 'booking/modal' );
                 return {
                     modal: {
                         show: false,
-                        type: 'add'
+                        type: 'add',
+                        item: $store.getters['newItem']
                     }
                 }
             },
@@ -87,6 +90,7 @@ hb_admin_view( 'booking/modal' );
                     }
                 },
                 openModal: function (room) {
+                    console.log(room);
                     if (room) {
                         this.modal.type = 'update';
                         this.modal.item = room;

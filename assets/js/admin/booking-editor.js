@@ -10,6 +10,9 @@ if (typeof wphb_admin_booking !== 'undefined') {
         state.countCurrentRequest = 0;
 
         var getters = {
+            booking: function (state) {
+                return state.booking;
+            },
             id: function (state) {
                 return state.booking.id;
             },
@@ -83,6 +86,7 @@ if (typeof wphb_admin_booking !== 'undefined') {
                 }).then(function (response) {
                     var result = response.body,
                         data = result.data;
+                    console.log(data);
                     if (data) {
                         context.commit('SET_BOOKING_ITEMS', data);
                     }
