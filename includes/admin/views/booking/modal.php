@@ -14,9 +14,6 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-global $post;
-$booking = WPHB_Booking::instance( $post->ID );
-
 hb_admin_view( 'booking/modal/add' );
 hb_admin_view( 'booking/modal/update' );
 ?>
@@ -28,7 +25,7 @@ hb_admin_view( 'booking/modal/update' );
         <wphb-booking-modal-update :item="item" v-if="this.type === 'update'"
                                    @closeModal="closeModal"></wphb-booking-modal-update>
 
-        <wphb-booking-modal-add :item="item" v-else="" @checkAvailable="checkAvailable"
+        <wphb-booking-modal-add :item="item" v-else="" @checkAvailable="checkAvailable" @addItem="addItem"
                                 @closeModal="closeModal"></wphb-booking-modal-add>
 
     </div>

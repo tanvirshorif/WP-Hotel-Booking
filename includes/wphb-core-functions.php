@@ -81,15 +81,16 @@ if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
 
 		$post_type = get_post_type( $product_id );
 
-		$product = 'WPHB_Product_' . implode( '_', array_map( 'ucfirst', explode( '_', $post_type ) ) );
-		if ( ! class_exists( $product ) ) {
-			$product = 'WPHB_Room';
+		if ( $post_type == WPHB_Extra_CPT ) {
+			$class = 'WPHB_Extra_Package';
+		} else {
+			$class = 'WPHB_Room';
 		}
 
-		$product = apply_filters( 'hotel_booking_cart_product_class_name', $product, $product_id );
-		$product = new $product( $product_id, $params );
+		$class = apply_filters( 'hotel_booking_cart_product_class_name', $class, $product_id );
+		$class = new $class( $product_id, $params );
 
-		return apply_filters( 'hotel_booking_get_product_class', $product, $product_id, $params );
+		return apply_filters( 'hotel_booking_get_product_class', $class, $product_id, $params );
 	}
 }
 

@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 
 global $post;
-$booking = WPHB_Booking::instance( $post->ID );
+
 hb_admin_view( 'booking/items' );
 hb_admin_view( 'booking/modal' );
 ?>
@@ -29,15 +29,15 @@ hb_admin_view( 'booking/modal' );
             <div id="booking-details">
                 <div class="booking-user-data">
                     <div class="user-avatar">
-                        <img v-bind:src="users[customer.id].avatar" v-bind:alt="users[customer.id].email"/>
+                        <!--                        <img v-bind:src="users[customer.id].avatar" v-bind:alt="users[customer.id].email"/>-->
                     </div>
                     <div class="order-user-meta">
                         <div class="user-display-name">
-                            <a v-bind:href="users[customer.id].link"
-                               target="_blank">{{users[customer.id].display_name}}</a>
+                            <!--                            <a v-bind:href="users[customer.id].link"-->
+                            <!--                               target="_blank">{{users[customer.id].display_name}}</a>-->
                         </div>
                         <div class="user-email">
-                            {{users[customer.id].email}}
+                            <!--                            {{users[customer.id].email}}-->
                         </div>
                     </div>
                 </div>
@@ -87,11 +87,11 @@ hb_admin_view( 'booking/modal' );
                     }
                 },
                 openModal: function (room) {
-                    this.modal.show = true;
                     if (room) {
                         this.modal.type = 'update';
                         this.modal.item = room;
                     }
+                    this.modal.show = true;
                 },
                 checkAvailable: function (item) {
                     $store.dispatch('checkAvailable', item);

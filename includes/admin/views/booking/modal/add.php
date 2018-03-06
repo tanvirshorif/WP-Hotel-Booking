@@ -12,14 +12,7 @@
 /**
  * Prevent loading this file directly
  */
-defined( 'ABSPATH' ) || exit;
-
-global $post;
-$booking = WPHB_Booking::instance( $post->ID );
-
-hb_admin_view( 'modal/add' );
-hb_admin_view( 'modal/update' );
-?>
+defined( 'ABSPATH' ) || exit; ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-modal-add">
 
@@ -67,7 +60,7 @@ hb_admin_view( 'modal/update' );
                     </div>
                 </div>
             </div>
-            <div class="extra-item" v-if="item.qty && numberExtra">
+            <div class="extra-item" v-if="item.qty">
                 <div class="heading">
                     <div class="extra"><?php _e( 'Extra Packages', 'wp-hotel-booking' ); ?></div>
                     <div class="type"><?php _e( 'Type', 'wp-hotel-booking' ); ?></div>
@@ -78,7 +71,8 @@ hb_admin_view( 'modal/update' );
                         <input type="checkbox" v-model="extra.selected"/>{{extra.title}}
                     </div>
                     <div class="type">{{extra.respondent}}</div>
-                    <div class="qty"><input type="number" value="1"/></div>
+                    <div class="qty">
+                        <input type="number" v-model="extra.qty" v-bind:readonly="extra.respondent == 'trip'"/></div>
                 </div>
             </div>
         </div>
@@ -104,17 +98,12 @@ hb_admin_view( 'modal/update' );
                 // item valid to add to booking
                 addable: function () {
                     return this.item.id && this.item.check_in && this.item.check_out && this.item.qty;
-                },
-                numberExtra: function () {
-                    return this.item.extra.length;
                 }
             },
             methods: {
                 checkAvailable: function () {
                     if (this.item.id && this.item.check_in && this.item.check_out) {
-                        console.log(this.item);
                         this.$emit('checkAvailable', this.item);
-                        console.log(this.item);
                     }
                 },
                 addItem: function () {

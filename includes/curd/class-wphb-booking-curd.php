@@ -146,10 +146,13 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 				'check_out_date' => strtotime( $item['check_out'] ),
 				'excerpt'        => array( $booking_id )
 			);
-			$qty  = WPHB_Room_CURD::get_room_available( $room_id, $args );
+
+			$room_curd = new WPHB_Room_CURD();
+			$qty       = $room_curd::get_room_available( $room_id, $args );
 
 			if ( $qty && ! is_wp_error( $qty ) ) {
 				$item['available'] = $qty;
+				$item['extra']     = $room_curd::get_room_extra( $room_id );
 			} else {
 				wp_send_json( array(
 					'status'  => false,
@@ -157,84 +160,110 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 				) );
 			}
 
-			$item['available'] = 1;
-
 			return $item;
 		}
 
-		public function add_item( $booking_id, $item ) {
+		/**
+		 * Add room and extra item to booking.
+		 *
+		 * @param $booking_id
+		 * @param $item
+		 *
+		 * @return array|bool
+		 */
+		public function add_items( $booking_id, $item ) {
 
-			$errors         = new WP_Error();
-			$product_id     = $item['id'];
-			$qty            = $item['qty'];
+			if ( empty( $item ) || ! $item['id'] ) {
+				return false;
+			}
+
+			$room_id        = $item['id'];
+			$room_qty       = $item['qty'];
 			$check_in_date  = strtotime( $item['check_in'] );
 			$check_out_date = strtotime( $item['check_out'] );
 
-			$order_item_id = 0;
-			$return        = true;
-			if ( isset( $_POST['order_item_id'] ) && $_POST['order_item_id'] ) {
-				$order_item_id = absint( $_POST['order_item_id'] );
-			}
+			// add room booking item
+			$booking_room_item_id = hb_add_booking_item( $booking_id, array(
+				'order_item_name' => get_the_title( $room_id ),
+				'order_item_type' => 'line_item'
+			) );
 
-			$args = array(
-				'order_item_name'   => get_the_title( $product_id ),
-				'order_item_type'   => isset( $_POST['order_item_type'] ) && $_POST['order_item_type'] ? sanitize_title( $_POST['order_item_type'] ) : 'line_item',
-				'order_item_parent' => isset( $_POST['order_item_parent'] ) && $_POST['order_item_parent'] ? absint( $_POST['order_item_parent'] ) : null
-			);
-			if ( ! $order_item_id ) {
-				// add new booking item
-				$order_item_id = hb_add_booking_item( $booking_id, $args );
-			} else {
-				// update booking item
-				hb_update_booking_item( $order_item_id, $args );
-			}
+			// update booking room item meta
+			hb_update_booking_item_meta( $booking_room_item_id, 'product_id', $room_id );
+			hb_update_booking_item_meta( $booking_room_item_id, 'qty', $room_qty );
+			hb_update_booking_item_meta( $booking_room_item_id, 'check_in_date', $check_in_date );
+			hb_update_booking_item_meta( $booking_room_item_id, 'check_out_date', $check_out_date );
 
-			// update order item meta
-			hb_update_booking_item_meta( $order_item_id, 'check_in_date', $check_in_date );
-			hb_update_booking_item_meta( $order_item_id, 'check_out_date', $check_out_date );
-			// product_id
-			hb_update_booking_item_meta( $order_item_id, 'product_id', $product_id );
-			hb_update_booking_item_meta( $order_item_id, 'qty', $qty );
-
-			$params        = array(
+			$product_class = hotel_booking_get_product_class( $room_id, array(
 				'check_in_date'  => $check_in_date,
 				'check_out_date' => $check_out_date,
-				'quantity'       => $qty,
-				'order_item_id'  => $order_item_id
-			);
-			$product_class = hotel_booking_get_product_class( $product_id, $params );
+				'quantity'       => $room_qty,
+				'order_item_id'  => $booking_room_item_id
+			) );
+			$subtotal      = $product_class->amount_exclude_tax();
+			$total         = $product_class->amount_include_tax();
+			hb_update_booking_item_meta( $booking_room_item_id, 'subtotal', $subtotal );
+			hb_update_booking_item_meta( $booking_room_item_id, 'total', $total );
+			hb_update_booking_item_meta( $booking_room_item_id, 'tax_total', $total - $subtotal );
 
-			// update subtotal, total
-			$subtotal = $product_class->amount_exclude_tax();
-			$total    = $product_class->amount_include_tax();
-			hb_update_booking_item_meta( $order_item_id, 'subtotal', $subtotal );
-			hb_update_booking_item_meta( $order_item_id, 'total', $total );
-			hb_update_booking_item_meta( $order_item_id, 'tax_total', $total - $subtotal );
-			// allow hook
-			do_action( 'hotel_booking_updated_order_item', $booking_id, $order_item_id );
+			$extra_data = array();
+			// add extra booking item
+			foreach ( $item['extra'] as $extra_id => $extra ) {
+				if ( $extra['selected'] ) {
+					$booking_extra_item_id = hb_add_booking_item( $booking_id, array(
+						'order_item_name'   => get_the_title( $extra_id ),
+						'order_item_type'   => 'sub_item',
+						'order_item_parent' => $booking_room_item_id
+					) );
+
+					// update booking extra item meta
+					hb_update_booking_item_meta( $booking_extra_item_id, 'product_id', $extra_id );
+					hb_update_booking_item_meta( $booking_extra_item_id, 'qty', $extra['qty'] );
+					hb_update_booking_item_meta( $booking_extra_item_id, 'check_in_date', $check_in_date );
+					hb_update_booking_item_meta( $booking_extra_item_id, 'check_out_date', $check_out_date );
+
+					$product_class = hotel_booking_get_product_class( $extra_id, array(
+						'check_in_date'  => $check_in_date,
+						'check_out_date' => $check_out_date,
+						'quantity'       => $extra['qty'],
+						'order_item_id'  => $booking_extra_item_id
+					) );
+					$subtotal      = $product_class->amount_exclude_tax();
+					$total         = $product_class->amount_include_tax();
+					hb_update_booking_item_meta( $booking_extra_item_id, 'subtotal', $subtotal );
+					hb_update_booking_item_meta( $booking_extra_item_id, 'total', $total );
+					hb_update_booking_item_meta( $booking_extra_item_id, 'tax_total', $total - $subtotal );
+
+					$extra_data[ $extra_id ] = array(
+						'order_id'          => $booking_id,
+						'order_item_id'     => $booking_extra_item_id,
+						'order_item_name'   => get_the_title( $extra_id ),
+						'order_item_parent' => $booking_room_item_id,
+						'order_item_type'   => 'sub_item',
+						'edit_link'         => get_edit_post_link( hb_get_booking_item_meta( $booking_extra_item_id, 'product_id', true ) ),
+						'check_in_date'     => date_i18n( hb_get_date_format(), $check_in_date ),
+						'check_out_date'    => date_i18n( hb_get_date_format(), $check_out_date ),
+						'night'             => hb_count_nights_two_dates( $check_out_date, $check_in_date ),
+						'qty'               => hb_get_booking_item_meta( $booking_extra_item_id, 'qty', true ),
+						'price'             => hb_get_booking_item_meta( $booking_extra_item_id, 'subtotal', true ),
+					);
+				}
+			}
 
 			return array(
 				'order_id'          => $booking_id,
-				'order_item_id'     => $order_item_id,
-				'order_item_name'   => $args['order_item_name'],
-				'order_item_parent' => $args['order_item_parent'],
-				'order_item_type'   => $args['order_item_type'],
-				'edit_link'         => get_edit_post_link( hb_get_booking_item_meta( $order_item_id, 'product_id', true ) ),
+				'order_item_id'     => $booking_room_item_id,
+				'order_item_name'   => get_the_title( $room_id ),
+				'order_item_parent' => null,
+				'order_item_type'   => 'line_item',
+				'edit_link'         => get_edit_post_link( hb_get_booking_item_meta( $booking_room_item_id, 'product_id', true ) ),
 				'check_in_date'     => date_i18n( hb_get_date_format(), $check_in_date ),
 				'check_out_date'    => date_i18n( hb_get_date_format(), $check_out_date ),
 				'night'             => hb_count_nights_two_dates( $check_out_date, $check_in_date ),
-				'qty'               => hb_get_booking_item_meta( $order_item_id, 'qty', true ),
-				'price'             => hb_get_booking_item_meta( $order_item_id, 'subtotal', true ),
-				'extra'             => array(),
+				'qty'               => hb_get_booking_item_meta( $booking_room_item_id, 'qty', true ),
+				'price'             => hb_get_booking_item_meta( $booking_room_item_id, 'subtotal', true ),
+				'extra'             => $extra_data,
 			);
-
-//			$post = get_post( $booking_id );
-//
-//			ob_start();
-//			hb_admin_view( 'metaboxes/booking-details', array(), true );
-//			$html = ob_get_clean();
-//
-//			wp_send_json( array( 'status' => true, 'html' => $html ) );
 		}
 
 		/**
@@ -252,10 +281,27 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 
 			global $wpdb;
 
+			// delete room booking item
 			$wpdb->delete( $wpdb->hotel_booking_order_items, array( 'order_item_id' => $booking_item_id ), array( '%d' ) );
 			$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array( 'hotel_booking_order_item_id' => $booking_item_id ), array( '%d' ) );
 
-			do_action( 'hotel_booking_remove_order_item', $booking_item_id );
+			// delete extra booking item
+			$sql = $wpdb->prepare( "
+                SELECT booking_item.order_item_id FROM $wpdb->hotel_booking_order_items as booking_item
+	                WHERE booking_item.order_item_type = %s 
+	                AND     booking_item.order_item_parent = %d",
+				'sub_item', $booking_item_id );
+
+			$extra = $wpdb->get_results( $sql, ARRAY_A );
+
+			if ( $extra ) {
+				foreach ( $extra as $key => $booking_extra_item_id ) {
+					$wpdb->delete( $wpdb->hotel_booking_order_items, array( 'order_item_id' => (int) $booking_extra_item_id ), array( '%d' ) );
+					$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array( 'hotel_booking_order_item_id' => (int) $booking_extra_item_id ), array( '%d' ) );
+				}
+			}
+
+			do_action( 'hotel_booking_remove_booking_item', $booking_item_id );
 
 			return true;
 		}

@@ -160,7 +160,7 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 					}
 
 					// add items to booking
-					$result = $curd->add_item( $booking_id, $item );
+					$result = $curd->add_items( $booking_id, $item );
 					break;
 				case 'remove-item':
 					$booking_item_id = $args['booking_item_id'] ? $args['booking_item_id'] : 0;
@@ -170,7 +170,6 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 					}
 
 					$result = $curd->remove_booking_item( $booking_item_id );
-
 					break;
 				default:
 					break;

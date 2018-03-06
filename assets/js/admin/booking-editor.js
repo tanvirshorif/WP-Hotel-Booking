@@ -20,7 +20,7 @@ if (typeof wphb_admin_booking !== 'undefined') {
                 return state.users;
             },
             rooms: function (state) {
-                return state.rooms;
+                return state.rooms || [];
             },
             newItem: function (state) {
                 return state.newItem;
@@ -44,6 +44,7 @@ if (typeof wphb_admin_booking !== 'undefined') {
                 state.rooms.push(item);
             },
             'REMOVE_ROOM': function (state, index) {
+                state.rooms[index]['extra'].length = 0;
                 state.rooms.splice(index, 1);
             },
             'REMOVE_EXTRA': function (state, room_index, extra_index) {

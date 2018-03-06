@@ -57,9 +57,19 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 		 */
 		public static function get_rooms() {
 			global $wpdb;
-			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s ORDER BY %s ASC", WPHB_Room_CPT, 'id' );
+			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s AND `post_status` =  %s ORDER BY %s ASC", WPHB_Room_CPT, 'publish', 'id' );
 
 			return $wpdb->get_results( $query, OBJECT );
+		}
+
+		/**
+		 * Get extra of room.
+		 */
+		public static function get_room_extra( $room_id ) {
+			$extra_product = WPHB_Extra_Product::instance( $room_id);
+			$room_extra    = $extra_product->get_extra();
+
+			return $room_extra;
 		}
 
 		/**

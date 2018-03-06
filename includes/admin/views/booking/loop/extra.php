@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <script type="text/x-template" id="tmpl-admin-booking-extra">
-    <tr class="extra-item">
+    <tr class="extra-item" :data-room-item="this.r_index">
         <td></td>
         <td colspan="3">{{extra.order_item_name}}</td>
         <td>{{extra.qty}}</td>
