@@ -34,7 +34,7 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 			}
 
 			if ( ! get_option( 'wphb_upgrade_2.0' ) ) {
-				self::update_booking_time();
+				self::update_booking_itemmeta();
 			}
 
 			self::deactivate_plugins();
@@ -45,15 +45,15 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 		 *
 		 * @since 2.0
 		 */
-		public static function update_booking_time() {
+		public static function update_booking_itemmeta() {
 
 			global $wpdb;
 
 			// select booking does not has time meta
 			$query = $wpdb->prepare( "
-				SELECT DISTINCT meta.hotel_booking_order_item_id FROM wp_hotel_booking_order_itemmeta AS meta
+				SELECT DISTINCT meta.hotel_booking_order_item_id FROM {$wpdb->prefix}hotel_booking_order_itemmeta AS meta
 				WHERE
-  					meta.hotel_booking_order_item_id NOT IN (SELECT meta.hotel_booking_order_item_id FROM wp_hotel_booking_order_itemmeta AS meta WHERE meta.meta_key = %s OR meta.meta_key = %s)",
+  					meta.hotel_booking_order_item_id NOT IN (SELECT meta.hotel_booking_order_item_id FROM {$wpdb->prefix}hotel_booking_order_itemmeta AS meta WHERE meta.meta_key = %s OR meta.meta_key = %s)",
 				'check_in_time', 'check_out_time' );
 
 			// add default booking time meta
@@ -65,6 +65,23 @@ if ( ! class_exists( 'WPHB_Upgrade' ) ) {
 						$id[0], $id[0], DAY_IN_SECONDS - 1 );
 
 					$wpdb->query( $query );
+				}
+			}
+
+
+			$sql = $wpdb->prepare( "
+					SELECT meta.hotel_booking_order_item_id, meta.meta_value FROM {$wpdb->prefix}hotel_booking_order_itemmeta AS meta
+					WHERE meta.meta_key = %s", 'product_id' );
+
+			if ( $items = $wpdb->get_results( $sql, ARRAY_A ) ) {
+				foreach ( $items as $item ) {
+					if ( get_post_type( $item['meta_value'] ) ) {
+						$query = $wpdb->prepare( "INSERT INTO {$wpdb->prefix}hotel_booking_order_itemmeta (hotel_booking_order_item_id, meta_key, meta_value) 
+						VALUES (%d, 'product_type', %s)",
+							$item['hotel_booking_order_item_id'], get_post_type( $item['meta_value'] ) );
+
+						$wpdb->query( $query );
+					}
 				}
 			}
 
