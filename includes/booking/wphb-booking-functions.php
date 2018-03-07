@@ -125,13 +125,15 @@ if ( ! function_exists( 'hb_get_booking_items' ) ) {
 				$items[ $key ] = $item;
 
 				$product_id = hb_get_booking_item_meta( $item['order_item_id'], 'product_id', true );
-				$post_type  = get_post_type( $product_id );
+				$post_type  = hb_get_booking_item_meta( $item['order_item_id'], 'product_type', true );
+
+				$items[ $key ]['type'] = $post_type;
 
 				if ( WPHB_Room_CPT == $post_type ) {
 					$check_in_date                    = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_date', true );
 					$check_out_date                   = hb_get_booking_item_meta( $item['order_item_id'], 'check_out_date', true );
 					$items[ $key ] ['id']             = $product_id;
-					$items[ $key ] ['edit_link']      = get_edit_post_link( hb_get_booking_item_meta( $item['order_item_id'], 'product_id', true ) );
+					$items[ $key ] ['edit_link']      = get_edit_post_link( $product_id );
 					$items[ $key ] ['check_in_date']  = date_i18n( hb_get_date_format(), $check_in_date );
 					$items[ $key ] ['check_out_date'] = date_i18n( hb_get_date_format(), $check_out_date );
 					$items[ $key ] ['night']          = hb_count_nights_two_dates( $check_out_date, $check_in_date );

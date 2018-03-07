@@ -68,6 +68,10 @@ if ( ! class_exists( 'WPHB_Metabox_Room_Price' ) ) {
 				return;
 			}
 
+			if ( get_post_type( $post_id ) != WPHB_Room_CPT ) {
+				return;
+			}
+
 			if ( ! isset( $_POST['hotel-booking-room-pricing-nonce'] ) || ! wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nonce' ) ) {
 				return;
 			}

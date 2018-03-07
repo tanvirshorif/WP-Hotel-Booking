@@ -125,6 +125,13 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 			return $data;
 		}
 
+		/**
+		 * Delete booking item data in order items and order item meta table.
+		 *
+		 * @param object $booking_id
+		 *
+		 * @return bool
+		 */
 		public function delete( &$booking_id ) {
 			if ( ! $booking_id || get_post_type( $booking_id ) != WPHB_Booking_CPT ) {
 				return false;

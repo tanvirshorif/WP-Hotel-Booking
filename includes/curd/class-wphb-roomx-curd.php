@@ -42,8 +42,25 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 			// TODO: Implement load() method.
 		}
 
-		public function delete( &$object ) {
-			// TODO: Implement delete() method.
+		/**
+		 * Delete room pricing plans in plans table.
+		 *
+		 * @param object $room_id
+		 *
+		 * @return bool
+		 */
+		public function delete( &$room_id ) {
+			if ( ! $room_id || get_post_type( $room_id ) != WPHB_Room_CPT ) {
+				return false;
+			}
+
+			global $wpdb;
+			// delete room pricing plans by room id
+			$wpdb->delete( $wpdb->hotel_booking_plans, array( 'room_id' => $room_id ), array( '%d' ) );
+
+			do_action( 'wphb_before_delete_room', $room_id );
+
+			return true;
 		}
 
 		public function update( &$object ) {
@@ -66,7 +83,7 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 		 * Get extra of room.
 		 */
 		public static function get_room_extra( $room_id ) {
-			$extra_product = WPHB_Extra_Product::instance( $room_id);
+			$extra_product = WPHB_Extra_Product::instance( $room_id );
 			$room_extra    = $extra_product->get_extra();
 
 			return $room_extra;
@@ -152,6 +169,7 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 				", '_hb_num_of_rooms', $room_id, 'hb_room' );
 
 				$qty = absint( $wpdb->get_var( $sql ) ) - absint( $wpdb->get_var( $not ) );
+
 				if ( $qty === 0 ) {
 					$errors->add( 'zero', __( 'This room is not available.', 'wp-hotel-booking' ) );
 

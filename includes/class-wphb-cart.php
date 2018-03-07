@@ -888,6 +888,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				$_products[ $k ] = apply_filters( 'hb_generate_transaction_object_room', array(
 					'parent_id'      => isset( $product->parent_id ) ? $product->parent_id : null,
 					'product_id'     => $product->ID,
+					'product_type'   => get_post_type( $product->ID ),
 					'qty'            => $product->get_data( 'quantity' ),
 					'check_in_date'  => $check_in,
 					'check_out_date' => $check_out,
