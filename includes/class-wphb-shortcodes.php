@@ -138,9 +138,6 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			 */
 			switch ( $page ) {
 				case 'results':
-					if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
-						break;
-					}
 					$query                    = WPHB_Query::instance( $atts );
 					$template                 = 'search/results.php';
 					$template_args['results'] = $query->search_rooms( apply_filters( 'hb_search_room_args', array(

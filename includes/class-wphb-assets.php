@@ -136,9 +136,7 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 				wp_enqueue_script( 'wphb-site' );
 
 				wp_enqueue_script( 'wphb-library-owl-carousel' );
-				if ( is_singular( 'hb_room' ) ) {
-					wp_enqueue_script( 'wphb-library-gallery' );
-				}
+				wp_enqueue_script( 'wphb-library-gallery' );
 			}
 			wp_enqueue_style( 'wphb-libraries' );
 			wp_enqueue_script( 'wphb-select2' );

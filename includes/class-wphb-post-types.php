@@ -77,6 +77,27 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			define( 'WPHB_Room_CPT', 'hb_room' );
 			define( 'WPHB_Extra_CPT', 'hb_extra_room' );
 			define( 'WPHB_Booking_CPT', 'hb_booking' );
+
+			add_action( 'before_delete_post', array( $this, 'before_delete_post' ) );
+		}
+
+		/**
+         * Delete booking data in order_items and order_itemmeta table.
+         *
+		 * @param $post_id
+		 */
+		public function before_delete_post( $post_id ) {
+			$type = get_post_type( $post_id );
+
+			if ( in_array( $type, array( WPHB_Booking_CPT, WPHB_Room_CPT ) ) ) {
+				if ( $type == WPHB_Booking_CPT ) {
+					$curd = new WPHB_Booking_CURD();
+				} else {
+					$curd = new WPHB_Room_CURD();
+				}
+
+				$curd->delete( $post_id );
+			}
 		}
 
 		/**

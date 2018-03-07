@@ -60,7 +60,7 @@ defined( 'ABSPATH' ) || exit;
                     <div class="type"><?php _e( 'Type', 'wp-hotel-booking' ); ?></div>
                     <div class="qty"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></div>
                 </div>
-                <div class="content" v-for="(extra, index) in item.all_extra">
+                <div class="content" v-for="(extra, index) in item.extra">
                     <div class="extra">
                         <input type="checkbox" checked/>{{extra.title}}
                     </div>
@@ -91,16 +91,6 @@ defined( 'ABSPATH' ) || exit;
                 // item valid to add to booking
                 addable: function () {
                     return this.item.id && this.item.check_in && this.item.check_out && this.item.qty;
-                },
-                listExtra: function () {
-                    var extra = this.item.extra,
-                        list = [];
-
-                    extra.each(function (_extra) {
-                        list[] = [_extra['id']];
-                    });
-
-                    return list;
                 }
             },
             methods: {

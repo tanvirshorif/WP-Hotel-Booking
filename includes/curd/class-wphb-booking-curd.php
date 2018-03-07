@@ -125,8 +125,31 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 			return $data;
 		}
 
-		public function delete( &$object ) {
-			// TODO: Implement delete() method.
+		public function delete( &$booking_id ) {
+			if ( ! $booking_id || get_post_type( $booking_id ) != WPHB_Booking_CPT ) {
+				return false;
+			}
+
+			global $wpdb;
+
+			$sql = $wpdb->prepare(
+				"SELECT items.order_item_id FROM $wpdb->hotel_booking_order_items AS items
+						  WHERE items.order_id = %d", $booking_id );
+			// get booking items id
+			$booking_items_id = $wpdb->get_results( $sql, ARRAY_A );
+
+
+			// delete booking items by booking id
+			$wpdb->delete( $wpdb->hotel_booking_order_items, array( 'order_id' => $booking_id ), array( '%d' ) );
+
+			// delete booking items meta
+			foreach ( $booking_items_id as $item ) {
+				$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array( 'hotel_booking_order_item_id' => $item['order_item_id'] ), array( '%d' ) );
+			}
+
+			do_action( 'wphb_before_delete_booking', $booking_id );
+
+			return true;
 		}
 
 		/**
