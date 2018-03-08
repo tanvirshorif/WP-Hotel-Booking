@@ -94,38 +94,27 @@ $date_order   = hb_start_of_week_order();
 						?>
                         <div class="hb-pricing-table">
                             <h3 class="hb-pricing-table-title">
-                                <span><?php _e( 'From', 'wp-hotel-booking' ); ?></span>
+                                <label><?php _e( 'From', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" class="datepicker"
                                        name="date-start[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
                                        value="<?php printf( '%s', date_i18n( hb_get_date_format(), $start ) ); ?>"/>
                                 <input type="hidden" name="date-start-timestamp[<?php echo esc_attr( $plan->ID ); ?>]"
                                        value="<?php echo esc_attr( $start ); ?>"/>
-                                <span><?php _e( 'To', 'wp-hotel-booking' ); ?></span>
+                                <label><?php _e( 'To', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" class="datepicker"
                                        name="date-end[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
                                        value="<?php printf( '%s', date_i18n( hb_get_date_format(), $end ) ); ?>"/>
                                 <input type="hidden" name="date-end-timestamp[<?php echo esc_attr( $plan->ID ); ?>]"
                                        value="<?php echo esc_attr( $end ); ?>"/>
                             </h3>
-                            <div class="hb-pricing-controls">
-                                <a href="" class="dashicons dashicons-trash"
-                                   title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
-                            </div>
-
                             <div class="hb-pricing-list">
                                 <table>
-                                    <thead>
-                                    <tr>
-										<?php foreach ( $date_order as $i ) { ?>
-                                            <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
-										<?php } ?>
-                                    </tr>
-                                    </thead>
                                     <tbody>
                                     <tr>
 										<?php $prices = $plan->prices; ?>
 										<?php foreach ( $date_order as $i ) { ?>
-                                            <td>
+                                            <td class="item">
+                                                <div class="date-name"><?php echo esc_html( $week_names[ $i ] ); ?></div>
 												<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                                 <input class="hb-pricing-price" type="number" min="0" step="any"
                                                        name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $i ); ?>]"
@@ -133,8 +122,11 @@ $date_order   = hb_start_of_week_order();
                                             </td>
 										<?php } ?>
                                     </tr>
-                                    </tbody>
                                 </table>
+                            </div>
+                            <div class="hb-pricing-controls">
+                                <a href="" class="dashicons dashicons-trash"
+                                   title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
                             </div>
                         </div>
 					<?php } ?>
@@ -157,30 +149,20 @@ $date_order   = hb_start_of_week_order();
 <script type="text/html" id="tmpl-hb-pricing-table">
     <div class="hb-pricing-table">
         <h3 class="hb-pricing-table-title">
-            <span><?php _e( 'From', 'wp-hotel-booking' ); ?></span>
+            <label><?php _e( 'From', 'wp-hotel-booking' ); ?></label>
             <input type="text" class="datepicker" name="date-start[__INDEX__]" size="10" readonly="readonly"/>
             <input type="hidden" name="date-start-timestamp[__INDEX__]"/>
-            <span><?php _e( 'To', 'wp-hotel-booking' ); ?></span>
+            <label><?php _e( 'To', 'wp-hotel-booking' ); ?></label>
             <input type="text" class="datepicker" name="date-end[__INDEX__]" size="10" readonly="readonly"/>
             <input type="hidden" name="date-end-timestamp[__INDEX__]"/>
         </h3>
-        <div class="hb-pricing-controls">
-            <a href="" class="dashicons dashicons-trash" title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
-        </div>
-
         <div class="hb-pricing-list">
             <table>
-                <thead>
-                <tr>
-					<?php foreach ( $date_order as $i ) { ?>
-                        <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
-					<?php } ?>
-                </tr>
-                </thead>
                 <tbody>
                 <tr>
 					<?php foreach ( $date_order as $i ) { ?>
-                        <td>
+                        <td class="item">
+                            <div class="date-name"><?php echo esc_html( $week_names[ $i ] ); ?></div>
                             <input class="hb-pricing-price" type="number" min="0" step="any"
                                    name="price[__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"/>
                         </td>
@@ -188,6 +170,9 @@ $date_order   = hb_start_of_week_order();
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="hb-pricing-controls">
+            <a href="" class="dashicons dashicons-trash" title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
         </div>
     </div>
 </script>

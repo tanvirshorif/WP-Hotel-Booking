@@ -19,4 +19,5 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <a href="#" data-id="<?php echo esc_attr( get_the_ID() ) ?>" data-name="<?php echo esc_attr( get_the_title() ) ?>"
-   class="hb_button hb_primary booking-now check_availability_room" title="<?php _e( 'Book Now', 'wp-hotel-booking-room' ); ?>"><i class="dashicons dashicons-calendar-alt"></i></a>
+   class="hb_button booking-now check_availability_room" title="<?php _e( 'Book Now', 'wp-hotel-booking-room' ); ?>"><i
+            class="dashicons dashicons-calendar-alt"></i></a>

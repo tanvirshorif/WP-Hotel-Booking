@@ -34,9 +34,9 @@
     height: 40px;
     min-width: 200px;
     border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
     font-size: 15px;
     color: #7a7a7a;
     padding: 7px 8px;
@@ -52,9 +52,9 @@
     height: 40px;
     min-width: 200px;
     border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
     padding: 7px 8px;
     line-height: 24px;
     -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.075);
@@ -329,12 +329,18 @@
   background: #ffb606;
   color: #fff;
   min-height: 40px;
-  display: inline-block; }
+  display: inline-block;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0; }
   .hb_button:hover {
     background: #2a2a2a;
     color: #fff; }
   .hb_button:focus {
     outline: none; }
+
+.hb_button_secondary {
+  background-color: #2a2a2a; }
 
 .hb_add_to_cart.hb_loading {
   -moz-opacity: 0.5;
@@ -513,9 +519,9 @@
       display: inline-block;
       overflow: hidden;
       color: #5a5a5a;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
       text-transform: uppercase; }
       .rooms-pagination .page-numbers li span.current {
         background: #ffb606;
@@ -529,9 +535,9 @@
       display: inline-block;
       color: #5a5a5a;
       overflow: hidden;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
       text-transform: uppercase;
       text-decoration: none; }
       .rooms-pagination .page-numbers li a:hover {
@@ -757,9 +763,9 @@
       padding: 10px 25px;
       line-height: 20px;
       border: 0;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
       background: #ffb606;
       color: #2a2a2a; }
       .hb_single_room #reviews #review_form_wrapper form .form-submit input[type="submit"]:hover {
@@ -886,9 +892,9 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
   background: #ffb606;
   color: #2a2a2a; }
 
@@ -897,11 +903,11 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
   background: #ffb606;
-  color: #2a2a2a; }
+  color: #fff; }
 
 #hotel-booking-results form .hb_button.hb_checkout:hover {
   background: #2a2a2a;
@@ -1026,9 +1032,9 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
   background: #ffb606;
   color: #2a2a2a; }
 

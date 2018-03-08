@@ -158,7 +158,7 @@ if ( ! function_exists( 'hb_admin_room_meta_boxes' ) ) {
 						)
 					)
 				),
-				'except'  => sprintf( wp_kses( __( '<i>You need create <a href="%s" target="_blank">room capacities</a> to select number of adults</i>', 'wp-hotel-booking' ),
+				'except'  => sprintf( wp_kses( __( '<i>You need to create <a href="%s" target="_blank">room capacities</a> to select number of adults</i>', 'wp-hotel-booking' ),
 					array(
 						'i' => array(),
 						'a' => array( 'href' => array(), 'target' => array() )

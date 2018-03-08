@@ -372,14 +372,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					} else {
 						$image = WPHB_PLUGIN_URL . '/assets/images/room-thumb.png';
 					}
-					$number = get_post_meta( $post->ID, '_hb_num_of_rooms', true );
-					if ( $number ) {
-						$sale_icon = ' <img class="sale-label" src="' . esc_url( WPHB_PLUGIN_URL . '/assets/images/sale.png' ) . '">';
-					} else {
-						$sale_icon = '';
-					}
-					echo '<a href="' . esc_url( admin_url( 'post.php?post=' . absint( $post->ID ) . '&action=edit' ) ) . '">' . wp_kses_post( $sale_icon ) .
-					     '<img width="50" height="50" class="room-thumbnail" src="' . esc_url( str_replace( '-150x150', '', $image ) ) . '"></a>';
+					echo '<img width="50" height="50" class="room-thumbnail" src="' . esc_url( str_replace( '-150x150', '', $image ) ) . '">';
 					break;
 				case 'room_quantity':
 					echo get_post_meta( $post->ID, '_hb_num_of_rooms', true );

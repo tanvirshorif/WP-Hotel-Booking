@@ -429,7 +429,6 @@
             });
             if (_table.hasClass('regular-price')) {
                 _cloned.removeClass('regular-price');
-                $('.hb-pricing-table-title > span', _cloned).html(wphb_admin_js.date_range);
                 $('#hb-pricing-plan-list').append(_cloned);
             } else {
                 _cloned.insertAfter(_table);
