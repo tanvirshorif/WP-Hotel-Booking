@@ -24,16 +24,15 @@ $booking_id = isset( $_GET['booking'] ) ? $_GET['booking'] : '';
 $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 ?>
 
-<?php if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
-	$booking = WPHB_Booking::instance( $booking_id );
+<?php if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) { ?>
+	<?php $booking = WPHB_Booking::instance( $booking_id ); ?>
 
-	if ( $booking->booking_key === $key ) {
+	<?php if ( $booking->booking_key === $key ) { ?>
+		<?php $rooms = hb_get_booking_items( $booking_id ); ?>
 
-		$rooms = hb_get_booking_items( $booking_id );
-		?>
         <div class="hb-message message">
             <div class="hb-message-content">
-				<?php echo __( 'Thank you! Your booking has been placed. We will contact you to confirm about the booking soon.', 'wp-hotel-booking' ); ?>
+				<?php echo __( 'Thank you! Your booking has been placed.', 'wp-hotel-booking' ); ?>
             </div>
         </div>
 
@@ -55,12 +54,25 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 					} ?>
                 </div>
             </div>
-            <div class="booking-data">
-                <h3 class="booking-data-number"><?php echo sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ); ?></h3>
-                <div class="booking-date">
-					<?php echo sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $booking_id ) ); ?>
-                </div>
-            </div>
+
+            <ul class="booking-data">
+                <li>
+                    <p><?php _e( 'Booking Number', 'wp-hotel-booking' ); ?></p>
+                    <strong><?php echo sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ); ?></strong>
+                </li>
+                <li>
+                    <p><?php _e( 'Date', 'wp-hotel-booking' ); ?></p>
+                    <strong><?php echo get_the_date( hb_get_date_format(), $booking_id ); ?></strong>
+                </li>
+                <li>
+                    <p><?php _e( 'Email', 'wp-hotel-booking' ); ?></p>
+                    <strong><?php echo esc_html( $booking->customer_email ); ?></strong>
+                </li>
+                <li>
+                    <p><?php _e( 'Total', 'wp-hotel-booking' ); ?></p>
+                    <strong><?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ) ?></strong>
+                </li>
+            </ul>
         </div>
 
         <div id="booking-items">
@@ -70,18 +82,18 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
             <table cellpadding="0" cellspacing="0" class="booking_item_table">
                 <thead>
                 <tr>
-                    <th><?php _e( 'Item', 'wp-hotel-booking' ); ?></th>
-                    <th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ) ?></th>
-                    <th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
-                    <th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
-                    <th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
+                    <th class="name"><?php _e( 'Item', 'wp-hotel-booking' ); ?></th>
+                    <th class="in-out"><?php _e( 'Check in - Check out', 'wp-hotel-booking' ) ?></th>
+                    <th class="night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
+                    <th class="qty"><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
+                    <th class="total"><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
                 </tr>
                 </thead>
                 <tbody>
 
 				<?php foreach ( $rooms as $k => $room ) { ?>
 
-                    <tr>
+                    <tr class="items">
                         <td>
 							<?php printf( '<a href="%s">%s</a>', get_permalink( hb_get_booking_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
                         </td>
@@ -152,27 +164,27 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 
                     <li>
                         <label for="_hb_customer_first_name"><?php echo __( 'First Name:', 'wp-hotel-booking' ); ?></label>
-		                <?php echo esc_html( $booking->customer_first_name ); ?>
+						<?php echo esc_html( $booking->customer_first_name ); ?>
                     </li>
 
                     <li>
                         <label for="_hb_customer_last_name"><?php echo __( 'Last Name:', 'wp-hotel-booking' ); ?></label>
-		                <?php echo esc_html( $booking->customer_last_name ); ?>
+						<?php echo esc_html( $booking->customer_last_name ); ?>
                     </li>
 
                     <li>
                         <label for="_hb_customer_address"><?php echo __( 'Address:', 'wp-hotel-booking' ); ?></label>
-		                <?php echo esc_html( $booking->customer_address ); ?>
+						<?php echo esc_html( $booking->customer_address ); ?>
                     </li>
 
                     <li>
                         <label for="_hb_customer_city"><?php echo __( 'City:', 'wp-hotel-booking' ); ?></label>
-		                <?php echo esc_html( $booking->customer_city ); ?>
+						<?php echo esc_html( $booking->customer_city ); ?>
                     </li>
 
                     <li>
                         <label for="_hb_customer_state"><?php echo __( 'State:', 'wp-hotel-booking' ); ?></label>
-		                <?php echo esc_html( $booking->customer_state ); ?>
+						<?php echo esc_html( $booking->customer_state ); ?>
                     </li>
 
                     <li>

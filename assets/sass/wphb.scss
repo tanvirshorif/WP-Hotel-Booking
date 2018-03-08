@@ -2645,3 +2645,58 @@ input[type="submit"], .bg-video-play, .navigation .navbar-nav > li > span, .hb_s
 .ui-datepicker-other-month.ui-state-disabled {
     visibility: hidden;
 }
+
+.wp-hotel-booking-thank-you {
+    #booking-details {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        .booking-user-data {
+            display: inline-block;
+            width: 150px;
+            .order-user-meta {
+                margin-top: 5px;
+            }
+        }
+        ul.booking-data {
+            list-style-type: none;
+            display: inline-block;
+            width: calc(100% - 160px);
+            li {
+                width: 24%;
+                padding-left: 8px;
+                display: inline-block;
+                border-right: 1px dashed #d3ced2;
+                p {
+                    margin-bottom: 4px;
+                }
+                &:last-child {
+                    border: none;
+                }
+            }
+        }
+    }
+    #booking-items {
+        h3 {
+            margin: 20px 0 10px 0;
+        }
+        th {
+            text-align: center;
+            &.check-in, &.check-out {
+                width: 160px;
+            }
+            &.night, &.qty {
+                width: 75px;
+            }
+            &.total {
+                width: 125px;
+            }
+        }
+        tbody {
+            td {
+                text-align: center;
+            }
+        }
+    }
+}
+

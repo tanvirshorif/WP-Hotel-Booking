@@ -2041,3 +2041,41 @@ input[type="submit"], .bg-video-play, .navigation .navbar-nav > li > span, .hb_s
 
 .ui-datepicker-other-month.ui-state-disabled {
   visibility: hidden; }
+
+.wp-hotel-booking-thank-you #booking-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; }
+  .wp-hotel-booking-thank-you #booking-details .booking-user-data {
+    display: inline-block;
+    width: 150px; }
+    .wp-hotel-booking-thank-you #booking-details .booking-user-data .order-user-meta {
+      margin-top: 5px; }
+  .wp-hotel-booking-thank-you #booking-details ul.booking-data {
+    list-style-type: none;
+    display: inline-block;
+    width: calc(100% - 160px); }
+    .wp-hotel-booking-thank-you #booking-details ul.booking-data li {
+      width: 24%;
+      padding-left: 8px;
+      display: inline-block;
+      border-right: 1px dashed #d3ced2; }
+      .wp-hotel-booking-thank-you #booking-details ul.booking-data li p {
+        margin-bottom: 4px; }
+      .wp-hotel-booking-thank-you #booking-details ul.booking-data li:last-child {
+        border: none; }
+
+.wp-hotel-booking-thank-you #booking-items h3 {
+  margin: 20px 0 10px 0; }
+
+.wp-hotel-booking-thank-you #booking-items th {
+  text-align: center; }
+  .wp-hotel-booking-thank-you #booking-items th.check-in, .wp-hotel-booking-thank-you #booking-items th.check-out {
+    width: 160px; }
+  .wp-hotel-booking-thank-you #booking-items th.night, .wp-hotel-booking-thank-you #booking-items th.qty {
+    width: 75px; }
+  .wp-hotel-booking-thank-you #booking-items th.total {
+    width: 125px; }
+
+.wp-hotel-booking-thank-you #booking-items tbody td {
+  text-align: center; }
