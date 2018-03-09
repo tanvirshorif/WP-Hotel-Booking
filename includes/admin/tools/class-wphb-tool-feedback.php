@@ -44,7 +44,6 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Feedback' ) ) {
 		 * Output.
 		 */
 		public function output() {
-			echo 'develop access';
 		}
 
 	}

@@ -1,4 +1,3 @@
-@import 'mixins';
 
 /********************************** Admin room page *************************************************/
 .post-type-hb_room {
@@ -16,10 +15,8 @@
                 cursor: move;
                 float: left;
                 margin: 0;
-                &:hover {
-                    .centered {
-                        opacity: 0.4;
-                    }
+                &:hover .centered {
+                    opacity: 0.4;
                 }
             }
         }
@@ -30,7 +27,6 @@
             cursor: move;
         }
     }
-
     .hb-form-field {
         margin: 0 0 15px 0;
         min-height: 25px;
@@ -49,7 +45,6 @@
             }
         }
     }
-
     .select2-container--default {
         .select2-selection--multiple .select2-selection__choice {
             background-color: transparent;
@@ -64,19 +59,6 @@
 }
 
 /********************************** Room regular price *************************************************/
-.hb-pricing-list {
-    th, td {
-        padding: 5px 5px 5px 0;
-    }
-    tbody {
-        td {
-            input {
-                text-align: center;
-                width: 100%;
-            }
-        }
-    }
-}
 
 #hb-pricing-plan-list {
     .hb-pricing-table-title {
@@ -89,7 +71,6 @@
             min-width: 125px;
         }
     }
-
     .hb-pricing-list {
         display: inline-block;
         td.item {
@@ -106,11 +87,141 @@
     }
 }
 
-/********************************** Pricing plans *************************************************/
-
+/********************************** Admin pricing plan *************************************************/
 .wp-hotel-booking_page_wphb-pricing-table {
-
+    /* DatePicker Container */
+    .ui-datepicker {
+        width: 300px;
+        height: auto;
+        margin: 5px auto 0;
+        font: 9pt Arial, sans-serif;
+        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        a {
+            text-decoration: none;
+        }
+        .ui-datepicker-title {
+            text-align: center;
+            line-height: 2.8em;
+        }
+        table {
+            width: 100%;
+        }
+    }
+    .ui-datepicker-header {
+        background: #000;
+        color: #e0e0e0;
+        font-weight: bold;
+        line-height: 30px;
+        border-width: 1px 0 0 0;
+        border-style: solid;
+        border-color: #111;
+        .ui-corner-all {
+            &.ui-state-hover {
+                background: transparent;
+                box-shadow: none;
+                border: none;
+            }
+            span {
+                display: none;
+            }
+        }
+    }
+    .ui-datepicker-prev, .ui-datepicker-next {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        cursor: pointer;
+        background-image: url("../images/arrow.png") !important;
+        background-repeat: no-repeat;
+        line-height: 600%;
+        overflow: hidden;
+    }
+    .ui-datepicker-prev {
+        float: left;
+        background-position: center -30px;
+    }
+    .ui-datepicker-next {
+        float: right;
+        background-position: center 0;
+    }
+    .ui-datepicker {
+        thead {
+            background-color: #f7f7f7;
+            background-image: -moz-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f1f1f1));
+            background-image: -webkit-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: -o-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: -ms-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f1f1f1', GradientType=0);
+            border-bottom: 1px solid #bbb;
+        }
+        th {
+            text-transform: uppercase;
+            font-size: 12px;
+            padding: 8px 0;
+            color: #fff;
+            filter: dropshadow(color = #fff, offx = 1, offy = 0);
+        }
+        tbody {
+            td {
+                padding: 0;
+                border-right: 1px solid #bbb;
+                &:last-child {
+                    border-right: 0;
+                }
+            }
+            tr {
+                border-bottom: 1px solid #bbb;
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+        td {
+            span, a {
+                font-weight: bold;
+                text-align: center;
+                line-height: 30px;
+                color: #666666;
+            }
+        }
+    }
+    .ui-datepicker-calendar .ui-state-active {
+        background: #0073aa;
+        color: #e0e0e0;
+        position: relative;
+        margin: -1px;
+    }
+    .ui-datepicker-unselectable .ui-state-default, a.ui-state-default {
+        background: transparent;
+        border: none;
+    }
+    .ui-datepicker-calendar {
+        td {
+            &:first-child .ui-state-active {
+                margin-left: 0;
+            }
+            &:last-child .ui-state-active {
+                margin-right: 0;
+            }
+        }
+        tr:last-child .ui-state-active {
+            margin-bottom: 0;
+        }
+        thead {
+            background: #0073aa;
+        }
+        tbody > tr > td a:hover {
+            background: #0073aa;
+            color: #fff;
+        }
+    }
 }
+
 
 /********************************** Admin extra page *************************************************/
 
@@ -122,81 +233,95 @@
         overflow: hidden;
         background-color: #fff;
         clear: both;
+    }
+    .extra-items-heading {
         input, select, textarea {
             background: transparent;
             border: none;
             box-shadow: none;
             border-bottom: 1px dashed #DDD;
         }
-        &:nth-child(2n+1) {
-            background-color: #f4fcff;
+    }
+    .extra-item {
+        input, select, textarea {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            border-bottom: 1px dashed #DDD;
         }
-        > div {
-            width: 20%;
-            float: left;
+    }
+    .extra-items-heading:nth-child(2n+1), .extra-item:nth-child(2n+1) {
+        background-color: #f4fcff;
+    }
+    .extra-items-heading > div, .extra-item > div {
+        width: 20%;
+        float: left;
+    }
+    .extra-items-heading .remove, .extra-item .remove {
+        padding-top: 30px;
+        width: 10%;
+    }
+    .extra-items-heading .desc, .extra-item .desc {
+        width: 42%;
+    }
+    .extra-items-heading > div > input, .extra-item > div > input {
+        width: 90%;
+        padding: 7px;
+    }
+    .extra-items-heading > div > input[type="checkbox"], .extra-item > div > input[type="checkbox"] {
+        width: auto;
+    }
+    .extra-items-heading > div > {
+        textarea, select {
+            width: 95%;
+            padding: 7px;
         }
-        .remove {
-            padding-top: 30px;
-            width: 10%;
+    }
+    .extra-item > div > {
+        textarea, select {
+            width: 95%;
+            padding: 7px;
         }
-        .desc {
-            width: 42%;
+    }
+    .extra-items-heading .rooms, .extra-item .rooms {
+        width: 10%;
+        text-align: center;
+    }
+    .extra-items-heading > .name, .extra-item > .name {
+        width: 18%;
+    }
+    .extra-items-heading > .type, .extra-item > .type, .extra-items-heading > .actions, .extra-item > .actions {
+        width: 10%;
+        text-align: center;
+    }
+    .extra-items-heading > .price > *, .extra-item > .price > * {
+        float: left;
+    }
+    .extra-items-heading > .price .price, .extra-item > .price .price {
+        margin-right: 3px;
+        width: 70px;
+    }
+    .extra-items-heading > .price .unit, .extra-item > .price .unit {
+        margin-left: 3px;
+        padding: 4px 0 4px 10px;
+        width: calc(100% - 100px);
+    }
+    .extra-items-heading > .type select, .extra-item > .type select {
+        width: 100%;
+    }
+    .extra-items-heading > {
+        .price span, .type select {
+            padding: 0;
+            line-height: 28px;
         }
-        > div > {
-            input {
-                &[type="checkbox"] {
-                    width: auto;
-                }
-                width: 90%;
-                padding: 7px;
-            }
-            textarea, select {
-                width: 95%;
-                padding: 7px;
-            }
-        }
-        .rooms {
-            width: 10%;
-            text-align: center;
-        }
+    }
+    .extra-item {
         > {
-            .name {
-                width: 18%;
-            }
-            .type {
-                width: 10%;
-                text-align: center;
-            }
-            .actions {
-                width: 10%;
-                text-align: center;
-            }
-
-            .price {
-                > * {
-                    float: left;
-                }
-                .price {
-                    margin-right: 3px;
-                    width: 70px;
-                }
-                .unit {
-                    margin-left: 3px;
-                    padding: 4px 0 4px 10px;
-                    width: calc(100% - 100px);
-                }
-            }
-            .type select {
-                width: 100%;
-            }
             .price span, .type select {
                 padding: 0;
                 line-height: 28px;
             }
         }
-    }
-
-    .extra-item {
         .actions {
             margin-top: 8px;
             span {
@@ -231,7 +356,6 @@
     .nav-tab-active {
         box-shadow: none;
     }
-
     .related-themes {
         .plugin-card-top {
             padding-bottom: 0;
@@ -239,18 +363,21 @@
         .theme-content {
             position: relative;
         }
-        .image-thumbnail {
-            a {
-                box-shadow: none;
-                img {
-                    width: 100%;
-                }
+        .image-thumbnail a {
+            box-shadow: none;
+            img {
+                width: 100%;
             }
         }
-
         .theme-description {
             margin: 0 0 25px 0;
-            @include text-overflow(1.6em, 5);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 5;
+            line-height: 1.6em;
+            max-height: 8em;
             color: #777;
         }
         .theme-title {
@@ -259,10 +386,10 @@
             line-height: 1.3em;
             margin-bottom: 0;
             min-height: 3.2em;
-        }
-        .theme-title a {
-            color: #545454;
-            text-decoration: none;
+            a {
+                color: #545454;
+                text-decoration: none;
+            }
         }
         .theme-rating {
             float: right;
@@ -282,13 +409,11 @@
             top: -3px;
             text-align: right;
             line-height: 1.6em;
-
             &:after {
                 content: '';
                 display: block;
                 clear: both;
             }
-
             .theme-price {
                 display: inline-block;
                 font-size: 24px;
@@ -307,27 +432,24 @@
             overflow: hidden;
         }
     }
-
-    .install-addons {
-        .plugin-card {
-            .plugin-card-top {
-                .name, .desc {
-                    margin-right: 0;
-                }
+    .install-addons .plugin-card {
+        .plugin-card-top {
+            .name, .desc {
+                margin-right: 0;
             }
-            .plugin-card-bottom {
-                .plugin-version {
-                    display: inline-block;
-                }
-            }
+        }
+        .plugin-card-bottom .plugin-version {
+            display: inline-block;
         }
     }
+}
 
-    @media screen and (min-width: 1600px) {
-        .plugin-card:not(.hide-if-js):nth-child(even) {
+@media screen and (min-width: 1600px) {
+    #wphb-admin-addons-wrapper .plugin-card:not(.hide-if-js) {
+        &:nth-child(even) {
             margin-right: 8px;
         }
-        .plugin-card:not(.hide-if-js):nth-child(3n) {
+        &:nth-child(3n) {
             margin-right: 0;
         }
     }
@@ -372,7 +494,7 @@
             &:first-child {
                 float: left;
             }
-            & > div {
+            > div {
                 padding-right: 20px;
             }
             h3 {
@@ -394,18 +516,12 @@
 
 /********************************** Admin setting page *************************************************/
 
-#wphb-admin-setting-wrapper {
-    .nav-tab-active {
-        box-shadow: none;
-    }
+#wphb-admin-setting-wrapper .nav-tab-active {
+    box-shadow: none;
 }
 
-.wp-hotel-booking_page_wphb-settings {
-    .form-table {
-        td {
-            padding-bottom: 0;
-        }
-    }
+.wp-hotel-booking_page_wphb-settings .form-table td {
+    padding-bottom: 0;
 }
 
 .wphb-admin-panel {
@@ -417,30 +533,87 @@
     }
 }
 
+/****************************************** Admin tools page ***************************************************/
+.wp-hotel-booking_page_wphb-tools {
+    #wphb-theme-override-templates {
+        margin-top: 25px;
+        thead h4 {
+            margin: 8px 0;
+        }
+        tbody {
+            th {
+                font-weight: bold;
+                p {
+                    margin: 0 0 0 10px;
+                    display: inline-block;
+                    a {
+                        font-weight: normal;
+                        outline: none;
+                        border: none;
+                        box-shadow: none;
+                        margin: 0;
+                        padding: 2px 8px;
+                        border-radius: 3px;
+                        &.current {
+                            background: #00aadc;
+                            color: #FFF;
+                        }
+                    }
+                }
+            }
+            .template-row {
+                code:before {
+                    font-family: Dashicons;
+                    vertical-align: middle;
+                    margin-top: -1px;
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+                &.up-to-date {
+                    .template-file code:before {
+                        content: "\f147";
+                        color: #0085ba;
+                    }
+                    .template-version {
+                        color: #1859ff;
+                    }
+                }
+                &.outdated .template-file code:before, &.undefined .template-file code:before {
+                    content: "\f534";
+                    color: #FF0000;
+                }
+                &.outdated .template-version, &.undefined .template-version {
+                    color: #FF0000;
+                }
+            }
+        }
+    }
+    #wphb-developer-access .link {
+        margin-top: 15px;
+        textarea {
+            padding: 8px;
+        }
+    }
+}
+
 /****************************************** Admin booking page ***************************************************/
+
 .post-type-hb_booking {
-    // archive booking page
     .search-box {
         display: none;
     }
-
-    // edit booking page
-    #post-body {
-        #normal-sortables {
-            min-height: 0;
-        }
+    #post-body #normal-sortables {
+        min-height: 0;
     }
     #booking-actions {
         label {
             display: block;
             font-weight: 600;
         }
-        ul {
-            li {
-                margin-bottom: 15px;
-                label {
-                    margin-bottom: 5px;
-                }
+        ul li {
+            margin-bottom: 15px;
+            label {
+                margin-bottom: 5px;
             }
         }
         .customer_details {
@@ -473,86 +646,72 @@
             }
         }
     }
-
     #booking-details {
         margin: 20px 0;
     }
-
     #booking-items {
         margin-bottom: 20px;
         table {
             width: 100%;
             margin-bottom: 25px;
             text-align: center;
-            thead {
-                th {
+            thead th {
+                text-align: left;
+                padding: 1em;
+                font-weight: 400;
+                color: #999;
+                &.night, &.qty, &.actions, &.total {
+                    padding: 2px;
+                }
+                &.checkin, &.checkout {
+                    width: 115px;
+                }
+                &.night {
+                    width: 55px;
+                }
+                &.qty {
+                    width: 65px;
+                }
+                &.price {
+                    width: 75px;
+                    text-align: right;
+                }
+                &.actions {
+                    width: 15px;
+                }
+            }
+            tbody tr {
+                td {
+                    padding: 15px 10px;
+                    font-size: 13px;
                     text-align: left;
-                    padding: 1em;
-                    font-weight: 400;
-                    color: #999;
-                    &.night, &.qty, &.actions, &.total {
-                        padding: 2px;
-                    }
-                    &.checkin, &.checkout {
-                        width: 115px;
-                    }
-                    &.night {
-                        width: 55px;
-                    }
-                    &.qty {
-                        width: 65px;
-                    }
                     &.price {
-                        width: 75px;
                         text-align: right;
                     }
                     &.actions {
-                        width: 15px;
+                        text-align: right;
+                        span {
+                            visibility: hidden;
+                            color: #ccc;
+                            cursor: pointer;
+                            &:hover {
+                                color: #0073aa;
+                            }
+                            &.remove:hover {
+                                color: #a00;
+                            }
+                        }
                     }
                 }
-            }
-            tbody {
-                tr {
-                    td {
-                        padding: 15px 10px;
-                        font-size: 13px;
-                        text-align: left;
-                        &.price {
-                            text-align: right;
-                        }
-                        &.actions {
-                            text-align: right;
-                            span {
-                                visibility: hidden;
-                                color: #ccc;
-                                cursor: pointer;
-                                &:hover {
-                                    color: #0073aa
-                                }
-                                &.remove {
-                                    &:hover {
-                                        color: #a00;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    &:hover {
-                        .actions {
-                            span {
-                                visibility: visible;
-                            }
-                        }
-                    }
-                    &.room-item {
-                        background: #F5F5F5;
-                    }
-                    &.extra-item {
-                        td {
-                            padding: 10px;
-                            font-size: 12px;
-                        }
-                    }
+                &:hover .actions span {
+                    visibility: visible;
+                }
+                &.room-item {
+                    background: #F5F5F5;
+                }
+                &.extra-item td {
+                    padding: 10px;
+                    font-size: 12px;
                 }
             }
             tfoot {
@@ -562,10 +721,8 @@
                 width: 50%;
                 margin: 0;
                 text-align: right;
-                tr {
-                    td {
-                        padding: 10px 25px 10px 50px;
-                    }
+                tr td {
+                    padding: 10px 25px 10px 50px;
                 }
             }
         }
@@ -579,7 +736,6 @@
             }
         }
     }
-
     #booking-customer {
         .hb-form-field {
             margin: 0 0 25px 0;
@@ -601,22 +757,18 @@
             }
         }
     }
-
     .column-customer, .column-total {
         width: 15%;
-        strong {
-            display: block;
-        }
     }
-
+    .column-customer strong, .column-total strong {
+        display: block;
+    }
     .column-title, .column-check_in_date, .column-check_out_date, .column-booking_date {
         width: 14%;
     }
-
     .column-status {
         width: 10%;
     }
-
     #booking-modal-search {
         opacity: 0;
         display: none;
@@ -658,10 +810,8 @@
             }
             .main {
                 padding: 20px 10px 35px;
-                .heading, .content {
-                    & > div {
-                        display: inline-block;
-                    }
+                .heading > div, .content > div {
+                    display: inline-block;
                 }
                 .heading {
                     padding: 10px 5px;
@@ -676,15 +826,13 @@
                     }
                     .checkin, .checkout {
                         width: 25%;
-                        input {
-                            display: inline-block;
-                            width: 90%;
-                        }
                     }
-                    .qty {
-                        select {
-                            padding: 2px 10px;
-                        }
+                    .checkin input, .checkout input {
+                        display: inline-block;
+                        width: 90%;
+                    }
+                    .qty select {
+                        padding: 2px 10px;
                     }
                 }
                 .extra-item {
@@ -698,10 +846,8 @@
                             margin: -2px 10px 0 30px;
                         }
                     }
-                    .qty {
-                        input {
-                            width: 75px;
-                        }
+                    .qty input {
+                        width: 75px;
                     }
                     .type {
                         width: 150px;
@@ -718,6 +864,7 @@
 }
 
 /****************************************** Admin booking detail ***************************************************/
+
 #hb-booking-details {
     .booking-user-data {
         display: inline-block;
@@ -769,10 +916,10 @@
     box-sizing: border-box;
     padding-bottom: 50px;
     z-index: 10;
-    .slider-items {
-        &:after {
-            @include clear-fix();
-        }
+    .slider-items:after {
+        clear: both;
+        display: block;
+        content: '';
     }
     .slide-item {
         position: relative;
@@ -783,7 +930,9 @@
         visibility: hidden;
         opacity: 0;
         background: #FFF;
-        @include box-sizing(border-box);
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
         -webkit-transition: visibility 0.5s linear, opacity 0.5s linear;
         transition: visibility 0.5s linear, opacity 0.5s linear;
         .slide-thumbnail {
@@ -817,8 +966,7 @@
         position: absolute;
         bottom: 80px;
         right: 20px;
-        .next-item,
-        .prev-item {
+        .next-item, .prev-item {
             font-family: 'dashicons';
             width: 40px;
             height: 40px;
@@ -830,12 +978,12 @@
             margin-left: 10px;
             text-align: center;
             color: #DDD;
-            &:hover {
-                border-color: #0085ba;
-                &:before {
-                    color: #0085ba;
-                }
-            }
+        }
+        .next-item:hover, .prev-item:hover {
+            border-color: #0085ba;
+        }
+        .next-item:hover:before, .prev-item:hover:before {
+            color: #0085ba;
         }
         .next-item:before {
             content: "\f341";
@@ -847,28 +995,24 @@
 }
 
 @media only screen and (max-width: 1200px) {
-    .wphb-advertisement-slider {
-        .slide-item {
-            .slide-thumbnail {
-                width: 50%;
+    .wphb-advertisement-slider .slide-item {
+        .slide-thumbnail {
+            width: 50%;
+        }
+        .slide-detail {
+            margin-left: 50%;
+            .description-short {
+                display: block;
             }
-            .slide-detail {
-                margin-left: 50%;
-            }
-            .slide-detail {
-                .description-short {
-                    display: block;
-                }
-                .description-full {
-                    display: none;
-                }
+            .description-full {
+                display: none;
             }
         }
     }
 }
 
 @media only screen and (max-width: 960px) {
-    .wphb-advertisement-slider {
+    .wphb-advertisement-slider, .wp-responsive-open .wphb-advertisement-slider {
         margin-left: 56px;
         .slide-item {
             .slide-thumbnail {
@@ -881,8 +1025,6 @@
             .slide-detail {
                 margin-left: 0;
                 padding-left: 0;
-            }
-            .slide-detail {
                 h2 {
                     padding-top: 20px;
                 }
@@ -901,86 +1043,52 @@
             }
         }
     }
-    .wp-responsive-open {
-        .wphb-advertisement-slider {
-            margin-left: 56px;
-            .slide-item {
-                .slide-thumbnail {
-                    width: 100%;
-                    float: none;
-                    img {
-                        width: 100%;
-                    }
-                }
-                .slide-detail {
-                    margin-left: 0;
-                    padding-left: 0;
-                }
-                .slide-detail {
-                    h2 {
-                        padding-top: 20px;
-                    }
-                    .description-short {
-                        display: block;
-                    }
-                    .description-full {
-                        display: none;
-                    }
-                    .slide-controls {
-                        margin-bottom: 0;
-                        .button {
-                            margin-bottom: 0;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 /****************************************** End Admin footer advertisements ***************************************************/
 
-.hb_addition_package_extra {
-    display: none;
-    clear: both;
-    padding-top: 30px;
-    .hb_addition_package_title_toggle {
-        margin: 0;
-    }
-    a.hb_package_toggle {
-        display: block;
-        color: #333333 !important;
-        font-size: 24px;
-        line-height: 30px;
-        font-weight: 700;
-        text-transform: none;
-        padding: 0;
-        text-decoration: none !important;
-        /* margin-bottom: 15px; */
-        &:after {
-            content: '\f342';
-            font: 400 18px/1 dashicons;
-            vertical-align: top;
-            line-height: 28px;
-            display: inline-block;
-            margin-left: 5px;
-        }
-        &.active:after {
-            content: '\f346';
-        }
-    }
-    .hb_package_toggle {
-        &:hover, &.active {
-            border-color: #46598b;
-            color: #46598b;
-        }
-    }
-    input.hb_optional_quantity {
-        width: 50px;
-    }
-}
+//.hb_addition_package_extra {
+//    display: none;
+//    clear: both;
+//    padding-top: 30px;
+//    .hb_addition_package_title_toggle {
+//        margin: 0;
+//    }
+//    a.hb_package_toggle {
+//        display: block;
+//        color: #333333 !important;
+//        font-size: 24px;
+//        line-height: 30px;
+//        font-weight: 700;
+//        text-transform: none;
+//        padding: 0;
+//        text-decoration: none !important;
+//        /* margin-bottom: 15px; */
+//        &:after {
+//            content: '\f342';
+//            font: 400 18px/1 dashicons;
+//            vertical-align: top;
+//            line-height: 28px;
+//            display: inline-block;
+//            margin-left: 5px;
+//        }
+//        &.active:after {
+//            content: '\f346';
+//        }
+//    }
+//    .hb_package_toggle {
+//        &:hover, &.active {
+//            border-color: #46598b;
+//            color: #46598b;
+//        }
+//    }
+//    input.hb_optional_quantity {
+//        width: 50px;
+//    }
+//}
 
 /****************************************** Admin modal ***************************************************/
+
 #hb_modal_dialog {
     .hb_modal {
         position: fixed;
@@ -1029,7 +1137,7 @@
                 float: right;
                 margin: 0 5px;
             }
-            & > .center {
+            > .center {
                 text-align: center;
                 button {
                     float: initial;
@@ -1058,7 +1166,7 @@
             }
         }
         select {
-            width: 100%
+            width: 100%;
         }
     }
     .modal_overlay {
@@ -1074,97 +1182,10 @@
     }
 }
 
-//================================= Admin tools page ================================================================//
 
-.wp-hotel-booking_page_wphb-tools {
-
-    #wphb-theme-override-templates {
-        margin-top: 25px;
-        thead {
-            h4 {
-                margin: 8px 0;
-            }
-        }
-        tbody {
-            th {
-                font-weight: bold;
-                p {
-                    margin: 0 0 0 10px;
-                    display: inline-block;
-                    a {
-                        font-weight: normal;
-                        outline: none;
-                        border: none;
-                        box-shadow: none;
-                        margin: 0;
-                        padding: 2px 8px;
-                        border-radius: 3px;
-                        &.current {
-                            background: #00aadc;
-                            color: #FFF;
-                        }
-                    }
-                }
-            }
-
-            .template-row {
-                code {
-                    &:before {
-                        font-family: Dashicons;
-                        vertical-align: middle;
-                        margin-top: -1px;
-                        display: inline-block;
-                        margin-right: 5px;
-                    }
-                }
-
-                &.up-to-date {
-                    .template-file {
-                        code {
-                            &:before {
-                                content: "\f147";
-                                color: #0085ba;
-                            }
-                        }
-                    }
-                    .template-version {
-                        color: #1859ff;
-                    }
-                }
-                &.outdated, &.undefined {
-                    .template-file {
-                        code {
-                            &:before {
-                                content: "\f534";
-                                color: #FF0000;
-                            }
-                        }
-                    }
-                    .template-version {
-                        color: #FF0000;
-                    }
-                }
-            }
-        }
-    }
-
-    #wphb-developer-access {
-        .link {
-            margin-top: 15px;
-            textarea {
-                padding: 8px;
-            }
-        }
-    }
-}
-
-//================================= Admin settings page ================================================================//
-
-form[name="hb-admin-settings-form"] {
-    .subsubsub {
-        float: none;
-        margin: 10px 0 0;
-    }
+form[name="hb-admin-settings-form"] .subsubsub {
+    float: none;
+    margin: 10px 0 0;
 }
 
 .clearfix:after {
@@ -1229,18 +1250,18 @@ form[name="hb-admin-settings-form"] {
     position: absolute;
     right: 10px;
     top: 10px;
+    a {
+        margin-left: 0;
+        border: 1px solid #DDD;
+        background-color: #F5F5F5;
+        padding: 5px;
+    }
 }
 
-.hb-pricing-controls a {
-    margin-left: 0;
-    border: 1px solid #DDD;
-    background-color: #F5F5F5;
-    padding: 5px;
-}
-
-.hb-pricing-table.regular-price .hb-pricing-table-title input,
-.hb-pricing-table.regular-price .hb-pricing-controls .dashicons-trash {
-    display: none;
+.hb-pricing-table.regular-price {
+    .hb-pricing-table-title input, .hb-pricing-controls .dashicons-trash {
+        display: none;
+    }
 }
 
 .hb-admin-sub-tab a {
@@ -1260,19 +1281,19 @@ form[name="hb-admin-settings-form"] {
     overflow: hidden;
     clear: both;
     display: none;
+    &.current {
+        opacity: 1;
+        display: block;
+    }
 }
 
-.hb-sub-tab-content.current {
-    opacity: 1;
-    display: block;
-}
-
-.post-type-hb_room .column-date {
-    display: none;
-}
-
-.post-type-hb_room .column-author {
-    width: 150px;
+.post-type-hb_room {
+    .column-date {
+        display: none;
+    }
+    .column-author {
+        width: 150px;
+    }
 }
 
 #adminmenu .toplevel_page_hb_booking_details {
@@ -1281,29 +1302,28 @@ form[name="hb-admin-settings-form"] {
 
 .customer-information {
     width: 50%;
+    tr {
+        width: 500px;
+        border: 1px solid black;
+    }
 }
 
-.customer-information tr {
-    width: 500px;
-    border: 1px solid black;
+.post-type-hb_customer {
+    .column-bookings, .column-phone_number {
+        width: 150px;
+    }
+    #post-body-content {
+        display: none;
+    }
 }
 
-.post-type-hb_customer .column-bookings {
-    width: 150px;
-}
-
-.post-type-hb_customer .column-phone_number {
-    width: 150px;
-}
-
-.post-type-hb_customer #post-body-content,
 .post-type-hb_booking #post-body-content {
     display: none;
 }
 
 /**/
-.hb-booking-table,
-.hb-booking-rooms {
+
+.hb-booking-table, .hb-booking-rooms {
     border: 1px solid #DDD;
     border-collapse: collapse;
     max-width: 800px;
@@ -1313,21 +1333,25 @@ form[name="hb-admin-settings-form"] {
     margin-bottom: 20px;
 }
 
-.hb-booking-table td,
-.hb-booking-table th,
-.hb-booking-rooms td,
-.hb-booking-rooms th {
-    border: 1px solid #DDD;
-    padding: 10px;
+.hb-booking-table {
+    td, th {
+        border: 1px solid #DDD;
+        padding: 10px;
+    }
 }
 
-.hb-booking-table thead th,
-.hb-booking-rooms thead th {
+.hb-booking-rooms {
+    td, th {
+        border: 1px solid #DDD;
+        padding: 10px;
+    }
+}
+
+.hb-booking-table thead th, .hb-booking-rooms thead th {
     background-color: #F5F5F5;
 }
 
-.hb-booking-table thead h3,
-.hb-booking-rooms thead h3 {
+.hb-booking-table thead h3, .hb-booking-rooms thead h3 {
     text-align: left;
     margin: 0;
     padding: 0;
@@ -1343,10 +1367,7 @@ form[name="hb-admin-settings-form"] {
     vertical-align: top;
 }
 
-#hb-booking-date-from,
-#hb-booking-date-to,
-#hb-booking-date-from[readonly="readonly"],
-#hb-booking-date-to[readonly="readonly"] {
+#hb-booking-date-from, #hb-booking-date-to, #hb-booking-date-from[readonly="readonly"], #hb-booking-date-to[readonly="readonly"] {
     background-color: #FFF;
     width: 100px;
     text-align: center;
@@ -1378,82 +1399,73 @@ form[name="hb-admin-settings-form"] {
     border: 1px solid #DDD;
 }*/
 
-.attachment.add-new .dashicons {
-    font-size: 40px;
-    line-height: 55px;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 50%;
-    margin-top: -25px;
-    left: 50%;
-    margin-left: -25px;
-    color: #FFF;
-    cursor: pointer;
-}
-
-.attachment.add-new {
-    cursor: pointer;
-}
-
-.attachment.add-new:hover .dashicons {
-    color: #00a0d2;
-}
-
-.attachment .dashicons-trash {
-    position: absolute;
-    z-index: 5;
-    font-size: 24px;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    color: #FFF;
-    right: 10px;
-    bottom: 10px;
-    cursor: pointer;
-    display: none;
-}
-
-.attachment .dashicons-trash:hover {
-    color: #FF0000;
-}
-
-.attachment:hover .dashicons-trash {
-    display: block;
+.attachment {
+    &.add-new {
+        .dashicons {
+            font-size: 40px;
+            line-height: 55px;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 50%;
+            margin-top: -25px;
+            left: 50%;
+            margin-left: -25px;
+            color: #FFF;
+            cursor: pointer;
+        }
+        cursor: pointer;
+        &:hover .dashicons {
+            color: #00a0d2;
+        }
+    }
+    .dashicons-trash {
+        position: absolute;
+        z-index: 5;
+        font-size: 24px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        color: #FFF;
+        right: 10px;
+        bottom: 10px;
+        cursor: pointer;
+        display: none;
+        &:hover {
+            color: #FF0000;
+        }
+    }
+    &:hover .dashicons-trash {
+        display: block;
+    }
 }
 
 .hb-booking-status {
     display: inline-block;
     background-color: #FFF;
     color: #F5F5F5;
-}
-
-.hb-booking-status a {
-    text-decoration: none;
-}
-
-.hb-booking-status.hb-completed a {
-    background-color: #2ea2cc;
-}
-
-.hb-booking-status.hb-pending a {
-    background-color: #ffba00;
-}
-
-.hb-booking-status.hb-processing a {
-    background-color: #73a724;
-}
-
-.hb-booking-status.hb-cancelled a {
-    background-color: #a00;
-}
-
-.hb-booking-status a {
-    font-size: 10px;
-    display: inline-block;
-    background-color: #FFF;
-    padding: 3px 8px;
-    color: #F5F5F5;
+    a {
+        text-decoration: none;
+    }
+    &.hb-completed a {
+        background-color: #2ea2cc;
+    }
+    &.hb-pending a {
+        background-color: #ffba00;
+    }
+    &.hb-processing a {
+        background-color: #73a724;
+    }
+    &.hb-cancelled a {
+        background-color: #a00;
+    }
+    a {
+        font-size: 10px;
+        display: inline-block;
+        background-color: #FFF;
+        padding: 3px 8px;
+        color: #F5F5F5;
+    }
 }
 
 .hb_advance_payment {
@@ -1461,257 +1473,190 @@ form[name="hb-admin-settings-form"] {
 }
 
 /*end gallery settings meta box*/
-
 /**rating hb_room**/
+
 .wp-admin.post-type-hb_room .star-rating {
     float: left;
     position: relative;
     width: 75px;
     height: 18px;
     line-height: 1;
-}
-
-.wp-admin.post-type-hb_room .star-rating:before,
-.wp-admin.post-type-hb_room .star-rating span:before {
-    content: "\e601\e601\e601\e601\e601";
-    color: #ffb606;
-    float: left;
-    top: 0;
-    left: 0;
-    position: absolute;
-    font-family: hotel-booking-star;
-}
-
-.wp-admin.post-type-hb_room .star-rating span:before {
-    content: "\e600\e600\e600\e600\e600";
-}
-
-.wp-admin.post-type-hb_room .star-rating span {
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    height: 18px;
+    &:before {
+        content: "\e601\e601\e601\e601\e601";
+        color: #ffb606;
+        float: left;
+        top: 0;
+        left: 0;
+        position: absolute;
+        font-family: hotel-booking-star;
+    }
+    span {
+        &:before {
+            content: "\e601\e601\e601\e601\e601";
+            color: #ffb606;
+            float: left;
+            top: 0;
+            left: 0;
+            position: absolute;
+            font-family: hotel-booking-star;
+            content: "\e600\e600\e600\e600\e600";
+        }
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        height: 18px;
+    }
 }
 
 /**end rating hb_room**/
 
 .tp_hotel_booking_tabs_settings {
     /*width: 20%;
-    max-width: 300px;
-    float: left;*/
-}
-
-.tp_hotel_booking_tabs_settings li {
-    display: inline-block;
-}
-
-.tp_hotel_booking_tabs_settings li a {
-    padding: 8px 12px;
-    display: block;
-    text-decoration: none;
-    color: #000;
-    background-color: #B5A1EA;
-    font-weight: 600;
-    transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-}
-
-.tp_hotel_booking_tabs_settings li a.active,
-.tp_hotel_booking_tabs_settings li a:hover {
-    background-color: #32373c;
-    /*padding-left: 30px;*/
-    color: rgba(240, 245, 250, .7);
+      max-width: 300px;
+      float: left;*/
+    li {
+        display: inline-block;
+        a {
+            padding: 8px 12px;
+            display: block;
+            text-decoration: none;
+            color: #000;
+            background-color: #B5A1EA;
+            font-weight: 600;
+            transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -webkit-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            &.active, &:hover {
+                background-color: #32373c;
+                /*padding-left: 30px;*/
+                color: rgba(240, 245, 250, 0.7);
+            }
+        }
+    }
 }
 
 .tp_hotel_booking_settings_content {
     /*padding-left: 20%;*/
-
 }
 
 .tp_hotel_booking_setting_fields {
     overflow: hidden;
     display: none;
     /*padding: 0 20px;*/
-}
-
-.tp_hotel_booking_setting_fields.active {
-    display: block;
+    &.active {
+        display: block;
+    }
 }
 
 /*END OTHER SETTINGS*/
-
 /*****Tags*****/
-.wp-list-table .column-thumbnail {
-    width: 120px;
-}
 
-.wp-list-table .column-ordering,
-.wp-list-table .column-capacity {
-    width: 80px;
-}
-
-.wp-list-table .hb-number-field {
-    width: 40px;
+.wp-list-table {
+    .column-thumbnail {
+        width: 120px;
+    }
+    .column-ordering, .column-capacity {
+        width: 80px;
+    }
+    .hb-number-field {
+        width: 40px;
+    }
 }
 
 /*****End Tags*****/
 /******META BOX******/
+
 .postbox .inside .hb_meta_title {
     font-weight: 600;
     font-size: 18px !important;
     color: #776C6C;
 }
 
-//#booking_details {
-//    padding: 8px 12px;
-//    color: #776C6C;
-//    overflow: hidden;
-//}
-//
-//#booking_details h1,
-//#booking_details h2,
-//#booking_details h3,
-//#booking_details h4,
-//#booking_details h5,
-//#booking_details h6,
-//#booking_details input,
-//#booking_details select,
-//#booking_details textarea {
-//    margin: 3px;
-//    padding: 3px;
-//    width: 90%;
-//}
-//
-//#booking_details ul {
-//    margin: 0;
-//}
-//
-//#booking_details_section label {
-//    display: block;
-//    padding: 5px 0;
-//}
-//
-//#booking_details_section .section {
-//    width: 32%;
-//    float: left;
-//    margin: 0 5px;
-//}
-//
-//#booking_details_section .section h4 a {
-//    font-size: 14px;
-//    color: #9E9393;
-//    padding: 0 5px;
-//    float: right;
-//}
-//
-//#booking_details_section .section .edit_details {
-//    display: none
-//}
-//
-//#booking_details_section .section .edit_details.active {
-//    display: block;
-//}
-//
-//#booking_details_section .section .edit_col {
-//    width: 50%;
-//    float: left;
-//}
-
-#booking_items .hb_overlay.active {
-    position: absolute;
-    background-color: #fff;
-    opacity: 0.8;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-#booking_items table {
-    width: 100%;
-    border: 3px solid #f8f8f8;
-}
-
-#booking_items table th {
-    background: #f8f8f8;
-}
-
-#booking_items table td,
-#booking_items table th {
-    padding: 8px;
-    font-size: 11px;
-    text-align: center;
-    color: #555;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-#booking_items table tr th:first-child,
-#booking_items table tr td:first-child {
-    width: 1%;
-}
-
-#booking_items table .actions {
-    width: 15%;
-}
-
-#booking_items .booking_item_table_cost tr th:first-child,
-#booking_items .booking_item_table_cost tr td:first-child {
-    width: 90%;
-}
-
-#booking_items .booking_item_table_cost tr td:first-child {
-    font-weight: 600;
-    font-size: 12px;
-}
-
-#booking_items table tr td {
-    border-bottom: 2px dotted #f8f8f8;
-}
-
-#booking_items table .name {
-    min-width: 200px;
-}
-
-#booking_items table .left {
-    text-align: left;
-}
-
-#booking_items table .right {
-    text-align: right;
-}
-
-#booking_items table .center {
-    text-align: center;
-}
-
-#booking_items table .actions a {
-    font-size: 14px;
-    color: #9E9393;
-    padding: 0 5px;
-}
-
-#booking_items table .actions a:hover {
-    color: #555;
-}
-
-#booking_items table .actions a.remove:hover {
-    color: #de5555;
-}
-
-#booking_items select {
-    font-size: 12px;
-    font-weight: 400;
-    color: #666;
+#booking_items {
+    .hb_overlay.active {
+        position: absolute;
+        background-color: #fff;
+        opacity: 0.8;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    table {
+        width: 100%;
+        border: 3px solid #f8f8f8;
+        th {
+            background: #f8f8f8;
+        }
+        td, th {
+            padding: 8px;
+            font-size: 11px;
+            text-align: center;
+            color: #555;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        tr {
+            th:first-child, td:first-child {
+                width: 1%;
+            }
+        }
+        .actions {
+            width: 15%;
+        }
+    }
+    .booking_item_table_cost tr {
+        th:first-child {
+            width: 90%;
+        }
+        td:first-child {
+            width: 90%;
+            font-weight: 600;
+            font-size: 12px;
+        }
+    }
+    table {
+        tr td {
+            border-bottom: 2px dotted #f8f8f8;
+        }
+        .name {
+            min-width: 200px;
+        }
+        .left {
+            text-align: left;
+        }
+        .right {
+            text-align: right;
+        }
+        .center {
+            text-align: center;
+        }
+        .actions a {
+            font-size: 14px;
+            color: #9E9393;
+            padding: 0 5px;
+            &:hover {
+                color: #555;
+            }
+            &.remove:hover {
+                color: #de5555;
+            }
+        }
+    }
+    select {
+        font-size: 12px;
+        font-weight: 400;
+        color: #666;
+    }
 }
 
 /*Submit metabox*/
+
 #hb-booking-actions .submitbox {
     overflow: hidden;
 }
@@ -1721,16 +1666,18 @@ form[name="hb-admin-settings-form"] {
 }
 
 /***END DIALOG***/
-
 /* FULL CALENDAR */
-.hotel-booking-fullcalendar.fc td,
-.hotel-booking-fullcalendar.fc th {
-    font-size: 12px;
-}
 
-.hotel-booking-fullcalendar.fc-ltr .fc-basic-view .fc-day-number {
-    text-align: center;
-    font-size: 10px;
+.hotel-booking-fullcalendar {
+    &.fc {
+        td, th {
+            font-size: 12px;
+        }
+    }
+    &.fc-ltr .fc-basic-view .fc-day-number {
+        text-align: center;
+        font-size: 10px;
+    }
 }
 
 .hotel-booking-fullcalendar-month {
@@ -1739,45 +1686,39 @@ form[name="hb-admin-settings-form"] {
 
 .hotel-booking-fullcalendar-toolbar {
     overflow: hidden;
-}
-
-.hotel-booking-fullcalendar-toolbar .fc-right {
-    float: right;
-}
-
-.hotel-booking-fullcalendar-toolbar .fc-button-group {
-    margin: 10px 0;
-}
-
-.hotel-booking-fullcalendar-toolbar .fc-button {
-    height: 2.1em;
-    line-height: 2.1em;
-}
-
-.hotel-booking-fullcalendar-toolbar .fc-button:hover {
-    cursor: pointer;
-    color: #333;
-    text-decoration: none;
-    background-color: #e6e6e6;
-    background-position: 0 -15px;
-    -webkit-transition: background-position .1s linear;
-    -moz-transition: background-position .1s linear;
-    -o-transition: background-position .1s linear;
-    transition: background-position .1s linear;
+    .fc-right {
+        float: right;
+    }
+    .fc-button-group {
+        margin: 10px 0;
+    }
+    .fc-button {
+        height: 2.1em;
+        line-height: 2.1em;
+        &:hover {
+            cursor: pointer;
+            color: #333;
+            text-decoration: none;
+            background-color: #e6e6e6;
+            background-position: 0 -15px;
+            -webkit-transition: background-position .1s linear;
+            -moz-transition: background-position .1s linear;
+            -o-transition: background-position .1s linear;
+            transition: background-position .1s linear;
+        }
+    }
 }
 
 #tp_extra_form {
     overflow: hidden;
-}
-
-#tp_extra_form .tp_extra_form_head {
-    padding: 0;
-}
-
-#tp_extra_form h4 {
-    margin: 0;
-    padding-bottom: 10px;
-    width: 100%;
+    .tp_extra_form_head {
+        padding: 0;
+    }
+    h4 {
+        margin: 0;
+        padding-bottom: 10px;
+        width: 100%;
+    }
 }
 
 .tp_extra_form_head h3 {
@@ -1794,19 +1735,13 @@ form[name="hb-admin-settings-form"] {
 }
 
 .wp-list-table {
-    thead {
-        #thumb {
-            width: 70px;
-        }
+    thead #thumb {
+        width: 70px;
     }
-    .thumb.column-thumb {
-        a {
-            position: relative;
-        }
+    .thumb.column-thumb a {
+        position: relative;
     }
 }
-
-//=================================================================================================//
 
 #list-extra-services {
     width: 100%;
@@ -1814,14 +1749,12 @@ form[name="hb-admin-settings-form"] {
     border: 1px solid #E5E5E5;
     margin-top: 20px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    .list-extra-header {
-        th {
-            font-weight: 400;
-            box-sizing: border-box;
-            font-size: 14px;
-            padding: 10px;
-            border-bottom: 1px solid #E5E5E5;
-        }
+    .list-extra-header th {
+        font-weight: 400;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 10px;
+        border-bottom: 1px solid #E5E5E5;
     }
     .title {
         width: 10%;
@@ -1835,10 +1768,7 @@ form[name="hb-admin-settings-form"] {
             width: 45%;
         }
     }
-    .type {
-        width: 20%;
-    }
-    .actions {
+    .type, .actions {
         width: 20%;
     }
     tr {
@@ -1854,151 +1784,3 @@ form[name="hb-admin-settings-form"] {
         }
     }
 }
-
-.wp-hotel-booking_page_wphb-pricing-table {
-    /* DatePicker Container */
-    .ui-datepicker {
-        width: 300px;
-        height: auto;
-        margin: 5px auto 0;
-        font: 9pt Arial, sans-serif;
-        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
-        -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
-        a {
-            text-decoration: none;
-        }
-        .ui-datepicker-title {
-            text-align: center;
-            line-height: 2.8em;
-        }
-        table {
-            width: 100%;
-        }
-    }
-    .ui-datepicker-header {
-        background: #000;
-        color: #e0e0e0;
-        font-weight: bold;
-        line-height: 30px;
-        border-width: 1px 0 0 0;
-        border-style: solid;
-        border-color: #111;
-        .ui-corner-all {
-            &.ui-state-hover {
-                background: transparent;
-                box-shadow: none;
-                border: none;
-            }
-            span {
-                display: none;
-            }
-        }
-    }
-    .ui-datepicker-prev, .ui-datepicker-next {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        cursor: pointer;
-        background-image: url('../images/arrow.png') !important;
-        background-repeat: no-repeat;
-        line-height: 600%;
-        overflow: hidden;
-    }
-    .ui-datepicker-prev {
-        float: left;
-        background-position: center -30px;
-    }
-    .ui-datepicker-next {
-        float: right;
-        background-position: center 0;
-    }
-    .ui-datepicker thead {
-        background-color: #f7f7f7;
-        background-image: -moz-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f1f1f1));
-        background-image: -webkit-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-        background-image: -o-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-        background-image: -ms-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-        background-image: linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f1f1f1', GradientType=0);
-        border-bottom: 1px solid #bbb;
-    }
-    .ui-datepicker th {
-        text-transform: uppercase;
-        font-size: 12px;
-        padding: 8px 0;
-        color: #fff;
-        filter: dropshadow(color=#fff, offx=1, offy=0);
-    }
-    .ui-datepicker tbody td {
-        padding: 0;
-        border-right: 1px solid #bbb;
-    }
-    .ui-datepicker tbody td:last-child {
-        border-right: 0;
-    }
-    .ui-datepicker tbody tr {
-        border-bottom: 1px solid #bbb;
-    }
-    .ui-datepicker tbody tr:last-child {
-        border-bottom: 0;
-    }
-    .ui-datepicker td span, .ui-datepicker td a {
-        font-weight: bold;
-        text-align: center;
-        line-height: 30px;
-        color: #666666;
-    }
-    .ui-datepicker-calendar .ui-state-active {
-        background: #0073aa;
-        color: #e0e0e0;
-        position: relative;
-        margin: -1px;
-    }
-    .ui-datepicker-unselectable .ui-state-default {
-        background: transparent;
-        border: none;
-    }
-
-    a.ui-state-default {
-        background: transparent;
-        border: none;
-    }
-
-    .ui-datepicker-calendar {
-
-        td:first-child .ui-state-active {
-            width: 29px;
-            margin-left: 0;
-        }
-
-        td:last-child .ui-state-active {
-            width: 29px;
-            margin-right: 0;
-        }
-
-        tr:last-child .ui-state-active {
-            height: 29px;
-            margin-bottom: 0;
-        }
-
-        thead {
-            background: #0073aa;
-        }
-        tbody {
-            > tr {
-                > td {
-                    a {
-                        &:hover {
-                            background: #0073aa;
-                            color: #fff;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-

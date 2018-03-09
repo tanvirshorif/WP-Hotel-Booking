@@ -85,7 +85,7 @@ $date_order   = hb_start_of_week_order();
                 <span class="count"><?php printf( _n( '(%d plan)', '(%d plans)', $count_plants, 'wp-hotel-booking' ), $count_plants ); ?></span>
             </h3>
 
-            <div id="hb-pricing-plan-list">
+            <div id="hb-pricing-plan-list" class="hb-pricing-list">
 				<?php if ( $plans ) { ?>
 					<?php foreach ( $plans as $plan ) { ?>
 						<?php
