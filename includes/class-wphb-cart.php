@@ -342,7 +342,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 				$this->sessions->set( $cart_item_id, $params );
 			}
 
-			// do action
+			// add extra to cart
 			do_action( 'hotel_booking_added_cart', $cart_item_id, $params, $_POST );
 
 			// do action woocommerce
@@ -880,18 +880,22 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			$products  = $this->get_products();
 			$_products = array();
 			foreach ( $products as $k => $product ) {
-				$check_in  = strtotime( $product->get_data( 'check_in_date' ) );
-				$check_out = strtotime( $product->get_data( 'check_out_date' ) );
-				$total     = $product->amount_include_tax();
-				$sub_total = $product->amount_exclude_tax();
+				$check_in_date  = strtotime( $product->get_data( 'check_in_date' ) );
+				$check_in_time  = $product->get_data( 'check_in_time' );
+				$check_out_date = strtotime( $product->get_data( 'check_out_date' ) );
+				$check_out_time = $product->get_data( 'check_out_time' );
+				$total          = $product->amount_include_tax();
+				$sub_total      = $product->amount_exclude_tax();
 
 				$_products[ $k ] = apply_filters( 'hb_generate_transaction_object_room', array(
 					'parent_id'      => isset( $product->parent_id ) ? $product->parent_id : null,
 					'product_id'     => $product->ID,
 					'product_type'   => get_post_type( $product->ID ),
 					'qty'            => $product->get_data( 'quantity' ),
-					'check_in_date'  => $check_in,
-					'check_out_date' => $check_out,
+					'check_in_date'  => $check_in_date,
+					'check_in_time'  => $check_in_time,
+					'check_out_date' => $check_out_date,
+					'check_out_time' => $check_out_time,
 					'subtotal'       => $sub_total,
 					'total'          => $total,
 					'tax_total'      => $total - $sub_total
@@ -954,10 +958,12 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 						'product_id'     => $extra_id,
 						'parent_id'      => $cart_id,
 						'check_in_date'  => $cart_item['check_in_date'],
-						'check_out_date' => $cart_item['check_out_date']
+						'check_in_time'  => $cart_item['check_in_time'],
+						'check_out_date' => $cart_item['check_out_date'],
+						'check_out_time' => $cart_item['check_out_time']
 					);
 					if ( array_key_exists( $extra_id, $turn_on ) ) {
-						$extra_cart_item_id = $this->add_to_cart( $extra_id, $param, $qty );
+						$this->add_to_cart( $extra_id, $param, $qty );
 					} else {
 						$extra_cart_item_id = $this->generate_cart_id( $param );
 						$this->remove_cart_item( $extra_cart_item_id );

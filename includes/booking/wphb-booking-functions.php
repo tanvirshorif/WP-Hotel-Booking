@@ -131,11 +131,15 @@ if ( ! function_exists( 'hb_get_booking_items' ) ) {
 
 				if ( WPHB_Room_CPT == $post_type ) {
 					$check_in_date                    = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_date', true );
+					$check_in_time                    = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_time', true );
 					$check_out_date                   = hb_get_booking_item_meta( $item['order_item_id'], 'check_out_date', true );
+					$check_out_time                   = hb_get_booking_item_meta( $item['order_item_id'], 'check_out_time', true );
 					$items[ $key ] ['id']             = $product_id;
 					$items[ $key ] ['edit_link']      = get_edit_post_link( $product_id );
 					$items[ $key ] ['check_in_date']  = date_i18n( hb_get_date_format(), $check_in_date );
+					$items[ $key ] ['check_in_time']  = date_i18n( hb_get_time_format(), $check_in_time );
 					$items[ $key ] ['check_out_date'] = date_i18n( hb_get_date_format(), $check_out_date );
+					$items[ $key ] ['check_out_time'] = date_i18n( hb_get_time_format(), $check_out_time + 1 );
 					$items[ $key ] ['night']          = hb_count_nights_two_dates( $check_out_date, $check_in_date );
 					$items[ $key ] ['qty']            = hb_get_booking_item_meta( $item['order_item_id'], 'qty', true );
 					$items[ $key ] ['price']          = hb_get_booking_item_meta( $item['order_item_id'], 'subtotal', true );

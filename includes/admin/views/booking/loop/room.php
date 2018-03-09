@@ -20,8 +20,8 @@ defined( 'ABSPATH' ) || exit;
         <td>
             <a target="_blank" v-bind:href="room.edit_link">{{room.order_item_name}}</a>
         </td>
-        <td>{{room.check_in_date}}</td>
-        <td>{{room.check_out_date}}</td>
+        <td>{{room.check_in_date}} - {{room.check_in_time}}</td>
+        <td>{{room.check_out_date}} - {{room.check_out_time}}</td>
         <td>{{room.night}}</td>
         <td>{{room.qty}}</td>
         <td class="price">{{room.price}}{{booking.currency}}</td>

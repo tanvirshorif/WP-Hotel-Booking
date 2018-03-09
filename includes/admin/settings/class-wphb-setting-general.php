@@ -59,7 +59,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => 'tp_hotel_booking_single_purchase',
+					'id'      => $prefix . 'booking_time',
+					'title'   => __( 'Booking Time', 'wp-hotel-booking' ),
+					'desc'    => __( 'Support time picker for booking room process.', 'wp-hotel-booking' ),
+					'default' => 0,
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => $prefix . 'single_purchase',
 					'title'   => __( 'Single Purchase', 'wp-hotel-booking' ),
 					'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
 					'default' => 0,

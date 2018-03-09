@@ -86,11 +86,13 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			if ( $start_date ) {
 				$start_date = date( 'm/d/Y', $start_date );
 			}
-
 			$end_date = hb_get_request( 'hb_check_out_date' );
 			if ( $end_date ) {
 				$end_date = date( 'm/d/Y', $end_date );
 			}
+
+			$start_time = hb_get_request( 'hb_check_in_time' );
+			$end_time   = hb_get_request( 'hb_check_out_time' );
 
 			$adults_term = hb_get_request( 'adults', 0 );
 			$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
@@ -104,7 +106,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$atts = wp_parse_args(
 				$atts, array(
 					'check_in_date'  => $start_date,
+					'check_in_time'  => $start_time,
 					'check_out_date' => $end_date,
+					'check_out_time' => $end_time,
 					'adults'         => $adults,
 					'max_child'      => $max_child,
 					'location'       => $location,
@@ -140,13 +144,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 				case 'results':
 					$query                    = WPHB_Query::instance( $atts );
 					$template                 = 'search/results.php';
-					$template_args['results'] = $query->search_rooms( apply_filters( 'hb_search_room_args', array(
-						'check_in_date'  => $start_date,
-						'check_out_date' => $end_date,
-						'adults'         => $adults,
-						'max_child'      => $max_child,
-						'location'       => $location
-					) ) );
+					$template_args['results'] = $query->search_rooms( apply_filters( 'hb_search_room_args', $atts ) );
 					break;
 				default:
 					break;
@@ -310,8 +308,8 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		}
 
 		/**
-         * Room filter by price.
-         *
+		 * Room filter by price.
+		 *
 		 * @param $atts
 		 */
 		public static function hb_widget_room_filter( $atts ) {

@@ -57,6 +57,9 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			wp_register_style( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/css/fullcalendar.min.css', array(), WPHB_VERSION );
 			wp_register_script( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/vendor/fullcalendar.min.js', $dependencies, WPHB_VERSION, true );
 
+			wp_enqueue_style( 'wphb-library-timepicker', WPHB_PLUGIN_URL . 'assets/css/jquery.timepicker.css', array(), WPHB_VERSION );
+			wp_enqueue_script( 'wphb-library-timepicker', WPHB_PLUGIN_URL . 'assets/js/vendor/jquery.timepicker.min.js', array(), WPHB_VERSION, true );
+
 			if ( is_admin() ) {
 				$dependencies = array_merge( $dependencies, array( 'backbone' ) );
 

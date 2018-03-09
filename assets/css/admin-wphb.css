@@ -487,7 +487,7 @@
       .post-type-hb_booking #booking-items table thead th.night, .post-type-hb_booking #booking-items table thead th.qty, .post-type-hb_booking #booking-items table thead th.actions, .post-type-hb_booking #booking-items table thead th.total {
         padding: 2px; }
       .post-type-hb_booking #booking-items table thead th.checkin, .post-type-hb_booking #booking-items table thead th.checkout {
-        width: 115px; }
+        width: 140px; }
       .post-type-hb_booking #booking-items table thead th.night {
         width: 55px; }
       .post-type-hb_booking #booking-items table thead th.qty {

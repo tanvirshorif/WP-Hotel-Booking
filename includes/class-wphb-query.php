@@ -114,10 +114,12 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 			$adults                 = $args['adults'];
 			$max_child              = $args['max_child'];
 			$location               = $args['location'];
-			$check_in_time          = strtotime( $args['check_in_date'] );
-			$check_out_time         = strtotime( $args['check_out_date'] );
-			$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
-			$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
+			$date_in                = strtotime( $args['check_in_date'] );
+			$time_in                = strtotime( $args['check_in_time'] );
+			$date_out               = strtotime( $args['check_out_date'] );
+			$time_out               = strtotime( $args['check_out_time'] );
+			$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $date_in ), date( 'd', $date_in ), date( 'Y', $date_in ) );
+			$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $date_out ), date( 'd', $date_out ), date( 'Y', $date_out ) );
 
 			$extend_join       = apply_filters( 'hb_search_room_extend_join', '' );
 			$extend_conditions = apply_filters( 'hb_search_room_extend_conditions', '', $location );

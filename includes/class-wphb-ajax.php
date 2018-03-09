@@ -95,12 +95,17 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		 */
 		public static function parse_search_params() {
 			check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
+
 			$params = apply_filters( 'hb_search_room_params', array(
 				'hotel-booking'     => hb_get_request( 'hotel-booking' ),
 				'check_in_date'     => hb_get_request( 'check_in_date' ),
+				'check_in_time'     => hb_get_request( 'check_in_time' ),
 				'check_out_date'    => hb_get_request( 'check_out_date' ),
+				'check_out_time'    => hb_get_request( 'check_out_time' ),
 				'hb_check_in_date'  => hb_get_request( 'hb_check_in_date' ),
+				'hb_check_in_time'  => hb_get_request( 'hb_check_in_time' ),
 				'hb_check_out_date' => hb_get_request( 'hb_check_out_date' ),
+				'hb_check_out_time' => hb_get_request( 'hb_check_out_time' ),
 				'adults'            => hb_get_request( 'adults_capacity' ),
 				'max_child'         => hb_get_request( 'max_child' ),
 				'room_location'     => hb_get_request( 'room_location' )
@@ -156,13 +161,15 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				) );
 			} else {
 				$param['check_in_date']  = sanitize_text_field( $_POST['check_in_date'] );
+				$param['check_in_time']  = sanitize_text_field( $_POST['check_in_time'] );
 				$param['check_out_date'] = sanitize_text_field( $_POST['check_out_date'] );
+				$param['check_out_time'] = sanitize_text_field( $_POST['check_out_time'] );
 			}
-
 			$param = apply_filters( 'hotel_booking_add_cart_params', $param );
 			do_action( 'hotel_booking_before_add_to_cart', $_POST );
 			// add to cart
 			$cart         = WPHB_Cart::instance();
+			// add room to cart and after that add extra to cart
 			$cart_item_id = $cart->add_to_cart( $product_id, $param, $qty );
 
 			if ( ! is_wp_error( $cart_item_id ) ) {

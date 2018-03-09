@@ -50,11 +50,21 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 		protected $check_in_date = null;
 
 		/**
+		 * @var null
+		 */
+		protected $check_in_time = null;
+
+		/**
 		 * room check out
 		 *
 		 * @var null
 		 */
 		protected $check_out_date = null;
+
+		/**
+		 * @var null
+		 */
+		protected $check_out_time = null;
 
 		/**
 		 * room quantity
@@ -81,7 +91,9 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 		public function __construct( $post, $params = array() ) {
 			$params = wp_parse_args( $params, array(
 				'check_in_date'  => '',
+				'check_in_time'  => '',
 				'check_out_date' => '',
+				'check_out_time' => '',
 				'room_quantity'  => 1,
 				'quantity'       => 1
 			) );
@@ -91,9 +103,19 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 				$this->check_in_date = time();
 			}
 
+			$this->check_in_time = $params['check_in_time'];
+			if ( ! $this->check_in_time ) {
+				$this->check_in_time = 0;
+			}
+
 			$this->check_out_date = $params['check_out_date'];
 			if ( ! $this->check_out_date ) {
 				$this->check_out_date = time();
+			}
+
+			$this->check_out_time = $params['check_out_time'];
+			if ( ! $this->check_out_time ) {
+				$this->check_out_time = 0;
 			}
 
 			$this->parent_quantity = $params['room_quantity'];

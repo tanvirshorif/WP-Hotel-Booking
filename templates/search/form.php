@@ -19,7 +19,9 @@ defined( 'ABSPATH' ) || exit;
 $show_label     = ! isset( $atts['show_label'] ) || $atts['show_label'] === 'true';
 $layout         = isset( $atts['layout'] ) ? $atts['layout'] : '';
 $check_in_date  = hb_get_request( 'check_in_date' );
+$check_in_time  = hb_get_request( 'check_in_time' );
 $check_out_date = hb_get_request( 'check_out_date' );
+$check_out_time = hb_get_request( 'check_out_time' );
 $adults         = hb_get_request( 'adults', 0 );
 $max_child      = hb_get_request( 'max_child', 0 );
 $location       = hb_get_request( 'room_location', 0 );
@@ -44,6 +46,17 @@ $uniqid         = uniqid();
                            class="hb_input_date_check" value="<?php echo esc_attr( $check_in_date ); ?>"/>
                 </div>
             </li>
+			<?php if ( hb_get_option( 'booking_time' ) ) { ?>
+                <li class="hb-form-field">
+					<?php echo $show_label ? __( 'Arrival Time', 'wp-hotel-booking' ) : ''; ?>
+                    <div class="hb-form-field-input hb_timepicker_input_field">
+                        <input type="text" name="check_in_time" id="check_in_time_<?php echo esc_attr( $uniqid ) ?>"
+                               class="hb_input_time_check" value="<?php echo esc_attr( $check_in_time ); ?>"
+                               placeholder="<?php _e( 'Arrival Time', 'wp-hotel-booking' ); ?>"/>
+                        <input type="hidden" name="hb_check_in_time" class="hb_input_time_check" value=""/>
+                    </div>
+                </li>
+			<?php } ?>
 			<?php do_action( 'hotel_booking_after_check_in_field', $uniqid, $show_label ); ?>
 
 			<?php do_action( 'hotel_booking_before_check_out_field', $uniqid, $show_label ); ?>
@@ -56,6 +69,17 @@ $uniqid         = uniqid();
                            class="hb_input_date_check" value="<?php echo esc_attr( $check_out_date ); ?>"/>
                 </div>
             </li>
+			<?php if ( hb_get_option( 'booking_time' ) ) { ?>
+                <li class="hb-form-field">
+					<?php echo $show_label ? __( 'Departure Time', 'wp-hotel-booking' ) : ''; ?>
+                    <div class="hb-form-field-input hb_timepicker_input_field">
+                        <input type="text" name="check_out_time" id="check_out_time_<?php echo esc_attr( $uniqid ) ?>"
+                               class="hb_input_time_check" value="<?php echo esc_attr( $check_out_time ); ?>"
+                               placeholder="<?php _e( 'Departure Time', 'wp-hotel-booking' ); ?>"/>
+                        <input type="hidden" name="hb_check_out_time" class="hb_input_time_check" value=""/>
+                    </div>
+                </li>
+			<?php } ?>
 			<?php do_action( 'hotel_booking_after_check_out_field', $uniqid, $show_label ); ?>
 
             <li class="hb-form-field">
@@ -97,12 +121,11 @@ $uniqid         = uniqid();
                     </div>
                 </li>
 			<?php } ?>
-			<?php $settings = hb_settings(); ?>
 			<?php if ( hb_get_option( 'multiple_location' ) ) { ?>
                 <li class="hb-form-field">
-	                <?php if ( $show_label ) { ?>
+					<?php if ( $show_label ) { ?>
                         <div><?php _e( 'Location', 'wp-hotel-booking' ); ?></div>
-	                <?php } ?>
+					<?php } ?>
 					<?php hb_dropdown_room_locations( array(
 						'name'             => 'room_location',
 						'show_option_none' => __( 'Location', 'wp-hotel-booking' ),

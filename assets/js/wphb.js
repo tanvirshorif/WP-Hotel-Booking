@@ -25,6 +25,17 @@
         }, 400);
     };
 
+    function timeToSecond(time, origin) {
+        var hour = time.substring(0, 2),
+            session = time.slice(2),
+            seconds = hour * 60 * 60;
+
+        if (session === 'PM') {
+            seconds += 12 * 60 * 60;
+        }
+        return (typeof origin !== 'undefined') ? seconds : seconds - 1;
+    }
+
     // compare date
     if (Date.prototype.compareWith === undefined) {
         Date.prototype.compareWith = function (d) {
@@ -630,6 +641,8 @@
 
             _self.check_in_date(_today, _min);
             _self.check_out_date(_tomorrow, _min);
+            _self.check_in_time_picker();
+            _self.check_out_time_picker();
         },
         check_in_date: function (_today, _min) {
             $('input[id^="check_in_date"]').datepicker({
@@ -663,6 +676,29 @@
             }).on('click', function () {
                 $(this).datepicker('show');
             })
+        },
+        check_in_time_picker: function () {
+            var _check_in = $('input[id^="check_in_time"]'),
+                _time = _check_in.siblings('input[name="hb_check_in_time"]');
+
+            _check_in.timepicker({
+                'timeFormat': 'H:i A',
+                'step': '60'
+            }).on('changeTime', function () {
+                _time.val(timeToSecond(_check_in.val(), true));
+
+            });
+        },
+        check_out_time_picker: function () {
+            var _check_out = $('input[id^="check_out_time_"]'),
+                _time = _check_out.siblings('input[name="hb_check_out_time"]');
+
+            _check_out.timepicker({
+                'timeFormat': 'H:i A',
+                'step': '60'
+            }).on('changeTime', function () {
+                _time.val(timeToSecond(_check_out.val()));
+            });
         }
     };
 
