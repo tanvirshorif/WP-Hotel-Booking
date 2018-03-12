@@ -22,10 +22,11 @@ hb_admin_view( 'booking/modal/update' );
 
     <div id="booking-modal-search">
 
-        <wphb-booking-modal-update :item="item" v-if="this.type === 'update'"
+
+        <wphb-booking-modal-update :item="existItem" v-if="this.type === 'update'"
                                    @closeModal="closeModal"></wphb-booking-modal-update>
 
-        <wphb-booking-modal-add v-else="" @checkAvailable="checkAvailable" @addItem="addItem"
+        <wphb-booking-modal-add v-else="" :item="newItem" @checkAvailable="checkAvailable" @addItem="addItem"
                                 @closeModal="closeModal"></wphb-booking-modal-add>
 
     </div>
@@ -38,7 +39,7 @@ hb_admin_view( 'booking/modal/update' );
 
         Vue.component('wphb-booking-modal', {
             template: '#tmpl-admin-booking-modal',
-            props: ['type', 'item'],
+            props: ['type', 'newItem', 'existItem'],
             computed: {},
             methods: {
                 checkAvailable: function (item) {

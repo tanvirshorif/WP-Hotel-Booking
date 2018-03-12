@@ -62,7 +62,7 @@ defined( 'ABSPATH' ) || exit;
                 </div>
                 <div class="content" v-for="(extra, index) in item.extra">
                     <div class="extra">
-                        <input type="checkbox" checked/>{{extra.title}}
+                        <input type="checkbox" checked/>{{extra.order_item_name}}
                     </div>
                     <div class="type">{{extra.respondent}}</div>
                     <div class="qty"><input type="number" v-model="extra.qty"/></div>

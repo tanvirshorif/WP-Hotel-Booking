@@ -84,7 +84,7 @@ defined( 'ABSPATH' ) || exit; ?>
                     </div>
                 </div>
             </div>
-            <div class="extra-item" v-if="item.qty">
+            <div class="extra-item" v-if="item.qty && item.extra">
                 <div class="heading">
                     <div class="extra"><?php _e( 'Extra Packages', 'wp-hotel-booking' ); ?></div>
                     <div class="type"><?php _e( 'Type', 'wp-hotel-booking' ); ?></div>
@@ -121,9 +121,9 @@ defined( 'ABSPATH' ) || exit; ?>
 
         Vue.component('wphb-booking-modal-add', {
             template: '#tmpl-admin-booking-modal-add',
+            props: ['item'],
             data: function () {
                 return {
-                    item: $store.getters['newItem'],
                     showCheckInTime: false,
                     showCheckOutTime: false
                 }
@@ -152,6 +152,7 @@ defined( 'ABSPATH' ) || exit; ?>
                     this.showCheckOutTime = false;
                 },
                 checkAvailable: function () {
+                    this.item.available = 0;
                     var checkInDate = $('.checkin input.check_in_date').val(),
                         checkOutDate = $('.checkout input.check_out_date').val(),
                         checkInTime = $('.checkin input.check_in_time').val(),
