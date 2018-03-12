@@ -225,8 +225,10 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 
 			$room_id        = $item['id'];
 			$room_qty       = $item['qty'];
-			$check_in_date  = strtotime( $item['check_in'] );
-			$check_out_date = strtotime( $item['check_out'] );
+			$check_in_date  = strtotime( $item['check_in_date'] );
+			$check_in_time  = isset( $item['check_in_time'] ) ? hb_time_to_seconds( $item['check_in_time'], true ) : 0;
+			$check_out_date = strtotime( $item['check_out_date'] );
+			$check_out_time = isset( $item['check_out_time'] ) ? hb_time_to_seconds( $item['check_out_time'] ) : 0;
 
 			// add room booking item
 			$booking_room_item_id = hb_add_booking_item( $booking_id, array(
@@ -235,22 +237,7 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 			) );
 
 			// update booking room item meta
-			hb_update_booking_item_meta( $booking_room_item_id, 'product_id', $room_id );
-			hb_update_booking_item_meta( $booking_room_item_id, 'qty', $room_qty );
-			hb_update_booking_item_meta( $booking_room_item_id, 'check_in_date', $check_in_date );
-			hb_update_booking_item_meta( $booking_room_item_id, 'check_out_date', $check_out_date );
-
-			$product_class = hotel_booking_get_product_class( $room_id, array(
-				'check_in_date'  => $check_in_date,
-				'check_out_date' => $check_out_date,
-				'quantity'       => $room_qty,
-				'order_item_id'  => $booking_room_item_id
-			) );
-			$subtotal      = $product_class->amount_exclude_tax();
-			$total         = $product_class->amount_include_tax();
-			hb_update_booking_item_meta( $booking_room_item_id, 'subtotal', $subtotal );
-			hb_update_booking_item_meta( $booking_room_item_id, 'total', $total );
-			hb_update_booking_item_meta( $booking_room_item_id, 'tax_total', $total - $subtotal );
+			$this->_booking_item_meta( $room_id, $booking_room_item_id, $room_qty, $check_in_date, $check_in_time, $check_out_date, $check_out_time );
 
 			$extra_data = array();
 			// add extra booking item
@@ -263,22 +250,7 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 					) );
 
 					// update booking extra item meta
-					hb_update_booking_item_meta( $booking_extra_item_id, 'product_id', $extra_id );
-					hb_update_booking_item_meta( $booking_extra_item_id, 'qty', $extra['qty'] );
-					hb_update_booking_item_meta( $booking_extra_item_id, 'check_in_date', $check_in_date );
-					hb_update_booking_item_meta( $booking_extra_item_id, 'check_out_date', $check_out_date );
-
-					$product_class = hotel_booking_get_product_class( $extra_id, array(
-						'check_in_date'  => $check_in_date,
-						'check_out_date' => $check_out_date,
-						'quantity'       => $extra['qty'],
-						'order_item_id'  => $booking_extra_item_id
-					) );
-					$subtotal      = $product_class->amount_exclude_tax();
-					$total         = $product_class->amount_include_tax();
-					hb_update_booking_item_meta( $booking_extra_item_id, 'subtotal', $subtotal );
-					hb_update_booking_item_meta( $booking_extra_item_id, 'total', $total );
-					hb_update_booking_item_meta( $booking_extra_item_id, 'tax_total', $total - $subtotal );
+					$this->_booking_item_meta( $extra_id, $booking_extra_item_id, $extra['qty'], $check_in_date, $check_in_time, $check_out_date, $check_out_time );
 
 					$extra_data[ $extra_id ] = array(
 						'order_id'          => $booking_id,
@@ -288,7 +260,9 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 						'order_item_type'   => 'sub_item',
 						'edit_link'         => get_edit_post_link( hb_get_booking_item_meta( $booking_extra_item_id, 'product_id', true ) ),
 						'check_in_date'     => date_i18n( hb_get_date_format(), $check_in_date ),
+						'check_in_time'     => date_i18n( hb_get_time_format(), $check_in_time ),
 						'check_out_date'    => date_i18n( hb_get_date_format(), $check_out_date ),
+						'check_out_time'    => date_i18n( hb_get_time_format(), $check_out_time + 1 ),
 						'night'             => hb_count_nights_two_dates( $check_out_date, $check_in_date ),
 						'qty'               => hb_get_booking_item_meta( $booking_extra_item_id, 'qty', true ),
 						'price'             => hb_get_booking_item_meta( $booking_extra_item_id, 'subtotal', true ),
@@ -304,7 +278,9 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 				'order_item_type'   => 'line_item',
 				'edit_link'         => get_edit_post_link( hb_get_booking_item_meta( $booking_room_item_id, 'product_id', true ) ),
 				'check_in_date'     => date_i18n( hb_get_date_format(), $check_in_date ),
+				'check_in_time'     => date_i18n( hb_get_time_format(), $check_in_time ),
 				'check_out_date'    => date_i18n( hb_get_date_format(), $check_out_date ),
+				'check_out_time'    => date_i18n( hb_get_time_format(), $check_out_time + 1 ),
 				'night'             => hb_count_nights_two_dates( $check_out_date, $check_in_date ),
 				'qty'               => hb_get_booking_item_meta( $booking_room_item_id, 'qty', true ),
 				'price'             => hb_get_booking_item_meta( $booking_room_item_id, 'subtotal', true ),
@@ -350,6 +326,41 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 			do_action( 'hotel_booking_remove_booking_item', $booking_item_id );
 
 			return true;
+		}
+
+		/**
+		 * Helper update booking item meta.
+		 *
+		 * @param $item_id
+		 * @param $booking_item_id
+		 * @param $qty
+		 * @param $check_in_date
+		 * @param $check_in_time
+		 * @param $check_out_date
+		 * @param $check_out_time
+		 */
+		private function _booking_item_meta( $item_id, $booking_item_id, $qty, $check_in_date, $check_in_time, $check_out_date, $check_out_time ) {
+
+			hb_update_booking_item_meta( $booking_item_id, 'product_id', $item_id );
+			hb_update_booking_item_meta( $booking_item_id, 'product_type', get_post_type( $item_id ) );
+			hb_update_booking_item_meta( $booking_item_id, 'qty', $qty );
+			hb_update_booking_item_meta( $booking_item_id, 'check_in_date', $check_in_date );
+			hb_update_booking_item_meta( $booking_item_id, 'check_in_time', $check_in_time );
+			hb_update_booking_item_meta( $booking_item_id, 'check_out_date', $check_out_date );
+			hb_update_booking_item_meta( $booking_item_id, 'check_out_time', $check_out_time );
+
+			$product_class = hotel_booking_get_product_class( $item_id, array(
+				'check_in_date'  => $check_in_date,
+				'check_out_date' => $check_out_date,
+				'quantity'       => $qty,
+				'order_item_id'  => $booking_item_id
+			) );
+			$subtotal      = $product_class->amount_exclude_tax();
+			$total         = $product_class->amount_include_tax();
+
+			hb_update_booking_item_meta( $booking_item_id, 'subtotal', $subtotal );
+			hb_update_booking_item_meta( $booking_item_id, 'total', $total );
+			hb_update_booking_item_meta( $booking_item_id, 'tax_total', $total - $subtotal );
 		}
 	}
 }
