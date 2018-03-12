@@ -462,10 +462,9 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		public function get_products() {
 
 			$products = array();
-			if ( ! $this->get_cart_contents() ) {
+			if ( ! $this->cart_contents ) {
 				return $products;
 			}
-
 
 			foreach ( $this->cart_contents as $cart_item_id => $cart_item ) {
 				$products[ $cart_item_id ] = $cart_item->product_data;
@@ -881,7 +880,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			$_products = array();
 			foreach ( $products as $k => $product ) {
 				$check_in_date  = strtotime( $product->get_data( 'check_in_date' ) );
-				$check_in_time  = $product->get_data( 'check_in_time' );
+				$check_in_time  = $product->get_data( 'check_in_time' ) ? $product->get_data( 'check_in_time' ) : 0;
 				$check_out_date = strtotime( $product->get_data( 'check_out_date' ) );
 				$check_out_time = $product->get_data( 'check_out_time' );
 				$total          = $product->amount_include_tax();

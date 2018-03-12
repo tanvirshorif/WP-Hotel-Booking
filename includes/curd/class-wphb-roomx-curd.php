@@ -107,7 +107,9 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 
 			$args = wp_parse_args( $args, array(
 				'check_in_date'  => '',
+				'check_in_time'  => '',
 				'check_out_date' => '',
+				'check_out_time' => '',
 				'excerpt'        => array( 0 )
 			) );
 

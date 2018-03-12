@@ -25,7 +25,7 @@ hb_admin_view( 'booking/modal/update' );
         <wphb-booking-modal-update :item="item" v-if="this.type === 'update'"
                                    @closeModal="closeModal"></wphb-booking-modal-update>
 
-        <wphb-booking-modal-add :item="item" v-else="" @checkAvailable="checkAvailable" @addItem="addItem"
+        <wphb-booking-modal-add v-else="" @checkAvailable="checkAvailable" @addItem="addItem"
                                 @closeModal="closeModal"></wphb-booking-modal-add>
 
     </div>

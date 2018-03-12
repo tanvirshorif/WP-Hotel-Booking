@@ -14,7 +14,6 @@
 defined( 'ABSPATH' ) || exit;
 
 hb_admin_view( 'booking/overview' );
-hb_admin_view( 'booking/customer' );
 hb_admin_view( 'booking/actions' );
 ?>
 
@@ -25,7 +24,6 @@ hb_admin_view( 'booking/actions' );
         </div>
         <div id="postbox-container-2" class="postbox-container">
             <wphb-booking-overview :customer="customer" :users="users"></wphb-booking-overview>
-            <wphb-booking-customer></wphb-booking-customer>
         </div>
     </div>
 

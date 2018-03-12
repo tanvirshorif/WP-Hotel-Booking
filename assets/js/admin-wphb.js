@@ -94,7 +94,10 @@
             // add room item for booking
             _doc
             // .on('click', '#add_room_item', _self.init_add_room_modal)
-                .on('click', '.checkin input, .checkout input', _self.datepicker)
+            // date picker
+                .on('click', '.checkin input.check_in_date, .checkout input.check_out_date', _self.datepicker)
+                // time picker
+                .on('click', '.checkin input.check_in_time, .checkout input.check_out_time', _self.timepicker)
                 // edit booking room item
                 // .on('click', '#booking-items .actions .edit', _self.edit_booking_room)
                 // delete booking room item
@@ -110,6 +113,9 @@
                 // save add booking room item
                 .on('wphb_submit_modal', _self.add_room_items);
 
+            // load admin booking editor
+            _self.load();
+
             // select customer in admin booking
             _self.select_booking_customer();
 
@@ -118,9 +124,27 @@
 
         },
 
+        load: function () {
+
+            var _modal = $('#booking-modal-search');
+            _modal.find('.checkin input.check_in_date, .checkout input.check_out_date').datepicker();
+            _modal.find('.checkin input.check_in_time, .checkout input.check_out_time').timepicker({
+                'timeFormat': 'H:i A',
+                'step': '60'
+            });
+        },
+
         datepicker: function () {
             $(this).datepicker();
         },
+
+        timepicker: function () {
+            $(this).timepicker({
+                'timeFormat': 'H:i A',
+                'step': '60'
+            });
+        },
+
 
         init_add_room_modal: function (e) {
             e.preventDefault();

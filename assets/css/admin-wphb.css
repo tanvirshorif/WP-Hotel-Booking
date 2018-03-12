@@ -578,7 +578,7 @@
   .post-type-hb_booking #booking-modal-search.show {
     display: block;
     opacity: 1;
-    z-index: 99999; }
+    z-index: 9999; }
   .post-type-hb_booking #booking-modal-search form.booking-room-item {
     background-color: #fff;
     max-width: 800px;
@@ -631,39 +631,38 @@
         .post-type-hb_booking #booking-modal-search form.booking-room-item .main .extra-item .type {
           width: 150px;
           text-transform: capitalize; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .show {
+        display: block; }
+      .post-type-hb_booking #booking-modal-search form.booking-room-item .main .hide {
+        display: none !important; }
     .post-type-hb_booking #booking-modal-search form.booking-room-item .footer {
-      padding: 15px;
+      padding: 15px 30px 15px 15px;
       border-top: 1px solid #eee; }
 
 /****************************************** Admin booking detail ***************************************************/
-#hb-booking-details .booking-user-data {
-  display: inline-block;
-  width: calc(100% - 200px);
-  position: relative; }
-  #hb-booking-details .booking-user-data .user-avatar {
-    display: inline-block; }
-  #hb-booking-details .booking-user-data .order-user-meta {
-    display: inline-block;
-    position: absolute;
-    margin-left: 20px; }
-    #hb-booking-details .booking-user-data .order-user-meta .user-display-name {
-      margin-bottom: 10px; }
-      #hb-booking-details .booking-user-data .order-user-meta .user-display-name a {
-        text-decoration: none;
-        margin-bottom: 10px; }
+#hb-booking-details .booking-user-data .user-avatar {
+  display: inline-block; }
 
-#hb-booking-details .booking-data {
-  display: inline-block;
-  width: 200px;
-  float: right; }
-  #hb-booking-details .booking-data .booking-data-number {
-    font-size: 24px;
-    font-weight: 700;
+#hb-booking-details .booking-user-data .order-user-meta {
+  display: inline-block; }
+  #hb-booking-details .booking-user-data .order-user-meta .user-display-name {
     margin-bottom: 10px; }
-  #hb-booking-details .booking-data .booking-date {
-    font-size: 14px;
-    font-style: italic;
-    margin-bottom: 5px; }
+    #hb-booking-details .booking-user-data .order-user-meta .user-display-name a {
+      text-decoration: none;
+      margin-bottom: 10px; }
+
+#hb-booking-details .booking-user-data .user-info {
+  display: inline-block; }
+
+#hb-booking-details .booking-data .booking-data-number {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px; }
+
+#hb-booking-details .booking-data .booking-date {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 5px; }
 
 /****************************************** Admin footer advertisements ***************************************************/
 #wpfooter {

@@ -2165,3 +2165,23 @@ if ( ! function_exists( 'hb_remove_revolution_slider_meta_boxes' ) ) {
 		}
 	}
 }
+
+if ( ! function_exists( 'hb_time_to_seconds' ) ) {
+	/**
+	 * @param $time
+	 * @param bool $origin
+	 *
+	 * @return float|int
+	 */
+	function hb_time_to_seconds( $time, $origin = false ) {
+		$hour    = substr( $time, 0, 2 );
+		$session = substr( $time, - 2 );
+		$seconds = $hour * 60 * 60;
+
+		if ( $session === 'PM' ) {
+			$seconds += 12 * 60 * 60;
+		}
+
+		return ( $origin ) ? $seconds : $seconds - 1;
+	}
+}

@@ -161,14 +161,14 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				) );
 			} else {
 				$param['check_in_date']  = sanitize_text_field( $_POST['check_in_date'] );
-				$param['check_in_time']  = sanitize_text_field( $_POST['check_in_time'] );
+				$param['check_in_time']  = $_POST['check_in_time'];
 				$param['check_out_date'] = sanitize_text_field( $_POST['check_out_date'] );
-				$param['check_out_time'] = sanitize_text_field( $_POST['check_out_time'] );
+				$param['check_out_time'] = $_POST['check_out_time'];
 			}
 			$param = apply_filters( 'hotel_booking_add_cart_params', $param );
 			do_action( 'hotel_booking_before_add_to_cart', $_POST );
 			// add to cart
-			$cart         = WPHB_Cart::instance();
+			$cart = WPHB_Cart::instance();
 			// add room to cart and after that add extra to cart
 			$cart_item_id = $cart->add_to_cart( $product_id, $param, $qty );
 

@@ -86,7 +86,6 @@ if (typeof wphb_admin_booking !== 'undefined') {
                 }).then(function (response) {
                     var result = response.body,
                         data = result.data;
-                    console.log(data);
                     if (data) {
                         context.commit('SET_BOOKING_ITEMS', data);
                     }

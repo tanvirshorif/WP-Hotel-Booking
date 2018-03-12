@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit; ?>
                 </div>
                 <div class="content">
                     <div class="room">
-                        <select name="product_id" class="select-item" v-model="item.id" @change="checkAvailable">
+                        <select name="product_id" class="select-item" v-model="item.id">
                             <option value="0"><?php _e( 'Select room' ) ?></option>
 							<?php
 							$rooms = WPHB_Room_CURD::get_rooms();
@@ -45,12 +45,36 @@ defined( 'ABSPATH' ) || exit; ?>
                         </select>
                     </div>
                     <div class="checkin">
-                        <input type="text" name="check_in_date" class="check_in_date" v-model="item.check_in"
-                               @change="checkAvailable">
+                        <input type="text" name="check_in_date" class="check_in_date" v-model="item.check_in_date">
+                        <template>
+							<?php if ( hb_get_option( 'booking_time' ) ) { ?>
+                                <template>
+                                    <a href="#"
+                                       @click="addCheckInTime"><?php _e( 'Add Time', 'wp-hotel-booking' ); ?></a>
+                                    <a href="#" :class="showCheckInTime ? 'show': 'hide'"
+                                       @click="removeCheckInTime"><?php _e( 'Remove Time', 'wp-hotel-booking' ); ?></a>
+                                </template>
+							<?php } ?>
+                            <input :class="showCheckInTime ? 'show': 'hide'" type="text" name="check_in_time"
+                                   class="check_in_time"
+                                   v-model="item.check_in_time">
+                        </template>
                     </div>
                     <div class="checkout">
-                        <input type="text" name="check_out_date" class="check_out_date" v-model="item.check_out"
-                               @change="checkAvailable">
+                        <input type="text" name="check_out_date" class="check_out_date" v-model="item.check_out_date">
+                        <template>
+							<?php if ( hb_get_option( 'booking_time' ) ) { ?>
+                                <template>
+                                    <a href="#"
+                                       @click="addCheckOutTime"><?php _e( 'Add Time', 'wp-hotel-booking' ); ?></a>
+                                    <a href="#" :class="showCheckOutTime ? 'show': 'hide'"
+                                       @click="removeCheckOutTime"><?php _e( 'Remove Time', 'wp-hotel-booking' ); ?></a>
+                                </template>
+							<?php } ?>
+                            <input :class="showCheckOutTime ? 'show': 'hide'" type="text" name="check_out_time"
+                                   class="check_out_time"
+                                   v-model="item.check_out_time">
+                        </template>
                     </div>
                     <div class="qty">
                         <select :disabled="!item.available" name="qty" class="number-room" v-model="item.qty">
@@ -79,6 +103,9 @@ defined( 'ABSPATH' ) || exit; ?>
         </div>
 
         <div class="footer">
+            <button type="submit" class="button"
+                    @click.prevent.submit="checkAvailable"><?php echo __( 'Check Available', 'wp-hotel-booking' ); ?>
+            </button>
             <button type="submit" class="button button-primary" :disabled="!addable"
                     @click.prevent.submit="addItem">
 				<?php echo __( 'Add', 'wp-hotel-booking' ); ?>
@@ -90,20 +117,51 @@ defined( 'ABSPATH' ) || exit; ?>
 
 <script type="text/javascript">
 
-    (function (Vue, $store) {
+    (function (Vue, $store, $) {
 
         Vue.component('wphb-booking-modal-add', {
             template: '#tmpl-admin-booking-modal-add',
-            props: ['item'],
+            data: function () {
+                return {
+                    item: $store.getters['newItem'],
+                    showCheckInTime: false,
+                    showCheckOutTime: false
+                }
+            },
             computed: {
                 // item valid to add to booking
                 addable: function () {
-                    return this.item.id && this.item.check_in && this.item.check_out && this.item.qty;
+                    return this.item.id && this.item.check_in_date && this.item.check_out_date && this.item.qty;
                 }
             },
             methods: {
+                addCheckInTime: function () {
+                    this.showCheckInTime = true;
+                },
+                removeCheckInTime: function () {
+                    $('.checkin input.check_in_time').val(0);
+                    this.item.check_in_time = '';
+                    this.showCheckInTime = false;
+                },
+                addCheckOutTime: function () {
+                    this.showCheckOutTime = true;
+                },
+                removeCheckOutTime: function () {
+                    $('.checkout input.check_out_time').val(0);
+                    this.item.check_out_time = '';
+                    this.showCheckOutTime = false;
+                },
                 checkAvailable: function () {
-                    if (this.item.id && this.item.check_in && this.item.check_out) {
+                    var checkInDate = $('.checkin input.check_in_date').val(),
+                        checkOutDate = $('.checkout input.check_out_date').val(),
+                        checkInTime = $('.checkin input.check_in_time').val(),
+                        checkOutTime = $('.checkout input.check_out_time').val();
+
+                    if (this.item.id && checkInDate && checkOutDate) {
+                        this.item.check_in_date = checkInDate;
+                        this.item.check_out_date = checkOutDate;
+                        this.item.check_in_time = checkInTime;
+                        this.item.check_out_time = checkOutTime;
                         this.$emit('checkAvailable', this.item);
                     }
                 },
@@ -116,6 +174,6 @@ defined( 'ABSPATH' ) || exit; ?>
             }
         });
 
-    })(Vue, WPHB_Booking_Store);
+    })(Vue, WPHB_Booking_Store, jQuery);
 
 </script>

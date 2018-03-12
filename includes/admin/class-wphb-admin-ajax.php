@@ -142,33 +142,26 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			switch ( $args['type'] ) {
 				case 'check-room-available':
 					$item = json_decode( wp_unslash( $args['item'] ), true );
-
 					if ( ! $item ) {
 						break;
 					}
-
 					// get number room available
 					$result = $curd->check_room_available( $booking_id, $item );
-
 					break;
 
 				case 'add-item':
 					$item = json_decode( wp_unslash( $args['item'] ), true );
-
 					if ( ! $item ) {
 						break;
 					}
-
 					// add items to booking
 					$result = $curd->add_items( $booking_id, $item );
 					break;
 				case 'remove-item':
 					$booking_item_id = $args['booking_item_id'] ? $args['booking_item_id'] : 0;
-
 					if ( ! $booking_item_id ) {
 						break;
 					}
-
 					$result = $curd->remove_booking_item( $booking_item_id );
 					break;
 				default:

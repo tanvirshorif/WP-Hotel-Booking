@@ -33,12 +33,14 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 		 */
 		public function __construct() {
 			$this->_args = array(
-				'id'        => 0,
-				'check_in'  => '',
-				'check_out' => '',
-				'qty'       => '',
-				'available' => 0,
-				'extra'     => array()
+				'id'             => 0,
+				'check_in_date'  => '',
+				'check_in_time'  => '',
+				'check_out_date' => '',
+				'check_out_time' => '',
+				'qty'            => '',
+				'available'      => 0,
+				'extra'          => array()
 			);
 		}
 
@@ -104,12 +106,14 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 				),
 				'rooms'    => hb_get_booking_items( $id, 'line_item', null, true ),
 				'newItem'  => array(
-					'id'        => 0,
-					'check_in'  => '',
-					'check_out' => '',
-					'qty'       => 0,
-					'available' => 0,
-					'extra'     => array()
+					'id'             => 0,
+					'check_in_date'  => '',
+					'check_in_time'  => '',
+					'check_out_date' => '',
+					'check_out_time' => '',
+					'qty'            => 0,
+					'available'      => 0,
+					'extra'          => array()
 				),
 				'modal'    => array(
 					'i18n' => array(
@@ -182,8 +186,10 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 
 			// search room args
 			$args = array(
-				'check_in_date'  => strtotime( $item['check_in'] ),
-				'check_out_date' => strtotime( $item['check_out'] ),
+				'check_in_date'  => strtotime( $item['check_in_date'] ),
+				'check_in_time'  => isset( $item['check_in_time'] ) ? hb_time_to_seconds( $item['check_in_time'], true ) : 0,
+				'check_out_date' => strtotime( $item['check_out_date'] ),
+				'check_out_time' => isset( $item['check_out_time'] ) ? hb_time_to_seconds( $item['check_out_time'] ) : DAY_IN_SECONDS - 1,
 				'excerpt'        => array( $booking_id )
 			);
 

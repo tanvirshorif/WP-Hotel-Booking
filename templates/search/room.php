@@ -103,7 +103,7 @@ global $hb_settings;
             <input type="hidden" name="check_in_date"
                    value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_in_date' ) ); ?>"/>
             <input type="hidden" name="check_in_time"
-                   value="<?php echo hb_get_request( 'hb_check_in_time', 0 ); ?>"/>
+                   value="<?php echo hb_get_request( 'hb_check_in_time', '0' ); ?>"/>
             <input type="hidden" name="check_out_date"
                    value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_out_date' ) ); ?>">
             <input type="hidden" name="check_out_time"

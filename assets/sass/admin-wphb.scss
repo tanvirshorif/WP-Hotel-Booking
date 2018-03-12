@@ -1,4 +1,3 @@
-
 /********************************** Admin room page *************************************************/
 .post-type-hb_room {
     #gallery_settings {
@@ -221,7 +220,6 @@
         }
     }
 }
-
 
 /********************************** Admin extra page *************************************************/
 
@@ -782,7 +780,7 @@
         &.show {
             display: block;
             opacity: 1;
-            z-index: 99999;
+            z-index: 9999;
         }
         form.booking-room-item {
             background-color: #fff;
@@ -854,9 +852,15 @@
                         text-transform: capitalize;
                     }
                 }
+                .show{
+                    display: block;
+                }
+                .hide{
+                    display: none !important;
+                }
             }
             .footer {
-                padding: 15px;
+                padding: 15px 30px 15px 15px;
                 border-top: 1px solid #eee;
             }
         }
@@ -867,16 +871,11 @@
 
 #hb-booking-details {
     .booking-user-data {
-        display: inline-block;
-        width: calc(100% - 200px);
-        position: relative;
         .user-avatar {
             display: inline-block;
         }
         .order-user-meta {
             display: inline-block;
-            position: absolute;
-            margin-left: 20px;
             .user-display-name {
                 margin-bottom: 10px;
                 a {
@@ -885,11 +884,11 @@
                 }
             }
         }
+        .user-info {
+            display: inline-block;
+        }
     }
     .booking-data {
-        display: inline-block;
-        width: 200px;
-        float: right;
         .booking-data-number {
             font-size: 24px;
             font-weight: 700;
@@ -1181,7 +1180,6 @@
         z-index: 99900;
     }
 }
-
 
 form[name="hb-admin-settings-form"] .subsubsub {
     float: none;
