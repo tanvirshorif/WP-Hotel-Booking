@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 <?php if ( $extras ) { ?>
 
     <div class="hb_mini_cart_price_packages">
-        <label><?php _e( 'Addition Services:', 'wp-hotel-booking' ) ?></label>
+        <label><?php _e( 'Extra Options:', 'wp-hotel-booking' ) ?></label>
         <ul>
 			<?php foreach ( $extras as $extra ) : ?>
                 <li>

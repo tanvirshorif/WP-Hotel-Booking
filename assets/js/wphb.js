@@ -388,7 +388,6 @@
             }).done(function (res) {
                 res = parseJSON(res);
                 if (typeof res.status === 'undefined' || res.status !== 'success') {
-                    console.log(res.message);
                     if (res.message) {
                         alert(res.message);
                     } else {

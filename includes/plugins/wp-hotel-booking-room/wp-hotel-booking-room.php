@@ -149,14 +149,14 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room' ) ) {
 					'type'    => 'checkbox',
 					'id'      => $prefix . 'enable_archive_book',
 					'title'   => __( 'Archive room page', 'wphb-booking-room' ),
-					'default' => 0,
+					'default' => 1,
 					'desc'    => __( 'Enable Book Now in archive room page', 'wphb-booking-room' )
 				),
 				array(
 					'type'    => 'checkbox',
 					'id'      => $prefix . 'enable_single_book',
 					'title'   => __( 'Single room page', 'wphb-booking-room' ),
-					'default' => 0,
+					'default' => 1,
 					'desc'    => __( 'Enable Book Now in single room page', 'wphb-booking-room' )
 				),
 				array(

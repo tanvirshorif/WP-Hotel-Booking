@@ -30,11 +30,10 @@ defined( 'ABSPATH' ) || exit;
             <table class="hb_table">
                 <thead>
                 <tr>
-                    <th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
-                    <th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_room_type"><?php _e( 'Room', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
-                    <th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
-                    <th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_check_in"><?php _e( 'Check in', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_check_out"><?php _e( 'Check out', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
                 </tr>
@@ -48,19 +47,23 @@ defined( 'ABSPATH' ) || exit;
 							<?php $cart_extra = $cart->get_extra_packages( $cart_id ); ?>
                             <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
                                 <td class="hb_room_type"<?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
-                                    <a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
-                                </td>
-                                <td class="hb_capacity">
-									<?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?>
+                                    <a target="_blank"
+                                       href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo esc_html( $room->name ); ?></a>
                                 </td>
                                 <td class="hb_quantity">
 									<?php printf( '%s', $num_of_rooms ); ?>
                                 </td>
                                 <td class="hb_check_in">
-									<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) ) ?>
+									<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) );
+									if ( hb_get_option( 'booking_time' ) ) {
+										echo ' ' . $room->get_data( 'hb_check_in_time' );
+									} ?>
                                 </td>
                                 <td class="hb_check_out">
-									<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) ) ?>
+									<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) );
+									if ( hb_get_option( 'booking_time' ) ) {
+										echo ' ' . $room->get_data( 'hb_check_out_time' );
+									} ?>
                                 </td>
                                 <td class="hb_night">
 									<?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date ) ?>
@@ -69,12 +72,17 @@ defined( 'ABSPATH' ) || exit;
 									<?php echo hb_format_price( $room->total ); ?>
                                 </td>
                             </tr>
-
 							<?php
 							// add extra package items in checkout page
-							$cart_extra = $cart->get_extra_packages( $cart_id );
-							if ( $cart_extra ) {
-								foreach ( $cart_extra as $extra_cart_id => $extra_item ) {
+							$cart_extra = $cart->get_extra_packages( $cart_id ); ?>
+							<?php if ( $cart_extra ) { ?>
+                                <tr class="hb_addition_services_title"
+                                    data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
+                                    <td colspan="5">
+										<?php _e( 'Extra Options', 'wp-hotel-booking' ); ?>
+                                    </td>
+                                </tr>
+								<?php foreach ( $cart_extra as $extra_cart_id => $extra_item ) {
 									hb_get_template( 'cart/cart-extra-item.php', array(
 										'cart_id' => $extra_cart_id,
 										'extra'   => $extra_item
@@ -97,7 +105,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<?php if ( $tax = hb_get_tax_settings() ) { ?>
                     <tr class="hb_advance_tax">
-                        <td colspan="7">
+                        <td colspan="6">
 							<?php _e( 'Tax', 'wp-hotel-booking' ); ?>
 							<?php if ( $tax < 0 ) { ?>
                                 <span><?php printf( __( '(price including tax)', 'wp-hotel-booking' ) ); ?></span>
@@ -108,7 +116,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php } ?>
 
                 <tr class="hb_advance_grand_total">
-                    <td colspan="7">
+                    <td colspan="6">
 						<?php _e( 'Grand Total', 'wp-hotel-booking' ); ?>
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ); ?></span>
                     </td>
@@ -116,14 +124,14 @@ defined( 'ABSPATH' ) || exit;
 
 				<?php if ( hb_get_advance_payment() ) { ?>
                     <tr class="hb_advance_payment">
-                        <td colspan="7">
+                        <td colspan="6">
 							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
                             <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $cart->advance_payment ); ?></span>
                         </td>
                     </tr>
 					<?php if ( hb_get_advance_payment() < 100 ) { ?>
                         <tr class="hb_payment_all">
-                            <td colspan="7" class="hb-align-right">
+                            <td colspan="6" class="hb-align-right">
                                 <label class="hb-align-right">
                                     <input type="checkbox" name="pay_all"/>
 									<?php _e( 'I want to pay all', 'wp-hotel-booking' ); ?>

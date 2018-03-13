@@ -153,10 +153,12 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 			$qty        = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
 
 			$param = apply_filters( 'hotel_booking_add_cart_params', array(
-				'check_in_date'  => sanitize_text_field( $_POST['check_in_date'] ),
-				'check_in_time'  => $_POST['check_in_time'],
-				'check_out_date' => sanitize_text_field( $_POST['check_out_date'] ),
-				'check_out_time' => $_POST['check_out_time'],
+				'check_in_date'     => sanitize_text_field( $_POST['check_in_date'] ),
+				'check_in_time'     => $_POST['check_in_time'],
+				'hb_check_in_time'  => $_POST['hb_check_in_time'],
+				'check_out_date'    => sanitize_text_field( $_POST['check_out_date'] ),
+				'check_out_time'    => $_POST['check_out_time'],
+				'hb_check_out_time' => $_POST['hb_check_out_time']
 			) );
 			// hook
 			do_action( 'hotel_booking_before_add_to_cart', $_POST );

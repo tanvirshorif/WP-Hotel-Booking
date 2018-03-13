@@ -146,8 +146,10 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 		 * @return mixed
 		 */
 		public function add_to_cart_redirect( $param, $room ) {
-			if ( isset( $param['status'] ) && $param['status'] === 'success' && isset( $_POST['is_single'] ) && $_POST['is_single'] ) {
-				$param['redirect'] = hb_get_cart_url();
+			if ( is_singular( 'hb_room' ) ) {
+				if ( isset( $param['status'] ) && $param['status'] === 'success' && isset( $_POST['is_single'] ) && $_POST['is_single'] ) {
+					$param['redirect'] = hb_get_cart_url();
+				}
 			}
 
 			return $param;

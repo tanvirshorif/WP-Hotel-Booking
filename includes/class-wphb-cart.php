@@ -112,6 +112,9 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 
 			// load from session
 			add_filter( 'hotel_booking_load_cart_from_session', array( $this, 'load_cart_from_session' ) );
+
+			// add extra to cart
+			add_action( 'hotel_booking_added_cart', array( $this, 'add_extra_to_cart' ), 10, 3 );
 		}
 
 		/**
@@ -555,6 +558,7 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		 * @return mixed|null|string|WP_Error
 		 */
 		public function add_to_cart( $post_id = null, $params = array(), $qty = 1, $group_post_id = null, $asc = false ) {
+
 			if ( ! $post_id ) {
 				return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Can not add to cart, product is not exist.', 'wp-hotel-booking' ) );
 			}
@@ -581,38 +585,12 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			// cart item is exist
 			if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
 				$this->update_cart_item( $cart_item_id, $qty, $asc, false );
-
 			} else {
 				// set session cart
 				$this->sessions->set( $cart_item_id, $params );
 			}
 
-
-//			if ( !empty( $_POST['hb_optional_quantity_selected'] ) && !empty( $_POST['hb_optional_quantity'] ) ) {
-//				if ( $_POST['hb_optional_quantity_selected'] ) {
-//					$selected_quantity = $_POST['hb_optional_quantity'];
-//					$on_select           = $_POST['hb_optional_quantity_selected'];
-//
-//					foreach ( $selected_quantity as $extra_id => $qty ) {
-//						// param
-//						$param = array(
-//							'product_id'     => $extra_id,
-//							'parent_id'      => $cart_item_id,
-//							'check_in_date'  => $params['check_in_date'],
-//							'check_in_time'  => $params['check_in_time'],
-//							'check_out_date' => $params['check_out_date'],
-//							'check_out_time' => $params['check_out_time']
-//						);
-//						if ( array_key_exists( $extra_id, $on_select ) ) {
-//							$this->add_to_cart( $extra_id, $param, $qty );
-//						} else {
-//							$extra_cart_item_id = $this->generate_cart_id( $param );
-//							$this->remove_cart_item( $extra_cart_item_id );
-//						}
-//					}
-//				}
-//			}
-
+			// add extra to cart
 			do_action( 'hotel_booking_added_cart', $cart_item_id, $params, $_POST );
 
 			// do action woocommerce
@@ -622,6 +600,45 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 			$this->refresh();
 
 			return $cart_item_id;
+		}
+
+		/**
+		 * Add extra to cart.
+		 *
+		 * @param $cart_id
+		 * @param $cart_item
+		 * @param $posts
+		 */
+		public function add_extra_to_cart( $cart_id, $cart_item, $posts ) {
+			if ( empty( $posts['hb_optional_quantity_selected'] ) || empty( $posts['hb_optional_quantity'] ) ) {
+				return;
+			}
+
+			remove_action( 'hotel_booking_added_cart', array( $this, 'add_extra_to_cart' ), 10 );
+
+			if ( $posts['hb_optional_quantity_selected'] ) {
+				$selected_quantity = $posts['hb_optional_quantity'];
+				$turn_on           = $posts['hb_optional_quantity_selected'];
+
+				foreach ( $selected_quantity as $extra_id => $qty ) {
+					// param
+					$param = array(
+						'product_id'     => $extra_id,
+						'parent_id'      => $cart_id,
+						'check_in_date'  => $cart_item['check_in_date'],
+						'check_in_time'  => $cart_item['check_in_time'],
+						'check_out_date' => $cart_item['check_out_date'],
+						'check_out_time' => $cart_item['check_out_time']
+					);
+					if ( array_key_exists( $extra_id, $turn_on ) ) {
+						$this->add_to_cart( $extra_id, $param, $qty );
+					} else {
+						$extra_cart_item_id = $this->generate_cart_id( $param );
+						$this->remove_cart_item( $extra_cart_item_id );
+					}
+				}
+			}
+			add_action( 'hotel_booking_added_cart', array( $this, 'add_extra_to_cart' ), 10, 3 );
 		}
 
 		/**

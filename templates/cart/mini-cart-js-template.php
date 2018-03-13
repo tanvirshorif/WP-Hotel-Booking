@@ -34,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
 
         <# if ( typeof data.extra_packages !== 'undefined' && Object.keys( data.extra_packages ).length > 0 ) { #>
             <div class="hb_mini_cart_price_packages">
-                <label><?php _e( 'Addition Services:', 'wp-hotel-booking' ) ?></label>
+                <label><?php _e( 'Extra Options:', 'wp-hotel-booking' ) ?></label>
                 <ul>
                     <#  for ( var i = 0; i < Object.keys( data.extra_packages ).length; i++ ) { #>
                         <# var pack = data.extra_packages[i]; #>

@@ -182,12 +182,12 @@ if ( ! function_exists( 'hb_admin_room_meta_boxes' ) ) {
 			),
 			array(
 				'name'    => 'room_extra',
-				'label'   => __( 'Addition Package', 'wp-hotel-booking' ),
-				'desc'    => __( 'Room extra services', 'wp-hotel-booking' ),
+				'label'   => __( 'Extra Options', 'wp-hotel-booking' ),
+				'desc'    => __( 'Room extra options', 'wp-hotel-booking' ),
 				'type'    => 'multiple',
 				'std'     => '',
 				'options' => hb_room_extra_options(),
-				'except'  => sprintf( wp_kses( __( '<i>There are no addition package. Create <a href="%s" target="_blank">here</a></i>', 'wp-hotel-booking' ),
+				'except'  => sprintf( wp_kses( __( '<i>There are no extra options. Create <a href="%s" target="_blank">here</a></i>', 'wp-hotel-booking' ),
 					array(
 						'i' => array(),
 						'a' => array( 'href' => array(), 'target' => array() )

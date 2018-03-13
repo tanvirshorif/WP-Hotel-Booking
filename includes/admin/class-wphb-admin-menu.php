@@ -59,8 +59,8 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 				),
 				'extra_package' => array(
 					'tp_hotel_booking',
-					__( 'Addition Packages', 'wp-hotel-booking' ),
-					__( 'Addition Packages', 'wp-hotel-booking' ),
+					__( 'Extra Options', 'wp-hotel-booking' ),
+					__( 'Extra Options', 'wp-hotel-booking' ),
 					'manage_hb_booking',
 					'wphb-addition-packages',
 					array( $this, 'addition_packages' )

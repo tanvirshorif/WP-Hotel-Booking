@@ -74,7 +74,7 @@ defined( 'ABSPATH' ) || exit;
             <# if ( typeof data.sub_items !== 'undefined' ) { #>
 
                 <div class="section_line">
-                    <h4><?php _e( 'Extra Packages', 'wp-hotel-booking' ); ?></h4>
+                    <h4><?php _e( 'Extra Options', 'wp-hotel-booking' ); ?></h4>
                     <ul>
                         <# var sub_items_length = data.sub_items.length; #>
                         <# for ( var i = 0; i < sub_items_length; i++ ) { #>
@@ -183,7 +183,7 @@ defined( 'ABSPATH' ) || exit;
                     <div class="hb_addition_package_title">
                         <h5 class="hb_addition_package_title_toggle">
                             <a href="javascript:void(0)" class="hb_package_toggle">
-								<?php esc_html_e( 'Optional Extras', 'wp-hotel-booking' ); ?>
+								<?php esc_html_e( 'Extra Options', 'wp-hotel-booking' ); ?>
                             </a>
                         </h5>
                     </div>

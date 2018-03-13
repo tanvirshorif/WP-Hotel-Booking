@@ -104,10 +104,14 @@ global $hb_settings;
                    value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_in_date' ) ); ?>"/>
             <input type="hidden" name="check_in_time"
                    value="<?php echo hb_get_request( 'hb_check_in_time', '0' ); ?>"/>
+            <input type="hidden" name="hb_check_in_time"
+                   value="<?php echo hb_get_request( 'check_in_time' ); ?>"/>
             <input type="hidden" name="check_out_date"
                    value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_out_date' ) ); ?>">
             <input type="hidden" name="check_out_time"
                    value="<?php echo hb_get_request( 'hb_check_out_time', DAY_IN_SECONDS - 1 ); ?>"/>
+            <input type="hidden" name="hb_check_out_time"
+                   value="<?php echo hb_get_request( 'check_out_time' ); ?>"/>
             <input type="hidden" name="room-id" value="<?php echo esc_attr( $room->ID ); ?>">
             <input type="hidden" name="hotel-booking" value="cart">
             <input type="hidden" name="action" value="wphb_add_to_cart"/>
@@ -126,27 +130,18 @@ global $hb_settings;
                         <ul class="hb_addition_packages_ul">
 							<?php foreach ( $room_extra as $key => $extra ): ?>
                                 <li data-price="<?php echo esc_attr( $extra->amount_singular ); ?>">
-                                    <div class="hb_extra_optional_right">
-                                        <input type="checkbox"
-                                               name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
-                                               class="hb_optional_quantity_selected"
-                                               id="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"
-                                        />
-                                    </div>
-                                    <div class="hb_extra_optional_left">
-                                        <div class="hb_extra_title">
-                                            <div class="hb_package_title">
-                                                <label for="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
-                                            </div>
-                                            <p><?php printf( '%s', $extra->description ) ?></p>
-                                        </div>
+                                    <input type="checkbox"
+                                           name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
+                                           class="hb_optional_quantity_selected"
+                                           id="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"
+                                    />
+                                    <div class="hb_package_title">
+                                        <label for="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
                                         <div class="hb_extra_detail_price">
 											<?php if ( $extra->respondent === 'number' ) { ?>
                                                 <input type="number" step="1" min="1"
                                                        name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
-                                                       value="1"
-                                                       class="hb_optional_quantity"
-                                                />
+                                                       value="1" class="hb_optional_quantity"/>
 											<?php } else { ?>
                                                 <input type="hidden" step="1" min="1"
                                                        name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
@@ -158,6 +153,7 @@ global $hb_settings;
                                             </label>
                                         </div>
                                     </div>
+                                    <p class="description"><?php printf( '%s', $extra->description ) ?></p>
                                 </li>
 							<?php endforeach ?>
                         </ul>

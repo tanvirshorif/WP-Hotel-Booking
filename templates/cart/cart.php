@@ -27,14 +27,13 @@ defined( 'ABSPATH' ) || exit;
             <table class="hb_table">
                 <thead>
                 <tr>
-                    <th></th>
-                    <th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
-                    <th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
+                    <th class="remove-room"></th>
+                    <th class="hb_room_type"><?php _e( 'Room', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_check_in"><?php _e( 'Check in', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_check_out"><?php _e( 'Check out', 'wp-hotel-booking' ); ?></th>
                     <th class="hb_night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
-                    <th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_gross_total"><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
                 </tr>
                 </thead>
 
@@ -44,26 +43,34 @@ defined( 'ABSPATH' ) || exit;
 						<?php if ( $num_of_rooms > 0 ) { ?>
 							<?php $cart_extra = $cart->get_extra_packages( $cart_id ); ?>
                             <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                                <td<?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
+                                <td class="remove-room" <?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
                                     <a class="hb_remove_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </td>
                                 <td class="hb_room_type">
-                                    <a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
+                                    <a target="_blank"
+                                       href="<?php echo get_permalink( $room->ID ); ?>"><?php echo esc_html( $room->name ); ?></a>
                                 </td>
-                                <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?> </td>
                                 <td class="hb_quantity"><?php echo esc_html( $num_of_rooms ); ?></td>
-                                <td class="hb_check_in"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) ) ?></td>
-                                <td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) ) ?></td>
+                                <td class="hb_check_in"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) );
+									if ( hb_get_option( 'booking_time' ) ) {
+										echo ' ' . $room->get_data( 'hb_check_in_time' );
+									} ?>
+                                </td>
+                                <td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) );
+									if ( hb_get_option( 'booking_time' ) ) {
+										echo ' ' . $room->get_data( 'hb_check_out_time' );
+									} ?>
+                                </td>
                                 <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date ) ?></td>
                                 <td class="hb_gross_total"><?php echo hb_format_price( $room->total ); ?></td>
                             </tr>
 							<?php if ( $cart_extra ) { ?>
                                 <tr class="hb_addition_services_title"
                                     data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                                    <td colspan="<?php echo ( 'checkout' === is_hb_checkout() ) ? 6 : 7 ?>">
-										<?php _e( 'Addition Services', 'wp-hotel-booking' ); ?>
+                                    <td colspan="6">
+										<?php _e( 'Extra Options', 'wp-hotel-booking' ); ?>
                                     </td>
                                 </tr>
 
@@ -82,7 +89,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php do_action( 'hotel_booking_before_cart_total' ); ?>
 
                 <tr class="hb_sub_total">
-                    <td colspan="8"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?>
+                    <td colspan="7"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?>
                         <span class="hb-align-right hb_sub_total_value">
                             <?php echo hb_format_price( $cart->sub_total ); ?>
                         </span>
@@ -90,7 +97,7 @@ defined( 'ABSPATH' ) || exit;
                 </tr>
 				<?php if ( $tax = hb_get_tax_settings() ) { ?>
                     <tr class="hb_advance_tax">
-                        <td colspan="8">
+                        <td colspan="7">
 							<?php _e( 'Tax', 'wp-hotel-booking' ); ?>
 							<?php if ( $tax < 0 ) { ?>
                                 <span><?php printf( __( '(price including tax)', 'wp-hotel-booking' ) ); ?></span>
@@ -100,7 +107,7 @@ defined( 'ABSPATH' ) || exit;
                     </tr>
 				<?php } ?>
                 <tr class="hb_advance_grand_total">
-                    <td colspan="8">
+                    <td colspan="7">
 						<?php _e( 'Grand Total', 'wp-hotel-booking' ); ?>
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ) ?></span>
                     </td>
@@ -108,7 +115,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<?php if ( hb_get_advance_payment() ) { ?>
                     <tr class="hb_advance_payment">
-                        <td colspan="8">
+                        <td colspan="7">
 							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
                             <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $cart->advance_payment ); ?></span>
                         </td>
