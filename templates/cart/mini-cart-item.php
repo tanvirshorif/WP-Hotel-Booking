@@ -37,7 +37,20 @@ defined( 'ABSPATH' ) || exit;
     </div>
 
     <!--add extra items in mini cart-->
-	<?php do_action( 'hotel_booking_mini_cart_item', $room, $cart_id ); ?>
+	<?php
+	if ( $cart_item ) {
+		$packages = array();
+		foreach ( $cart->get_cart_contents() as $id => $cart_item ) {
+			if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
+				$cart_item->cart_id = $id;
+				$packages[]         = $cart_item;
+			}
+		}
+
+		ob_start();
+		hb_get_template( 'cart/mini-cart-extra-item.php', array( 'extras' => $packages ) );
+		echo ob_get_clean();
+	} ?>
 
     <div class="hb_mini_cart_price">
         <label><?php _e( 'Price: ', 'wp-hotel-booking' ); ?></label>

@@ -130,13 +130,13 @@ global $hb_settings;
                                         <input type="checkbox"
                                                name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
                                                class="hb_optional_quantity_selected"
-                                               id="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ) ?>"
+                                               id="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"
                                         />
                                     </div>
                                     <div class="hb_extra_optional_left">
                                         <div class="hb_extra_title">
                                             <div class="hb_package_title">
-                                                <label for="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
+                                                <label for="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
                                             </div>
                                             <p><?php printf( '%s', $extra->description ) ?></p>
                                         </div>

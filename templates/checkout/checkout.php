@@ -19,63 +19,69 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<?php
-$cart = WPHB_Cart::instance();
+<?php $cart = WPHB_Cart::instance(); ?>
 
-do_action( 'hotel_booking_before_checkout_form' );
-?>
+<?php do_action( 'hotel_booking_before_checkout_form' ); ?>
 
     <div id="hotel-booking-payment">
 
         <form name="hb-payment-form" id="hb-payment-form" method="post" action="">
             <h3><?php _e( 'Booking Rooms', 'wp-hotel-booking' ); ?></h3>
             <table class="hb_table">
-
                 <thead>
-                <th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
-                <th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
+                <tr>
+                    <th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
+                    <th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
+                </tr>
                 </thead>
 
                 <!-- get rooms from cart-->
 				<?php if ( $rooms = $cart->get_rooms() ) { ?>
 					<?php foreach ( $rooms as $cart_id => $room ) { ?>
-						<?php
-						if ( ( $num_of_rooms = $room->quantity ) == 0 ) {
-							continue;
-						}
-						// get extra packages from cart
-						$cart_extra = $cart->get_extra_packages( $cart_id );
-						?>
-                        <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                            <td class="hb_room_type"<?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
-                                <a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
-                            </td>
-                            <td class="hb_capacity">
-								<?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?>
-                            </td>
-                            <td class="hb_quantity">
-								<?php printf( '%s', $num_of_rooms ); ?>
-                            </td>
-                            <td class="hb_check_in">
-								<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) ) ?>
-                            </td>
-                            <td class="hb_check_out">
-								<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) ) ?>
-                            </td>
-                            <td class="hb_night">
-								<?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date ) ?>
-                            </td>
-                            <td class="hb_gross_total">
-								<?php echo hb_format_price( $room->total ); ?>
-                            </td>
-                        </tr>
-                        <!--add extra package items in checkout page-->
-						<?php do_action( 'hotel_booking_cart_after_item', $room, $cart_id ); ?>
+						<?php $num_of_rooms = $room->quantity; ?>
+						<?php if ( $num_of_rooms > 0 ) { ?>
+							<?php $cart_extra = $cart->get_extra_packages( $cart_id ); ?>
+                            <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
+                                <td class="hb_room_type"<?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
+                                    <a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
+                                </td>
+                                <td class="hb_capacity">
+									<?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?>
+                                </td>
+                                <td class="hb_quantity">
+									<?php printf( '%s', $num_of_rooms ); ?>
+                                </td>
+                                <td class="hb_check_in">
+									<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) ) ?>
+                                </td>
+                                <td class="hb_check_out">
+									<?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) ) ?>
+                                </td>
+                                <td class="hb_night">
+									<?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date ) ?>
+                                </td>
+                                <td class="hb_gross_total">
+									<?php echo hb_format_price( $room->total ); ?>
+                                </td>
+                            </tr>
+
+							<?php
+							// add extra package items in checkout page
+							$cart_extra = $cart->get_extra_packages( $cart_id );
+							if ( $cart_extra ) {
+								foreach ( $cart_extra as $extra_cart_id => $extra_item ) {
+									hb_get_template( 'cart/cart-extra-item.php', array(
+										'cart_id' => $extra_cart_id,
+										'extra'   => $extra_item
+									) );
+								}
+							} ?>
+						<?php } ?>
 					<?php } ?>
 				<?php } ?>
 
@@ -129,24 +135,20 @@ do_action( 'hotel_booking_before_checkout_form' );
 
             </table>
 
-			<?php if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) ) { ?>
-
-				<?php if ( get_option( 'users_can_register' ) ) {
+			<?php if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) ) {
+				if ( get_option( 'users_can_register' ) ) {
 					printf( __( 'You have to <strong><a href="%s">login</a></strong> or <strong><a href="%s">register</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ), wp_registration_url() );
 				} else {
 					printf( __( 'You have to <strong><a href="%s">login</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ) );
-				} ?>
+				}
+			} else {
+				// customer checkout form info
+				hb_get_template( 'checkout/customer.php', array( 'customer' => $customer ) );
+				// payment methods checkout form
+				hb_get_template( 'checkout/payment-method.php' );
+				// booking addition information
+				hb_get_template( 'checkout/addition-information.php' ); ?>
 
-			<?php } else { ?>
-
-                <!-- customer checkout form info-->
-				<?php hb_get_template( 'checkout/customer.php', array( 'customer' => $customer ) ); ?>
-                <!-- payment methods checkout form-->
-				<?php hb_get_template( 'checkout/payment-method.php' ); ?>
-                <!-- booking addition information-->
-				<?php hb_get_template( 'checkout/addition-information.php' ); ?>
-
-<!--                <input type="hidden" name="hotel-booking" value="place_order"/>-->
                 <input type="hidden" name="action" value="wphb_place_booking"/>
                 <input type="hidden" name="total_advance"
                        value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>"/>
@@ -164,7 +166,6 @@ do_action( 'hotel_booking_before_checkout_form' );
                 <p>
                     <button type="submit" class="hb_button"><?php _e( 'Check out', 'wp-hotel-booking' ); ?></button>
                 </p>
-
 			<?php } ?>
         </form>
     </div>

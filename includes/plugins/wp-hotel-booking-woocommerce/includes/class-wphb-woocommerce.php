@@ -248,6 +248,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 			$woo_cart_param = apply_filters( 'hotel_booking_wc_cart_params', $woo_cart_param, $cart_item_id );
 
 			$woo_cart_id = $woocommerce->cart->generate_cart_id( $woo_cart_param['product_id'], null, array(), $woo_cart_param );
+
 			if ( array_key_exists( $woo_cart_id, $cart_items ) ) {
 				$woocommerce->cart->set_quantity( $woo_cart_id, $params['quantity'] );
 			} else {

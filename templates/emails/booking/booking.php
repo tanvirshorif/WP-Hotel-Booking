@@ -16,7 +16,10 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<h2 class="section-title"><?php echo __( 'Booking ', 'wp-hotel-booking' ) . hb_format_order_number( $booking->id ); ?></h2>
+<h2 class="section-title">
+	<?php echo __( 'Booking ', 'wp-hotel-booking' ) . hb_format_order_number( $booking->id ); ?>
+</h2>
+
 <table class="width-100 booking_details" cellspacing="0" cellpadding="0">
     <tr>
         <th><?php _e( 'Room', 'wp-hotel-booking' ) ?></th>
@@ -25,7 +28,9 @@ defined( 'ABSPATH' ) || exit;
         <th><?php _e( '#', 'wp-hotel-booking' ) ?></th>
         <th><?php _e( 'Price', 'wp-hotel-booking' ) ?></th>
     </tr>
+
 	<?php $items = hb_get_booking_items( $booking->id ); ?>
+
 	<?php foreach ( $items as $k => $item ) { ?>
         <tr>
             <td><?php printf( '%s', $item->order_item_name ) ?></td>
@@ -35,7 +40,22 @@ defined( 'ABSPATH' ) || exit;
             <td><?php printf( '%s', hb_format_price( hb_get_booking_item_meta( $item->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
         </tr>
 
-		<?php do_action( 'hotel_booking_email_after_room_item', $item, $booking ); ?>
+		<?php $packages = hb_get_booking_items( $booking->id, 'sub_item', $item->order_item_id );
+		if ( ! $packages ) {
+			$html = array();
+			foreach ( $packages as $i => $package ) {
+				$html[] = '<tr>';
+				$html[] = '<td>' . sprintf( '%s', $package->order_item_name ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $package->order_item_id, 'check_in_date', true ) ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_booking_item_meta( $package->order_item_id, 'check_out_date', true ) ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', hb_get_booking_item_meta( $package->order_item_id, 'qty', true ) ) . '</td>';
+				$html[] = '<td>' . sprintf( '%s', hb_format_price( hb_get_booking_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ) . '</td>';
+				$html[] = '</tr>';
+			}
+
+			printf( '%s', implode( '', $html ) );
+		} ?>
+
 	<?php } ?>
     <tr>
         <td colspan="4"><b><?php _e( 'Subtotal', 'wp-hotel-booking' ) ?></b></td>

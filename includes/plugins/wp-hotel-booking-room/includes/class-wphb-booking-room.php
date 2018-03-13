@@ -55,6 +55,8 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 				'check_room_available'
 			) );
 			add_action( 'hotel_booking_room_before_quantity', array( $this, 'extra_single_room' ) );
+
+			// redirect cart when booking in single room
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_redirect' ), 10, 2 );
 		}
 
