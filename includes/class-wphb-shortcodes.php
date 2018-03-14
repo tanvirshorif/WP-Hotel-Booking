@@ -95,13 +95,9 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$end_time   = hb_get_request( 'hb_check_out_time' );
 
 			$adults_term = hb_get_request( 'adults', 0 );
-			$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
-			if ( ! $adults ) {
-				$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
-			}
-
-			$max_child = hb_get_request( 'max_child', 0 );
-			$location  = hb_get_request( 'room_location', 0 );
+			$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : 0;
+			$max_child   = hb_get_request( 'max_child', 0 );
+			$location    = hb_get_request( 'room_location', 0 );
 
 			$atts = wp_parse_args(
 				$atts, array(

@@ -50,7 +50,7 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 		 * @return bool
 		 */
 		public function delete( &$room_id ) {
-			if ( ! $room_id || get_post_type( $room_id ) != WPHB_Room_CPT ) {
+			if ( ! $room_id || get_post_type( $room_id ) != 'hb_room' ) {
 				return false;
 			}
 
@@ -74,7 +74,7 @@ if ( ! class_exists( 'WPHB_Room_CURD' ) ) {
 		 */
 		public static function get_rooms() {
 			global $wpdb;
-			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s AND `post_status` =  %s ORDER BY %s ASC", WPHB_Room_CPT, 'publish', 'id' );
+			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s AND `post_status` =  %s ORDER BY %s ASC", 'hb_room', 'publish', 'id' );
 
 			return $wpdb->get_results( $query, OBJECT );
 		}

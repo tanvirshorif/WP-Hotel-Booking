@@ -76,7 +76,7 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 				case 'delete-extra':
 					$id = $args['extra_id'] ? $args['extra_id'] : '';
 
-					if ( $id && get_post_type( $id ) == WPHB_Extra_CPT ) {
+					if ( $id && get_post_type( $id ) == 'hb_extra_room' ) {
 						// delete extra
 						wp_delete_post( $id, true );
 						$result = self::_handle_response( true, __( 'Delete Extra successful', 'wp-hotel-booking' ) );

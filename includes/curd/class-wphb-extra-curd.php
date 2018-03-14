@@ -54,7 +54,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 			$id = wp_insert_post( array(
 				'post_title'   => $extra['title'],
 				'post_content' => $extra['description'],
-				'post_type'    => WPHB_Extra_CPT,
+				'post_type'    => 'hb_extra_room',
 				'post_status'  => 'publish'
 			) );
 
@@ -87,7 +87,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 			$extra = wp_parse_args( $extra, $this->_args );
 
 			$id = $extra['id'];
-			if ( $id && get_post_type( $id ) == WPHB_Extra_CPT ) {
+			if ( $id && get_post_type( $id ) == 'hb_extra_room' ) {
 				$update = wp_update_post(
 					array(
 						'ID'           => $id,
@@ -109,7 +109,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 		 */
 		public static function get_extra() {
 			global $wpdb;
-			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s ORDER BY %s ASC", WPHB_Extra_CPT, 'id' );
+			$query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE `post_type` = %s ORDER BY %s ASC", 'hb_extra_room', 'id' );
 
 			return $wpdb->get_results( $query, OBJECT );
 		}

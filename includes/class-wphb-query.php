@@ -115,9 +115,9 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 			$max_child              = $args['max_child'];
 			$location               = $args['location'];
 			$date_in                = strtotime( $args['check_in_date'] );
-			$time_in                = strtotime( $args['check_in_time'] );
+			$time_in                = $args['check_in_time'];
 			$date_out               = strtotime( $args['check_out_date'] );
-			$time_out               = strtotime( $args['check_out_time'] );
+			$time_out               = $args['check_out_time'];
 			$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $date_in ), date( 'd', $date_in ), date( 'Y', $date_in ) );
 			$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $date_out ), date( 'd', $date_out ), date( 'Y', $date_out ) );
 
@@ -190,9 +190,9 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 			}
 
 			$cart = WPHB_Cart::instance();
-			if ( $cart->cart_contents && $search ) {
+			if ( $cart->get_cart_contents() && $search ) {
 				$selected_id = array();
-				foreach ( $cart->cart_contents as $k => $_cart ) {
+				foreach ( $cart->get_cart_contents() as $k => $_cart ) {
 					$selected_id[ $_cart->product_id ] = $_cart->quantity;
 				}
 
@@ -200,9 +200,7 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 					if ( array_key_exists( $room->post->ID, $selected_id ) ) {
 						$in  = $room->get_data( 'check_in_date' );
 						$out = $room->get_data( 'check_out_date' );
-						if (
-							( $in < $check_in_date_to_time && $check_out_date_to_time < $out ) || ( $in < $check_in_date_to_time && $check_out_date_to_time < $out )
-						) {
+						if ( ( $in < $check_in_date_to_time && $check_out_date_to_time < $out ) || ( $in < $check_in_date_to_time && $check_out_date_to_time < $out ) ) {
 							$total                                = $search[ $k ]->available_rooms;
 							$results[ $k ]->post->available_rooms = (int) $total - (int) $selected_id[ $room->post->ID ];
 						}
@@ -216,9 +214,9 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 				'adults'    => $adults,
 				'child'     => $max_child
 			) );
-			global $hb_settings;
+
 			$total          = count( $results );
-			$posts_per_page = (int) apply_filters( 'hb_number_search_rooms_per_page', $hb_settings->get( 'posts_per_page', 8 ) );
+			$posts_per_page = (int) apply_filters( 'hb_number_search_rooms_per_page', hb_get_option( 'posts_per_page', 8 ) );
 			$page           = isset( $_GET['hb_page'] ) ? absint( $_GET['hb_page'] ) : 1;
 			$offset         = ( $page * $posts_per_page ) - $posts_per_page;
 			$max_num_pages  = ceil( $total / $posts_per_page );

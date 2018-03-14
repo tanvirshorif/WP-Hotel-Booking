@@ -81,7 +81,7 @@ if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
 
 		$post_type = get_post_type( $product_id );
 
-		if ( $post_type == WPHB_Extra_CPT ) {
+		if ( $post_type == 'hb_extra_room' ) {
 			$class = 'WPHB_Extra_Package';
 		} else {
 			$class = 'WPHB_Room';
@@ -478,12 +478,13 @@ if ( ! function_exists( 'hb_get_option' ) ) {
 	 * Get wphb option.
 	 *
 	 * @param string $name
+	 * @param string $default
 	 * @param string $prefix
 	 *
 	 * @return mixed
 	 */
-	function hb_get_option( $name = '', $prefix = 'tp_hotel_booking_' ) {
-		return get_option( $prefix . $name );
+	function hb_get_option( $name = '', $default = '', $prefix = 'tp_hotel_booking_' ) {
+		return get_option( $prefix . $name, $default );
 	}
 }
 

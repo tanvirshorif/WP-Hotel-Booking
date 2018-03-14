@@ -74,23 +74,19 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
 			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
 
-			define( 'WPHB_Room_CPT', 'hb_room' );
-			define( 'WPHB_Extra_CPT', 'hb_extra_room' );
-			define( 'WPHB_Booking_CPT', 'hb_booking' );
-
 			add_action( 'before_delete_post', array( $this, 'before_delete_post' ) );
 		}
 
 		/**
-         * Delete booking data in order_items and order_itemmeta table.
-         *
+		 * Delete booking data in order_items and order_itemmeta table.
+		 *
 		 * @param $post_id
 		 */
 		public function before_delete_post( $post_id ) {
 			$type = get_post_type( $post_id );
 
-			if ( in_array( $type, array( WPHB_Booking_CPT, WPHB_Room_CPT ) ) ) {
-				if ( $type == WPHB_Booking_CPT ) {
+			if ( in_array( $type, array( 'hb_room', 'hb_booking' ) ) ) {
+				if ( $type == 'hb_booking' ) {
 					$curd = new WPHB_Booking_CURD();
 				} else {
 					$curd = new WPHB_Room_CURD();
@@ -146,9 +142,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				return;
 			}
 
-			if ( $_POST['room_capacity'] ) {
-				update_term_meta( $term_id, 'hb_max_number_of_adults', sanitize_title( $_POST['room_capacity'] ) );
-			}
+			$cap = $_POST['room_capacity'] ? sanitize_title( $_POST['room_capacity'] ) : 0;
+			update_term_meta( $term_id, 'hb_max_number_of_adults', $cap );
 		}
 
 		/**

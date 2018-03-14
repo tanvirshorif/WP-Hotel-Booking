@@ -292,7 +292,6 @@ if ( ! function_exists( 'wphb_get_screen_ids' ) ) {
 			$wphb_screen_id . '_page_wphb-about',
 			$wphb_screen_id . '_page_wphb-about',
 			$wphb_screen_id . '_page_wphb-tools',
-			WPHB_Room_CPT,
 			'hb_room',
 			'edit-hb_room',
 			'hb_booking',

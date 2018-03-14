@@ -64,7 +64,7 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 		 * @throws Exception
 		 */
 		public function load( &$booking ) {
-			if ( ! $booking->ID || get_post_type( $booking->ID ) != WPHB_Booking_CPT ) {
+			if ( ! $booking->ID || get_post_type( $booking->ID ) != 'hb_booking' ) {
 				return false;
 			}
 
@@ -137,7 +137,7 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 		 * @return bool
 		 */
 		public function delete( &$booking_id ) {
-			if ( ! $booking_id || get_post_type( $booking_id ) != WPHB_Booking_CPT ) {
+			if ( ! $booking_id || get_post_type( $booking_id ) != 'hb_booking' ) {
 				return false;
 			}
 

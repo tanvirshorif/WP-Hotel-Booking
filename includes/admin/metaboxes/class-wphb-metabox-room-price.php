@@ -68,7 +68,7 @@ if ( ! class_exists( 'WPHB_Metabox_Room_Price' ) ) {
 				return;
 			}
 
-			if ( get_post_type( $post_id ) != WPHB_Room_CPT ) {
+			if ( get_post_type( $post_id ) != 'hb_room' ) {
 				return;
 			}
 

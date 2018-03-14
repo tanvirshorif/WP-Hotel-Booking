@@ -94,6 +94,7 @@ $uniqid         = uniqid();
 							'min'               => 1,
 							'max'               => hb_get_max_capacity_of_rooms(),
 							'selected'          => $adults,
+							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
 							'option_none_value' => 0,
 							'options'           => hb_get_capacity_of_rooms()
 						)
@@ -113,6 +114,7 @@ $uniqid         = uniqid();
 								'name'              => 'max_child',
 								'min'               => 1,
 								'max'               => hb_get_max_child_of_rooms(),
+								'show_option_none'  => __( 'Children', 'wp-hotel-booking' ),
 								'option_none_value' => 0,
 								'selected'          => $max_child,
 							)

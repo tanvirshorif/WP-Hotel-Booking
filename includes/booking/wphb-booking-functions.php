@@ -129,7 +129,7 @@ if ( ! function_exists( 'hb_get_booking_items' ) ) {
 
 				$items[ $key ]['type'] = $post_type;
 
-				if ( WPHB_Room_CPT == $post_type ) {
+				if ( 'hb_room' == $post_type ) {
 					$check_in_date                    = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_date', true );
 					$check_in_time                    = hb_get_booking_item_meta( $item['order_item_id'], 'check_in_time', true );
 					$check_out_date                   = hb_get_booking_item_meta( $item['order_item_id'], 'check_out_date', true );
@@ -156,7 +156,7 @@ if ( ! function_exists( 'hb_get_booking_items' ) ) {
 							);
 						}
 					};
-				} else if ( WPHB_Extra_CPT == $post_type ) {
+				} else if ( 'hb_extra_room' == $post_type ) {
 					$items[ $key ] ['id']    = $product_id;
 					$items[ $key ] ['title'] = get_post_type( $product_id );
 					$items[ $key ]['unit']   = get_post_meta( $product_id, 'tp_hb_extra_room_respondent', true );
