@@ -138,7 +138,7 @@ defined( 'ABSPATH' ) || exit; ?>
 						<?php
 						$settings = hb_settings();
 						// booking details
-						hb_get_template( 'emails/booking.php', array( 'booking' => $booking, 'options' => $settings ) );
+						hb_get_template( 'emails/booking/booking.php', array( 'booking' => $booking, 'options' => $settings ) );
 						// customer details
 						hb_get_template( 'emails/booking/customer.php', array(
 							'booking' => $booking,

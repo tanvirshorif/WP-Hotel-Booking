@@ -596,7 +596,7 @@ if ( ! function_exists( 'hb_send_customer_booking_email' ) ) {
 	 *
 	 * @return bool
 	 */
-	function hb_send_customer_booking_email( $booking = null, $status ) {
+	function hb_send_customer_booking_email( $booking = null, $status = '' ) {
 
 		$settings = hb_settings();
 

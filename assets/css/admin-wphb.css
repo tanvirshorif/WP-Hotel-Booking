@@ -1313,3 +1313,13 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
     display: none; }
   #list-extra-services tr.edit input, #list-extra-services tr.edit textarea {
     display: block; }
+
+#wphb-booking-statistic .statistic-sections {
+  width: 15%;
+  display: inline-block; }
+  #wphb-booking-statistic .statistic-sections .list-rooms {
+    margin: 10px 10px 10px 20px; }
+
+#wphb-booking-statistic #wp-hotel-booking-report {
+  width: 80%;
+  display: inline-block; }

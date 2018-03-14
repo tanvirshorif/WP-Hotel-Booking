@@ -150,7 +150,7 @@ if ( ! function_exists( 'wphb_statistic_export_form' ) ) {
 			<?php } ?>
             <input type="hidden" name="check_out_timestamp"
                    value="<?php echo isset( $_REQUEST['check_out_timestamp'] ) ? esc_attr( sanitize_text_field( $_REQUEST['check_out_timestamp'] ) ) : '' ?>">
-			<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
+			<?php wp_nonce_field( 'wp-hotel-booking-report-export', 'wp-hotel-booking-report-export' ) ?>
             <button type="submit"><?php _e( 'Export', 'wphb-statistic' ) ?></button>
         </form>
 	<?php }

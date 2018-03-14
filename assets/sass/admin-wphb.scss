@@ -852,10 +852,10 @@
                         text-transform: capitalize;
                     }
                 }
-                .show{
+                .show {
                     display: block;
                 }
-                .hide{
+                .hide {
                     display: none !important;
                 }
             }
@@ -1780,5 +1780,19 @@ form[name="hb-admin-settings-form"] {
                 display: block;
             }
         }
+    }
+}
+
+#wphb-booking-statistic {
+    .statistic-sections {
+        width: 15%;
+        display: inline-block;
+        .list-rooms{
+            margin: 10px 10px 10px 20px;
+        }
+    }
+    #wp-hotel-booking-report {
+        width: 80%;
+        display: inline-block;
     }
 }

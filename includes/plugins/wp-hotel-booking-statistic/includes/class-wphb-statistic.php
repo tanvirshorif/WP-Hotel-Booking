@@ -80,7 +80,6 @@ if ( ! class_exists( 'WPHB_Statistic' ) ) {
 		public function admin_sections() {
 
 			$sections = $this->get_sections();
-
 			if ( count( $sections ) === 1 ) {
 				return;
 			}
@@ -91,21 +90,40 @@ if ( ! class_exists( 'WPHB_Statistic' ) ) {
 				$this->current_section = sanitize_text_field( $_REQUEST['tab'] );
 			} else if ( $sections ) {
 				$this->current_section = sanitize_text_field( array_keys( $sections )[0] );
+			} ?>
+
+
+            <ul class="statistic-sections">
+				<?php foreach ( $sections as $section => $title ) { ?>
+                    <li>
+                        <a href="?page=wphb-statistic&tab=<?php echo esc_attr( $section ); ?>"
+                           class="<?php echo( $this->current_section === $section ? 'current' : '' ); ?>"><?php echo esc_html( $title ); ?></a>
+						<?php $this->get_sub_sections( $section ); ?>
+                    </li>
+				<?php } ?>
+            </ul>
+			<?php
+		}
+
+		/**
+		 * Get sub sections.
+		 *
+		 * @param $section
+		 */
+		public function get_sub_sections( $section ) {
+			if ( $section == 'room' ) {
+				$rooms = WPHB_Room_CURD::get_rooms();
+				if ( is_array( $rooms ) ) { ?>
+                    <ul class="list-rooms">
+						<?php foreach ( $rooms as $room ) { ?>
+                            <li value="<?php echo esc_attr( $room->ID ); ?>">
+                                <a href="#"><?php echo esc_html( $room->post_title ); ?></a>
+                            </li>
+							<?php
+						} ?>
+                    </ul>
+				<?php }
 			}
-
-			$html = array();
-
-			$html[] = '<ul class="hb-admin-sub-tab subsubsub">';
-			$sub    = array();
-			foreach ( $sections as $id => $title ) {
-				$sub[] = '<li>
-						<a href="?page=wphb-statistic&tab=' . $id . '&section=' . $id . '"' . ( $this->current_section === $id ? ' class="current"' : '' ) . '>' . esc_html( $title ) . '</a>
-					</li>';
-			}
-			$html[] = implode( '&nbsp;|&nbsp;', $sub );
-			$html[] = '</ul>';
-
-			echo implode( '', $html );
 		}
 
 		/**
@@ -124,8 +142,7 @@ if ( ! class_exists( 'WPHB_Statistic' ) ) {
 			$current_range = '7day';
 			if ( isset( $_REQUEST['range'] ) && $_REQUEST['range'] ) {
 				$current_range = sanitize_text_field( $_REQUEST['range'] );
-			}
-			?>
+			} ?>
 
             <ul>
 				<?php foreach ( $ranges as $key => $title ) { ?>

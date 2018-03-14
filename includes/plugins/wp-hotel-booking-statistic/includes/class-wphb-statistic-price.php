@@ -107,7 +107,7 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 		 *
 		 * @return array|null|object
 		 */
-		public function getOrdersItems() {
+		public function get_orders_items() {
 
 			global $wpdb;
 
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 		 * @return array|bool|object|stdClass
 		 */
 		public function js_data() {
-			$results = $this->getOrdersItems();
+			$results = $this->get_orders_items();
 			if ( ! $results ) {
 				return false;
 			}
@@ -307,13 +307,13 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 		 * @return bool
 		 */
 		public function export_csv() {
-			$this->_query_results = $this->getOrdersItems();
+			$this->_query_results = $this->get_orders_items();
 			if ( ! isset( $_POST ) ) {
 				return false;
 			}
 
-			if ( ! isset( $_POST['tp-hotel-booking-report-export'] ) ||
-			     ! wp_verify_nonce( sanitize_text_field( $_POST['tp-hotel-booking-report-export'] ), 'tp-hotel-booking-report-export' )
+			if ( ! isset( $_POST['wp-hotel-booking-report-export'] ) ||
+			     ! wp_verify_nonce( sanitize_text_field( $_POST['wp-hotel-booking-report-export'] ), 'wp-hotel-booking-report-export' )
 			) {
 				return false;
 			}
@@ -394,7 +394,7 @@ if ( ! class_exists( 'WPHB_Statistic_Price' ) ) {
 		 */
 		public function total_earn( $sidebars ) {
 			$price                = 0;
-			$this->_query_results = $this->getOrdersItems();
+			$this->_query_results = $this->get_orders_items();
 			if ( $this->_query_results ) {
 				foreach ( $this->_query_results as $key => $item ) {
 					$price = $price + $item->total;

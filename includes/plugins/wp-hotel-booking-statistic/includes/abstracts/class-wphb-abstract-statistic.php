@@ -190,7 +190,7 @@ if ( ! class_exists( 'WPHB_Abstract_Statistic' ) ) {
 		 *
 		 * @return bool
 		 */
-		protected function getOrdersItems() {
+		protected function get_orders_items() {
 			return true;
 		}
 
