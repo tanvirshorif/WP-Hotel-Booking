@@ -309,7 +309,10 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 		 * @param $atts
 		 */
 		public static function hb_widget_room_filter( $atts ) {
-			hb_get_template( 'shortcodes/room-filter.php', array( 'atts' => $atts ) );
+			// only for archive room page
+			if ( is_post_type_archive( 'hb_room' ) || is_room_taxonomy() ) {
+				hb_get_template( 'shortcodes/room-filter.php', array( 'atts' => $atts ) );
+			}
 		}
 
 		/**

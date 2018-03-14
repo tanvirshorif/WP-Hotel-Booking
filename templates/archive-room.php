@@ -49,11 +49,25 @@ defined( 'ABSPATH' ) || exit;
 
 			<?php hotel_booking_room_loop_start(); ?>
 
-			<?php while ( have_posts() ) : the_post(); ?>
 
-				<?php hb_get_template_part( 'content', 'room' ); ?>
+            <!-- filter room by price-->
+			<?php
+			$price = hb_get_min_max_rooms_price();
+			$min   = hb_get_request( 'min_price', $price['min'] );
+			$max   = hb_get_request( 'max_price', $price['max'] );
 
-			<?php endwhile; // end of the loop. ?>
+			if ( $min && $max ) {
+				$filter = array( 'min' => $min, 'max' => $max );
+			} ?>
+
+			<?php while ( have_posts() ) : the_post();
+
+				$prices = hb_get_rooms_price();
+				if ( $prices[ get_the_ID() ]['max'] <= $max && $prices[ get_the_ID() ]['min'] >= $min ) {
+					hb_get_template_part( 'content', 'room' );
+				}
+
+			endwhile; // end of the loop. ?>
 
 			<?php hotel_booking_room_loop_end(); ?>
 

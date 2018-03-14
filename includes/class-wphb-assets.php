@@ -42,7 +42,13 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 		 */
 		public function enqueue_assets() {
 
-			$dependencies = array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker', 'wp-util' );
+			$dependencies = array(
+				'jquery',
+				'jquery-ui-sortable',
+				'jquery-ui-datepicker',
+				'wp-util',
+				'jquery-ui-slider'
+			);
 
 			/**
 			 * Register scripts.

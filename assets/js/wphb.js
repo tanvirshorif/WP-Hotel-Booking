@@ -1100,7 +1100,41 @@
         }
     };
 
+    var WPHB_Widget = {
+        init: function () {
+            var _self = this;
+
+            _self.filter_room_price();
+        },
+
+        filter_room_price: function () {
+            var _slider = $('.price-room-range'),
+                _max = _slider.data('max-price'),
+                _min = _slider.data('min-price'),
+                _value_min = _slider.data('value-min'),
+                _value_max = _slider.data('value-max'),
+                _range = $('.range-price'),
+                _min_input = $('#min_price'),
+                _max_input = $('#max_price');
+
+            _slider.slider({
+                range: true,
+                min: _min,
+                max: _max,
+                values: [_value_min, _value_max],
+                slide: function (event, ui) {
+                    _range.val("$" + ui.values[0] + " - $" + ui.values[1]);
+                    _min_input.val(ui.values[0]);
+                    _max_input.val(ui.values[1]);
+                }
+            });
+
+            _range.val("$" + _slider.slider("values", 0) + " - $" + _slider.slider("values", 1));
+        }
+    };
+
     function _ready() {
+
         WPHB_Site.init();
 
         WPHB_Cart.init();
@@ -1112,6 +1146,8 @@
         WPHB_Checkout.init();
 
         WPHB_Room.init();
+
+        WPHB_Widget.init();
     }
 
     $doc.ready(_ready);

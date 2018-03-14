@@ -2185,3 +2185,49 @@ if ( ! function_exists( 'hb_time_to_seconds' ) ) {
 		return ( $origin ) ? $seconds : $seconds - 1;
 	}
 }
+
+if ( ! function_exists( 'hb_get_rooms_price' ) ) {
+	/**
+	 * Get min max rooms price.
+	 */
+	function hb_get_rooms_price() {
+		$rooms = WPHB_Room_CURD::get_rooms();
+		$price = array();
+		if ( is_array( $rooms ) ) { ?>
+			<?php foreach ( $rooms as $room ) {
+				$plan               = hb_room_get_selected_plan( $room->ID );
+				$price[ $room->ID ] = array(
+					'min' => min( $plan->prices ),
+					'max' => max( $plan->prices )
+				);
+			} ?>
+		<?php }
+
+		return $price;
+	}
+}
+
+if ( ! function_exists( 'hb_get_min_max_rooms_price' ) ) {
+	/**
+	 * Get min max room price.
+	 */
+	function hb_get_min_max_rooms_price() {
+		$prices = hb_get_rooms_price();
+		if ( $prices ) {
+			$min = reset($prices)['min'];
+			$max = reset($prices)['max'];
+			foreach ( $prices as $room_id => $price ) {
+				if ( $min > $price['min'] ) {
+					$min = $price['min'];
+				}
+				if ( $max < $price['max'] ) {
+					$max = $price['max'];
+				}
+			}
+		} else {
+			$min = $max = 0;
+		}
+
+		return array( 'min' => $min, 'max' => $max );
+	}
+}

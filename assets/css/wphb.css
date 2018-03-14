@@ -2094,3 +2094,6 @@ input[type="submit"], .bg-video-play, .navigation .navbar-nav > li > span, .hb_s
 
 .wp-hotel-booking-thank-you #booking-items tbody td {
   text-align: center; }
+
+.price-slider-wrapper .price-room-range {
+  margin-bottom: 15px; }
