@@ -35,21 +35,21 @@ $booking = WPHB_Booking::instance( $post->ID );
                     </div>
                 </div>
                 <div class="booking-user-data">
-                    <div class="user-avatar">
-                        <!--                        <img v-bind:src="users[customer.id].avatar" v-bind:alt="users[customer.id].email"/>-->
-                    </div>
-                    <div class="order-user-meta">
-                        <div class="user-display-name">
-                            <!--                            <a v-bind:href="users[customer.id].link"-->
-                            <!--                               target="_blank">{{users[customer.id].display_name}}</a>-->
+                    <div class="user-data">
+                        <div class="user-avatar"><img v-bind:src="users[customer.id].avatar"
+                                                      v-bind:alt="users[customer.id].email"/></div>
+                        <div class="order-user-meta">
+                            <div class="user-display-name">
+                                <a v-bind:href="users[customer.id].link"
+                                   target="_blank">{{users[customer.id].display_name}}</a>
+                            </div>
+                            <div class="user-email">{{users[customer.id].email}}</div>
                         </div>
-                        <!--                        <div class="user-email">-->
-                        <!--                            {{users[customer.id].email}}-->
-                        <!--                        </div>-->
                     </div>
-                    <div class="user-info">
+                    <div class="user-detail">
+                        <a href="#" class="edit-info"><i class="dashicons dashicons-edit"></i></a>
                         <ul>
-                            <li>
+                            <li class="title">
                                 <label for="_hb_customer_title"><?php echo __( 'Title:', 'wp-hotel-booking' ); ?></label>
 								<?php hb_dropdown_titles( array(
 									'name'     => '_hb_customer_title',
@@ -57,37 +57,37 @@ $booking = WPHB_Booking::instance( $post->ID );
 									'selected' => $booking->customer_title
 								) ); ?>
                             </li>
-                            <li>
+                            <li class="first-name">
                                 <label for="_hb_customer_first_name"><?php echo __( 'First Name:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_first_name" id="_hb_customer_first_name"
                                        value="<?php echo esc_attr( $booking->customer_first_name ) ?>"/>
                             </li>
-                            <li>
+                            <li class="last-name">
                                 <label for="_hb_customer_last_name"><?php echo __( 'Last Name:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_last_name" id="_hb_customer_last_name"
                                        value="<?php echo esc_attr( $booking->customer_last_name ) ?>"/>
                             </li>
-                            <li>
+                            <li class="address">
                                 <label for="_hb_customer_address"><?php echo __( 'Address:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_address" id="_hb_customer_address"
                                        value="<?php echo esc_attr( $booking->customer_address ) ?>"/>
                             </li>
-                            <li>
+                            <li class="city">
                                 <label for="_hb_customer_city"><?php echo __( 'City:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_city" id="_hb_customer_city"
                                        value="<?php echo esc_attr( $booking->customer_city ) ?>"/>
                             </li>
-                            <li>
+                            <li class="state">
                                 <label for="_hb_customer_state"><?php echo __( 'State:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_state" id="_hb_customer_state"
                                        value="<?php echo esc_attr( $booking->customer_state ) ?>"/>
                             </li>
-                            <li>
+                            <li class="postal-code">
                                 <label for="_hb_customer_postal_code"><?php echo __( 'Postal Code:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_postal_code" id="_hb_customer_postal_code"
                                        value="<?php echo esc_attr( $booking->customer_postal_code ) ?>"/>
                             </li>
-                            <li>
+                            <li class="country">
                                 <label for="_hb_customer_country"><?php echo __( 'Country:', 'wp-hotel-booking' ); ?></label>
 								<?php hb_dropdown_countries( array(
 									'name'             => '_hb_customer_country',
@@ -96,17 +96,17 @@ $booking = WPHB_Booking::instance( $post->ID );
 									'selected'         => $booking->customer_country
 								) ); ?>
                             </li>
-                            <li>
+                            <li class="phone">
                                 <label for="_hb_customer_phone"><?php echo __( 'Phone:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_phone" id="_hb_customer_phone"
                                        value="<?php echo esc_attr( $booking->customer_phone ) ?>"/>
                             </li>
-                            <li>
+                            <li class="email">
                                 <label for="_hb_customer_email"><?php echo __( 'Email:', 'wp-hotel-booking' ); ?></label>
                                 <input type="email" name="_hb_customer_email" id="_hb_customer_email"
                                        value="<?php echo esc_attr( $booking->customer_email ) ?>"/>
                             </li>
-                            <li>
+                            <li class="fax">
                                 <label for="_hb_customer_fax"><?php echo __( 'Fax:', 'wp-hotel-booking' ); ?></label>
                                 <input type="text" name="_hb_customer_fax" id="_hb_customer_fax"
                                        value="<?php echo esc_attr( $booking->customer_tax ) ?>"/>
@@ -114,9 +114,9 @@ $booking = WPHB_Booking::instance( $post->ID );
                         </ul>
                     </div>
                     <div class="user-note">
+                        <a href="#" class="edit-info"><i class="dashicons dashicons-edit"></i></a>
                         <label for="_hb_addition_information"><?php _e( 'Addition Information:', 'wp-hotel-booking' ); ?></label>
-                        <textarea name="_hb_addition_information" id="_hb_addition_information" cols="30"
-                                  rows="10"><?php echo esc_html( $booking->post->post_content ); ?></textarea>
+                        <textarea name="_hb_addition_information" id="_hb_addition_information" rows="6"><?php echo esc_html( $booking->post->post_content ); ?></textarea>
                     </div>
                 </div>
             </div>

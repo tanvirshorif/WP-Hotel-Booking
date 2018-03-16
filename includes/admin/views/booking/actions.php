@@ -26,7 +26,6 @@ $users   = get_users( array( 'fields' => array( 'ID' ) ) );
                         class="toggle-indicator" aria-hidden="true"></span></button>
             <h2 class="hndle"><span><?php _e( 'Booking Actions', 'wp-hotel-booking' ); ?></span></h2>
             <div class="inside">
-
                 <div id="booking-actions">
 					<?php wp_nonce_field( 'hotel-booking-metabox-booking-actions', 'hotel_booking_metabox_booking_actions_nonce' ); ?>
                     <ul>
@@ -68,19 +67,19 @@ $users   = get_users( array( 'fields' => array( 'ID' ) ) );
                             </select>
                         </li>
                     </ul>
-                    <div class="major-publishing-actions">
-                        <div id="delete-action">
-							<?php if ( current_user_can( 'delete_post', $post->ID ) ) { ?>
-                                <a class="submitdelete deletion"
-                                   href="<?php echo esc_attr( get_delete_post_link( $post->ID ) ) ?>"><?php _e( 'Move to Trash', 'wp-hotel-booking' ); ?></a>
-							<?php } ?>
-                        </div>
-                        <div id="publishing-action">
-                            <button name="save" type="submit" class="button button-primary" id="publish">
-								<?php printf( '%s', $post->post_status !== 'auto-draft' ? __( 'Update', 'wp-hotel-booking' ) : __( 'Save', 'wp-hotel-booking' ) ) ?>
-                            </button>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div id="major-publishing-actions">
+                <div id="delete-action">
+			        <?php if ( current_user_can( 'delete_post', $post->ID ) ) { ?>
+                        <a class="submitdelete deletion"
+                           href="<?php echo esc_attr( get_delete_post_link( $post->ID ) ) ?>"><?php _e( 'Move to Trash', 'wp-hotel-booking' ); ?></a>
+			        <?php } ?>
+                </div>
+                <div id="publishing-action">
+                    <button name="save" type="submit" class="button button-primary" id="publish">
+				        <?php printf( '%s', $post->post_status !== 'auto-draft' ? __( 'Update', 'wp-hotel-booking' ) : __( 'Save', 'wp-hotel-booking' ) ) ?>
+                    </button>
                 </div>
             </div>
         </div>

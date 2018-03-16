@@ -645,10 +645,14 @@
         }
     }
     #booking-details {
-        margin: 20px 0;
+        margin: 20px 0 0 0;
     }
+
     #booking-items {
-        margin-bottom: 20px;
+        margin-bottom: -10px 0 20px 0;
+        h3 {
+            margin-bottom: 5px;
+        }
         table {
             width: 100%;
             margin-bottom: 25px;
@@ -868,24 +872,84 @@
 }
 
 /****************************************** Admin booking detail ***************************************************/
-
 #hb-booking-details {
+
     .booking-user-data {
-        .user-avatar {
+        margin-top: 25px;
+        > div {
+            vertical-align: top;
             display: inline-block;
         }
+        a {
+            text-decoration: none;
+            color: #444;
+        }
+        label {
+            font-weight: 500;
+        }
         .order-user-meta {
-            display: inline-block;
+            margin-top: 10px;
             .user-display-name {
-                margin-bottom: 10px;
+                margin-bottom: 5px;
                 a {
                     text-decoration: none;
                     margin-bottom: 10px;
+                    color: #0073aa;
                 }
             }
         }
-        .user-info {
-            display: inline-block;
+        .user-data {
+            width: 25%;
+        }
+        .user-detail {
+            width: 40%;
+            position: relative;
+            .edit-info {
+                i {
+                    position: absolute;
+                    right: 60px;
+                }
+            }
+            ul {
+                margin: 0;
+            }
+            label {
+                display: block;
+                min-width: 70px;
+            }
+            .title {
+                width: 45%;
+                display: block;
+            }
+            .first-name, .last-name, .address, .city, .state, .postal-code, .country, .phone, .email, .fax {
+                width: 45%;
+                display: inline-block;
+                input {
+                    width: 80%;
+                }
+            }
+            .country {
+                .select2-container {
+                    width: 80% !important;
+                }
+            }
+        }
+        .user-note {
+            position: relative;
+            width: 30%;
+            label {
+                display: block;
+                margin-bottom: 5px;
+            }
+            .edit-info {
+                i {
+                    position: absolute;
+                    right: 0;
+                }
+            }
+            textarea {
+                width: 100%;
+            }
         }
     }
     .booking-data {
@@ -1655,8 +1719,22 @@ form[name="hb-admin-settings-form"] {
 
 /*Submit metabox*/
 
-#hb-booking-actions .submitbox {
-    overflow: hidden;
+#hb-booking-actions {
+    #major-publishing-actions {
+        height: 30px;
+        #delete-action {
+            a {
+                color: #a00;
+                &:hover {
+                    color: #dc3232;
+                }
+            }
+        }
+    }
+    .submitbox {
+        overflow: hidden;
+
+    }
 }
 
 .select2-dropdown {
@@ -1787,7 +1865,7 @@ form[name="hb-admin-settings-form"] {
     .statistic-sections {
         width: 15%;
         display: inline-block;
-        .list-rooms{
+        .list-rooms {
             margin: 10px 10px 10px 20px;
         }
     }

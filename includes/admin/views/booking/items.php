@@ -20,7 +20,7 @@ hb_admin_view( 'booking/loop/extra' );
 
 <script type="text/x-template" id="tmpl-admin-booking-items">
 
-    <div id="booking-items">
+    <div id="booking-items" class="inside">
         <h3><?php _e( 'Booking Items', 'wp-hotel-booking' ); ?></h3>
         <table cellpadding="0" cellspacing="0" class="booking_item_table">
 
