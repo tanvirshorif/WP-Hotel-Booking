@@ -75,6 +75,24 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
 
 			add_action( 'before_delete_post', array( $this, 'before_delete_post' ) );
+
+			add_filter( 'post_row_actions', array( $this, 'admin_booking_row_actions' ), 10, 2 );
+		}
+
+		/**
+		 * Remove admin booking row actions link.
+		 *
+		 * @param $actions
+		 * @param $post
+		 *
+		 * @return array
+		 */
+		public function admin_booking_row_actions( $actions, $post ) {
+			if ( 'hb_booking' == $post->post_type ) {
+				return array();
+			}
+
+			return $actions;
 		}
 
 		/**
@@ -417,13 +435,13 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		public function custom_booking_columns( $columns ) {
 			unset( $columns['author'] );
 			unset( $columns['date'] );
-			$columns['customer']       = __( 'Customer', 'wp-hotel-booking' );
-			$columns['booking_date']   = __( 'Date', 'wp-hotel-booking' );
-			$columns['check_in_date']  = __( 'Check in', 'wp-hotel-booking' );
-			$columns['check_out_date'] = __( 'Check out', 'wp-hotel-booking' );
-			$columns['total']          = __( 'Total', 'wp-hotel-booking' );
-			$columns['title']          = __( 'Booking', 'wp-hotel-booking' );
-			$columns['status']         = __( 'Status', 'wp-hotel-booking' );
+			$columns['title']        = __( 'ID', 'wp-hotel-booking' );
+			$columns['customer']     = __( 'Customer', 'wp-hotel-booking' );
+			$columns['booking_date'] = __( 'Date', 'wp-hotel-booking' );
+			$columns['detail']       = __( 'Detail', 'wp-hotel-booking' );
+			$columns['total']        = __( 'Total', 'wp-hotel-booking' );
+			$columns['status']       = __( 'Status', 'wp-hotel-booking' );
+			$columns['actions']      = __( 'Actions', 'wp-hotel-booking' );
 
 			return $columns;
 		}
@@ -485,21 +503,34 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				case 'booking_date':
 					echo date( hb_get_date_format(), strtotime( get_post_field( 'post_date', $post_id ) ) );
 					break;
-				case 'check_in_date':
-					$check_in_date = hb_booking_get_check_in_date( $post_id );
-					if ( $check_in_date ) {
-						echo date( hb_get_date_format(), $check_in_date );
-					}
+				case 'detail':
+					$rooms = hb_get_booking_items( $post_id, 'line_item', null, true );
+					foreach ( $rooms as $room ) { ?>
+                        <div>
+                            <a class="room-name" href="<?php echo get_the_permalink( $room['id'] ); ?>"
+                               target="_blank"><?php echo esc_html( $room['order_item_name'] ); ?></a>
+                            <span><?php echo $room['check_in_date'] . ' - ' . $room['check_in_date']; ?></span>
+                        </div>
+					<?php }
 					break;
-				case 'check_out_date':
-					$check_out_date = hb_booking_get_check_out_date( $post_id );
-					if ( $check_out_date ) {
-						echo date( hb_get_date_format(), $check_out_date );
-					}
+				case 'status': ?>
+                    <span class="hb-booking-status <?php echo esc_attr( $status ); ?>">
+                        <a href="<?php echo esc_attr( get_edit_post_link( $post_id ) ); ?>"><?php echo hb_get_booking_status_label( $post_id ); ?></a>
+                    </span>
+					<?php
 					break;
-				case 'status':
-					$link   = '<a href="' . esc_attr( get_edit_post_link( $post_id ) ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
-					$echo[] = '<span class="hb-booking-status ' . $status . '">' . $link . '</span>';
+				case 'actions':
+					switch ( $status ) {
+						case 'hb-completed':
+							break;
+						case 'hb-cancelled':
+							break;
+					} ?>
+                    <a class="delete-booking" href="<?php echo get_delete_post_link( $post_id ); ?>"><i
+                                class="dashicons dashicons-trash"></i></a>
+					<?php break;
+				default:
+					break;
 			}
 			echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode( '', $echo ) ), $column, $post_id );
 		}
@@ -515,8 +546,6 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 */
 		public function custom_booking_sortable_columns( $columns ) {
 			$columns['booking_date'] = 'booking_date';
-//			$columns['check_in_date']  = 'check_in_date';
-//			$columns['check_out_date'] = 'check_out_date';
 
 			return $columns;
 		}

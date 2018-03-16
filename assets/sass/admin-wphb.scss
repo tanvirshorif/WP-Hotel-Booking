@@ -1874,3 +1874,43 @@ form[name="hb-admin-settings-form"] {
         display: inline-block;
     }
 }
+
+.wp-admin.post-type-hb_booking {
+    .wp-list-table {
+        thead {
+            tr {
+                #title {
+                    width: 70px;
+                }
+                #detail {
+                    width: 300px;
+                }
+            }
+        }
+        tbody {
+            .detail {
+                > div:not(:first-child) {
+                    margin-top: 10px;
+                }
+                .room-name {
+                    max-width: 120px;
+                    min-width: 100px;
+                    display: inline-block;
+                }
+                a {
+                    vertical-align: top;
+                }
+            }
+            .actions {
+                a {
+                    &.delete-booking {
+                        color: #a00;
+                        &:hover {
+                            color: #dc3232;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

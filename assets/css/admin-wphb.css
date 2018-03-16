@@ -1371,3 +1371,25 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
 #wphb-booking-statistic #wp-hotel-booking-report {
   width: 80%;
   display: inline-block; }
+
+.wp-admin.post-type-hb_booking .wp-list-table thead tr #title {
+  width: 70px; }
+
+.wp-admin.post-type-hb_booking .wp-list-table thead tr #detail {
+  width: 300px; }
+
+.wp-admin.post-type-hb_booking .wp-list-table tbody .detail > div:not(:first-child) {
+  margin-top: 10px; }
+
+.wp-admin.post-type-hb_booking .wp-list-table tbody .detail .room-name {
+  max-width: 120px;
+  min-width: 100px;
+  display: inline-block; }
+
+.wp-admin.post-type-hb_booking .wp-list-table tbody .detail a {
+  vertical-align: top; }
+
+.wp-admin.post-type-hb_booking .wp-list-table tbody .actions a.delete-booking {
+  color: #a00; }
+  .wp-admin.post-type-hb_booking .wp-list-table tbody .actions a.delete-booking:hover {
+    color: #dc3232; }
