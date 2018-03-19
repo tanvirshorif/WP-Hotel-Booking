@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 
 <?php global $post; ?>
 
-<div id="book_room_now_popup"></div>
+<div id="book_room_now_popup" class="magnific-popup"></div>
 <!--Single search form-->
 <script type="text/html" id="tmpl-hb-room-load-form">
     <form action="POST" name="hb-search-single-room"

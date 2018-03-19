@@ -414,8 +414,11 @@
                 .on('click', '.add_new_plan', _self.add_new_plan)
                 // remove plan
                 .on('click', '.hb-pricing-controls a', _self.remove_plan)
-                // update pricing
-                .on('submit', 'form[name="pricing-table-form"]', _self.update_pricing);
+                // update pricing plans
+                .on('submit', 'form[name="pricing-table-form"]', _self.update_pricing)
+                // update prcing
+                .on('submit', 'form[name="hb-add-calendar-pricing"]', _self.add_calendar_pricing);
+
 
             // init pricing tables
             _self.init_pricing_tables();
@@ -424,9 +427,28 @@
             _self.init_pricing_calendar();
 
             // view next/previous pricing calendar
-            _doc.on('click', '.hotel-booking-fullcalendar-toolbar .fc-button', _self.calendar_actions);
+            _doc.on('click', '.hotel-booking-fullcalendar .fc-header-toolbar .fc-button-group', _self.calendar_actions);
 
         },
+
+        add_calendar_pricing: function (e) {
+            e.preventDefault();
+            var _self = $(this),
+                _data = _self.serializeArray();
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'wphb_admin_add_calendar_pricing',
+                    nonce: hotel_settings.nonce,
+                    data: _data
+                }
+            }).done(function (res) {
+                location.reload();
+            });
+        },
+
         show_room_pricing: function (e) {
             e.preventDefault();
             var _self = this,
@@ -516,20 +538,40 @@
                 }
 
                 _calendar.fullCalendar({
-                    header: {
-                        left: '',
-                        right: ''
-                    },
-                    ignoreTimezone: false,
-                    handleWindowResize: true,
-                    editable: false,
-                    defaultView: 'month',
+                    height: 400,
+                    selectable: true,
                     events: _events,
-                    eventClick: function (calEvent, jsEvent, view) {
-                        alert('Event: ' + calEvent.title);
+                    eventAfterRender: function (event, element, view) {
+                        $(element).css({
+                            'width': '50px',
+                            'border-radius': '0',
+                            'padding': '10px',
+                            'text-align': 'center',
+                            'font-size': '11px',
+                            'margin': '0 auto'
+                        });
                     },
-                    contentHeight: 400,
-                    aspectRatio: 3
+                    select: function (startDate, endDate) {
+                        var _self = $(this),
+                            _doc = $(document),
+                            _calendar = $('.hotel-booking-fullcalendar'),
+                            _name = _calendar.data('room-name'),
+                            _id = _calendar.data('room-id'),
+                            _target = 'hb-update-pricing-form',
+                            _lightbox = '#update_pricing_popup';
+
+                        $(_lightbox).html(wp.template(_target)({
+                            name: _name,
+                            id: _id,
+                            from: startDate.format(),
+                            to: endDate.format()
+                        }));
+                        $.magnificPopup.open({
+                            type: 'inline',
+                            items: {src: _lightbox}
+                        });
+                        return false;
+                    }
                 });
             }
         },

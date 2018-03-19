@@ -55,14 +55,37 @@
             margin-top: 7px;
         }
     }
+    #hb-room-price {
+        .hb-pricing-list {
+            input.hb-pricing-price {
+                width: 100%;
+            }
+            i.set-pricing-plans {
+                font-size: 15px;
+                text-decoration: none;
+                padding-top: 2px;
+                margin-left: -2px;
+            }
+        }
+    }
 }
 
 /********************************** Room regular price *************************************************/
 
 #hb-pricing-plan-list {
+    .hb-pricing-table {
+        border: 1px solid #DDD;
+        position: relative;
+        padding-top: 5px;
+        margin-bottom: 20px;
+        background-color: #FFF;
+        clear: both;
+    }
     .hb-pricing-table-title {
         font-weight: 400;
         display: inline-block;
+        vertical-align: top;
+        margin-top: -5px;
         label {
             font-size: 13px;
         }
@@ -88,135 +111,20 @@
 
 /********************************** Admin pricing plan *************************************************/
 .wp-hotel-booking_page_wphb-pricing-table {
-    /* DatePicker Container */
-    .ui-datepicker {
-        width: 300px;
-        height: auto;
-        margin: 5px auto 0;
-        font: 9pt Arial, sans-serif;
-        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-        a {
-            text-decoration: none;
-        }
-        .ui-datepicker-title {
-            text-align: center;
-            line-height: 2.8em;
-        }
-        table {
-            width: 100%;
-        }
-    }
-    .ui-datepicker-header {
-        background: #000;
-        color: #e0e0e0;
-        font-weight: bold;
-        line-height: 30px;
-        border-width: 1px 0 0 0;
-        border-style: solid;
-        border-color: #111;
-        .ui-corner-all {
-            &.ui-state-hover {
-                background: transparent;
-                box-shadow: none;
-                border: none;
-            }
-            span {
-                display: none;
-            }
-        }
-    }
-    .ui-datepicker-prev, .ui-datepicker-next {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        cursor: pointer;
-        background-image: url("../images/arrow.png") !important;
-        background-repeat: no-repeat;
-        line-height: 600%;
-        overflow: hidden;
-    }
-    .ui-datepicker-prev {
-        float: left;
-        background-position: center -30px;
-    }
-    .ui-datepicker-next {
-        float: right;
-        background-position: center 0;
-    }
-    .ui-datepicker {
-        thead {
-            background-color: #f7f7f7;
-            background-image: -moz-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f1f1f1));
-            background-image: -webkit-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-            background-image: -o-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-            background-image: -ms-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-            background-image: linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f1f1f1', GradientType=0);
-            border-bottom: 1px solid #bbb;
-        }
-        th {
-            text-transform: uppercase;
-            font-size: 12px;
-            padding: 8px 0;
-            color: #fff;
-            filter: dropshadow(color = #fff, offx = 1, offy = 0);
-        }
-        tbody {
-            td {
-                padding: 0;
-                border-right: 1px solid #bbb;
-                &:last-child {
-                    border-right: 0;
+
+    form[name="pricing-table-form"] {
+        .hb-pricing-table.regular-price {
+            .hb-pricing-list {
+                background: #fff;
+                padding: 10px;
+                > table {
+                    td {
+                        input.hb-pricing-price {
+                            width: 100%;
+                        }
+                    }
                 }
             }
-            tr {
-                border-bottom: 1px solid #bbb;
-                &:last-child {
-                    border-bottom: 0;
-                }
-            }
-        }
-        td {
-            span, a {
-                font-weight: bold;
-                text-align: center;
-                line-height: 30px;
-                color: #666666;
-            }
-        }
-    }
-    .ui-datepicker-calendar .ui-state-active {
-        background: #0073aa;
-        color: #e0e0e0;
-        position: relative;
-        margin: -1px;
-    }
-    .ui-datepicker-unselectable .ui-state-default, a.ui-state-default {
-        background: transparent;
-        border: none;
-    }
-    .ui-datepicker-calendar {
-        td {
-            &:first-child .ui-state-active {
-                margin-left: 0;
-            }
-            &:last-child .ui-state-active {
-                margin-right: 0;
-            }
-        }
-        tr:last-child .ui-state-active {
-            margin-bottom: 0;
-        }
-        thead {
-            background: #0073aa;
-        }
-        tbody > tr > td a:hover {
-            background: #0073aa;
-            color: #fff;
         }
     }
 }
@@ -1292,14 +1200,6 @@ form[name="hb-admin-settings-form"] {
     clear: both;
 }
 
-.hb-pricing-table {
-    border: 1px solid #DDD;
-    position: relative;
-    margin-bottom: 20px;
-    background-color: #FFF;
-    clear: both;
-}
-
 .hb-pricing-table-title {
     padding: 10px;
     margin: 0;
@@ -1745,6 +1645,8 @@ form[name="hb-admin-settings-form"] {
 /* FULL CALENDAR */
 
 .hotel-booking-fullcalendar {
+    background: #fff;
+    padding: 20px;
     &.fc {
         td, th {
             font-size: 12px;
@@ -1910,6 +1812,189 @@ form[name="hb-admin-settings-form"] {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+.wp-admin {
+    /* DatePicker Container */
+    .ui-datepicker {
+        width: 300px;
+        height: auto;
+        margin: 5px auto 0;
+        font: 9pt Arial, sans-serif;
+        -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        a {
+            text-decoration: none;
+        }
+        .ui-datepicker-title {
+            text-align: center;
+            line-height: 2.8em;
+        }
+        table {
+            width: 100%;
+        }
+    }
+    .ui-datepicker-header {
+        background: #000;
+        color: #e0e0e0;
+        font-weight: bold;
+        line-height: 30px;
+        border-width: 1px 0 0 0;
+        border-style: solid;
+        border-color: #111;
+        .ui-corner-all {
+            &.ui-state-hover {
+                background: transparent;
+                box-shadow: none;
+                border: none;
+            }
+            span {
+                display: none;
+            }
+        }
+    }
+    .ui-datepicker-prev, .ui-datepicker-next {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        cursor: pointer;
+        background-image: url("../images/arrow.png") !important;
+        background-repeat: no-repeat;
+        line-height: 600%;
+        overflow: hidden;
+    }
+    .ui-datepicker-prev {
+        float: left;
+        background-position: center -30px;
+    }
+    .ui-datepicker-next {
+        float: right;
+        background-position: center 0;
+    }
+    .ui-datepicker {
+        thead {
+            background-color: #f7f7f7;
+            background-image: -moz-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f1f1f1));
+            background-image: -webkit-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: -o-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: -ms-linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            background-image: linear-gradient(top, #f7f7f7 0%, #f1f1f1 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f1f1f1', GradientType=0);
+            border-bottom: 1px solid #bbb;
+        }
+        th {
+            text-transform: uppercase;
+            font-size: 12px;
+            padding: 8px 0;
+            color: #fff;
+            filter: dropshadow(color = #fff, offx = 1, offy = 0);
+        }
+        tbody {
+            td {
+                padding: 0;
+                border-right: 1px solid #bbb;
+                &:last-child {
+                    border-right: 0;
+                }
+            }
+            tr {
+                border-bottom: 1px solid #bbb;
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+        td {
+            span, a {
+                font-weight: bold;
+                text-align: center;
+                line-height: 30px;
+                color: #666666;
+            }
+        }
+    }
+    .ui-datepicker-calendar .ui-state-active {
+        background: #0073aa;
+        color: #e0e0e0;
+        position: relative;
+        margin: -1px;
+    }
+    .ui-datepicker-unselectable .ui-state-default, a.ui-state-default {
+        background: transparent;
+        border: none;
+    }
+    .ui-datepicker-calendar {
+        td {
+            &:first-child .ui-state-active {
+                margin-left: 0;
+            }
+            &:last-child .ui-state-active {
+                margin-right: 0;
+            }
+        }
+        tr:last-child .ui-state-active {
+            margin-bottom: 0;
+        }
+        thead {
+            background: #0073aa;
+        }
+        tbody > tr > td a:hover {
+            background: #0073aa;
+            color: #fff;
+        }
+    }
+}
+
+.mfp-content {
+    .magnific-popup {
+        background: #fff;
+        .header {
+
+        }
+        .main {
+
+        }
+        .footer {
+
+        }
+    }
+    #update_pricing_popup {
+        width: 500px;
+        height: 210px;
+        margin: 0 auto;
+        form {
+            .header {
+                padding: 20px 10px;
+                border-bottom: 1px solid #eee;
+                h2 {
+                    margin: 0;
+                }
+            }
+            .main {
+                padding: 20px 10px;
+                .room-name {
+                    font-size: 16px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                input {
+                    margin-left: 5px;
+                }
+                code {
+                    padding: 6px 10px;
+
+                }
+            }
+            .footer {
+                text-align: right;
+                padding: 10px;
+                border-top: 1px solid #eee;
             }
         }
     }

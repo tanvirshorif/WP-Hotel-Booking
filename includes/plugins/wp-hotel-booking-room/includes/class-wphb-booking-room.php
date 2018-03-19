@@ -48,6 +48,7 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 
 			add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
 			add_action( 'wp_ajax_wphb_room_check_single_room_available', array( $this, 'check_room_available' ) );
 			add_action( 'wp_ajax_nopriv_wphb_room_check_single_room_available', array(
@@ -120,6 +121,11 @@ if ( ! class_exists( 'WPHB_Booking_Room' ) ) {
 				array( 'jquery', 'wp-util', 'magnific-popup', 'jquery-ui-datepicker' ), WPHB_ROOM_VER );
 
 			wp_localize_script( 'wphb-booking-room', 'wphb_room_js', hb_i18n() );
+		}
+
+		public function admin_scripts() {
+			wp_enqueue_script( 'magnific-popup', WPHB_ROOM_URI . '/assets/js/jquery.magnific-popup.min.js', array(), WPHB_ROOM_VER );
+			wp_enqueue_style( 'magnific-popup', WPHB_ROOM_URI . '/assets/css/magnific-popup.css', array(), WPHB_ROOM_VER );
 		}
 
 		/**

@@ -34,6 +34,7 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 				'admin_booking',
 				'load_room_ajax',
 				'admin_load_pricing_calendar',
+				'admin_add_calendar_pricing',
 				'admin_dismiss_notice',
 				'admin_rating_plugin',
 				'admin_force_update_db'
@@ -234,6 +235,41 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 				'prev'       => date( 'm/d/Y', strtotime( '-1 month', strtotime( $date ) ) ),
 				'month_name' => date_i18n( 'F, Y', strtotime( $date ) )
 			) );
+		}
+
+		/**
+		 * Admin add pricing plan via calendar.
+		 */
+		public function admin_add_calendar_pricing() {
+			check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
+
+			if ( ! isset( $_POST['data'] ) ) {
+				wp_send_json( array(
+					'status'  => false,
+					'message' => __( 'Invalid request.', 'wp-hotel-booking' )
+				) );
+			}
+
+			$data    = ( $_POST['data'] );
+			$request = array();
+			foreach ( $data as $_data ) {
+				$request[ $_data['name'] ] = $_data['value'];
+			}
+
+			$price = array();
+			for ( $i = 0; $i < 7; $i ++ ) {
+				$price[ $i ] = $request['price'];
+			}
+
+			// set pricing plan
+			$plan_id = hb_room_set_pricing_plan( array(
+				'start_time' => strtotime( $request['from'] ),
+				'end_time'   => strtotime( $request['to'] ),
+				'room_id'    => $request['room-id'],
+				'pricing'    => $price
+			) );
+
+			wp_send_json( array( 'status' => 'done', 'plan_id' => $plan_id ) );
 		}
 
 		/**

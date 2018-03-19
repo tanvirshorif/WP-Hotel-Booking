@@ -41,12 +41,17 @@ $date_order   = hb_start_of_week_order();
 					<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                     <input class="hb-pricing-price" type="number" min="0" step="any"
                            name="_hbpricing[prices][<?php echo sprintf( '%s', $plan_id ); ?>][<?php echo esc_attr( $i ); ?>]"
-                           value="<?php echo $price ? esc_attr( $price ) : 0; ?>" size="10"/>
+                           value="<?php echo $price ? esc_attr( $price ) : 0; ?>"/>
                 </td>
 			<?php } ?>
         </tr>
         </tbody>
     </table>
+    <a href='<?php echo esc_url( admin_url( "admin.php?page=wphb-pricing-table&hb-room=$post->ID" ) ) ?>'
+       target="_blank">
+		<?php _e( 'Set Pricing Plans ', 'wp-hotel-booking' ); ?>
+        <i class="dashicons dashicons-arrow-right-alt set-pricing-plans"></i>
+    </a>
 </div>
 
 <?php wp_nonce_field( 'hotel_booking_room_pricing_nonce', 'hotel-booking-room-pricing-nonce' ); ?>

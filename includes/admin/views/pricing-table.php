@@ -31,7 +31,7 @@ $count_plants = count( $plans );
 $date_order   = hb_start_of_week_order();
 ?>
 
-<div class="wrap" id="tp_hotel_booking_pricing">
+<div class="wrap" id="wp_hotel_booking_pricing">
     <h2><?php _e( 'Pricing Plans', 'wp-hotel-booking' ); ?></h2>
     <form method="post" name="pricing-table-form">
         <p>
@@ -177,24 +177,35 @@ $date_order   = hb_start_of_week_order();
     </div>
 </script>
 
-<?php if ( $room_id ) { ?>
-    <h2 class="hotel-booking-fullcalendar-month"><?php printf( '%s', date_i18n( 'F, Y', time() ) ) ?></h2>
-    <div class="hotel-booking-fullcalendar-toolbar">
-        <div class="fc-right">
-            <div class="fc-button-group">
-                <button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"
-                        data-month="<?php echo date( 'm/d/Y', strtotime( '-1 month', time() ) ) ?>"
-                        data-room=<?php echo esc_attr( $room_id ) ?>>
-                    <span class="fc-icon fc-icon-left-single-arrow"></span>
-                </button>
-                <button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"
-                        data-month="<?php echo date( 'm/d/Y', strtotime( '+1 month', time() ) ) ?>"
-                        data-room=<?php echo esc_attr( $room_id ) ?>>
-                    <span class="fc-icon fc-icon-right-single-arrow"></span>
-                </button>
+<div id="update_pricing_popup" class="magnific-popup"></div>
+<!--Single search form-->
+<script type="text/html" id="tmpl-hb-update-pricing-form">
+    <form method="POST" name="hb-add-calendar-pricing">
+        <div class="header">
+            <h2><?php _e( 'Set price', 'wp-hotel-booking' ); ?></h2>
+        </div>
+        <div class="main">
+            <div class="room-name"><input type="hidden" name="room-id" value="{{data.id}}">{{data.name}}</div>
+            <div>
+				<?php _e( 'From ', 'wp-hotel-booking' ); ?>{{data.from}}
+				<?php _e( ' to ', 'wp-hotel-booking' ); ?>{{data.to}}:
+                <input type="hidden" name="from" value="{{data.from}}"/>
+                <input type="hidden" name="to" value="{{data.to}}"/>
+                <input type="number" name="price" value=""/>
+                <code><?php echo hb_get_currency_symbol( hb_get_currency() ) . '/night'; ?></code>
             </div>
         </div>
-    </div>
+        <div class="footer">
+            <button type="submit" id="add_pricing_plan" class="button button-primary">
+				<?php _e( 'Save', 'wp-hotel-booking' ); ?></button>
+        </div>
+    </form>
+
+</script>
+
+<?php if ( $room_id ) { ?>
     <div class="hotel-booking-fullcalendar"
+         data-room-id="<?php echo esc_attr( $room_id ); ?>"
+         data-room-name="<?php echo get_the_title( $room_id ); ?>"
          data-events="<?php echo esc_attr( hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y' ) ) ) ?>"></div>
 <?php } ?>
