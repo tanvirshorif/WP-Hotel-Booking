@@ -115,7 +115,7 @@ $date_order   = hb_start_of_week_order();
 										<?php foreach ( $date_order as $i ) { ?>
                                             <td class="item">
                                                 <div class="date-name"><?php echo esc_html( $week_names[ $i ] ); ?></div>
-												<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
+												<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : 0; ?>
                                                 <input class="hb-pricing-price" type="number" min="0" step="any"
                                                        name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $i ); ?>]"
                                                        value="<?php echo esc_attr( $price ); ?>" size="10"/>
@@ -187,12 +187,39 @@ $date_order   = hb_start_of_week_order();
         <div class="main">
             <div class="room-name"><input type="hidden" name="room-id" value="{{data.id}}">{{data.name}}</div>
             <div>
-				<?php _e( 'From ', 'wp-hotel-booking' ); ?>{{data.from}}
-				<?php _e( ' to ', 'wp-hotel-booking' ); ?>{{data.to}}:
+				<?php _e( 'From ', 'wp-hotel-booking' ); ?><strong>{{data.from}}</strong>
+				<?php _e( ' to ', 'wp-hotel-booking' ); ?><strong>{{data.to}}</strong>:
                 <input type="hidden" name="from" value="{{data.from}}"/>
                 <input type="hidden" name="to" value="{{data.to}}"/>
-                <input type="number" name="price" value=""/>
-                <code><?php echo hb_get_currency_symbol( hb_get_currency() ) . '/night'; ?></code>
+                <div class="all-day">
+                    <input type="radio" id="all-day" name="all-day" value="1" checked>
+                    <label for="all-day"><?php _e( 'All day:', 'wp-hotel-booking' ); ?></label>
+                    <input type="number" name="all-day-price" value=""/>
+                    <code><?php echo hb_get_currency_symbol( hb_get_currency() ) . '/night'; ?></code>
+                </div>
+                <div class="single-date">
+                    <input type="radio" name="all-day" value="0" id="single-date">
+                    <label for="single-date"><?php _e( 'Single date:', 'wp-hotel-booking' ); ?></label>
+                    <table>
+                        <thead>
+                        <tr>
+							<?php foreach ( $date_order as $i ) { ?>
+                                <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
+							<?php } ?>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+							<?php foreach ( $date_order as $i ) { ?>
+                                <td>
+                                    <input class="hb-pricing-price" type="number" min="0" step="any"
+                                           name="price-date[<?php echo esc_attr( $i ); ?>]" value=""/>
+                                </td>
+							<?php } ?>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="footer">

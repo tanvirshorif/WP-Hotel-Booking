@@ -258,7 +258,11 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 
 			$price = array();
 			for ( $i = 0; $i < 7; $i ++ ) {
-				$price[ $i ] = $request['price'];
+				if ( $request['all-day'] ) {
+					$price[ $i ] = $request['all-day-price'] ? $request['all-day-price'] : 0;
+				} else {
+					$price[ $i ] = $request[ 'price-date[' . $i . ']' ] ? $request[ 'price-date[' . $i . ']' ] : 0;
+				}
 			}
 
 			// set pricing plan

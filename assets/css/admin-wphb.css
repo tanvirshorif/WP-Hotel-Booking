@@ -1418,22 +1418,35 @@ form[name="hb-admin-settings-form"] select, form[name="hb-admin-settings-form"] 
   background: #fff; }
 
 .mfp-content #update_pricing_popup {
-  width: 500px;
-  height: 210px;
+  width: 60%;
   margin: 0 auto; }
   .mfp-content #update_pricing_popup form .header {
     padding: 20px 10px;
     border-bottom: 1px solid #eee; }
     .mfp-content #update_pricing_popup form .header h2 {
-      margin: 0; }
+      margin: 0 5px 0 0; }
   .mfp-content #update_pricing_popup form .main {
-    padding: 20px 10px; }
+    padding: 20px 30px; }
+    .mfp-content #update_pricing_popup form .main input[type="radio"] {
+      margin: 0; }
     .mfp-content #update_pricing_popup form .main .room-name {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 10px; }
-    .mfp-content #update_pricing_popup form .main input {
-      margin-left: 5px; }
+    .mfp-content #update_pricing_popup form .main .all-day {
+      margin-top: 15px; }
+      .mfp-content #update_pricing_popup form .main .all-day label {
+        display: inline-block;
+        min-width: 80px; }
+    .mfp-content #update_pricing_popup form .main .single-date {
+      margin-top: 15px; }
+      .mfp-content #update_pricing_popup form .main .single-date table {
+        margin-top: 10px; }
+        .mfp-content #update_pricing_popup form .main .single-date table tr th {
+          font-weight: 500;
+          text-align: center; }
+        .mfp-content #update_pricing_popup form .main .single-date table input {
+          width: 90%; }
     .mfp-content #update_pricing_popup form .main code {
       padding: 6px 10px; }
   .mfp-content #update_pricing_popup form .footer {

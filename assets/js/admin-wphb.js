@@ -428,7 +428,6 @@
 
             // view next/previous pricing calendar
             _doc.on('click', '.hotel-booking-fullcalendar .fc-header-toolbar .fc-button-group', _self.calendar_actions);
-
         },
 
         add_calendar_pricing: function (e) {
