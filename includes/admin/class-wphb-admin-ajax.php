@@ -37,7 +37,8 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 				'admin_add_calendar_pricing',
 				'admin_dismiss_notice',
 				'admin_rating_plugin',
-				'admin_force_update_db'
+				'admin_force_update_db',
+				'admin_send_feedback'
 			);
 
 			foreach ( $actions as $action ) {
@@ -311,6 +312,27 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 			$install::create_tables();
 
 			return true;
+		}
+
+		/**
+		 * Admin send feedback.
+		 *
+		 * @return bool
+		 */
+		public function admin_send_feedback() {
+			$data = ( hb_get_request( 'data' ) );
+
+			/**
+			 * @var $name
+			 * @var $email
+			 * @var $type
+			 * @var $content
+			 */
+			parse_str( $data );
+
+			$email = wp_mail( 'hai@foobla.com', 'Customer send feedback', $name . $email . $type . $content );
+
+			return $email;
 		}
 	}
 }

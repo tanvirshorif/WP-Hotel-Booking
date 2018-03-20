@@ -29,7 +29,6 @@ if ( ! class_exists( 'WPHB_Addons' ) ) {
 		public static function get_addon_tabs() {
 			$tabs = array(
 				'free'    => __( 'Free', 'wp-hotel-booking' ),
-				'premium' => __( 'Premium', 'wp-hotel-booking' ),
 				'themes'  => __( 'Themes', 'wp-hotel-booking' )
 			);
 

@@ -674,8 +674,9 @@
                 // check missing table
                 .on('click', '#check_db_status', _self.check_db_status)
                 // developer access
-                .on('click', '.copy-developer-access-link', _self.copy_developer_access_link);
-
+                .on('click', '.copy-developer-access-link', _self.copy_developer_access_link)
+                // customer submit feedback form
+                .on('submit', 'form[name="wphb-customer-feedback-form"]', _self.submit_customer_feedback_form);
             // datetime picker field
             _self.datetime_metabox_field();
             // set select2 for fields
@@ -858,6 +859,21 @@
             e.preventDefault();
             $('#wpbh-link-developer-access').select();
             document.execCommand("copy");
+        },
+
+        submit_customer_feedback_form: function (e) {
+            e.preventDefault();
+
+            var _self = $(this),
+                _data = _self.serialize();
+
+            $.ajax({
+                url: ajaxurl,
+                data: {
+                    action: 'wphb_admin_send_feedback',
+                    data: _data
+                }
+            });
         }
     };
 

@@ -30,8 +30,7 @@ if ( ! class_exists( 'WPHB_Helper_Plugins' ) ) {
 		 * @var array
 		 */
 		public static $plugins = array(
-			'free'    => false,
-			'premium' => false
+			'free'    => false
 		);
 
 		/**

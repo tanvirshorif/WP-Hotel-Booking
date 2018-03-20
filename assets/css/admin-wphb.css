@@ -359,6 +359,34 @@
   .wp-hotel-booking_page_wphb-tools #wphb-developer-access .link textarea {
     padding: 8px; }
 
+.wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form {
+  background: #fff;
+  padding: 10px 10px 20px 20px;
+  margin-top: 20px; }
+  .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .header h2 {
+    margin: 5px 0 10px 0; }
+  .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main label {
+    font-weight: 500;
+    min-width: 70px;
+    display: inline-block; }
+  .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main input, .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main textarea {
+    background: #f5f5f5; }
+  .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div {
+    margin-top: 25px; }
+    .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.name, .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.email {
+      display: inline-block;
+      margin-right: 20px; }
+      .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.name input, .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.email input {
+        width: 250px; }
+    .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.email label {
+      min-width: 40px; }
+    .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.content label {
+      vertical-align: top; }
+    .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .main > div.content textarea {
+      width: 570px; }
+  .wp-hotel-booking_page_wphb-tools #wphb-customer-feedback-form .footer {
+    margin-top: 10px; }
+
 /****************************************** Admin booking page ***************************************************/
 .post-type-hb_booking .search-box {
   display: none; }
