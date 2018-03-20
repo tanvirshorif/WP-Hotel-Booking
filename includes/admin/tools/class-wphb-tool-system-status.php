@@ -72,7 +72,7 @@ if ( ! class_exists( 'WPHB_Admin_Tool_System_Status' ) ) {
                 <h2><?php _e( 'Database', 'wp-hotel-booking' ); ?></h2>
                 <button class="button button-secondary" id="check_db_status" type="submit">
 					<?php esc_html_e( 'Force Database', 'wp-hotel-booking' ); ?></button>
-                <p><i><?php _e( 'Check up to date and force update database.' ); ?></i></p>
+                <p><i><?php _e( 'Check up to date and force update database if missing table(s).' ); ?></i></p>
             </div>
 
 		<?php }

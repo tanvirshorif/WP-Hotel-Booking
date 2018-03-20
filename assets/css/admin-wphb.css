@@ -290,7 +290,10 @@
       #wphb-admin-about-wrapper .content .feature-section:first-child {
         float: left; }
       #wphb-admin-about-wrapper .content .feature-section > div {
-        padding-right: 20px; }
+        background: #fff;
+        padding: 5px 20px 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd; }
       #wphb-admin-about-wrapper .content .feature-section h3 {
         margin: 1.25em 0 .6em;
         font-size: 20px;

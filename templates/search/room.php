@@ -15,12 +15,11 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-
-global $hb_settings;
 ?>
 
-<?php foreach ( $results as $room ) { ?>
+<?php $single_purchase = hb_get_option( 'single_purchase' ); ?>
 
+<?php foreach ( $results as $room ) { ?>
 	<?php
 	$gallery       = $room->gallery;
 	$featured      = $gallery ? array_shift( $gallery ) : false;
@@ -30,7 +29,8 @@ global $hb_settings;
 
     <li class="hb-room clearfix">
 
-        <form name="hb-search-results" class="hb-search-room-results">
+        <form name="hb-search-results"
+              class="hb-search-room-results <?php echo ( $single_purchase ) ? esc_attr( 'single-purchase' ) : ''; ?>">
 			<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
             <div class="hb-room-content">
                 <div class="hb-room-thumbnail">
@@ -69,12 +69,11 @@ global $hb_settings;
 								<?php hb_get_template( 'search/price-breakdown.php', array( 'room' => $room ) ); ?>
                             </div>
                         </li>
-						<?php if ( ! get_option( 'tp_hotel_booking_single_purchase', true ) ) { ?>
+						<?php if ( ! $single_purchase ) { ?>
                             <li class="hb_search_quantity">
                                 <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
                                 <div>
-									<?php
-									hb_dropdown_numbers(
+									<?php hb_dropdown_numbers(
 										array(
 											'name'             => 'hb-num-of-rooms',
 											'min'              => 1,
@@ -82,8 +81,7 @@ global $hb_settings;
 											'max'              => $room->post->available_rooms,
 											'class'            => 'number_room_select'
 										)
-									);
-									?>
+									); ?>
                                 </div>
                             </li>
 						<?php } else { ?>
@@ -92,8 +90,7 @@ global $hb_settings;
                             </select>
 						<?php } ?>
                         <li class="hb_search_add_to_cart">
-                            <button class="hb_add_to_cart"
-                                    disabled="disabled"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
+                            <button class="hb_add_to_cart" <?php echo ( $single_purchase ) ? '' : 'disabled="disabled"'; ?>><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
                         </li>
                     </ul>
                 </div>
@@ -117,7 +114,6 @@ global $hb_settings;
             <input type="hidden" name="action" value="wphb_add_to_cart"/>
 
 			<?php if ( $room_extra ) { ?>
-
                 <div class="hb_addition_package_extra">
                     <div class="hb_addition_package_title">
                         <h5 class="hb_addition_package_title_toggle">
@@ -159,10 +155,9 @@ global $hb_settings;
                         </ul>
                     </div>
                 </div>
-
 			<?php } ?>
         </form>
-		<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || $hb_settings->get( 'enable_gallery_lightbox' ) ) { ?>
+		<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || hb_get_option( 'enable_gallery_lightbox' ) ) { ?>
 			<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
 		<?php } ?>
     </li>

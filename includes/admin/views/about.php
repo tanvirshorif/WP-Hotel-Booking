@@ -59,7 +59,7 @@ defined( 'ABSPATH' ) || exit;
                 <p><?php _e( 'Find help in our forum and get free updates when purchasing the PRO version which boats a lot more advanced features.', 'wp-hotel-booking' ); ?></p>
                 <p>
                     <a class="button-primary" href="https://thimpress.com/forums/forum/plugins/wp-hotel-booking/"
-                       target="_blank"><?php _e( 'Get Support', 'wp-hotel-booking' ); ?></a>
+                       target="_blank"><?php _e( 'Go to support forum', 'wp-hotel-booking' ); ?></a>
                 </p>
             </div>
         </div>
