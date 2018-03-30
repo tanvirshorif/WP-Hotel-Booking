@@ -239,7 +239,7 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 
 			$args = array(
 				'post_type'      => 'hb_room',
-				'posts_per_page' => absint( $atts['number_room'] ),
+				'posts_per_page' => $atts['number_room'],
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 				'post_status'    => 'publish'

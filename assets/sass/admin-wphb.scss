@@ -422,16 +422,26 @@
         }
     }
 }
-
 /********************************** Admin setting page *************************************************/
 
 #wphb-admin-setting-wrapper .nav-tab-active {
     box-shadow: none;
 }
 
-.wp-hotel-booking_page_wphb-settings .form-table td {
-    padding-bottom: 0;
+.wp-hotel-booking_page_wphb-settings {
+    .form-table td {
+        padding-bottom: 0;
+    }
+    .hb-form-field{
+        a {
+            font-style: italic;
+            &.view-page{
+                margin: 0 5px 0 10px;
+            }
+        }
+    }
 }
+
 
 .wphb-admin-panel {
     background: #fff;
@@ -545,7 +555,7 @@
                 }
             }
         }
-        .footer{
+        .footer {
             margin-top: 10px;
         }
     }

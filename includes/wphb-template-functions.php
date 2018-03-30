@@ -393,6 +393,10 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 		$classes = (array) $classes;
 
 		switch ( $post->ID ) {
+			case hb_get_page_id( 'rooms' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-rooms';
+				break;
 			case hb_get_page_id( 'cart' ):
 				$classes[] = 'wp-hotel-booking-page';
 				$classes[] = 'wp-hotel-booking-cart';

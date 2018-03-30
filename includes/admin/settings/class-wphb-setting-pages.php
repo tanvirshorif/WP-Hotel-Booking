@@ -59,6 +59,12 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Pages' ) ) {
 				),
 				array(
 					'type'  => 'select_page',
+					'id'    => $prefix . 'rooms_page_id',
+					'title' => __( 'Rooms Page', 'wp-hotel-booking' ),
+					'desc'  => __( 'Hotel list rooms page', 'wp-hotel-booking' )
+				),
+				array(
+					'type'  => 'select_page',
 					'id'    => $prefix . 'search_page_id',
 					'title' => __( 'Search Page', 'wp-hotel-booking' ),
 					'desc'  => __( 'Hotel search room page', 'wp-hotel-booking' )

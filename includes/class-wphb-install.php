@@ -115,6 +115,15 @@ if ( ! class_exists( 'WPHB_Install' ) ) {
 			}
 
 			$pages = array();
+
+			if ( ! hb_get_page_id( 'rooms' ) || ! get_post( hb_get_page_id( 'rooms' ) ) ) {
+				$pages['rooms'] = array(
+					'name'    => _x( 'hotel-rooms', 'Page Slug', 'wp-hotel-booking' ),
+					'title'   => _x( 'Hotel Rooms', 'Page Title', 'wp-hotel-booking' ),
+					'content' => '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']'
+				);
+			}
+
 			if ( ! hb_get_page_id( 'cart' ) || ! get_post( hb_get_page_id( 'cart' ) ) ) {
 				$pages['cart'] = array(
 					'name'    => _x( 'hotel-cart', 'Page Slug', 'wp-hotel-booking' ),

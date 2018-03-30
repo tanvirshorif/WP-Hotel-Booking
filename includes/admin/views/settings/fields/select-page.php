@@ -27,19 +27,23 @@ defined( 'ABSPATH' ) || exit;
     </th>
     <td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ) ?>">
 		<?php if ( isset( $field['id'] ) ) { ?>
-			<?php
-			hb_dropdown_pages(
+			<?php hb_dropdown_pages(
 				array(
 					'show_option_none'  => __( 'Select page', 'wp-hotel-booking' ),
 					'option_none_value' => 0,
 					'name'              => $field['id'],
 					'selected'          => $selected
 				)
-			);
-			?>
+			); ?>
 		<?php } ?>
-	    <?php if ( isset( $field['desc'] ) ) { ?>
+		<?php if ( $selected ) { ?>
+            <a href="<?php echo get_the_permalink( $selected ); ?>"
+               target="_blank" class="view-page"><?php _e( 'View page', 'wp-hotel-booking' ); ?></a>
+            <a href="<?php echo get_edit_post_link( $selected ); ?>"
+               target="_blank"><?php _e( 'Edit page', 'wp-hotel-booking' ); ?></a>
+		<?php } ?>
+		<?php if ( isset( $field['desc'] ) ) { ?>
             <p class="description"><?php echo esc_html( $field['desc'] ) ?></p>
-	    <?php } ?>
+		<?php } ?>
     </td>
 </tr>
