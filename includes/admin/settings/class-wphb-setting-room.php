@@ -75,13 +75,15 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					'id'      => $prefix . 'catalog_number_column',
 					'type'    => 'number',
 					'default' => 4,
-					'title'   => __( 'Number of column display catalog page', 'wp-hotel-booking' )
+					'title'   => __( 'Number column', 'wp-hotel-booking' ),
+					'desc'    => __( 'Number of column display catalog page', 'wp-hotel-booking' )
 				),
 				array(
 					'id'      => $prefix . 'posts_per_page',
 					'type'    => 'number',
 					'default' => 8,
-					'title'   => __( 'Number of post display in page', 'wp-hotel-booking' )
+					'title'   => __( 'Posts per page', 'wp-hotel-booking' ),
+					'desc'    => __( 'Number of post display in page', 'wp-hotel-booking' )
 				),
 				array(
 					'id'      => $prefix . 'catalog_image',
@@ -156,7 +158,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'width'  => 270,
 						'height' => 270
 					),
-					'title'   => __( 'Room images size gallery', 'wp-hotel-booking' )
+					'title'   => __( 'Images gallery', 'wp-hotel-booking' )
 				),
 				array(
 					'id'      => $prefix . 'room_thumbnail',
@@ -169,7 +171,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'width'  => 150,
 						'height' => 150
 					),
-					'title'   => __( 'Room images thumbnail', 'wp-hotel-booking' )
+					'title'   => __( 'Images room thumbnail', 'wp-hotel-booking' )
 				),
 				array(
 					'type' => 'section_end',

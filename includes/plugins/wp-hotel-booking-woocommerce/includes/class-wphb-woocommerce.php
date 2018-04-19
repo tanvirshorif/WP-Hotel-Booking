@@ -43,7 +43,7 @@ if ( ! class_exists( 'WPHB_Woocommerce' ) ) {
 
 			add_filter( 'hb_payment_gateways', array( $this, 'add_payment_gateway' ) );
 
-			if ( 'yes' === $settings->get( 'wc_enable' ) ) {
+			if ( $settings->get( 'wc_enable' ) ) {
 				// filter WPHB currency to WC currency
 				add_filter( 'hb_currency', array( $this, 'woocommerce_currency' ), 50 );
 				add_filter( 'hotel_booking_payment_current_currency', array( $this, 'woocommerce_currency' ), 50 );

@@ -243,8 +243,10 @@ if ( ! function_exists( 'hb_dropdown_rooms' ) ) {
 		$posts = apply_filters( 'hotel_booking_rooms_dropdown', $posts );
 		$posts = array_merge( array( $emptySelected ), $posts );
 
-		foreach ( $posts as $key => $post ) {
-			$output .= '<option value="' . $post->ID . '"' . ( $post->ID == $args['selected'] ? ' selected' : '' ) . '>' . $post->post_title . '</option>';
+		if ( $posts && is_array( $posts ) ) {
+			foreach ( $posts as $key => $post ) {
+				$output .= '<option value="' . $post->ID . '"' . ( $post->ID == $args['selected'] ? ' selected' : '' ) . '>' . $post->post_title . '</option>';
+			}
 		}
 		$output .= '</select>';
 
@@ -401,7 +403,7 @@ if ( ! function_exists( 'hb_parse_request' ) ) {
 		$params = hb_get_request( 'hotel-booking-params' );
 		if ( $params ) {
 			$params = maybe_unserialize( base64_decode( $params ) );
-			if ( $params ) {
+			if ( $params && is_array( $params ) ) {
 				foreach ( $params as $k => $v ) {
 					$_GET[ $k ]     = sanitize_text_field( $v );
 					$_POST[ $k ]    = sanitize_text_field( $v );
@@ -2214,8 +2216,8 @@ if ( ! function_exists( 'hb_get_min_max_rooms_price' ) ) {
 	function hb_get_min_max_rooms_price() {
 		$prices = hb_get_rooms_price();
 		if ( $prices ) {
-			$min = reset($prices)['min'];
-			$max = reset($prices)['max'];
+			$min = reset( $prices )['min'];
+			$max = reset( $prices )['max'];
 			foreach ( $prices as $room_id => $price ) {
 				if ( $min > $price['min'] ) {
 					$min = $price['min'];
