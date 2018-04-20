@@ -42,6 +42,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 */
 		public function includes() {
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-ajax.php' );
+			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-assets.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-settings.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-menu.php' );
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-tools.php' );
@@ -55,8 +56,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 */
 		public function update_pricing_plan() {
 			if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ), 'hb-update-pricing-plan' ) ) {
-				return;
-			}
+				return;			}
 
 			if ( empty( $_POST['price'] ) || ! isset( $_POST['room_id'] ) ) {
 				return;
