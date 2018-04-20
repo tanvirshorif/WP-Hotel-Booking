@@ -161,6 +161,9 @@ if ( ! class_exists( 'WP_Hotel_Booking' ) ) {
 			include_once( WPHB_INCLUDES . 'wphb-template-functions.php' );
 			include_once( WPHB_INCLUDES . 'class-wphb-resizer.php' );
 			include_once( WPHB_INCLUDES . 'class-wphb-post-types.php' );
+
+			include_once( WPHB_INCLUDES . 'custom-post-types/booking.php' );
+
 			include_once( WPHB_INCLUDES . 'class-wphb-query.php' );
 			include_once( WPHB_INCLUDES . 'class-wphb-roles.php' );
 			include_once( WPHB_INCLUDES . 'class-wphb-user.php' );

@@ -922,12 +922,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * Registers booking statues.
 		 */
 		public function register_post_statues() {
-			$statuses = array(
-				'cancelled'  => 'Cancelled',
-				'pending'    => 'Pending',
-				'processing' => 'Processing',
-				'completed'  => 'Completed',
-			);
+			$statuses = hb_get_booking_statuses();
 
 			foreach ( $statuses as $key => $status ) {
 				register_post_status( 'hb_' . $key,

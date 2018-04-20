@@ -5,7 +5,6 @@
  * @version     2.0
  * @author      ThimPress
  * @package     WP_Hotel_Booking/Functions
- * @category    Core Functions
  * @author      Thimpress, leehld
  */
 
@@ -75,14 +74,14 @@ if ( ! function_exists( 'hb_get_booking_statuses' ) ) {
 	 * @return mixed
 	 */
 	function hb_get_booking_statuses() {
-		$booking_statuses = array(
+		$booking_statuses = apply_filters( 'hb_booking_statuses', array(
+			'hb-completed'  => _x( 'Completed', 'Booking status', 'wp-hotel-booking' ),
+			'hb-processing' => _x( 'Processing', 'Booking status', 'wp-hotel-booking' ),
 			'hb-pending'    => _x( 'Pending', 'Booking status', 'wp-hotel-booking' ),
 			'hb-cancelled'  => _x( 'Cancelled', 'Booking status', 'wp-hotel-booking' ),
-			'hb-processing' => _x( 'Processing', 'Booking status', 'wp-hotel-booking' ),
-			'hb-completed'  => _x( 'Completed', 'Booking status', 'wp-hotel-booking' ),
-		);
+		) );
 
-		return apply_filters( 'hb_booking_statuses', $booking_statuses );
+		return ( is_array( $booking_statuses ) && $booking_statuses ) ? $booking_statuses : array();
 	}
 }
 
