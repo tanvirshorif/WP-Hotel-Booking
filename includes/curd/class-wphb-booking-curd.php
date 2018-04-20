@@ -1,12 +1,10 @@
 <?php
-
 /**
  * WP Hotel Booking Booking CURD class.
  *
  * @class       WPHB_Booking_CURD
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
- * @category    Class
  * @author      Thimpress, leehld
  */
 
@@ -18,8 +16,6 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 	/**
 	 * Class WPHB_Booking_CURD.
-	 *
-	 * @since 2.0
 	 */
 	class WPHB_Booking_CURD extends WPHB_Abstract_CURD implements WPHB_Interface_CURD {
 
@@ -120,7 +116,7 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 		}
 
 		/**
-		 * Delete booking item data in order items and order item meta table.
+		 * Delete booking item data in booking items and booking item meta table.
 		 *
 		 * @param object $booking_id
 		 *
@@ -135,10 +131,9 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 
 			$sql = $wpdb->prepare(
 				"SELECT items.order_item_id FROM $wpdb->hotel_booking_order_items AS items
-						  WHERE items.order_id = %d", $booking_id );
+						WHERE items.order_id = %d", $booking_id );
 			// get booking items id
 			$booking_items_id = $wpdb->get_results( $sql, ARRAY_A );
-
 
 			// delete booking items by booking id
 			$wpdb->delete( $wpdb->hotel_booking_order_items, array( 'order_id' => $booking_id ), array( '%d' ) );

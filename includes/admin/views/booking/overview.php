@@ -36,15 +36,15 @@ $booking = WPHB_Booking::instance( $post->ID );
                 </div>
                 <div class="booking-user-data">
                     <div class="user-data">
-                        <div class="user-avatar"><img v-bind:src="users[customer.id].avatar"
-                                                      v-bind:alt="users[customer.id].email"/></div>
-                        <div class="order-user-meta">
-                            <div class="user-display-name">
-                                <a v-bind:href="users[customer.id].link"
-                                   target="_blank">{{users[customer.id].display_name}}</a>
-                            </div>
-                            <div class="user-email">{{users[customer.id].email}}</div>
-                        </div>
+<!--                        <div class="user-avatar"><img v-bind:src="users[customer.id].avatar"-->
+<!--                                                      v-bind:alt="users[customer.id].email"/></div>-->
+<!--                        <div class="order-user-meta">-->
+<!--                            <div class="user-display-name">-->
+<!--                                <a v-bind:href="users[customer.id].link"-->
+<!--                                   target="_blank">{{users[customer.id].display_name}}</a>-->
+<!--                            </div>-->
+<!--                            <div class="user-email">{{users[customer.id].email}}</div>-->
+<!--                        </div>-->
                     </div>
                     <div class="user-detail">
                         <a href="#" class="edit-info"><i class="dashicons dashicons-edit"></i></a>

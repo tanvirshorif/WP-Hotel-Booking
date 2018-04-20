@@ -1,12 +1,10 @@
 <?php
-
 /**
  * WP Hotel Booking admin class.
  *
  * @class       WPHB_Admin_Ajax
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
- * @category    Class
  * @author      Thimpress, leehld
  */
 
@@ -181,8 +179,6 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 
 		/**
 		 * Ajax load room in booking details.
-		 *
-		 * @since 2.0
 		 */
 		public static function load_room_ajax() {
 			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['room'] ) ) {
@@ -207,8 +203,6 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 
 		/**
 		 * Admin load pricing calendar.
-		 *
-		 * @since 2.0
 		 */
 		public static function admin_load_pricing_calendar() {
 			check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
@@ -279,8 +273,6 @@ if ( ! class_exists( 'WPHB_Admin_Ajax' ) ) {
 
 		/**
 		 * Dismiss remove TP Hotel Booking plugin notice.
-		 *
-		 * @since 2.0
 		 */
 		public static function admin_dismiss_notice() {
 			if ( is_multisite() ) {

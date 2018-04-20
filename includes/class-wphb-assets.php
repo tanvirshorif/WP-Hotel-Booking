@@ -35,17 +35,21 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 
 			// room gallery
 			wp_enqueue_script( 'wphb-library-gallery', WPHB_PLUGIN_URL . 'assets/js/vendor/gallery.min.js', array( 'jquery' ), WPHB_VERSION, true );
+			// time picker
+			wp_enqueue_style( 'wphb-library-timepicker', WPHB_PLUGIN_URL . 'assets/css/jquery.timepicker.css', array(), WPHB_VERSION );
+			wp_enqueue_script( 'wphb-library-timepicker', WPHB_PLUGIN_URL . 'assets/js/vendor/jquery.timepicker.min.js', array(), WPHB_VERSION, true );
 
 			wp_enqueue_style( 'wphb-site', WPHB_PLUGIN_URL . 'assets/css/wphb.css', array(), WPHB_VERSION );
-			wp_register_script( 'wphb-site', WPHB_PLUGIN_URL . 'assets/js/wphb.js', array(
+			wp_enqueue_script( 'wphb-site', WPHB_PLUGIN_URL . 'assets/js/wphb.js', array(
 				'jquery',
 				'jquery-ui-sortable',
 				'jquery-ui-datepicker',
 				'wp-util',
+				'wphb-library-timepicker',
 				'jquery-ui-slider',
 				'backbone'
 			), WPHB_VERSION, true );
-			wp_enqueue_script( 'wphb-site', 'wphb_js', hb_i18n() );
+			wp_localize_script( 'wphb-site', 'wphb_js', hb_i18n() );
 		}
 
 		/**

@@ -885,6 +885,11 @@
         WPHB_Admin_Pricing_Plan.init();
 
         WPHB_Admin_Settings.init();
+
+        $('.post-type-hb_room.taxonomy-hb_room_capacity .bulkactions').append('<button type="button" class="button button-primary hb-update-ordering">Update</button>');
+        $doc.on('click', '.hb-update-ordering', function () {
+            $(this.form).append('<input type="hidden" name="action" value="hb-update-taxonomy" />').submit();
+        });
     }
 
     $doc.ready(_ready);

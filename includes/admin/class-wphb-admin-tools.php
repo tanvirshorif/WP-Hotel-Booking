@@ -1,12 +1,10 @@
 <?php
-
 /**
  * WP Hotel Booking admin tools class.
  *
  * @class       WPHB_Admin_Tools
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
- * @category    Class
  * @author      Thimpress, leehld
  */
 
@@ -18,14 +16,10 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPHB_Admin_Tools' ) ) {
 	/**
 	 * Class WPHB_Admin_Tools.
-	 *
-	 * @since 2.0
 	 */
 	class WPHB_Admin_Tools {
 		/**
 		 * Get admin setting page tabs.
-		 *
-		 * @since 2.0
 		 *
 		 * @return array
 		 */
@@ -41,8 +35,6 @@ if ( ! class_exists( 'WPHB_Admin_Tools' ) ) {
 
 		/**
 		 * Output tools page.
-		 *
-		 * @since 2.0
 		 */
 		public static function output() {
 			self::get_tools_pages();
@@ -53,7 +45,6 @@ if ( ! class_exists( 'WPHB_Admin_Tools' ) ) {
 				$tab_keys     = array_keys( $tabs );
 				$selected_tab = reset( $tab_keys );
 			} ?>
-
             <div class="wrap">
                 <h2 class="nav-tab-wrapper">
 					<?php if ( $tabs ) { ?>

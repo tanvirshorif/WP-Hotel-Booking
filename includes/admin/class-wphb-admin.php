@@ -1,12 +1,10 @@
 <?php
-
 /**
  * WP Hotel Booking admin class.
  *
  * @class       WPHB_Admin
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
- * @category    Class
  * @author      Thimpress, leehld
  */
 
@@ -18,16 +16,14 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPHB_Admin' ) ) {
 	/**
 	 * Class WPHB_Admin.
-	 *
-	 * @since 2.0
 	 */
 	class WPHB_Admin {
+
 		/**
 		 * WPHB_Admin constructor.
-		 *
-		 * @since 2.0
 		 */
 		public function __construct() {
+
 			// include files
 			$this->includes();
 
@@ -37,8 +33,6 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 
 		/**
 		 * Include admin component.
-		 *
-		 * @since 2.0
 		 */
 		public function includes() {
 			include_once( WPHB_INCLUDES . 'admin/class-wphb-admin-ajax.php' );
@@ -51,8 +45,6 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 
 		/**
 		 * Update room pricing plan.
-		 *
-		 * @since 2.0
 		 */
 		public function update_pricing_plan() {
 			if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ), 'hb-update-pricing-plan' ) ) {

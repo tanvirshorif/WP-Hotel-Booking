@@ -71,7 +71,7 @@ $date_order   = hb_start_of_week_order();
 									<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                     <input class="hb-pricing-price" type="number" min="0" step="any"
                                            name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]"
-                                           value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
+                                           value="<?php echo esc_attr( $price ); ?>" size="10"/>
                                 </td>
 							<?php } ?>
                         </tr>

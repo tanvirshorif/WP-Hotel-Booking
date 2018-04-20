@@ -1,12 +1,10 @@
 <?php
-
 /**
  * WP Hotel Booking admin menu class.
  *
  * @class       WPHB_Admin_Menu
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
- * @category    Class
  * @author      Thimpress, leehld
  */
 
@@ -18,14 +16,10 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 	/**
 	 * Class WPHB_Admin_Menu.
-	 *
-	 * @since 2.0
 	 */
 	class WPHB_Admin_Menu {
 		/**
 		 * WPHB_Admin_Menu constructor.
-		 *
-		 * @since 2.0
 		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'plugin_menu' ) );
@@ -33,8 +27,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 
 		/**
 		 * Register plugin menu.
-		 *
-		 * @since 2.0
 		 */
 		public function plugin_menu() {
 			// Register menu.
@@ -118,8 +110,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 
 		/**
 		 * Addition packages view.
-		 *
-		 * @since 2.0
 		 */
 		public function addition_packages() {
 			hb_admin_view( 'addition-packages', array(), true );
@@ -127,17 +117,13 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 
 		/**
 		 * Pricing plan view.
-		 *
-		 * @since 2.0
 		 */
 		public function pricing_table() {
 			hb_admin_view( 'pricing-table', array(), true );
 		}
 
 		/**
-		 * Addons view.
-		 *
-		 * @since 2.0
+		 * Add-ons view.
 		 */
 		public function addons_page() {
 			WPHB_Addons::output();
@@ -145,8 +131,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 
 		/**
 		 * Setting page view.
-		 *
-		 * @since 2.0
 		 */
 		public function settings_page() {
 			WPHB_Admin_Settings::output();
@@ -154,8 +138,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 
 		/**
 		 * Setting page view.
-		 *
-		 * @since 2.0
 		 */
 		public function about_page() {
 			hb_admin_view( 'about', array(), true );

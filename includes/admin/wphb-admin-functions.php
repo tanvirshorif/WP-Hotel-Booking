@@ -5,7 +5,6 @@
  * @version     2.0
  * @author      ThimPress
  * @package     WP_Hotel_Booking/Functions
- * @category    Core Functions
  * @author      Thimpress, leehld
  */
 

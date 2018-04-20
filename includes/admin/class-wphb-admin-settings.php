@@ -1,12 +1,10 @@
 <?php
-
 /**
  * WP Hotel Booking admin settings class.
  *
  * @class       WPHB_Admin_Settings
  * @version     2.0
  * @package     WP_Hotel_Booking/Classes
- * @category    Class
  * @author      Thimpress, leehld
  */
 
@@ -18,14 +16,10 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 	/**
 	 * Class WPHB_Admin_Settings.
-	 *
-	 * @since 2.0
 	 */
 	class WPHB_Admin_Settings {
 		/**
 		 * Get admin setting page tabs.
-		 *
-		 * @since 2.0
 		 *
 		 * @return array
 		 */
@@ -43,8 +37,6 @@ if ( ! class_exists( 'WPHB_Admin_Settings' ) ) {
 
 		/**
 		 * Output settings page.
-		 *
-		 * @since 2.0
 		 */
 		public static function output() {
 			self::get_settings_pages();
