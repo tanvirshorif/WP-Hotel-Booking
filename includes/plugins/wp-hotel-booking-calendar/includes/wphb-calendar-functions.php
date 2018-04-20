@@ -14,9 +14,6 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-?>
-
-<?php
 
 if ( ! function_exists( 'wphb_calendar_template_path' ) ) {
 

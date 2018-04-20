@@ -12,9 +12,7 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-?>
 
-<?php
 // show message on shortcodes
 add_action( 'hotel_booking_wrapper_shortcode_start', 'hb_display_message' );
 

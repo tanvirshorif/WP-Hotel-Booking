@@ -12,9 +12,7 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-?>
 
-<?php
 //  show notice required remove tp hotel booking plugin and add-ons
 if ( is_multisite() ) {
 	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && ! get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {

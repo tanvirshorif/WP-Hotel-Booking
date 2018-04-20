@@ -41,6 +41,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'plugins_loaded', array( $this, 'init' ) );
+
 		}
 
 		/**
@@ -98,8 +99,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
 			require_once WPHB_COUPON_ABSPATH . '/includes/class-wphb-coupon-post-types.php';
 			require_once WPHB_COUPON_ABSPATH . '/includes/class-wphb-coupon-ajax.php';
 
-
-			require_once WPHB_COUPON_ABSPATH . '/includes/admin/views/booking-coupon-js-template.php';
+//			require_once WPHB_COUPON_ABSPATH . '/includes/admin/views/booking-coupon-js-template.php';
 		}
 
 		/**

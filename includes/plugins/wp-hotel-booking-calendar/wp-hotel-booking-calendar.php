@@ -16,7 +16,6 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-
 if ( ! class_exists( 'WP_Hotel_Booking_Calendar' ) ) {
 
 	/**

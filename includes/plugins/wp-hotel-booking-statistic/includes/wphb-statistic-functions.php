@@ -14,9 +14,7 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-?>
 
-<?php
 if ( ! function_exists( 'wphb_statistic_get_template' ) ) {
 	/**
 	 * Get templates passing attributes and including the file.
