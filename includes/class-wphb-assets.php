@@ -39,6 +39,10 @@ if ( ! class_exists( 'WPHB_Assets' ) ) {
 			wp_enqueue_style( 'wphb-library-timepicker', WPHB_PLUGIN_URL . 'assets/css/jquery.timepicker.css', array(), WPHB_VERSION );
 			wp_enqueue_script( 'wphb-library-timepicker', WPHB_PLUGIN_URL . 'assets/js/vendor/jquery.timepicker.min.js', array(), WPHB_VERSION, true );
 
+			// full calendar
+			wp_enqueue_style( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/css/fullcalendar.min.css', array(), WPHB_VERSION );
+			wp_enqueue_script( 'wphb-library-fullcalendar', WPHB_PLUGIN_URL . 'assets/js/vendor/fullcalendar.min.js', array('jquery'), WPHB_VERSION, true );
+
 			wp_enqueue_style( 'wphb-site', WPHB_PLUGIN_URL . 'assets/css/wphb.css', array(), WPHB_VERSION );
 			wp_enqueue_script( 'wphb-site', WPHB_PLUGIN_URL . 'assets/js/wphb.js', array(
 				'jquery',
