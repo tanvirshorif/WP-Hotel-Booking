@@ -69,8 +69,6 @@ add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' 
 
 //========================================== Booking Hooks ===========================================//
 
-// restrict booking
-add_action( 'restrict_manage_posts', 'hb_booking_restrict_manage_posts' );
 
 // schedule cancel booking mail
 add_action( 'hotel_booking_create_booking', 'hb_schedule_cancel_booking', 10, 1 );

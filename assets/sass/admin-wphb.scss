@@ -1,3 +1,15 @@
+/********************************** General settings *************************************************/
+.hb-field-overlay {
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    background: #FFF;
+    opacity: 0.9;
+}
+
 /********************************** Admin room page *************************************************/
 .post-type-hb_room {
     #gallery_settings {
@@ -230,7 +242,7 @@
         }
         .actions {
             margin-top: 8px;
-            span {
+            a {
                 color: #999;
                 cursor: pointer;
                 &:hover {
@@ -422,6 +434,7 @@
         }
     }
 }
+
 /********************************** Admin setting page *************************************************/
 
 #wphb-admin-setting-wrapper .nav-tab-active {
@@ -432,16 +445,15 @@
     .form-table td {
         padding-bottom: 0;
     }
-    .hb-form-field{
+    .hb-form-field {
         a {
             font-style: italic;
-            &.view-page{
+            &.view-page {
                 margin: 0 5px 0 10px;
             }
         }
     }
 }
-
 
 .wphb-admin-panel {
     background: #fff;

@@ -84,11 +84,11 @@ if ( ! class_exists( 'WPHB_Booking_CURD' ) ) {
 					'woo_order_id'            => get_post_meta( $id, '_hb_woo_order_id', true )
 				),
 				'customer' => array(
-					'id'          => get_post_meta( $id, '_hb_user_id', true ),
-					'title'       => get_post_meta( $id, '_hb_customer_title', true ),
-					'avatar'      => get_avatar_url( get_post_meta( $id, '_hb_user_id', true ) ),
-					'link'        => get_edit_user_link( get_post_meta( $id, '_hb_user_id', true ) ),
-					'user_login'  => get_post_meta( $id, '_hb_user_id', true ) ? get_userdata( get_post_meta( $id, '_hb_user_id', true ) )->user_login : __( '[Guest]', 'wp-hotel-booking' ),
+					'id'         => get_post_meta( $id, '_hb_user_id', true ),
+					'title'      => get_post_meta( $id, '_hb_customer_title', true ),
+					'avatar'     => get_avatar_url( get_post_meta( $id, '_hb_user_id', true ) ),
+					'link'       => get_edit_user_link( get_post_meta( $id, '_hb_user_id', true ) ),
+					'user_login' => ( get_post_meta( $id, '_hb_user_id', true ) != - 1 ) ? get_userdata( get_post_meta( $id, '_hb_user_id', true ) )->user_login : __( '[Guest]', 'wp-hotel-booking' ),
 				),
 				'rooms'    => hb_get_booking_items( $id, 'line_item', null, true ),
 				'newItem'  => array(

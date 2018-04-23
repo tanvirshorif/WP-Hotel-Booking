@@ -38,7 +38,7 @@ hb_admin_view( 'booking/actions' );
             template: '#tmpl-admin-booking-editor',
             computed: {
                 customer: function () {
-                    return $store.getters['customer'];
+                    return $store.getters['customer'].id ? $store.getters['customer'] : $store.getters['users'][-1];
                 },
                 users: function () {
                     return $store.getters['users'];

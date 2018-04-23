@@ -82,6 +82,7 @@ if ( ! class_exists( 'WPHB_User' ) ) {
 					);
 				}
 				$info[ - 1 ] = array(
+					'id'           => - 1,
 					'user_login'   => __( '[Guest]', 'wp-hotel-booking' ),
 					'display_name' => __( '[Guest]', 'wp-hotel-booking' ),
 					'email'        => '',

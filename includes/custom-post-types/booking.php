@@ -39,7 +39,10 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 			// update sortable columns
 			add_filter( 'manage_edit-hb_booking_sortable_columns', array( $this, 'sortable_columns' ) );
 
-//			add_filter( 'post_row_actions', array( $this, 'admin_booking_row_actions' ), 10, 2 );
+			add_filter( 'post_row_actions', array( $this, 'admin_row_actions' ), 10, 2 );
+
+			// restrict booking
+//			add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_booking' ), 10, 2 );
 
 			add_filter( 'views_edit-hb_booking', array( $this, 'views_edit_booking' ) );
 			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
@@ -91,7 +94,7 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 			$statuses = hb_get_booking_statuses();
 
 			foreach ( $statuses as $key => $status ) {
-				register_post_status( 'hb_' . $key,
+				register_post_status( $key,
 					array(
 						'label'                     => _x( $status, 'Booking status', 'wp-hotel-booking' ),
 						'public'                    => false,
@@ -235,7 +238,7 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 		 */
 		public function posts_join_paged( $join ) {
 			global $wpdb;
-			$result = $wpdb->get_col( "SELECT order_item_id FROM {$wpdb->hotel_booking_order_items} WHERE `order_item_id` IS NOT NULL" );
+			$result = $wpdb->get_col( "SELECT order_item_id FROM {$wpdb->hotel_booking_order_items} WHERE order_item_id IS NOT NULL" );
 			if ( ! $this->is_search( 'booking' ) || ! $result ) {
 				return $join;
 			}
@@ -366,7 +369,7 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 		 *
 		 * @return array
 		 */
-		public function admin_booking_row_actions( $actions, $post ) {
+		public function admin_row_actions( $actions, $post ) {
 			if ( 'hb_booking' == $post->post_type ) {
 				return array();
 			}
@@ -375,18 +378,61 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 		}
 
 		/**
+		 * Create booking date drop down filter.
+		 *
+		 * @param $post_type
+		 * @param $which
+		 */
+		function restrict_manage_booking( $post_type, $which ) {
+			$type = 'post';
+			if ( isset( $_GET['post_type'] ) ) {
+				$type = $_GET['post_type'];
+			}
+
+			// only add filter to hb_booking post type
+			if ( 'hb_booking' == $type ) {
+				//change this to the list of values you want to show
+				$from           = hb_get_request( 'date-from' );
+				$from_timestamp = hb_get_request( 'date-from-timestamp' );
+				$to             = hb_get_request( 'date-to' );
+				$to_timestamp   = hb_get_request( 'date-to-timestamp' );
+				$filter_type    = hb_get_request( 'filter-type' );
+
+				$filter_types = apply_filters(
+					'hb_booking_filter_types',
+					array(
+						'booking-date'   => __( 'Booking date', 'wp-hotel-booking' ),
+						'check-in-date'  => __( 'Check-in date', 'wp-hotel-booking' ),
+						'check-out-date' => __( 'Check-out date', 'wp-hotel-booking' )
+					)
+				); ?>
+                <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+                <input type="text" id="hb-booking-date-from" class="hb-date-field"
+                       value="<?php echo esc_attr( $from ); ?>"
+                       name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
+                <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
+                <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
+                       name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
+                <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
+                <select name="filter-type">
+                    <option value=""><?php _e( 'Filter By', 'wp-hotel-booking' ); ?></option>
+					<?php foreach ( $filter_types as $slug => $text ) { ?>
+                        <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
+					<?php } ?>
+                </select>
+				<?php
+			}
+		}
+
+		/**
 		 * @param $views
 		 *
 		 * @return mixed
 		 */
 		public function views_edit_booking( $views ) {
-			if ( 'hb_booking' != get_post_type() ) {
-				return $views;
-			}
-			unset( $views['all'] );
 
 			$query  = array( 'post_type' => 'hb_booking' );
-			$status = ( isset( $_REQUEST['post_status'] ) && $_REQUEST['post_status'] ) ? $_REQUEST['post_status'] : 'hb-completed';
+			$status = ( isset( $_REQUEST['post_status'] ) && $_REQUEST['post_status'] ) ? $_REQUEST['post_status'] : '';
 
 			$new_views = hb_get_booking_statuses();
 			foreach ( $new_views as $view => $name ) {
@@ -403,10 +449,8 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 						$query = apply_filters( 'hb_booking_query_post', '' );
 						break;
 				}
-
-				$result = new WP_Query( array( 'post_type' => 'hb_booking', 'post_status' => 'hb-pending' ) );
-
-				$views[ $view ] = sprintf( '<a href="%s"' . $class . '>' . esc_html( $name ) . '<span class="count"> (%d)</span></a>', esc_url( add_query_arg( $query, 'edit.php' ) ), $result->found_posts );
+				$count_posts    = wp_count_posts( 'hb_booking' );
+				$views[ $view ] = sprintf( '<a href="%s"' . $class . '>' . esc_html( $name ) . '<span class="count"> (%s)</span></a>', esc_url( add_query_arg( $query, 'edit.php' ) ), $count_posts->$view );
 			}
 
 			return $views;
@@ -420,7 +464,7 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 		 * @return WP_Query
 		 */
 		public function pre_get_posts( $query ) {
-			$status = $_REQUEST['post_status'] ? $_REQUEST['post_status'] : 'hb-completed';
+			$status = isset( $_REQUEST['post_status'] ) ? $_REQUEST['post_status'] : '';
 
 			/**
 			 * @var $query WP_Query

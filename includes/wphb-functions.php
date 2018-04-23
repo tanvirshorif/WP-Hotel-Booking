@@ -117,7 +117,7 @@ if ( ! function_exists( 'wphb_get_location_of_rooms' ) ) {
 	 */
 	function wphb_get_location_of_rooms() {
 		$locations = array();
-		$terms     = get_terms( 'hb_room_location' );
+		$terms     = get_terms( 'hb_room_location', array( 'hide_empty' => false ) );
 		foreach ( $terms as $term ) {
 			$locations[ $term->term_id ] = $term->name;
 		}
@@ -203,7 +203,7 @@ if ( ! function_exists( 'hb_dropdown_room_locations' ) ) {
 	function hb_dropdown_room_locations( $args = array() ) {
 		$locations = wphb_get_location_of_rooms();
 		$args      = wp_parse_args( $args, array(
-				'name'              => 'countries',
+				'name'              => 'locations',
 				'selected'          => '',
 				'show_option_none'  => __( 'Location', 'wp-hotel-booking' ),
 				'option_none_value' => '',

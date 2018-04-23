@@ -51,6 +51,8 @@ hb_admin_view( 'extra/new' );
             <wphb-admin-extra-new v-if="add || !extra.length" :types="types" @newExtra="newExtra"
                                   @deleteNew="deleteNew"></wphb-admin-extra-new>
 
+            <button class="button update-items"
+                    @click="addExtra"><?php echo __( 'Add New', 'wp-hotel-booking' ); ?></button>
             <button class="button update-items button-primary"
                     @click="updateItems"><?php echo __( 'Update', 'wp-hotel-booking' ); ?></button>
         </div>
@@ -98,6 +100,10 @@ hb_admin_view( 'extra/new' );
                     this.add = false;
                 },
                 updateItems: function () {
+                    if (this.add) {
+                        var newItem = this.$children.slice(-1)[0];
+                        this.newExtra(newItem.extra);
+                    }
                     $store.dispatch('updateListExtra', this.extra);
                 }
             }

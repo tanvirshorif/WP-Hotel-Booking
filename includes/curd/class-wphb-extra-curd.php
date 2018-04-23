@@ -44,7 +44,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 		/**
 		 * Create extra.
 		 *
-		 * @param object $extra
+		 * @param $extra
 		 *
 		 * @return bool
 		 */
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 		/**
 		 * Update extra.
 		 *
-		 * @param object $extra
+		 * @param $extra
 		 *
 		 * @return bool|int|WP_Error
 		 */
@@ -98,7 +98,9 @@ if ( ! class_exists( 'WPHB_Extra_CURD' ) ) {
 
 				return $update;
 			} else {
-				return false;
+				$create = $this->create( $extra );
+
+				return $create;
 			}
 		}
 
