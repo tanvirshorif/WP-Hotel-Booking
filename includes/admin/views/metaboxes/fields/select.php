@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin View: Admin meta box field - select.
+ * Admin View: Admin meta box select field.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Views
@@ -46,8 +46,7 @@ if ( $field['attr'] ) {
 	} else {
 		$field_attr = $field['attr'];
 	}
-}
-?>
+} ?>
 <?php if ( empty( $field['options'] ) && $field['except'] ) { ?>
     <p><?php echo( $field['except'] ); ?></p>
 <?php } else { ?>

@@ -24,6 +24,12 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Extra' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'init', array( $this, 'register_post_type' ) );
+
+			// update admin extra columns
+			add_filter( 'manage_hb_extra_room_posts_columns', array( $this, 'extra_columns' ) );
+			add_action( 'manage_hb_extra_room_posts_custom_column', array( $this, 'extra_columns_content' ) );
+
+			add_action( 'admin_init', array( $this, 'settings_meta_box' ) );
 		}
 
 		/**
@@ -32,9 +38,9 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Extra' ) ) {
 		public function register_post_type() {
 			// register room extra package
 			$args = array(
-				'labels'              => array(
-					'name'               => __( 'Extra Room', 'wp-hotel-booking' ),
-					'singular_name'      => __( 'Extra Room', 'wp-hotel-booking' ),
+				'labels'             => array(
+					'name'               => __( 'Extra Options', 'wp-hotel-booking' ),
+					'singular_name'      => __( 'Extra Option', 'wp-hotel-booking' ),
 					'add_new'            => _x( 'Add New Extra Room', 'wp-hotel-booking', 'wp-hotel-booking' ),
 					'add_new_item'       => __( 'Add New Extra Room', 'wp-hotel-booking' ),
 					'edit_item'          => __( 'Edit Extra Room', 'wp-hotel-booking' ),
@@ -44,28 +50,110 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Extra' ) ) {
 					'not_found'          => __( 'No Extra Room found', 'wp-hotel-booking' ),
 					'not_found_in_trash' => __( 'No Extra Room found in Trash', 'wp-hotel-booking' ),
 					'parent_item_colon'  => __( 'Parent Singular Extra Room:', 'wp-hotel-booking' ),
-					'menu_name'          => __( 'Extra Room', 'wp-hotel-booking' ),
+					'menu_name'          => __( 'Extra Options', 'wp-hotel-booking' ),
 				),
-				'hierarchical'        => false,
-				'description'         => __( 'Extra room system booking', 'wp-hotel-booking' ),
-				'taxonomies'          => array(),
-				'public'              => false,
-				'show_ui'             => false,
-				'show_in_menu'        => false,
-				'show_in_admin_bar'   => false,
-				'menu_position'       => null,
-				'menu_icon'           => null,
-				'show_in_nav_menus'   => false,
-				'publicly_queryable'  => true,
-				'exclude_from_search' => true,
-				'has_archive'         => true,
-				'query_var'           => true,
-				'rewrite'             => true,
-				'capability_type'     => 'hb_room',
-				'supports'            => array( 'title', 'editor' )
+				'public'             => false,
+				'query_var'          => true,
+				'publicly_queryable' => false,
+				'show_ui'            => true,
+				'has_archive'        => false,
+				'capability_type'    => 'hb_booking',
+				'map_meta_cap'       => true,
+				'show_in_menu'       => 'tp_hotel_booking',
+				'show_in_admin_bar'  => true,
+				'show_in_nav_menus'  => true,
+				'supports'           => array( 'title', 'editor', 'custom-fields' ),
+				'hierarchical'       => false,
 			);
 
 			register_post_type( 'hb_extra_room', apply_filters( 'hb_register_post_type_extra_room_arg', $args ) );
+		}
+
+		/**
+		 * @param $columns
+		 *
+		 * @return mixed
+		 */
+		public function extra_columns( $columns ) {
+//			unset( $columns['author'] );
+			unset( $columns['date'] );
+			$columns['price']    = __( 'Price', 'wp-hotel-booking' );
+			$columns['unit']     = __( 'Unit', 'wp-hotel-booking' );
+			$columns['type']     = __( 'Type', 'wp-hotel-booking' );
+			$columns['required'] = __( 'Required', 'wp-hotel-booking' );
+
+			return $columns;
+		}
+
+		/**
+		 * @param $column
+		 */
+		public function extra_columns_content( $column ) {
+			global $post;
+			$post_id = $post->ID;
+
+			switch ( $column ) {
+				case 'price':
+					echo hb_format_price( get_post_meta( $post_id, 'tp_hb_extra_room_price', true ) );
+					break;
+				case 'unit':
+					echo get_post_meta( $post_id, 'tp_hb_extra_room_respondent_name', true );
+					break;
+				case 'type':
+					echo get_post_meta( $post_id, 'tp_hb_extra_room_respondent', true );
+					break;
+				case 'required':
+					?>
+                    <input type="checkbox" name="required-extra"
+                           data-extra-id="<?php echo esc_attr( $post_id ); ?>" <?php checked( get_post_meta( $post_id, 'tp_hb_extra_room_required', true ), 1 ); ?>>
+					<?php break;
+				default:
+					break;
+			}
+		}
+
+		public function settings_meta_box() {
+			WPHB_Meta_Box::instance(
+				'extra_settings',
+				array(
+					'title'           => __( 'Extra Settings', 'wp-hotel-booking' ),
+					'post_type'       => 'hb_extra_room',
+					'meta_key_prefix' => 'tp_hb_extra_room_',
+					'priority'        => 'high'
+				),
+				array()
+			)->add_field(
+				array(
+					'name'  => 'price',
+					'label' => __( 'Price', 'wp-hotel-booking' ),
+					'type'  => 'number',
+					'std'   => '10',
+					'desc'  => __( 'Price of extra room option', 'wp-hotel-booking' ),
+					'min'   => 0,
+					'max'   => 100
+				),
+				array(
+					'name'    => 'respondent_name',
+					'label'   => __( 'Unit', 'wp-hotel-booking' ),
+					'desc'    => __( 'Unit of extra room option', 'wp-hotel-booking' ),
+					'type'    => 'text',
+					'default' => __( 'Package', 'wp-hotel-booking' )
+				),
+				array(
+					'name'   => 'respondent',
+					'label'  => __( 'Type', 'wp-hotel-booking' ),
+					'desc'   => __( 'Type of extra room option', 'wp-hotel-booking' ),
+					'type'   => 'select',
+					'options' => hb_extra_types()
+				),
+				array(
+					'name'  => 'required',
+					'label' => __( 'Required', 'wp-hotel-booking' ),
+					'desc'  => __( 'Required include for all booking', 'wp-hotel-booking' ),
+					'type'  => 'checkbox',
+					'std'   => ''
+				)
+			);
 		}
 	}
 }

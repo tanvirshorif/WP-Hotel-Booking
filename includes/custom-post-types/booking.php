@@ -47,6 +47,9 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 			add_filter( 'views_edit-hb_booking', array( $this, 'views_edit_booking' ) );
 			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
+			// add meta box
+			add_action( 'admin_init', array( $this, 'booking_meta_boxes' ) );
+
 			add_action( 'before_delete_post', array( $this, 'before_delete' ) );
 		}
 
@@ -487,6 +490,14 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Booking' ) ) {
 			}
 
 			return $query;
+		}
+
+		/**
+		 * Booking meta box.
+		 */
+		public function booking_meta_boxes() {
+			new WPHB_Metabox_Booking_Editor();
+			new WPHB_Metabox_Booking_Actions();
 		}
 
 		/**

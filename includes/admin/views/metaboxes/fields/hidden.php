@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin View: Admin meta box field - hidden.
+ * Admin View: Admin meta box hidden field.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Views
@@ -16,9 +16,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <?php
-
-$field      = wp_parse_args(
-	$field,
+$field = wp_parse_args( $field,
 	array(
 		'id'          => '',
 		'name'        => '',
@@ -28,6 +26,7 @@ $field      = wp_parse_args(
 		'filter'      => null
 	)
 );
+
 $field_attr = '';
 if ( $field['attr'] ) {
 	if ( is_array( $field['attr'] ) ) {
@@ -42,12 +41,4 @@ if ( is_callable( $field['filter'] ) ) {
 	$value = call_user_func_array( $field['filter'], array( $value ) );
 }
 
-printf(
-	'<input type="hidden" name="%s" id="%s" value="%s" %s/>',
-	$field['name'],
-	$field['id'],
-	$value,
-	$field_attr
-);
-
-?>
+printf( '<input type="hidden" name="%s" id="%s" value="%s" %s/>', $field['name'], $field['id'], $value, $field_attr ); ?>

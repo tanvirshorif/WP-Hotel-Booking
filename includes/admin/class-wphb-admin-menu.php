@@ -48,14 +48,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					'manage_hb_booking',
 					'wphb-pricing-table',
 					array( $this, 'pricing_table' )
-				),
-				'extra_package' => array(
-					'tp_hotel_booking',
-					__( 'Extra Options', 'wp-hotel-booking' ),
-					__( 'Extra Options', 'wp-hotel-booking' ),
-					'manage_hb_booking',
-					'wphb-addition-packages',
-					array( $this, 'addition_packages' )
 				)
 			);
 
@@ -106,13 +98,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					call_user_func_array( 'add_submenu_page', $item );
 				}
 			}
-		}
-
-		/**
-		 * Addition packages view.
-		 */
-		public function addition_packages() {
-			hb_admin_view( 'addition-packages', array(), true );
 		}
 
 		/**

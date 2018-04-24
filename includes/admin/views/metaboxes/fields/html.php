@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin View: Admin meta box field - html.
+ * Admin View: Admin meta box html field.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Views

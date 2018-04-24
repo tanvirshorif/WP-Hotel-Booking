@@ -38,11 +38,6 @@ add_filter( 'the_content', 'hb_setup_page_content' );
 // footer advertisement
 add_action( 'admin_footer', 'hb_footer_advertisement', - 10 );
 
-// add room meta box
-add_action( 'admin_init', 'hb_admin_room_meta_boxes', 50 );
-// init other meta boxes
-add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
-
 // query request for booking
 add_filter( 'request', 'hb_request_query' );
 

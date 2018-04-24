@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin View: Admin meta box field - label.
+ * Admin View: Admin meta box label field.
  *
  * @version     2.0
  * @package     WP_Hotel_Booking/Views
@@ -16,15 +16,14 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <?php
-
-$field      = wp_parse_args(
-	$field,
+$field = wp_parse_args( $field,
 	array(
 		'std'    => '',
 		'attr'   => '',
 		'filter' => null
 	)
 );
+
 $field_attr = '';
 if ( $field['attr'] ) {
 	if ( is_array( $field['attr'] ) ) {
@@ -39,10 +38,4 @@ if ( is_callable( $field['filter'] ) ) {
 	$value = call_user_func_array( $field['filter'], array( $value ) );
 }
 
-printf(
-	'<span %s>%s</span>',
-	$field_attr,
-	$value
-);
-
-?>
+printf( '<span %s>%s</span>', $field_attr, $value ); ?>

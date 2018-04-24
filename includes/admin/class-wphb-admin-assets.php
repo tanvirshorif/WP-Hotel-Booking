@@ -69,16 +69,6 @@ if ( ! class_exists( 'WPHB_Admin_Assets' ) ) {
 			$screen = get_current_screen();
 
 			switch ( $screen->id ) {
-				case 'wp-hotel-booking_page_wphb-addition-packages':
-
-					wp_localize_script( 'wphb-admin-vue', 'wphb_addition_packages', WPHB_Extra::localize_script() );
-					wp_enqueue_script( 'wphb-admin-extra-vue', WPHB_PLUGIN_URL . 'assets/js/admin/extra-editor.js', array(
-						'jquery',
-						'wphb-vue',
-						'wphb-vuex',
-						'wphb-vue-resource'
-					), WPHB_VERSION );
-					break;
 				case 'hb_booking':
 					global $post;
 

@@ -29,6 +29,10 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Room' ) ) {
 			add_filter( 'manage_hb_room_posts_columns', array( $this, 'room_columns' ) );
 			add_action( 'manage_hb_room_posts_custom_column', array( $this, 'room_columns_content' ) );
 
+			// add room meta box
+			add_action( 'admin_init', array( $this, 'general_meta_box' ) );
+			add_action( 'admin_init', array( $this, 'pricing_meta_box' ) );
+
 			add_action( 'before_delete_post', array( $this, 'before_delete' ) );
 		}
 
@@ -154,6 +158,93 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Room' ) ) {
 					echo implode( '', $html );
 					break;
 			}
+		}
+
+		/**
+		 * General room meta boxes.
+		 */
+		public function general_meta_box() {
+			WPHB_Meta_Box::instance(
+				'room_settings',
+				array(
+					'title'           => __( 'Room Settings', 'wp-hotel-booking' ),
+					'post_type'       => 'hb_room',
+					'meta_key_prefix' => '_hb_',
+					'priority'        => 'high'
+				),
+				array()
+			)->add_field(
+				array(
+					'name'  => 'num_of_rooms',
+					'label' => __( 'Quantity', 'wp-hotel-booking' ),
+					'type'  => 'number',
+					'std'   => '10',
+					'desc'  => __( 'Number of the room', 'wp-hotel-booking' ),
+					'min'   => 0,
+					'max'   => 100
+				),
+				array(
+					'name'    => 'room_capacity',
+					'label'   => __( 'Adults', 'wp-hotel-booking' ),
+					'desc'    => __( 'Room capacity', 'wp-hotel-booking' ),
+					'type'    => 'select',
+					'options' => hb_get_room_capacities(
+						array(
+							'map_fields' => array(
+								'term_id' => 'value',
+								'name'    => 'text'
+							)
+						)
+					),
+					'except'  => sprintf( wp_kses( __( '<i>You need to create <a href="%s" target="_blank">room capacities</a> to select number of adults</i>', 'wp-hotel-booking' ),
+						array(
+							'i' => array(),
+							'a' => array( 'href' => array(), 'target' => array() )
+						) ), admin_url( 'edit-tags.php?taxonomy=hb_room_capacity&post_type=hb_room' ) )
+				),
+				array(
+					'name'  => 'max_child_per_room',
+					'label' => __( 'Children', 'wp-hotel-booking' ),
+					'desc'  => __( 'Max children per room', 'wp-hotel-booking' ),
+					'type'  => 'number',
+					'std'   => 0,
+					'min'   => 0,
+					'max'   => 100
+				),
+				array(
+					'name'   => 'room_addition_information',
+					'label'  => __( 'Addition Information', 'wp-hotel-booking' ),
+					'type'   => 'textarea',
+					'std'    => '',
+					'editor' => true
+				),
+				array(
+					'name'    => 'room_extra',
+					'label'   => __( 'Extra Options', 'wp-hotel-booking' ),
+					'desc'    => __( 'Room extra options', 'wp-hotel-booking' ),
+					'type'    => 'multiple',
+					'std'     => '',
+					'options' => hb_room_extra_options(),
+					'except'  => sprintf( wp_kses( __( '<i>There are no extra options. Create <a href="%s" target="_blank">here</a></i>', 'wp-hotel-booking' ),
+						array(
+							'i' => array(),
+							'a' => array( 'href' => array(), 'target' => array() )
+						) ), admin_url( 'admin.php?page=wphb-addition-packages' ) )
+				),
+				array(
+					'name'  => 'gallery',
+					'label' => __( 'Gallery Images', 'wp-hotel-booking' ),
+					'desc'  => __( 'Room gallery images', 'wp-hotel-booking' ),
+					'type'  => 'gallery'
+				)
+			);
+		}
+
+		/**
+		 * Pricing room meta boxes.
+		 */
+		public function pricing_meta_box() {
+			new WPHB_Metabox_Room_Price();
 		}
 
 		/**

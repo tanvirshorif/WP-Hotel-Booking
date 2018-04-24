@@ -170,39 +170,6 @@ if ( ! class_exists( 'WPHB_Extra' ) ) {
 		}
 
 		/**
-		 * Localize script in admin extra panel.
-		 */
-		public static function localize_script() {
-			$extras = WPHB_Extra_CURD::get_extra();
-
-			$hb_extra = array();
-			if ( is_array( $extras ) ) {
-				foreach ( $extras as $extra ) {
-					$hb_extra[] = array(
-						'id'          => $extra->ID,
-						'title'       => $extra->post_title,
-						'description' => $extra->post_content,
-						'price'       => get_post_meta( $extra->ID, 'tp_hb_extra_room_price', true ),
-						'unit'        => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent_name', true ),
-						'type'        => get_post_meta( $extra->ID, 'tp_hb_extra_room_respondent', true )
-					);
-				}
-			}
-
-			$localize = array(
-				'wphb_extra' => array(
-					'extra'  => $hb_extra,
-					'unit'   => __( 'Package', 'wp-hotel-booking' ),
-					'types'  => hb_extra_types(),
-					'action' => 'wphb_extra_panel',
-					'nonce'  => wp_create_nonce( 'wphb_admin_extra_nonce' )
-				)
-			);
-
-			return $localize;
-		}
-
-		/**
 		 * Get class instance.
 		 *
 		 * @return null|WPHB_Extra
