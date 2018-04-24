@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<?php $content = hb_settings()->get( $field['id'] ); ?>
+<?php $content = get_option( $field['id'], '' ); ?>
 
 <tr valign="top" <?php echo $field['class'] ? 'class="' . $field['class'] . '"' : ''; ?>>
     <th scope="row">
