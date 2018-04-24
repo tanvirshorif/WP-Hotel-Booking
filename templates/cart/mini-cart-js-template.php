@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 
         <div class="hb_mini_cart_top">
             <h4 class="hb_title"><a href="{{{ data.permalink }}}">{{ data.name }}</a></h4>
-            <span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
+            <span class="hb_mini_cart_remove"><i class="dashicons dashicons-no"></i></span>
         </div>
 
         <div class="hb_mini_cart_number">
@@ -44,7 +44,7 @@ defined( 'ABSPATH' ) || exit;
                                 <span>
                                         ({{{ pack.package_quantity }}})
                                         <a href="#" class="hb_package_remove" data-cart-id="{{ pack.cart_id }}"><i
-                                                    class="fa fa-times"></i></a>
+                                                    class="dashicons dashicons-no"></i></a>
                                     </span>
                             </div>
                         </li>

@@ -213,7 +213,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Coupon' ) ) {
                 <tr class="hb_coupon">
                     <td class="hb_coupon_remove" colspan="8">
                         <p class="hb-remove-coupon" align="right">
-                            <a href="" id="hb-remove-coupon"><i class="fa fa-times"></i></a>
+                            <a href="" id="hb-remove-coupon"><i class="dashicons dashicons-no"></i></a>
                         </p>
                         <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'wphb-coupon' ), $coupon->coupon_code ); ?></span>
                         <span class="hb-align-right">-<?php echo hb_format_price( $coupon->discount_value ); ?></span>

@@ -174,6 +174,9 @@ if ( ! class_exists( 'WPHB_Extra_Package' ) ) {
 				case 'respondent_name':
 					$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent_name', true );
 					break;
+				case 'required':
+					$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_required', true );
+					break;
 				case 'night':
 					$return = hb_count_nights_two_dates( $this->check_out_date, $this->check_in_date );
 					break;

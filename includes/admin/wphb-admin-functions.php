@@ -199,8 +199,7 @@ if ( ! function_exists( 'wphb_get_screen_ids' ) ) {
 			'hb_booking',
 			'edit-hb_booking',
 			'edit-hb_room_capacity',
-			'edit-hb_room_type',
-			'edit-hb_room_location'
+			'edit-hb_room_type'
 		);
 
 		return apply_filters( 'wphb_screen_ids', $screen_id );

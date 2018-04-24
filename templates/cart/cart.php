@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) || exit;
                             <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
                                 <td class="remove-room" <?php echo $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
                                     <a class="hb_remove_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                                        <i class="fa fa-times"></i>
+                                        <i class="dashicons dashicons-no"></i>
                                     </a>
                                 </td>
                                 <td class="hb_room_type">

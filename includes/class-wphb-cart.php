@@ -608,8 +608,9 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 		 * @param $cart_id
 		 * @param $cart_item
 		 * @param $posts
+		 * @param $object | for object cart item
 		 */
-		public function add_extra_to_cart( $cart_id, $cart_item, $posts ) {
+		public function add_extra_to_cart( $cart_id, $cart_item, $posts, $object = false ) {
 			if ( empty( $posts['hb_optional_quantity_selected'] ) || empty( $posts['hb_optional_quantity'] ) ) {
 				return;
 			}
@@ -625,10 +626,10 @@ if ( ! class_exists( 'WPHB_Cart' ) ) {
 					$param = array(
 						'product_id'     => $extra_id,
 						'parent_id'      => $cart_id,
-						'check_in_date'  => $cart_item['check_in_date'],
-						'check_in_time'  => $cart_item['check_in_time'],
-						'check_out_date' => $cart_item['check_out_date'],
-						'check_out_time' => $cart_item['check_out_time']
+						'check_in_date'  => $object ? $cart_item->check_in_date : $cart_item['check_in_date'],
+						'check_in_time'  => $object ? ( isset( $cart_item->check_in_time ) ? $cart_item->check_in_time : null ) : $cart_item['check_in_time'],
+						'check_out_date' => $object ? $cart_item->check_out_date : $cart_item['check_out_date'],
+						'check_out_time' => $object ? ( isset( $cart_item->check_out_time ) ? $cart_item->check_out_time : null ) : $cart_item['check_out_time']
 					);
 					if ( array_key_exists( $extra_id, $turn_on ) ) {
 						$this->add_to_cart( $extra_id, $param, $qty );

@@ -85,8 +85,6 @@ if ( ! class_exists( 'WPHB_Admin_Assets' ) ) {
 					break;
 			}
 
-			// fontawesome
-			wp_enqueue_style( 'wphb-libraries', WPHB_PLUGIN_URL . 'assets/css/libraries.css', array(), WPHB_VERSION );
 			// select2
 			wp_enqueue_script( 'wphb-select2', WPHB_PLUGIN_URL . 'assets/js/vendor/select2.min.js', array(), WPHB_VERSION, true );
 			// moment

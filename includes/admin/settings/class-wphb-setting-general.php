@@ -73,10 +73,10 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'    => 'checkbox',
-					'id'      => $prefix . 'multiple_location',
-					'title'   => __( 'Multiple Location', 'wp-hotel-booking' ),
+					'id'      => $prefix . 'custom_process',
+					'title'   => __( 'Custom Process', 'wp-hotel-booking' ),
+					'desc'    => __( 'Choose extra options after select room in search page', 'wp-hotel-booking' ),
 					'default' => 0,
-					'desc'    => __( 'Enable multiple location', 'wp-hotel-booking' )
 				),
 				array(
 					'type'    => 'checkbox',
@@ -86,9 +86,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'desc'    => __( 'Disable children field in search room page', 'wp-hotel-booking' )
 				),
 				array(
-					'type'    => 'number',
-					'id'      => $prefix . 'minimum_booking_day',
-					'title'   => __( 'Min Booking Nights', 'wp-hotel-booking' ),
+					'type'  => 'number',
+					'id'    => $prefix . 'minimum_booking_day',
+					'title' => __( 'Min Booking Nights', 'wp-hotel-booking' ),
 
 					'default' => 1,
 					'min'     => 0,

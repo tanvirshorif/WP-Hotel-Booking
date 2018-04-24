@@ -109,23 +109,6 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wphb_get_location_of_rooms' ) ) {
-	/**
-	 * Get all room locations.
-	 *
-	 * @return array
-	 */
-	function wphb_get_location_of_rooms() {
-		$locations = array();
-		$terms     = get_terms( 'hb_room_location', array( 'hide_empty' => false ) );
-		foreach ( $terms as $term ) {
-			$locations[ $term->term_id ] = $term->name;
-		}
-
-		return $locations;
-	}
-}
-
 if ( ! function_exists( 'hb_dropdown_room_types' ) ) {
 	/**
 	 * List room types into drop down select.
@@ -191,33 +174,6 @@ if ( ! function_exists( 'hb_dropdown_room_capacities' ) ) {
 		}
 
 		return $output;
-	}
-}
-
-if ( ! function_exists( 'hb_dropdown_room_locations' ) ) {
-	/**
-	 * Drop down to select location.
-	 *
-	 * @param array $args
-	 */
-	function hb_dropdown_room_locations( $args = array() ) {
-		$locations = wphb_get_location_of_rooms();
-		$args      = wp_parse_args( $args, array(
-				'name'              => 'locations',
-				'selected'          => '',
-				'show_option_none'  => __( 'Location', 'wp-hotel-booking' ),
-				'option_none_value' => '',
-				'required'          => false
-			)
-		);
-		echo '<select name="' . $args['name'] . '"' . ( ( $args['required'] ) ? 'required' : '' ) . '>';
-		if ( $args['show_option_none'] ) {
-			echo '<option value="' . $args['option_none_value'] . '">' . $args['show_option_none'] . '</option>';
-		}
-		foreach ( $locations as $id => $name ) {
-			echo '<option value="' . $id . '" ' . selected( $id == $args['selected'] ) . '>' . $name . '</option>';
-		}
-		echo '</select>';
 	}
 }
 
@@ -1793,6 +1749,22 @@ if ( ! function_exists( 'hb_get_url' ) ) {
 		}
 
 		return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, hb_get_page_id( 'search' ), $params );
+	}
+}
+
+if ( ! function_exists( 'hb_get_search_room_url' ) ) {
+	/**
+	 * @return mixed
+	 */
+	function hb_get_search_room_url() {
+		$id = hb_get_page_id( 'search' );
+
+		$url = home_url();
+		if ( $id ) {
+			$url = get_the_permalink( $id );
+		}
+
+		return apply_filters( 'hb_search_room_url', $url );
 	}
 }
 

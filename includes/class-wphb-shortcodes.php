@@ -97,7 +97,6 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 			$adults_term = hb_get_request( 'adults', 0 );
 			$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : 0;
 			$max_child   = hb_get_request( 'max_child', 0 );
-			$location    = hb_get_request( 'room_location', 0 );
 
 			$atts = wp_parse_args(
 				$atts, array(
@@ -107,14 +106,13 @@ if ( ! class_exists( 'WPHB_Shortcodes' ) ) {
 					'check_out_time' => $end_time,
 					'adults'         => $adults,
 					'max_child'      => $max_child,
-					'location'       => $location,
 					'search_page'    => null
 				)
 			);
 
 			$page = hb_get_request( 'hotel-booking' );
 
-			$template      = 'search/form.php';
+			$template      = 'search/search-page.php';
 			$template_args = array();
 
 			// find the url for form action

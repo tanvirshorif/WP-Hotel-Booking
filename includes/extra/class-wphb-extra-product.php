@@ -75,6 +75,7 @@ if ( ! class_exists( 'WPHB_Extra_Product' ) ) {
 					$ext->price           = hb_format_price( $ext->amount_singular );
 					$ext->selected        = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
 					$ext->qty             = 1;
+					$ext->required        = $package->required;
 					$results[ $post_id ]  = $ext;
 				}
 

@@ -113,49 +113,51 @@ defined( 'ABSPATH' ) || exit;
             <input type="hidden" name="hotel-booking" value="cart">
             <input type="hidden" name="action" value="wphb_add_to_cart"/>
 
-			<?php if ( $room_extra ) { ?>
-                <div class="hb_addition_package_extra">
-                    <div class="hb_addition_package_title">
-                        <h5 class="hb_addition_package_title_toggle">
-                            <a href="javascript:void(0)" class="hb_package_toggle">
-								<?php esc_html_e( 'Optional Extras', 'wp-hotel-booking' ); ?>
-                            </a>
-                        </h5>
-                    </div>
-                    <div class="hb_addition_packages">
-                        <ul class="hb_addition_packages_ul">
-							<?php foreach ( $room_extra as $key => $extra ): ?>
-                                <li data-price="<?php echo esc_attr( $extra->amount_singular ); ?>">
-                                    <input type="checkbox"
-                                           name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
-                                           class="hb_optional_quantity_selected"
-                                           id="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"
-                                    />
-                                    <div class="hb_package_title">
-                                        <label for="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
-                                        <div class="hb_extra_detail_price">
-											<?php if ( $extra->respondent === 'number' ) { ?>
-                                                <input type="number" step="1" min="1"
-                                                       name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
-                                                       value="1" class="hb_optional_quantity"/>
-											<?php } else { ?>
-                                                <input type="hidden" step="1" min="1"
-                                                       name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
-                                                       value="1"/>
-											<?php } ?>
-                                            <label>
-                                                <strong><?php echo $extra->price; ?></strong>
-                                                <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ) ?></small>
-                                            </label>
+			<?php if ( ! hb_get_option( 'custom_process' ) ) { ?>
+				<?php if ( $room_extra ) { ?>
+                    <div class="hb_addition_package_extra">
+                        <div class="hb_addition_package_title">
+                            <h5 class="hb_addition_package_title_toggle">
+                                <a href="javascript:void(0)" class="hb_package_toggle">
+									<?php esc_html_e( 'Optional Extras', 'wp-hotel-booking' ); ?>
+                                </a>
+                            </h5>
+                        </div>
+                        <div class="hb_addition_packages">
+                            <ul class="hb_addition_packages_ul">
+								<?php foreach ( $room_extra as $key => $extra ): ?>
+                                    <li data-price="<?php echo esc_attr( $extra->amount_singular ); ?>">
+                                        <input type="checkbox"
+                                               name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
+                                               class="hb_optional_quantity_selected"
+                                               id="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"/>
+                                        <div class="hb_package_title">
+                                            <label for="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
+                                            <div class="hb_extra_detail_price">
+												<?php if ( $extra->respondent === 'number' ) { ?>
+                                                    <input type="number" step="1" min="1"
+                                                           name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
+                                                           value="1" class="hb_optional_quantity"/>
+												<?php } else { ?>
+                                                    <input type="hidden" step="1" min="1"
+                                                           name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
+                                                           value="1"/>
+												<?php } ?>
+                                                <label>
+                                                    <strong><?php echo $extra->price; ?></strong>
+                                                    <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ) ?></small>
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <p class="description"><?php printf( '%s', $extra->description ) ?></p>
-                                </li>
-							<?php endforeach ?>
-                        </ul>
+                                        <p class="description"><?php printf( '%s', $extra->description ) ?></p>
+                                    </li>
+								<?php endforeach ?>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+				<?php } ?>
 			<?php } ?>
+
         </form>
 		<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || hb_get_option( 'enable_gallery_lightbox' ) ) { ?>
 			<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>

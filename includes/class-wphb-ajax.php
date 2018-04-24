@@ -37,6 +37,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'place_booking',
 				'parse_search_params',
 				'add_to_cart',
+				'add_extra_to_cart',
 				'remove_cart_item',
 				'remove_extra_cart',
 				'cancel_booking'
@@ -89,8 +90,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 		/**
 		 * Catch variables via post method and build a request param.
-		 *
-		 * @since 2.0
 		 */
 		public static function parse_search_params() {
 			check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
@@ -106,8 +105,7 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 				'hb_check_out_date' => hb_get_request( 'hb_check_out_date' ),
 				'hb_check_out_time' => hb_get_request( 'hb_check_out_time' ),
 				'adults'            => hb_get_request( 'adults_capacity' ),
-				'max_child'         => hb_get_request( 'max_child' ),
-				'room_location'     => hb_get_request( 'room_location' )
+				'max_child'         => hb_get_request( 'max_child' )
 			) );
 
 			$return = apply_filters( 'hotel_booking_parse_search_param', array(
@@ -120,8 +118,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 		/**
 		 * Add to cart action.
-		 *
-		 * @since 2.0
 		 */
 		public static function add_to_cart() {
 			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
@@ -182,7 +178,12 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 					'name'      => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
 					'quantity'  => $qty,
 					'cart_id'   => $cart_id,
-					'total'     => hb_format_price( $cart->get_cart_item( $cart_id )->amount )
+					'total'     => hb_format_price( $cart->get_cart_item( $cart_id )->amount ),
+					'redirect'  => hb_get_option( 'custom_process' ) ? add_query_arg( array(
+						'page'    => 'select-room-extra',
+						'cart_id' => $cart_id,
+						'room_id' => $product_id
+					), hb_get_search_room_url() ) : ''
 				);
 
 				// add extra package
@@ -215,9 +216,40 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 		}
 
 		/**
+		 * Add extra to cart action.
+		 */
+		public static function add_extra_to_cart() {
+
+			if ( ! check_ajax_referer( 'hb_select_extra_nonce_action', 'nonce' ) ) {
+				return;
+			}
+			$cart_id = $_POST['cart_id'];
+			if ( ! $cart_id ) {
+				hb_send_json( array(
+					'status'  => 'warning',
+					'message' => __( 'Cart ID is invalid.', 'wp-hotel-booking' )
+				) );
+			}
+
+			$cart      = WPHB_Cart::instance();
+			$cart_item = $cart->get_cart_item( $cart_id );
+
+			if ( isset( $_POST['hb_optional_quantity_selected'] ) ) {
+				$selected = $_POST['hb_optional_quantity_selected'];
+				foreach ( $selected as $extra_id => $select ) {
+					if ( $select == 'on' ) {
+						$cart->add_extra_to_cart( $cart_id, $cart_item, array(
+							'hb_optional_quantity'          => array( $extra_id => $_POST['hb_optional_quantity'][ $extra_id ] ),
+							'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
+						), true );
+					}
+				}
+			}
+			hb_send_json( array( 'status' => 'success', 'redirect' => hb_get_cart_url() ) );
+		}
+
+		/**
 		 * Remove cart item action.
-		 *
-		 * @since 2.0
 		 */
 		public static function remove_cart_item() {
 			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
@@ -250,8 +282,6 @@ if ( ! class_exists( 'WPHB_Ajax' ) ) {
 
 		/**
 		 * Remove extra from cart.
-		 *
-		 * @since 2.0
 		 */
 		public static function remove_extra_cart() {
 			if ( ! isset( $_POST ) || ! defined( 'WPHB_BLOG_ID' ) ) {

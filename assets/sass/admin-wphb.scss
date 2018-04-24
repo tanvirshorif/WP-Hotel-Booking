@@ -123,16 +123,19 @@
 
 /********************************** Admin pricing plan *************************************************/
 .wp-hotel-booking_page_wphb-pricing-table {
-
     form[name="pricing-table-form"] {
         .hb-pricing-table.regular-price {
             .hb-pricing-list {
                 background: #fff;
                 padding: 10px;
                 > table {
+                    th {
+                        text-align: left;
+                    }
                     td {
                         input.hb-pricing-price {
                             width: 100%;
+                            text-align: center;
                         }
                     }
                 }

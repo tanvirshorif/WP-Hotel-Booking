@@ -98,7 +98,7 @@ if ( ! class_exists( 'WPHB_Custom_Post_Type_Room' ) ) {
 			unset( $columns['title'] );
 			unset( $columns['author'] );
 			unset( $columns['comments'] );
-			$columns['thumb']               = __( '<i class="fa fa-picture-o"></i>', 'wp-hotel-booking' );
+			$columns['thumb']               = __( '<i class="dashicons dashicons-format-image"></i>', 'wp-hotel-booking' );
 			$columns['title']               = __( 'Title', 'wp-hotel-booking' );
 			$columns['room_quantity']       = __( 'Quantity', 'wp-hotel-booking' );
 			$columns['room_capacity']       = __( 'Capacity', 'wp-hotel-booking' );

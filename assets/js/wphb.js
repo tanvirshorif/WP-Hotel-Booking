@@ -278,11 +278,13 @@
         init: function () {
             var _doc = $(document),
                 _self = this;
-            // enable add cart
 
+            // enable add cart
             _doc.on('change', '.number_room_select', _self.enable_add_cart)
             // add to cart
                 .on('submit', '.hb-search-room-results', _self.add_to_cart)
+                // add extra to cart
+                .on('submit', '.hb-select-extra-results', _self.add_extra_to_cart)
                 // remove cart room item in cart
                 .on('click', '.hb_remove_cart_item', _self.remove_room_cart)
                 // remove cart extra item in cart
@@ -346,7 +348,7 @@
                         // update woo cart when add room to cart
                         $('body').trigger('hb_added_item_to_cart');
                         // add message successfully
-                        if (typeof code.redirect !== 'undefined') {
+                        if (typeof code.redirect !== 'undefined' && code.redirect) {
                             window.location.href = code.redirect;
                         }
                     } else {
@@ -365,6 +367,21 @@
                 }
             });
             return false;
+        },
+        add_extra_to_cart: function (e) {
+            e.preventDefault();
+            var data = $(this).serializeArray();
+
+            $.ajax({
+                url: hotel_settings.ajax,
+                type: 'POST',
+                data: data,
+                dataType: 'html',
+                success: function (code) {
+                    code = parseJSON(code);
+                    window.location.href = code.redirect;
+                }
+            });
         },
         remove_room_cart: function (e) {
             e.preventDefault();

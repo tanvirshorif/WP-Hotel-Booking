@@ -17,24 +17,29 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<?php if ( $extras ) { ?>
-
+<?php
+/**
+ * @var $extras
+ */
+if ( $extras ) { ?>
     <div class="hb_mini_cart_price_packages">
         <label><?php _e( 'Extra Options:', 'wp-hotel-booking' ) ?></label>
         <ul>
-			<?php foreach ( $extras as $extra ) : ?>
+			<?php foreach ( $extras as $extra ) { ?>
                 <li>
                     <div class="hb_package_title">
                         <a href="#"><?php printf( '%s (%s)', $extra->product_data->title, hb_format_price( $extra->amount_singular ) ) ?></a>
-                        <span>
+						<?php if ( ! get_post_meta( $extra->product_id, 'tp_hb_extra_room_required' ) ) { ?>
+                            <span>
 							(<?php printf( 'x%s', $extra->quantity ) ?>)
 							<a href="#" class="hb_package_remove"
-                               data-cart-id="<?php echo esc_attr( $extra->cart_id ) ?>"><i class="fa fa-times"></i></a>
+                               data-cart-id="<?php echo esc_attr( $extra->cart_id ) ?>"><i
+                                        class="dashicons dashicons-no"></i></a>
 						</span>
+						<?php } ?>
                     </div>
                 </li>
-			<?php endforeach; ?>
+			<?php } ?>
         </ul>
     </div>
-
 <?php } ?>

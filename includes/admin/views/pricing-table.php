@@ -194,7 +194,7 @@ $date_order   = hb_start_of_week_order();
                 <div class="all-day">
                     <input type="radio" id="all-day" name="all-day" value="1" checked>
                     <label for="all-day"><?php _e( 'All day:', 'wp-hotel-booking' ); ?></label>
-                    <input type="number" name="all-day-price" value=""/>
+                    <input type="number" name="all-day-price" value="100"/>
                     <code><?php echo hb_get_currency_symbol( hb_get_currency() ) . '/night'; ?></code>
                 </div>
                 <div class="single-date">

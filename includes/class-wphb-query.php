@@ -40,42 +40,7 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 		 * @param null $params
 		 */
 		public function __construct( $params = null ) {
-			if ( $params['location'] ) {
-				add_filter( 'hb_search_room_extend_join', array( $this, 'location_join' ) );
-				add_filter( 'hb_search_room_extend_conditions', array( $this, 'location_conditions' ), 10, 2 );
-			}
-
 			add_filter( 'hb_search_booking_except_conditions', array( $this, 'booking_except_conditions' ), 10, 3 );
-		}
-
-		/**
-		 * Left join to query room by location.
-		 *
-		 * @since 2.0
-		 *
-		 * @return string
-		 */
-		public function location_join() {
-			global $wpdb;
-			$join = "LEFT JOIN {$wpdb->term_relationships} AS term_relationships ON rooms.ID = term_relationships.object_id";
-
-			return $join;
-		}
-
-		/**
-		 * Where conditions when search room by location.
-		 *
-		 * @since 2.0
-		 *
-		 * @param $default
-		 * @param $location
-		 *
-		 * @return string
-		 */
-		public function location_conditions( $default, $location ) {
-			$conditions = "AND term_relationships.term_taxonomy_id = $location ";
-
-			return $conditions;
 		}
 
 		/**
@@ -113,7 +78,6 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 
 			$adults                 = $args['adults'];
 			$max_child              = $args['max_child'];
-			$location               = $args['location'];
 			$date_in                = strtotime( $args['check_in_date'] );
 			$time_in                = $args['check_in_time'];
 			$date_out               = strtotime( $args['check_out_date'] );
@@ -122,7 +86,7 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 			$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $date_out ), date( 'd', $date_out ), date( 'Y', $date_out ) );
 
 			$extend_join       = apply_filters( 'hb_search_room_extend_join', '' );
-			$extend_conditions = apply_filters( 'hb_search_room_extend_conditions', '', $location );
+			$extend_conditions = apply_filters( 'hb_search_room_extend_conditions', '' );
 
 			$booking_except_join       = apply_filters( 'hb_search_booking_except_join', '' );
 			$booking_except_conditions = apply_filters( 'hb_search_booking_except_conditions', '', $check_in_date_to_time, $check_out_date_to_time );
@@ -168,8 +132,7 @@ if ( ! class_exists( 'WPHB_Query' ) ) {
 				'check_in'  => $check_in_date_to_time,
 				'check_out' => $check_out_date_to_time,
 				'adults'    => $adults,
-				'child'     => $max_child,
-				'location'  => $location
+				'child'     => $max_child
 			) );
 
 			if ( $search = $wpdb->get_results( $query ) ) {

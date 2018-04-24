@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="hb-booking-room-details">
     <span class="hb_search_room_item_detail_price_close">
-        <i class="fa fa-times"></i>
+        <i class="dashicons dashicons-no"></i>
     </span>
 	<?php $details = $room->get_booking_room_details(); ?>
 
