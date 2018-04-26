@@ -231,6 +231,13 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
             </div>
 
         </div>
+
+        <div id="instruction">
+			<?php if ( ( ! $booking->method || $booking->method == 'offline-payment' ) && $option = get_option( 'tp_hotel_booking_offline-payment' ) ) { ?>
+                <h3><?php echo __( 'Instruction', 'wp-hotel-booking' ); ?></h3>
+				<?php echo $option['instruction']; ?>
+			<?php } ?>
+        </div>
 	<?php } else { ?>
         <p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ) ?></p>
 	<?php }

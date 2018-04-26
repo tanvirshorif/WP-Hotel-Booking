@@ -326,7 +326,7 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Stripe' ) ) {
 					WP_Hotel_Booking::instance()->empty_cart();
 					$return = array(
 						'result'   => 'success',
-						'redirect' => hb_get_return_url()
+						'redirect' => hb_get_thank_you_url( $booking_id, $booking->booking_key )
 					);
 				} else {
 					$return = array(

@@ -75,6 +75,14 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Offline_Payment' ) ) {
 					'default' => 1,
 				),
 				array(
+					'type'    => 'textarea',
+					'id'      => $prefix . 'offline-payment[instruction]',
+					'title'   => __( 'Instruction', 'wp-hotel-booking' ),
+					'desc'    => __( 'Information for bank transfer via Offline payment', 'wp-hotel-booking' ),
+					'default' => '',
+					'options' => array( 'media_buttons' => false )
+				),
+				array(
 					'type' => 'section_end',
 					'id'   => 'offline_payment_setting'
 				)

@@ -402,9 +402,12 @@ if ( ! class_exists( 'WPHB_Payment_Gateway_Authorize' ) ) {
 		 * @return array
 		 */
 		public function process_checkout( $booking_id = null ) {
+			$booking = WPHB_Booking::instance( $booking_id );
+
 			return array(
 				'result'   => 'success',
-				'redirect' => $this->_get_authorize_basic_checkout_url( $booking_id )
+				'redirect' => hb_get_thank_you_url( $booking_id, $booking->booking_key ),
+//				'redirect' => $this->_get_authorize_basic_checkout_url( $booking_id )
 			);
 		}
 

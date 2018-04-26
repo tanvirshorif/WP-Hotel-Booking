@@ -15,7 +15,18 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<?php $content = get_option( $field['id'], '' ); ?>
+<?php
+if ( $name = substr( $field['id'], strpos( $field['id'], '[' ) + 1, ( strpos( $field['id'], ']' ) - strpos( $field['id'], '[' ) - 1 ) ) ) {
+	$option = substr( $field['id'], 0, strpos( $field['id'], '[' ) );
+	$value  = get_option( $option );
+	if ( $value ) {
+		$content = $value[ $name ];
+	} else {
+		$content = isset( $field['default'] ) ? $field['default'] : '';
+	}
+} else {
+	$content = ( get_option( $field['id'] ) !== false ) ? get_option( $field['id'] ) : ( isset( $field['default'] ) ? $field['default'] : '' );
+} ?>
 
 <tr valign="top" <?php echo $field['class'] ? 'class="' . $field['class'] . '"' : ''; ?>>
     <th scope="row">

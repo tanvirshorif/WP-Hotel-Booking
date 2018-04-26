@@ -738,7 +738,7 @@
         },
         admin_select2: function () {
             // select setting page
-            $('form[name="hb-admin-settings-form"] select').select2();
+            // $('form[name="hb-admin-settings-form"] select').select2();
             // select country
             $('select[name="_hb_customer_country"]').select2();
             // select metabox
