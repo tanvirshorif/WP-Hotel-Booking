@@ -69,6 +69,12 @@ defined( 'ABSPATH' ) || exit;
         <td colspan="4"><b><?php _e( 'Total', 'wp-hotel-booking' ) ?></b></td>
         <td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
+    <tr>
+		<?php if ( $advance_payment = $booking->advance_payment ) { ?>
+            <td colspan="4"><b><?php _e( 'Advance Payment', 'wp-hotel-booking' ) ?></b></td>
+            <td><?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
+		<?php } ?>
+    </tr>
 </table>
 
 <?php if ( $booking->content ) { ?>

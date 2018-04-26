@@ -106,7 +106,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'    => 'number',
 					'id'      => $prefix . 'advance_payment',
 					'title'   => __( 'Advance Payment', 'wp-hotel-booking' ),
-					'desc'    => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
+					'desc'    => __( 'Advance payment, eg: 50%', 'wp-hotel-booking' ),
 					'default' => 50,
 					'min'     => 0,
 					'max'     => 100
